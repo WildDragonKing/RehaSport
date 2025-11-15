@@ -1,4 +1,10 @@
-import { useEffect, useMemo, useState } from "react";
+import {
+  useEffect,
+  useMemo,
+  useState,
+  type ChangeEvent,
+  type FormEvent
+} from "react";
 import { useSearchParams } from "react-router-dom";
 
 import Button from "../components/ui/Button";
@@ -56,11 +62,19 @@ function ContactPage(): JSX.Element {
     return courses.map((course) => ({ value: course.id, label: course.title }));
   }, []);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value, type, checked } = event.target;
+  const handleChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
+    const target = event.target;
+    const { name, value } = target;
+    const nextValue =
+      target instanceof HTMLInputElement && target.type === "checkbox"
+        ? target.checked
+        : value;
+
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value
+      [name]: nextValue
     }));
   };
 
@@ -84,7 +98,7 @@ function ContactPage(): JSX.Element {
     return nextErrors;
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const nextErrors = validate();
     setErrors(nextErrors);
