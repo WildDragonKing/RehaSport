@@ -1,57 +1,43 @@
 import { renderToString } from "react-dom/server";
-import { describe, expect, it, vi, type Mock } from "vitest";
+import { MemoryRouter } from "react-router-dom";
+import { describe, expect, it } from "vitest";
 
 import App from "./App";
 
-type ContentIndexResult = {
-  entries: {
-    id: string;
-    type: "stunde";
-    path: string;
-    title: string;
-    summary: string;
-    concepts: string[];
-    phases: string[];
-    tags: string[];
-  }[];
-  isLoading: boolean;
-  error: undefined;
-};
-
-type MockUseContentIndex = Mock<[], ContentIndexResult>;
-import type { UseContentIndexResult } from "./hooks/useContentIndex";
-
-const mockEntries = [
-  {
-    id: "stunde-1",
-    type: "stunde" as const,
-    path: "Stunden/balance-basics.md",
-    title: "Balance Basics",
-    summary: "Stabilität verbessern",
-    concepts: ["Balance"],
-    phases: ["Phase 1"],
-    tags: ["mobilität"]
-  }
-];
-
-vi.mock("./hooks/useContentIndex", () => {
-  const useContentIndex: MockUseContentIndex = vi.fn<[], ContentIndexResult>(() => ({
-  const useContentIndex = vi.fn<[], UseContentIndexResult>(() => ({
-    entries: mockEntries,
-    isLoading: false,
-    error: undefined
-  }));
-
-  return { useContentIndex };
-});
-
 describe("App", () => {
-  it("rendert die Navigation und die Inhalte der aktiven Kategorie", () => {
-    const html = renderToString(<App />);
+  it("zeigt die Startseite mit Hero und Navigation", () => {
+    const html = renderToString(
+      <MemoryRouter initialEntries={["/"]}>
+        <App />
+      </MemoryRouter>
+    );
 
-    expect(html).toContain("Stunden");
-    expect(html).toContain("Übungen");
-    expect(html).toContain("Konzepte");
-    expect(html).toContain("Balance Basics");
+    expect(html).toContain("RehaSport Zentrum");
+    expect(html).toContain("RehaSport, der motiviert und wirkt");
+    expect(html).toContain("Zu den Kursen");
+  });
+
+  it("zeigt die Kursübersicht mit Kurskarten", () => {
+    const html = renderToString(
+      <MemoryRouter initialEntries={["/kurse"]}>
+        <App />
+      </MemoryRouter>
+    );
+
+    expect(html).toContain("Unsere Kursübersicht");
+    expect(html).toContain("Rückenfit & Entspannung");
+    expect(html).toContain("Cardio Sanft");
+  });
+
+  it("liefert Kontaktformular mit Pflichtfeldern", () => {
+    const html = renderToString(
+      <MemoryRouter initialEntries={["/kontakt"]}>
+        <App />
+      </MemoryRouter>
+    );
+
+    expect(html).toContain("Kontakt & Anmeldung");
+    expect(html).toContain("Name*");
+    expect(html).toContain("Nachricht absenden");
   });
 });
