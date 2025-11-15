@@ -8,4 +8,4 @@ Der RehaSport Reader bringt vorbereitete RehaSport-Stunden direkt auf den Bildsc
 - Hinweise zu Alternativen helfen dir, Übungen spontan anzupassen.
 
 ## Mitmachen
-Hast du eine neue Idee für eine Stunde oder möchtest Feedback geben? Das Projekt lebt von gemeinsamer Weiterentwicklung. Auf [GitHub](https://github.com/buettgen/RehaSport) findest du den Quellcode, kannst Ideen diskutieren und direkt neue Vorschläge als Issue einreichen.
+Hast du eine neue Idee für eine Stunde oder möchtest Feedback geben? Das Projekt lebt von gemeinsamer Weiterentwicklung. Auf [GitHub](https://github.com/WildDragonKing/RehaSport) findest du den Quellcode, kannst Ideen diskutieren und direkt neue Vorschläge als Issue einreichen.

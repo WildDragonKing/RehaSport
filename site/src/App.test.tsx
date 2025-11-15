@@ -79,6 +79,15 @@ describe("App", () => {
     const session = getSession("ruecken", "stabilitaet-und-mobilisation");
     expect(session).toBeDefined();
     expect(session?.exercises.length ?? 0).toBeGreaterThan(0);
+
+    const html = renderToString(
+      <MemoryRouter initialEntries={["/ordner/ruecken/stabilitaet-und-mobilisation"]}>
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
+      </MemoryRouter>
+    );
+
     expect(html).toContain("aria-label=\"Übungsablauf\"");
     expect(html).toContain("Stabilität &amp; Mobilisation");
   });

@@ -33,7 +33,7 @@ function HomePage(): JSX.Element {
         <div className="cta-links" role="group" aria-label="Mitmachen">
           <a
             className="button button--secondary"
-            href="https://github.com/buettgen/RehaSport"
+            href="https://github.com/WildDragonKing/RehaSport"
             target="_blank"
             rel="noreferrer"
           >
@@ -41,7 +41,7 @@ function HomePage(): JSX.Element {
           </a>
           <a
             className="button button--primary"
-            href="https://github.com/buettgen/RehaSport/issues/new"
+            href="https://github.com/WildDragonKing/RehaSport/issues"
             target="_blank"
             rel="noreferrer"
           >
