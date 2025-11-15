@@ -1,19 +1,17 @@
 import { NavLink } from "react-router-dom";
 
 const NAV_ITEMS = [
-  { path: "/", label: "Start" },
-  { path: "/kurse", label: "Kurse" },
-  { path: "/info", label: "Über RehaSport" },
-  { path: "/kontakt", label: "Kontakt" }
+  { path: "/", label: "Ordner" },
+  { path: "/info", label: "Hinweise" }
 ];
 
 function Header(): JSX.Element {
   return (
     <header className="site-header" role="banner">
       <div className="container site-header__inner">
-        <NavLink to="/" className="site-header__brand" aria-label="RehaSport Startseite">
-          <span aria-hidden="true">💪</span>
-          <span>RehaSport Zentrum</span>
+        <NavLink to="/" className="site-header__brand" aria-label="RehaSport Reader Startseite">
+          <span aria-hidden="true">📘</span>
+          <span>RehaSport Reader</span>
         </NavLink>
         <nav className="site-header__nav" aria-label="Hauptnavigation">
           {NAV_ITEMS.map((item) => (

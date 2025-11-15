@@ -1,25 +1,43 @@
-# Projektüberblick: RehaSport Zentrum
+# Projektüberblick: RehaSport Reader
 
 ## Zweck der Anwendung
-Die Webanwendung präsentiert das RehaSport-Angebot des Projekts mit einer klar strukturierten Startseite, einer Kursübersicht, Hintergrundinformationen zum Rehabilitationssport sowie einem Kontaktformular zur Kursanmeldung oder Beratung.
+Der Reader stellt vorbereitete RehaSport-Stunden aus Markdown-Dateien dar. Statt Kursbuchung oder Kontaktformular liegt der Fokus auf einer klaren Darstellung für Trainer*innen während des laufenden Trainings.
 
 ## Tech-Stack
 - **Framework:** React 18 mit Vite
 - **Routing:** `react-router-dom`
-- **Styles:** Globale CSS-Dateien mit Design-Token (`src/styles/theme.css`, `src/index.css`)
-- **Tests:** Vitest (`npm run test`)
+- **Markdown-Pipeline:** `gray-matter`, `remark-parse`, eigene Aggregation (`src/content/sessions.ts`)
+- **Styles:** Theme-Variablen in `src/styles/theme.css`, Komponenten-Layout in `src/index.css`
+- **Tests:** Vitest (`npm run test`) mit serverseitigem Rendering der wichtigsten Routen
 
 ## Struktur
-- `src/App.tsx` – Routen-Definition und grundlegende Seitenstruktur
-- `src/components/` – Layout-Komponenten (Header, Footer, PageLayout) und UI-Bausteine (Button, Card, Section, Kurskarten)
-- `src/pages/` – Seiten für Start, Kurse, Info und Kontakt
-- `src/content/` – Statische Inhalte wie Kursdaten, Highlights und Info-Texte
-- `src/styles/` – Zentrales Theme mit Farb- und Typografie-Definitionen
+- `src/App.tsx` – Routing für Übersicht, Ordner, Stunden und Info-Seite
+- `src/components/layout/` – Header, Footer, PageLayout
+- `src/components/ui/Button.tsx` – Zentrale Button-Komponente
+- `src/content/` – Parser (`sessions.ts`) und erklärende Texte (`info.ts`)
+- `src/pages/` – React-Seiten für Start (`HomePage`), Ordner (`CategoryPage`), Stunde (`SessionPage`) und Hinweise (`InfoPage`)
+- `src/index.css` – Layout-, Typografie- und Komponentenstile
 
 ## Datenquellen
-Alle Inhalte werden aktuell statisch in TypeScript-Dateien gepflegt:
-- Kurse: `src/content/courses.ts`
-- Vorteile: `src/content/highlights.ts`
-- Info & FAQ: `src/content/info.ts`
+Alle Stunden liegen als Markdown in `../../stunden/`. Die Struktur lautet `<ordner>/<slug>.md`. Beispiel:
 
-Die Daten können bei Bedarf über ein Headless CMS oder eine API ersetzt werden. Die Komponenten erwarten jeweils strukturierte Objekte aus diesen Dateien.
+```
+---
+beschreibung: Schulter-Mobilisation.
+dauer: 40 Minuten
+fokus: Schulter, Brustwirbelsäule
+---
+
+# Schulter-Mobility Flow
+## Beschreibung
+...
+```
+
+Der Parser liest Frontmatter, Abschnitte und nummerierte Listen und formt daraus Kategorien, Stunden und Übungen.
+
+## Erweiterungsideen
+- Weitere Metadaten im Frontmatter (z. B. Intensität, benötigte Fläche)
+- Geräteansicht mit automatischer Vollbild-Option
+- Export als PDF-Handout
+
+Diese Datei liefert nur einen Überblick. Details zur Pipeline findest du in `docs/reader-architektur.md`.

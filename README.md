@@ -1,36 +1,85 @@
-# RehaSport – Sammlung für Reha-Übungen und Stunden
+# RehaSport Reader – Stunden aus Markdown
 
-Willkommen in unserem Projekt! Wir sammeln hier bewährte Übungen und komplette Stundenbilder, die Trainer*innen im Rehabilitationssport sofort einsetzen können. Das Ziel: Teilnehmern einen sicheren, abwechslungsreichen und motivierenden Reha-Alltag zu ermöglichen – unabhängig davon, ob sie Knie-, Schulter- oder Rückenbeschwerden mitbringen.
+Der RehaSport Reader ist ein leichtgewichtiger Viewer für komplette Trainingseinheiten. Alle Inhalte stammen aus Markdown-Dateien, die in Ordnern strukturiert sind. Statt Kursbuchung oder Kontaktformularen steht die Lesbarkeit während des Trainings im Mittelpunkt.
 
-## Was dich hier erwartet
-- **Übungen** mit leicht verständlichen Beschreibungen und passenden Alternativen.
-- **45-Minuten-Stunden** mit klarer Struktur für Aufwärmen, Hauptteil, Schwerpunkt und Ausklang.
-- **Konzepte** rund um Themen wie Balance, Mobilität oder Kraftaufbau.
+## Kernideen
 
-## Mitmachen?
-Super gern! Damit alles zusammenpasst, lies bitte vor dem Erstellen neuer Inhalte unsere [CONTRIBUTING.md](CONTRIBUTING.md). Dort findest du alle Qualitätsstandards, Templates und detaillierten Schritt-für-Schritt-Anleitungen.
+- **Ordner = Kategorien**: Jeder Ordner unter `stunden/` bildet eine Kategorie (z. B. Rücken, Schulter, Balance).
+- **Markdown = Datenquelle**: Eine Datei entspricht exakt einer Stunde. Überschriften und Listen werden geparst und als UI-Elemente dargestellt.
+- **Reader-Modus**: Große, ruhige Typografie, Fokus auf den aktuellen Übungsblock, Navigation über „Zurück“ / „Weiter“.
 
-Viel Spaß beim Stöbern – und danke, dass du RehaSport noch besser machst!
+## Projektstruktur (Auszug)
 
-## Weiterentwickeln
+```
+RehaSport/
+├── README.md                # Diese Übersicht
+├── docs/                    # Entwickler-Notizen & Architektur
+├── stunden/                 # Markdown-Ordner mit Stunden
+│   └── <ordner>/<slug>.md   # z. B. ruecken/stabilitaet-und-mobilisation.md
+└── site/                    # React-Frontend (Vite)
+    ├── src/App.tsx          # Routing
+    ├── src/content/         # Markdown-Parser & Info-Texte
+    ├── src/pages/           # Reader-Seiten
+    └── src/index.css        # Layout & Komponenten-Styling
+```
 
-### Projekt starten
+## Markdown-Format einer Stunde
 
-- Abhängigkeiten installieren: `cd site && npm install`
-- Entwicklungsserver: `npm run dev`
-- Produktion bauen: `npm run build` (statischer Build im Ordner `site/dist`)
-- Tests ausführen: `npm run test`
+Pflichtstruktur einer Markdown-Datei im Ordner `stunden/`:
 
-### Neue Inhalte und Komponenten
+```markdown
+---
+beschreibung: Aktivierende Rücken-Einheit.
+dauer: 45 Minuten
+fokus: Rücken, Rumpfstabilität
+---
 
-- **Seiten** liegen in `site/src/pages`. Nutze React Router (`react-router-dom`), um neue Routen hinzuzufügen (`src/App.tsx`).
-- **UI-Bausteine** (Buttons, Karten, Sektionen) befinden sich unter `site/src/components/ui`. Erweitere diese Sammlung, statt Inline-Styles zu verwenden.
-- **Statische Inhalte** wie Kurse oder Info-Texte werden in `site/src/content` gepflegt. Halte die Daten strukturiert (z.B. Typdefinitionen exportieren) und dokumentiere größere Änderungen in `docs/overview.md`.
-- Das zentrale Styling ist in `site/src/styles/theme.css` (Design-Token) und `site/src/index.css` (Layout-Regeln) definiert. Bitte konsistente Variablen nutzen.
+# Rückenfit: Stabilität und Mobilisation
 
-### Checkliste vor dem Deployment
+## Beschreibung
+Kurzer Freitext zum Ziel der Stunde.
 
-- [ ] `npm run build` und `npm run test` laufen ohne Fehler.
-- [ ] Startseite, Kursübersicht, Info und Kontaktformular funktionieren und sind erreichbar.
-- [ ] Responsive Layout auf Desktop und Smartphone geprüft.
-- [ ] Keine sichtbaren Layout-Brüche, Texte vollständig auf Deutsch.
+## Dauer
+45 Minuten
+
+## Fokus
+Optionaler Schwerpunkt (z. B. Rücken, Schulter).
+
+## Übungen
+1. Aktivierung im Stand
+   - **Beschreibung:** Kurzer Ablauftext.
+   - **Dauer/Wiederholungen:** 3 Sätze à 10
+   - **Equipment:** Theraband
+   - **Hinweise:** Aufrichtung betonen
+```
+
+- Der Abschnitt `## Übungen` muss eine nummerierte Liste enthalten.
+- Unterpunkte innerhalb der Übungen werden als Details erkannt, wenn sie mit `**Label:**` beginnen.
+- Zusätzliche Labels erscheinen als freie Hinweise, die Reihenfolge bleibt erhalten.
+
+## Reader-Navigation
+
+1. **Startseite**: Listet alle Ordner alphabetisch mit Kurzbeschreibung und Anzahl der enthaltenen Stunden.
+2. **Ordnerseite**: Zeigt alle Stunden eines Ordners mit Dauer- und Fokusangaben.
+3. **Stundenseite**: Präsentiert Beschreibung, Dauer, Fokus sowie die Übungen. Über „Zurück“ und „Weiter“ lässt sich der aktive Übungsblock wechseln.
+
+## Entwicklung
+
+```bash
+cd site
+npm install            # Abhängigkeiten (einmalig)
+npm run dev            # Entwicklungsserver mit Hot-Reload
+npm run test           # Vitest (SSR-Rendering der Seiten)
+npm run build          # Produktionsbuild erzeugen
+```
+
+Das Frontend basiert auf React + Vite. Markdown-Dateien werden über `import.meta.glob` als Rohtext geladen und mit `gray-matter` plus `remark-parse` analysiert. Änderungen an `stunden/` erfordern keinen Build-Schritt – Vite erkennt neue Dateien automatisch.
+
+## Weitere Hinweise
+
+- Farben, Abstände und Schriftdefinitionen liegen in `site/src/styles/theme.css`.
+- Barrierefreiheit: Skip-Link, Fokuszustände und Buttons unterstützen Tastaturnavigation.
+- Für neue Ordner reicht es, einen Unterordner in `stunden/` anzulegen. Dateiname = URL-Slug.
+- Dokumentation zum Parser und zur Navigation befindet sich zusätzlich in `docs/reader-architektur.md`.
+
+Viel Erfolg beim Unterrichten – und viel Freude beim Erweitern des Readers!

@@ -3,7 +3,7 @@ function Footer(): JSX.Element {
   return (
     <footer className="site-footer" role="contentinfo">
       <div className="container site-footer__inner">
-        <p>© {currentYear} RehaSport Zentrum. Gemeinsam aktiv für mehr Lebensqualität.</p>
+        <p>© {currentYear} RehaSport Reader. Bereit für klare Stundenabläufe.</p>
         <div className="site-footer__links">
           <a className="site-footer__link" href="#">Impressum</a>
           <a className="site-footer__link" href="#">Datenschutz</a>
