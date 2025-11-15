@@ -1,5 +1,7 @@
 import { NavLink } from "react-router-dom";
 
+import ThemeSwitcher from "../ui/ThemeSwitcher";
+
 const NAV_ITEMS = [
   { path: "/", label: "Ordner" },
   { path: "/uebungen", label: "Übungen" },
@@ -14,24 +16,27 @@ function Header(): JSX.Element {
           <span aria-hidden="true">📘</span>
           <span>RehaSport Reader</span>
         </NavLink>
-        <nav className="site-header__nav" aria-label="Hauptnavigation">
-          {NAV_ITEMS.map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              className={({ isActive }) =>
-                [
-                  "site-header__link",
-                  isActive ? "site-header__link--active" : ""
-                ]
-                  .filter(Boolean)
-                  .join(" ")
-              }
-            >
-              {item.label}
-            </NavLink>
-          ))}
-        </nav>
+        <div className="site-header__controls">
+          <nav className="site-header__nav" aria-label="Hauptnavigation">
+            {NAV_ITEMS.map((item) => (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                className={({ isActive }) =>
+                  [
+                    "site-header__link",
+                    isActive ? "site-header__link--active" : ""
+                  ]
+                    .filter(Boolean)
+                    .join(" ")
+                }
+              >
+                {item.label}
+              </NavLink>
+            ))}
+          </nav>
+          <ThemeSwitcher />
+        </div>
       </div>
     </header>
   );
