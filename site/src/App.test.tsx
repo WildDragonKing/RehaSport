@@ -1,0 +1,40 @@
+import { renderToString } from "react-dom/server";
+import { describe, expect, it, vi } from "vitest";
+
+import App from "./App";
+
+type MockUseContentIndex = ReturnType<typeof vi.fn>;
+
+const mockEntries = [
+  {
+    id: "stunde-1",
+    type: "stunde" as const,
+    path: "Stunden/balance-basics.md",
+    title: "Balance Basics",
+    summary: "Stabilität verbessern",
+    concepts: ["Balance"],
+    phases: ["Phase 1"],
+    tags: ["mobilität"]
+  }
+];
+
+vi.mock("./hooks/useContentIndex", () => {
+  const useContentIndex: MockUseContentIndex = vi.fn(() => ({
+    entries: mockEntries,
+    isLoading: false,
+    error: undefined
+  }));
+
+  return { useContentIndex };
+});
+
+describe("App", () => {
+  it("rendert die Navigation und die Inhalte der aktiven Kategorie", () => {
+    const html = renderToString(<App />);
+
+    expect(html).toContain("Stunden");
+    expect(html).toContain("Übungen");
+    expect(html).toContain("Konzepte");
+    expect(html).toContain("Balance Basics");
+  });
+});
