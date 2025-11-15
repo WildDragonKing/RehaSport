@@ -143,9 +143,6 @@ function renderNode(node: MarkdownNode, key: string): JSX.Element {
       if (isText(node)) {
         return <Fragment key={key}>{node.value}</Fragment>;
       }
-      if (isInlineCode(node)) {
-        return <code key={key}>{node.value}</code>;
-      }
       return <Fragment key={key} />;
     }
   }
