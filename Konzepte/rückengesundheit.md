@@ -86,7 +86,7 @@ Das Konzept basiert auf dem biopsychosozialen Modell von Rückenschmerzen und de
 
 **Stunden, die dieses Konzept nutzen:**
 
-- [Stunde 01: Rückenfit - Stabilität und Mobilität](../Stunden/stunde_01_rückenfit.md) - Grundlagenarbeit für Rückengesundheit
+- [Stabilität & Mobilisation](../stunden/ruecken/stabilitaet-und-mobilisation.md) – Rumpfstärke und Wirbelsäulenbeweglichkeit kombinieren
 
 ## 🔄 Progression
 

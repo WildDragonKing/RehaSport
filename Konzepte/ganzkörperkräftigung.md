@@ -92,8 +92,7 @@ Der menschliche Körper ist für Bewegung gebaut - doch moderne Lebensweise füh
 
 **Stunden, die dieses Konzept nutzen:**
 
-- [Stunde 05: Ganzkörper-Kräftigung](../Stunden/stunde_05_ganzkörper.md) - Vollständiges Ganzkörpertraining
-- [Stunde 01: Rückenfit](../Stunden/stunde_01_rückenfit.md) - Mit Schwerpunkt Rücken
+- [Ganzkörper Kraft & Balance](../stunden/ganzkoerper/kraft-und-balance.md) – Funktionelle Kraft und Koordination im Wechsel
 
 ## 🔄 Progression
 

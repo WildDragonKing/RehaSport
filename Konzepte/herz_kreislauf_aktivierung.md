@@ -90,8 +90,7 @@ Moderates Ausdauertraining ist die wirksamste Medizin für das Herz-Kreislauf-Sy
 
 **Stunden, die dieses Konzept nutzen:**
 
-- [Stunde 04: Herz-Kreislauf-Aktivierung](../Stunden/stunde_04_herz_kreislauf.md) - Moderates Ausdauertraining
-- [Stunde 05: Ganzkörper-Kräftigung](../Stunden/stunde_05_ganzkörper.md) - Kombination Kraft und Ausdauer
+- [Ausdauer-Aktivierung](../stunden/herz-kreislauf/ausdauer-aktivierung.md) – Rhythmuswechsel für moderates Cardio-Training
 
 ## 🔄 Progression
 
