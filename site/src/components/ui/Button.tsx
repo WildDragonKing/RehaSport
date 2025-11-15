@@ -24,14 +24,14 @@ type ButtonAsLink = ButtonBaseProps & {
 type ButtonProps = ButtonAsButton | ButtonAsLink;
 
 function Button(props: ButtonProps): JSX.Element {
-  const { variant = "primary", className, children } = props;
+  const variant = props.variant ?? "primary";
   const classes = ["button", `button--${variant}`];
-  if (className) {
-    classes.push(className);
+  if (props.className) {
+    classes.push(props.className);
   }
 
   if ("to" in props && props.to) {
-    const { to, variant: _variant, className: _className, children: _children, ...rest } = props;
+    const { to, variant: _variant, className: _className, children, ...rest } = props;
     return (
       <Link to={to} className={classes.join(" ")} {...rest}>
         {children}
@@ -39,7 +39,7 @@ function Button(props: ButtonProps): JSX.Element {
     );
   }
 
-  const { variant: _variant, className: _className, children: _children, type = "button", ...rest } = props;
+  const { variant: _variant, className: _className, children, type = "button", ...rest } = props as ButtonAsButton;
   return (
     <button type={type} className={classes.join(" ")} {...rest}>
       {children}
