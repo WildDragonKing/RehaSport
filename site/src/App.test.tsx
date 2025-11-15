@@ -1,30 +1,14 @@
 import { renderToString } from "react-dom/server";
-import { describe, expect, it, vi, type Mock } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import App from "./App";
-
-type ContentIndexResult = {
-  entries: {
-    id: string;
-    type: "stunde";
-    path: string;
-    title: string;
-    summary: string;
-    concepts: string[];
-    phases: string[];
-    tags: string[];
-  }[];
-  isLoading: boolean;
-  error: undefined;
-};
-
-type MockUseContentIndex = Mock<[], ContentIndexResult>;
 import type { UseContentIndexResult } from "./hooks/useContentIndex";
+import type { ContentEntry } from "./types";
 
-const mockEntries = [
+const mockEntries: ContentEntry[] = [
   {
     id: "stunde-1",
-    type: "stunde" as const,
+    type: "stunde",
     path: "Stunden/balance-basics.md",
     title: "Balance Basics",
     summary: "Stabilität verbessern",
@@ -35,7 +19,6 @@ const mockEntries = [
 ];
 
 vi.mock("./hooks/useContentIndex", () => {
-  const useContentIndex: MockUseContentIndex = vi.fn<[], ContentIndexResult>(() => ({
   const useContentIndex = vi.fn<[], UseContentIndexResult>(() => ({
     entries: mockEntries,
     isLoading: false,
