@@ -1,5 +1,9 @@
+/// <reference types="node" />
+
 import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react-swc";
+import { existsSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 
 export default defineConfig(({ mode }) => {
   const repository = process.env.GITHUB_REPOSITORY;
@@ -8,9 +12,12 @@ export default defineConfig(({ mode }) => {
   const envBase = process.env.VITE_BASE_PATH;
   const isDev = mode === "development";
 
+  const cnamePath = fileURLToPath(new URL("./public/CNAME", import.meta.url));
+  const hasCustomDomain = existsSync(cnamePath);
+
   const base = isDev
     ? "/"
-    : envBase ?? (repositoryName ? `/${repositoryName}/` : "./");
+    : envBase ?? (hasCustomDomain ? "./" : repositoryName ? `/${repositoryName}/` : "./");
 
   return {
     plugins: [react()],
