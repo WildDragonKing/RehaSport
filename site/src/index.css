@@ -59,6 +59,13 @@ main {
   color: var(--color-text-muted);
 }
 
+.cta-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-sm);
+}
+
 h1,
 h2,
 h3,

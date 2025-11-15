@@ -13,8 +13,8 @@ describe("App", () => {
     );
 
     expect(html).toContain("RehaSport Reader");
-    expect(html).toContain("Stunden-Ordner");
-    expect(html).toContain("Ordner öffnen");
+    expect(html).toContain("Der RehaSport Reader bringt vorbereitete RehaSport-Stunden direkt auf den Bildschirm.");
+    expect(html).toContain("Was du damit machen kannst");
   });
 
   it("listet Stunden innerhalb eines Ordners", () => {
@@ -24,7 +24,7 @@ describe("App", () => {
       </MemoryRouter>
     );
 
-    expect(html).toContain("Rückenfit: Stabilität und Mobilisation");
+    expect(html).toContain("Stabilität &amp; Mobilisation");
     expect(html).toContain("Stunde öffnen");
     expect(html).toContain("Rücken, Rumpfstabilität");
   });
@@ -37,7 +37,7 @@ describe("App", () => {
     );
 
     expect(html).toContain("Aktive Übung");
-    expect(html).toContain("Vierfüßler diagonal");
-    expect(html).toContain("Dauer/Wiederholungen");
+    expect(html).toContain("aria-label=\"Übungsablauf\"");
+    expect(html).toContain("Stabilität &amp; Mobilisation");
   });
 });

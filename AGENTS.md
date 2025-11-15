@@ -8,9 +8,12 @@ Diese Richtlinien gelten für das gesamte Repository.
 - Strukturiere neue Inhalte so, dass sie sich nahtlos in die vorhandene Ordnerstruktur einfügen.
 - Dokumentiere neue Befehle oder manuelle Schritte direkt in den passenden README- oder Anleitungskapiteln.
 - Die `README.md` dient ausschließlich als kompakter Projektüberblick und soll keine tiefgehenden technischen Details enthalten.
+- Die Einleitung der `README.md` muss leicht verständlich und nicht technisch formuliert sein und wortgleich auf der Startseite des Frontends erscheinen.
+- Die Startseite des Frontends muss eine gut sichtbare Verlinkung auf das GitHub-Projekt sowie auf die Issue-Erstellung enthalten, damit neue Stundenideen gesammelt werden können.
 - Nutze die verbindlichen Leitfäden im Verzeichnis `Anleitung/` (z. B. `stunden_planen.md`, `alternative_übungen.md`, `übungen_erstellen.md`) als Grundlage für Inhalte in den entsprechenden Bereichen.
 - Verweise bei Konzept- oder Stundenanpassungen konsequent auf die Dateien im Ordner `Konzepte/` und halte die Querverlinkungen zwischen Konzepten, Stunden und Übungen aktuell.
 - Halte alle Projektdokumente konsolidiert und vermeide redundante Inhalte; erstelle nur dann neue Markdown-Dateien, wenn sie zwingend notwendig und langfristig gepflegt werden.
+- Jede Änderung am Projekt, die Dokumentation betrifft, muss in den entsprechenden Markdown-Dateien (einschließlich dieser `AGENTS.md`) zeitgleich nachgeführt werden. Alle Markdown-Dokumente sind stets aktuell zu halten.
 
 ## Abgleich der KI-Anweisungen
 - Die Richtlinien in `AGENTS.md`, `.github/copilot-instructions.md` und `claude.md` müssen stets synchron gehalten werden.
