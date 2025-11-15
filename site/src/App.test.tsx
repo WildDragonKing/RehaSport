@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import App from "./App";
 
-type MockUseContentIndex = ReturnType<typeof vi.fn>;
+import type { UseContentIndexResult } from "./hooks/useContentIndex";
 
 const mockEntries = [
   {
@@ -19,7 +19,7 @@ const mockEntries = [
 ];
 
 vi.mock("./hooks/useContentIndex", () => {
-  const useContentIndex: MockUseContentIndex = vi.fn(() => ({
+  const useContentIndex = vi.fn<[], UseContentIndexResult>(() => ({
     entries: mockEntries,
     isLoading: false,
     error: undefined
