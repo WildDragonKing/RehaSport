@@ -19,6 +19,7 @@ type ContentIndexResult = {
 };
 
 type MockUseContentIndex = Mock<[], ContentIndexResult>;
+import type { UseContentIndexResult } from "./hooks/useContentIndex";
 
 const mockEntries = [
   {
@@ -35,6 +36,7 @@ const mockEntries = [
 
 vi.mock("./hooks/useContentIndex", () => {
   const useContentIndex: MockUseContentIndex = vi.fn<[], ContentIndexResult>(() => ({
+  const useContentIndex = vi.fn<[], UseContentIndexResult>(() => ({
     entries: mockEntries,
     isLoading: false,
     error: undefined
