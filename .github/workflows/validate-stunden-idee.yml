@@ -70,7 +70,7 @@ jobs:
             core.setOutput("limitExceeded", String(limitExceeded));
       - name: KI-Validierung ausführen
         id: ai_check
-        if: steps.check_limit.outputs.limitExceeded != 'true'
+        if: steps.check_limit.outputs.limitExceeded != 'true' && secrets.OPENAI_API_KEY != ''
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           ISSUE_BODY: ${{ github.event.issue.body }}
@@ -127,7 +127,7 @@ jobs:
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
       - name: KI-Antwort auswerten
-        if: steps.check_limit.outputs.limitExceeded != 'true'
+        if: steps.check_limit.outputs.limitExceeded != 'true' && steps.ai_check.outcome == 'success'
         uses: actions/github-script@v7
         env:
           AI_RESPONSE: ${{ steps.ai_check.outputs.response }}
@@ -222,3 +222,16 @@ jobs:
                 state: 'closed',
               });
             }
+      - name: Fehlende KI-Konfiguration kommunizieren
+        if: steps.check_limit.outputs.limitExceeded != 'true' && secrets.OPENAI_API_KEY == ''
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { owner, repo } = context.repo;
+            await github.rest.issues.createComment({
+              owner,
+              repo,
+              issue_number: context.issue.number,
+              body: 'Die automatische Stunden-Ideen-Prüfung konnte mangels OPENAI_API_KEY nicht ausgeführt werden. Bitte prüft das Issue manuell oder ergänzt das Secret.',
+            });

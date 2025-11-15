@@ -4,15 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node ./build.mjs",
-    "generate:content": "node ../scripts/generate-content-index.js"
-  "version": "0.1.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate:content": "node ../scripts/generate-content-index.js"
   },
   "dependencies": {
     "highlight.js": "^11.9.0",
