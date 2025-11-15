@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import Button from "../components/ui/Button";
@@ -9,15 +9,54 @@ function SessionPage(): JSX.Element {
   const { categorySlug, sessionSlug } = useParams();
   const session = categorySlug && sessionSlug ? getSession(categorySlug, sessionSlug) : undefined;
   const category = categorySlug ? getCategory(categorySlug) : undefined;
-  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [expandedExercises, setExpandedExercises] = useState<Set<string>>(new Set());
+  const exerciseRefs = useRef<Map<string, HTMLLIElement>>(new Map());
 
-  useEffect(() => {
-    setActiveIndex(0);
-  }, [sessionSlug]);
+  function getPhaseColor(phaseTitle: string): string {
+    const title = phaseTitle.toLowerCase();
+    if (title.includes("aufwärmen") || title.includes("phase 1")) return "phase-warmup";
+    if (title.includes("hauptteil") || title.includes("phase 2")) return "phase-main";
+    if (title.includes("schwerpunkt") || title.includes("phase 3")) return "phase-focus";
+    if (title.includes("ausklang") || title.includes("phase 4")) return "phase-cooldown";
+    return "";
+  }
 
-  const safeIndex = session
-    ? Math.min(activeIndex, Math.max(0, session.exercises.length - 1))
-    : 0;
+  function toggleExercise(exerciseKey: string): void {
+    const isCurrentlyExpanded = expandedExercises.has(exerciseKey);
+
+    // Haptic feedback for mobile devices
+    if ("vibrate" in navigator && !isCurrentlyExpanded) {
+      navigator.vibrate(10);
+    }
+
+    setExpandedExercises((prev) => {
+      const next = new Set(prev);
+      if (next.has(exerciseKey)) {
+        next.delete(exerciseKey);
+      } else {
+        next.add(exerciseKey);
+      }
+      return next;
+    });
+
+    // Auto-scroll to expanded exercise
+    if (!isCurrentlyExpanded) {
+      setTimeout(() => {
+        const element = exerciseRefs.current.get(exerciseKey);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+      }, 100);
+    }
+  }
+
+  function setExerciseRef(key: string, element: HTMLLIElement | null): void {
+    if (element) {
+      exerciseRefs.current.set(key, element);
+    } else {
+      exerciseRefs.current.delete(key);
+    }
+  }
 
   if (!session || !category) {
     return (
@@ -32,20 +71,6 @@ function SessionPage(): JSX.Element {
       </div>
     );
   }
-
-  const exercises = session.exercises;
-  const activeExercise = exercises[safeIndex];
-
-  function handlePrevious(): void {
-    setActiveIndex((index) => Math.max(0, index - 1));
-  }
-
-  function handleNext(): void {
-    setActiveIndex((index) => Math.min(exercises.length - 1, index + 1));
-  }
-
-  const totalExercises = exercises.length;
-  const activePosition = totalExercises > 0 ? `${safeIndex + 1} / ${totalExercises}` : undefined;
 
   return (
     <div className="container stack">
@@ -81,75 +106,97 @@ function SessionPage(): JSX.Element {
         </dl>
       </header>
 
-      <section className="exercise-controls" aria-label="Steuerung">
-        <div className="exercise-status">
-          <span className="exercise-status__label">Aktive Übung</span>
-          <div className="exercise-status__content">
-            {activePosition ? <span className="exercise-status__position">{activePosition}</span> : null}
-            <strong className="exercise-status__title">{activeExercise?.title ?? "-"}</strong>
-          </div>
-        </div>
-        <div className="exercise-buttons">
-          <Button
-            type="button"
-            variant="secondary"
-            onClick={handlePrevious}
-            disabled={safeIndex === 0 || exercises.length === 0}
-            aria-label="Vorherige Übung"
-          >
-            Zurück
-          </Button>
-          <Button
-            type="button"
-            variant="primary"
-            onClick={handleNext}
-            disabled={exercises.length === 0 || safeIndex === exercises.length - 1}
-            aria-label="Nächste Übung"
-          >
-            Weiter
-          </Button>
-        </div>
-      </section>
+      {session.phases.length > 0 ? (
+        <div className="session-phases">
+          {session.phases.map((phase, phaseIndex) => {
+            const phaseColorClass = getPhaseColor(phase.title);
+            return (
+              <section key={phase.title} className={`session-phase ${phaseColorClass}`}>
+                <header className="session-phase__header">
+                  <h2 className="session-phase__title">{phase.title}</h2>
+                  {phase.description ? <p className="session-phase__description">{phase.description}</p> : null}
+                </header>
 
-      <ol className="exercise-list" aria-label="Übungsablauf">
-        {exercises.map((exercise, index) => {
-          const isActive = index === safeIndex;
-          const exerciseSlug = findExerciseSlugByTitle(exercise.title);
-          return (
-            <li key={exercise.title} className={isActive ? "exercise exercise--active" : "exercise"}>
-              <div className="exercise__header">
-                <button
-                  type="button"
-                  className="exercise__selector"
-                  onClick={() => setActiveIndex(index)}
-                  aria-pressed={isActive}
-                >
-                  <span className="exercise__number" aria-hidden="true">
-                    {index + 1}
-                  </span>
-                  <span className="exercise__title">{exercise.title}</span>
-                  {isActive ? <span className="exercise__badge">Aktiv</span> : null}
-                </button>
-                {exerciseSlug ? (
-                  <Link className="exercise__link" to={`/uebungen/${exerciseSlug}`}>
-                    Zur Übung
-                  </Link>
-                ) : null}
-              </div>
-              {exercise.details.length > 0 ? (
-                <dl className="exercise__details">
-                  {exercise.details.map((detail) => (
-                    <div key={`${exercise.title}-${detail.label}`}>
-                      <dt>{detail.label}</dt>
-                      <dd>{detail.value}</dd>
-                    </div>
-                  ))}
-                </dl>
-              ) : null}
-            </li>
-          );
-        })}
-      </ol>
+                <ol className="exercise-list" aria-label={`Übungen: ${phase.title}`}>
+                  {phase.exercises.map((exercise, exerciseIndex) => {
+                    const exerciseKey = `${phaseIndex}-${exerciseIndex}`;
+                    const isExpanded = expandedExercises.has(exerciseKey);
+                    const exerciseSlug = findExerciseSlugByTitle(exercise.title);
+                    const primaryDetail = exercise.details.find((d) => d.label === "Durchführung");
+                    const otherDetails = exercise.details.filter((d) => d.label !== "Durchführung");
+
+                    // Extract alternative indicators
+                    const kneeDetail = otherDetails.find((d) => d.label === "Knie-Alternative");
+                    const shoulderDetail = otherDetails.find((d) => d.label === "Schulter-Alternative");
+                    const hasAlternatives = kneeDetail || shoulderDetail;
+
+                    return (
+                      <li key={exerciseKey} className="exercise exercise--compact" ref={(el) => setExerciseRef(exerciseKey, el)}>
+                        <button
+                          type="button"
+                          className="exercise__toggle"
+                          onClick={() => toggleExercise(exerciseKey)}
+                          aria-expanded={isExpanded}
+                          aria-label={`${exercise.title}, ${primaryDetail?.value ?? ""}, ${isExpanded ? "Details ausblenden" : "Details anzeigen"}`}
+                        >
+                          <span className="exercise__number" aria-hidden="true">
+                            {exerciseIndex + 1}
+                          </span>
+                          <div className="exercise__main">
+                            <div className="exercise__title-row">
+                              <strong className="exercise__title">{exercise.title}</strong>
+                              {hasAlternatives ? (
+                                <span className="exercise__alternatives" aria-label="Alternativen verfügbar">
+                                  {kneeDetail ? (
+                                    <span className="alternative-icon alternative-icon--knee" title="Knie-Alternative">
+                                      K
+                                    </span>
+                                  ) : null}
+                                  {shoulderDetail ? (
+                                    <span className="alternative-icon alternative-icon--shoulder" title="Schulter-Alternative">
+                                      S
+                                    </span>
+                                  ) : null}
+                                </span>
+                              ) : null}
+                            </div>
+                            {primaryDetail ? <span className="exercise__primary">{primaryDetail.value}</span> : null}
+                          </div>
+                          <span className="exercise__icon" aria-hidden="true">
+                            {isExpanded ? "−" : "+"}
+                          </span>
+                        </button>
+
+                        {isExpanded ? (
+                          <div className="exercise__expanded">
+                            {otherDetails.length > 0 ? (
+                              <dl className="exercise__details">
+                                {otherDetails.map((detail) => (
+                                  <div key={`${exerciseKey}-${detail.label}`} className={detail.label.includes("Alternative") ? "detail--alternative" : ""}>
+                                    <dt>{detail.label}</dt>
+                                    <dd>{detail.value}</dd>
+                                  </div>
+                                ))}
+                              </dl>
+                            ) : null}
+                            {exerciseSlug ? (
+                              <Link className="exercise__link" to={`/uebungen/${exerciseSlug}`}>
+                                Zur Übung
+                              </Link>
+                            ) : null}
+                          </div>
+                        ) : null}
+                      </li>
+                    );
+                  })}
+                </ol>
+              </section>
+            );
+          })}
+        </div>
+      ) : (
+        <p>Keine Übungen gefunden.</p>
+      )}
     </div>
   );
 }
