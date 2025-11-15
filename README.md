@@ -156,8 +156,16 @@ Alle Übungen einer Stunde verfolgen ein gemeinsames Ziel:
 
 Für bessere Organisation verwenden Sie Tags:
 
-**Bereich**: `#aufwärmen` `#hauptteil` `#schwerpunkt` `#ausklang`  
-**Schwerpunkt**: `#kraft` `#ausdauer` `#beweglichkeit` `#koordination` `#balance`  
+**Bereich**: `#aufwärmen` `#hauptteil` `#schwerpunkt` `#ausklang`
+**Schwerpunkt**: `#kraft` `#ausdauer` `#beweglichkeit` `#koordination` `#balance`
+
+## 💡 Stunden-Ideen einreichen
+
+Du möchtest eine neue Stunden-Idee vorschlagen? Nutze unser GitHub-Issue-Formular „Stunden-Idee“ und beschreibe Titel, Konzept, Ablaufskizze sowie alle sicherheitsrelevanten Hinweise. Nach dem Absenden prüft ein automatischer KI-Check, ob die Angaben vollständig und plausibel sind. Bei erfolgreicher Prüfung erhält dein Vorschlag das Label `idee-validiert`, andernfalls wird das Issue mit einem Hinweis „Bitte konkretisieren…“ geschlossen.
+
+Beachte bitte das Tageslimit: maximal fünf Stunden-Ideen können innerhalb von 24 Stunden eingereicht werden. Wird das Limit erreicht, informiert dich der Bot und schließt das Issue automatisch – probiere es dann am Folgetag erneut.
+
+Für die Einreichung benötigst du einen GitHub-Account, damit wir Rückfragen direkt im Issue klären können.
 **Anpassung**: `#knie-freundlich` `#schulter-freundlich` `#anfänger` `#fortgeschritten` `#senioren`  
 **Zielgruppe**: `#orthopädie` `#herz-kreislauf` `#neurologie` `#allgemein`
 
