@@ -4,14 +4,21 @@ import hljs from "highlight.js";
 import { REPO_BASE_URL } from "../config";
 import type { ContentEntry } from "../types";
 
-marked.setOptions({
-  highlight(code, language) {
-    if (language && hljs.getLanguage(language)) {
-      return hljs.highlight(code, { language }).value;
-    }
-    return hljs.highlightAuto(code).value;
+const renderer = new marked.Renderer();
+
+renderer.code = (code: string, infostring: string | undefined) => {
+  const language = (infostring ?? "").trim().split(/\s+/)[0];
+
+  if (language && hljs.getLanguage(language)) {
+    const { value } = hljs.highlight(code, { language });
+    return `<pre><code class="hljs language-${language}">${value}</code></pre>`;
   }
-});
+
+  const { value } = hljs.highlightAuto(code);
+  return `<pre><code class="hljs">${value}</code></pre>`;
+};
+
+marked.use({ renderer });
 
 const contentCache = new Map<string, string>();
 
