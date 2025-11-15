@@ -12,7 +12,6 @@
     "esModuleInterop": true,
     "strict": true,
     "noFallthroughCasesInSwitch": true,
-    "jsx": "react-jsx",
-    "noEmit": true
+    "jsx": "react-jsx"
   }
 }
