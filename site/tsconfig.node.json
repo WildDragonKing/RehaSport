@@ -6,7 +6,8 @@
     "moduleResolution": "Node",
     "allowSyntheticDefaultImports": true,
     "noEmit": false,
-    "outDir": "./dist/node"
+    "outDir": "./dist/node",
+    "types": ["node"]
   },
   "include": ["vite.config.ts", "scripts", "types.d.ts"],
   "exclude": ["src"]
