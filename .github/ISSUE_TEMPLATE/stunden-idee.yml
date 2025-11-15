@@ -1,0 +1,38 @@
+name: "Stunden-Idee"
+description: "Schlage eine neue Stunden-Idee für das RehaSport-Projekt vor."
+title: "[Stunden-Idee] ${issue_title}"
+labels:
+  - stunden-idee
+body:
+  - type: input
+    id: issue_title
+    attributes:
+      label: "Titel"
+      description: "Wie lautet der prägnante Titel deiner Stunden-Idee?"
+      placeholder: "z.B. Balance-Training mit Theraband"
+    validations:
+      required: true
+  - type: textarea
+    id: concept
+    attributes:
+      label: "Konzept"
+      description: "Welches Konzept verfolgt die Stunde? Beschreibe Zielgruppe, Ziele und thematischen Schwerpunkt."
+      placeholder: "Beschreibe das übergreifende Konzept der Stunde."
+    validations:
+      required: true
+  - type: textarea
+    id: outline
+    attributes:
+      label: "Ablaufskizze"
+      description: "Skizziere den zeitlichen Ablauf (Aufwärmen, Hauptteil, Schwerpunkt, Ausklang) inklusive Kernübungen."
+      placeholder: "Gliedere die Stunde nach Phasen und nenne exemplarische Übungen."
+    validations:
+      required: true
+  - type: textarea
+    id: safety
+    attributes:
+      label: "Sicherheitshinweise"
+      description: "Welche Kontraindikationen, Alternativen oder Sicherheitsaspekte sind zu beachten?"
+      placeholder: "Hinweise für Teilnehmende mit Einschränkungen (Knie, Schulter etc.)."
+    validations:
+      required: true
