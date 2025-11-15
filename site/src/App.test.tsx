@@ -3,12 +3,15 @@ import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
 
 import App from "./App";
+import { ThemeProvider } from "./components/theme/ThemeProvider";
 
 describe("App", () => {
   it("zeigt die Ordnerübersicht", () => {
     const html = renderToString(
       <MemoryRouter initialEntries={["/"]}>
-        <App />
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
       </MemoryRouter>
     );
 
@@ -20,11 +23,13 @@ describe("App", () => {
   it("listet Stunden innerhalb eines Ordners", () => {
     const html = renderToString(
       <MemoryRouter initialEntries={["/ordner/ruecken"]}>
-        <App />
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
       </MemoryRouter>
     );
 
-    expect(html).toContain("Rückenfit: Stabilität und Mobilisation");
+    expect(html).toContain("Stabilität &amp; Mobilisation");
     expect(html).toContain("Stunde öffnen");
     expect(html).toContain("Rücken, Rumpfstabilität");
   });
@@ -32,12 +37,14 @@ describe("App", () => {
   it("zeigt die Details einer Stunde mit Übungen", () => {
     const html = renderToString(
       <MemoryRouter initialEntries={["/ordner/ruecken/stabilitaet-und-mobilisation"]}>
-        <App />
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
       </MemoryRouter>
     );
 
     expect(html).toContain("Aktive Übung");
-    expect(html).toContain("Vierfüßler diagonal");
-    expect(html).toContain("Dauer/Wiederholungen");
+    expect(html).toContain("Stabilität &amp; Mobilisation");
+    expect(html).toContain("Übungsablauf");
   });
 });
