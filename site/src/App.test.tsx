@@ -3,6 +3,7 @@ import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
 
 import App from "./App";
+import { getSession } from "./content/sessions";
 
 describe("App", () => {
   it("zeigt die Ordnerübersicht", () => {
@@ -37,6 +38,38 @@ describe("App", () => {
     );
 
     expect(html).toContain("Aktive Übung");
+    expect(html).toContain("Schulterkreisen");
+    expect(html).toContain("Zur Übung");
+  });
+
+  it("listet verfügbare Übungen", () => {
+    const html = renderToString(
+      <MemoryRouter initialEntries={["/uebungen"]}>
+        <App />
+      </MemoryRouter>
+    );
+
+    expect(html).toContain("Übungen entdecken");
+    expect(html).toContain("Armkreisen");
+    expect(html).toContain("Übung ansehen");
+  });
+
+  it("zeigt die Detailseite einer Übung", () => {
+    const html = renderToString(
+      <MemoryRouter initialEntries={["/uebungen/schulterkreisen"]}>
+        <App />
+      </MemoryRouter>
+    );
+
+    expect(html).toContain("Übung");
+    expect(html).toContain("Schulterkreisen");
+    expect(html).toContain("Verwandte Übungen");
+  });
+
+  it("liefert Übungen aus dem Content", () => {
+    const session = getSession("ruecken", "stabilitaet-und-mobilisation");
+    expect(session).toBeDefined();
+    expect(session?.exercises.length ?? 0).toBeGreaterThan(0);
     expect(html).toContain("aria-label=\"Übungsablauf\"");
     expect(html).toContain("Stabilität &amp; Mobilisation");
   });

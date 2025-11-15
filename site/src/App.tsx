@@ -2,6 +2,8 @@ import { Navigate, Route, Routes } from "react-router-dom";
 
 import PageLayout from "./components/layout/PageLayout";
 import CategoryPage from "./pages/CategoryPage";
+import ExerciseDetailPage from "./pages/ExerciseDetailPage";
+import ExercisesPage from "./pages/ExercisesPage";
 import HomePage from "./pages/HomePage";
 import InfoPage from "./pages/InfoPage";
 import SessionPage from "./pages/SessionPage";
@@ -13,6 +15,8 @@ function App(): JSX.Element {
         <Route index element={<HomePage />} />
         <Route path="ordner/:categorySlug" element={<CategoryPage />} />
         <Route path="ordner/:categorySlug/:sessionSlug" element={<SessionPage />} />
+        <Route path="uebungen" element={<ExercisesPage />} />
+        <Route path="uebungen/:exerciseSlug" element={<ExerciseDetailPage />} />
         <Route path="info" element={<InfoPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>

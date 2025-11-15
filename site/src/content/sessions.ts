@@ -109,29 +109,31 @@ function parseDetail(item: ListItem): SessionExerciseDetail | undefined {
 
 function parseExercises(sectionNodes: Content[]): SessionExercise[] {
   const exercises: SessionExercise[] = [];
-  const listNode = sectionNodes.find((node): node is List => node.type === "list");
+  const listNodes = sectionNodes.filter((node): node is List => node.type === "list");
 
-  if (!listNode) {
+  if (listNodes.length === 0) {
     return exercises;
   }
 
-  for (const item of listNode.children) {
-    const titleNode = item.children.find((child): child is Paragraph => child.type === "paragraph");
-    const title = titleNode ? toString(titleNode).trim() : "Übung";
+  for (const listNode of listNodes) {
+    for (const item of listNode.children) {
+      const titleNode = item.children.find((child): child is Paragraph => child.type === "paragraph");
+      const title = titleNode ? toString(titleNode).trim() : "Übung";
 
-    const detailList = item.children.find((child): child is List => child.type === "list");
-    const details: SessionExerciseDetail[] = [];
+      const detailList = item.children.find((child): child is List => child.type === "list");
+      const details: SessionExerciseDetail[] = [];
 
-    if (detailList) {
-      for (const detailItem of detailList.children) {
-        const detail = parseDetail(detailItem);
-        if (detail) {
-          details.push(detail);
+      if (detailList) {
+        for (const detailItem of detailList.children) {
+          const detail = parseDetail(detailItem);
+          if (detail) {
+            details.push(detail);
+          }
         }
       }
-    }
 
-    exercises.push({ title, details });
+      exercises.push({ title, details });
+    }
   }
 
   return exercises;
@@ -171,7 +173,9 @@ function parseSession(path: string, source: string): SessionMeta {
   const description = (data.beschreibung as string | undefined)?.trim() ?? extractText(sections["beschreibung"] ?? []);
   const duration = (data.dauer as string | undefined)?.trim() ?? extractText(sections["dauer"] ?? []);
   const focus = (data.fokus as string | undefined)?.trim() ?? extractText(sections["fokus"] ?? []);
-  const exercises = parseExercises(sections["ubungen"] ?? sections["übungen"] ?? []);
+  const exercises = parseExercises(
+    sections["ubungen"] ?? sections["übungen"] ?? sections[normalizeKey("Phasenplan")] ?? []
+  );
 
   return {
     slug: sessionSlug,
