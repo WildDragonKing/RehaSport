@@ -9,6 +9,22 @@ Dieses Dokument definiert verbindliche Qualitätsstandards und Pflichtlektüre.
 
 Willkommen zur RehaSport-Sammlung! Dieses Projekt dokumentiert Rehabilitations-Übungen und strukturierte 45-minütige Trainingsstunden nach dem bewährten RehaSport-Konzept.
 
+## 🌐 Interaktiver Inhalts-Explorer
+
+Unter [https://<OWNER>.github.io/RehaSport/](https://<OWNER>.github.io/RehaSport/) steht ein statischer Explorer zur Verfügung, der die Stunden-, Übungs- und Konzept-Sammlungen durchsucht und Markdown-Inhalte direkt anzeigt.
+
+### Frontend-Build
+
+```bash
+cd site
+npm install
+npm run build
+```
+
+Der Build schreibt die optimierten Assets nach `site/dist`. GitHub Pages (oder ein beliebiger statischer Hoster) kann diesen Ordner veröffentlichen.
+
+> 💡 Über die Umgebungsvariable `VITE_REPO_BASE_URL` (z.B. in einer `.env`-Datei) lässt sich die Basis-URL steuern, aus der Markdown-Dateien nachgeladen werden. Standardmäßig wird auf das Raw-Repository unter `https://raw.githubusercontent.com/<OWNER>/RehaSport/main/` verwiesen.
+
 ### ✨ Hauptmerkmale
 
 - **🏋️ Übungsdatenbank**: Detaillierte Übungen mit Beschreibungen, Ausführungsanleitungen und medizinischen Hinweisen
