@@ -9,6 +9,22 @@ Dieses Dokument definiert verbindliche Qualitätsstandards und Pflichtlektüre.
 
 Willkommen zur RehaSport-Sammlung! Dieses Projekt dokumentiert Rehabilitations-Übungen und strukturierte 45-minütige Trainingsstunden nach dem bewährten RehaSport-Konzept.
 
+## 🌐 Interaktiver Inhalts-Explorer
+
+Unter [https://<OWNER>.github.io/RehaSport/](https://<OWNER>.github.io/RehaSport/) steht ein statischer Explorer zur Verfügung, der die Stunden-, Übungs- und Konzept-Sammlungen durchsucht und Markdown-Inhalte direkt anzeigt.
+
+### Frontend-Build
+
+```bash
+cd site
+npm install
+npm run build
+```
+
+Der Build schreibt die optimierten Assets nach `site/dist`. GitHub Pages (oder ein beliebiger statischer Hoster) kann diesen Ordner veröffentlichen.
+
+> 💡 Über die Umgebungsvariable `VITE_REPO_BASE_URL` (z.B. in einer `.env`-Datei) lässt sich die Basis-URL steuern, aus der Markdown-Dateien nachgeladen werden. Standardmäßig wird auf das Raw-Repository unter `https://raw.githubusercontent.com/<OWNER>/RehaSport/main/` verwiesen.
+
 ### ✨ Hauptmerkmale
 
 - **🏋️ Übungsdatenbank**: Detaillierte Übungen mit Beschreibungen, Ausführungsanleitungen und medizinischen Hinweisen
@@ -175,6 +191,13 @@ täglich einen aktuellen Inhaltsindex und veröffentlicht die statische Seite.
 4. Überprüfen Sie anschließend das Zertifikat (GitHub stellt automatisch ein TLS-Zertifikat bereit).
 
 Weitere Informationen bietet die offizielle Dokumentation zu [benutzerdefinierten Domains für GitHub Pages](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site).
+## 💡 Stunden-Ideen einreichen
+
+Du möchtest eine neue Stunden-Idee vorschlagen? Nutze unser GitHub-Issue-Formular „Stunden-Idee“ und beschreibe Titel, Konzept, Ablaufskizze sowie alle sicherheitsrelevanten Hinweise. Nach dem Absenden prüft ein automatischer KI-Check, ob die Angaben vollständig und plausibel sind. Bei erfolgreicher Prüfung erhält dein Vorschlag das Label `idee-validiert`, andernfalls wird das Issue mit einem Hinweis „Bitte konkretisieren…“ geschlossen.
+
+Beachte bitte das Tageslimit: maximal fünf Stunden-Ideen können innerhalb von 24 Stunden eingereicht werden. Wird das Limit erreicht, informiert dich der Bot und schließt das Issue automatisch – probiere es dann am Folgetag erneut.
+
+Für die Einreichung benötigst du einen GitHub-Account, damit wir Rückfragen direkt im Issue klären können.
 **Anpassung**: `#knie-freundlich` `#schulter-freundlich` `#anfänger` `#fortgeschritten` `#senioren`  
 **Zielgruppe**: `#orthopädie` `#herz-kreislauf` `#neurologie` `#allgemein`
 

@@ -1,0 +1,870 @@
+[
+  {
+    "id": "übung:Übungen/armheben_mit_widerstand.md",
+    "type": "übung",
+    "path": "Übungen/armheben_mit_widerstand.md",
+    "title": "Armheben mit Widerstand",
+    "concepts": [],
+    "phases": [
+      "Hauptteil"
+    ],
+    "tags": [
+      "hauptteil",
+      "kraft",
+      "schulter"
+    ],
+    "summary": "Eine einfache und effektive Übung zur Kräftigung der Schulter- und Armmuskulatur mit leichtem Widerstand (z.B. Wasserflaschen, Theraband). Diese Übung verbessert die Kraft für Alltagsbewegungen wie Greifen nach oben, Tra"
+  },
+  {
+    "id": "übung:Übungen/armkreisen.md",
+    "type": "übung",
+    "path": "Übungen/armkreisen.md",
+    "title": "Armkreisen",
+    "concepts": [],
+    "phases": [
+      "Aufwärmen"
+    ],
+    "tags": [
+      "aufwärmen",
+      "beweglichkeit",
+      "schulter",
+      "allgemein",
+      "anfänger"
+    ],
+    "summary": "Armkreisen mobilisiert die Schultergelenke und aktiviert die gesamte Schulter-Arm-Muskulatur. Diese Übung bereitet den Oberkörper optimal auf Belastung vor, fördert die Durchblutung und löst Verspannungen im Schulter-Nac"
+  },
+  {
+    "id": "übung:Übungen/atemübung_mit_armen.md",
+    "type": "übung",
+    "path": "Übungen/atemübung_mit_armen.md",
+    "title": "Atemübung mit Armen",
+    "concepts": [],
+    "phases": [
+      "Ausklang"
+    ],
+    "tags": [
+      "ausklang",
+      "entspannung",
+      "atmung"
+    ],
+    "summary": "Eine entspannende Atemübung kombiniert mit sanften Armbewegungen zur Förderung der Entspannung und Vertiefung der Atmung. Diese Übung beruhigt das Nervensystem, verbessert die Sauerstoffaufnahme und leitet das Cool-down "
+  },
+  {
+    "id": "übung:Übungen/ausfallschritt_zurück.md",
+    "type": "übung",
+    "path": "Übungen/ausfallschritt_zurück.md",
+    "title": "Ausfallschritt zurück",
+    "concepts": [],
+    "phases": [
+      "Hauptteil"
+    ],
+    "tags": [
+      "hauptteil",
+      "kraft",
+      "balance"
+    ],
+    "summary": "Eine effektive Übung zur Kräftigung der Bein- und Gesäßmuskulatur mit Fokus auf Balance und Koordination. Der Ausfallschritt nach hinten ist knieschonender als nach vorne und trainiert gleichzeitig das Gleichgewicht. Die"
+  },
+  {
+    "id": "übung:Übungen/beckenlift.md",
+    "type": "übung",
+    "path": "Übungen/beckenlift.md",
+    "title": "Beckenlift",
+    "concepts": [],
+    "phases": [
+      "Hauptteil"
+    ],
+    "tags": [
+      "hauptteil",
+      "kraft",
+      "gesäß"
+    ],
+    "summary": "Eine grundlegende Übung zur Kräftigung der Gesäß- und Oberschenkelrückseite in Rückenlage. Der Beckenlift stärkt die hintere Kette, stabilisiert das Becken und kann Rückenschmerzen vorbeugen. Die Übung ist besonders scho"
+  },
+  {
+    "id": "übung:Übungen/beinpendel_seitlich.md",
+    "type": "übung",
+    "path": "Übungen/beinpendel_seitlich.md",
+    "title": "Beinpendel seitlich",
+    "concepts": [],
+    "phases": [
+      "Hauptteil"
+    ],
+    "tags": [
+      "hauptteil",
+      "kraft",
+      "hüfte"
+    ],
+    "summary": "Eine mobilisierende und kräftigende Übung für die seitliche Hüft- und Gesäßmuskulatur. Das seitliche Beinpendeln verbessert die Hüftbeweglichkeit, kräftigt die Abduktoren und fördert das Gleichgewicht. Diese Übung ist be"
+  },
+  {
+    "id": "übung:Übungen/brustdehnung_an_der_wand.md",
+    "type": "übung",
+    "path": "Übungen/brustdehnung_an_der_wand.md",
+    "title": "Brustdehnung an der Wand",
+    "concepts": [],
+    "phases": [
+      "Ausklang"
+    ],
+    "tags": [
+      "ausklang",
+      "beweglichkeit",
+      "brustdehnung"
+    ],
+    "summary": "Eine effektive Dehnübung für die Brustmuskulatur und vordere Schulter an der Wand. Diese Dehnung ist besonders wichtig für Menschen mit nach vorne geneigter Haltung oder Schreibtischtätigkeit. Sie öffnet den Brustkorb un"
+  },
+  {
+    "id": "übung:Übungen/dehnung_hüftbeuger.md",
+    "type": "übung",
+    "path": "Übungen/dehnung_hüftbeuger.md",
+    "title": "Dehnung Hüftbeuger",
+    "concepts": [],
+    "phases": [
+      "Ausklang"
+    ],
+    "tags": [
+      "ausklang",
+      "beweglichkeit",
+      "hüftdehnung"
+    ],
+    "summary": "Eine wichtige Dehnübung für die Hüftbeugemuskulatur, die bei vielen Menschen durch langes Sitzen verkürzt ist. Die Dehnung erfolgt im Ausfallschritt und kann helfen, Rückenschmerzen zu reduzieren und die Haltung zu verbe"
+  },
+  {
+    "id": "übung:Übungen/dehnung_oberschenkelrückseite.md",
+    "type": "übung",
+    "path": "Übungen/dehnung_oberschenkelrückseite.md",
+    "title": "Dehnung Oberschenkelrückseite",
+    "concepts": [],
+    "phases": [
+      "Ausklang"
+    ],
+    "tags": [
+      "ausklang",
+      "beweglichkeit",
+      "dehnung"
+    ],
+    "summary": "Eine sanfte Dehnübung für die Oberschenkelrückseite (Hamstrings) im Sitzen oder Stehen. Diese Muskelgruppe ist bei vielen Menschen verkürzt, was zu Rückenschmerzen und eingeschränkter Beweglichkeit führen kann. Die Dehnu"
+  },
+  {
+    "id": "übung:Übungen/einbeinstand.md",
+    "type": "übung",
+    "path": "Übungen/einbeinstand.md",
+    "title": "Einbeinstand",
+    "concepts": [],
+    "phases": [
+      "Schwerpunkt"
+    ],
+    "tags": [
+      "schwerpunkt",
+      "balance",
+      "sturzprophylaxe"
+    ],
+    "summary": "Eine fundamentale Gleichgewichtsübung zur Verbesserung der Balance und Sturzprophylaxe. Der Einbeinstand trainiert nicht nur das Gleichgewichtssystem, sondern auch die stabilisierende Muskulatur des gesamten Beins und Ru"
+  },
+  {
+    "id": "übung:Übungen/fersen_und_zehenstand.md",
+    "type": "übung",
+    "path": "Übungen/fersen_und_zehenstand.md",
+    "title": "Fersen- und Zehenstand",
+    "concepts": [],
+    "phases": [
+      "Aufwärmen"
+    ],
+    "tags": [
+      "aufwärmen",
+      "balance",
+      "unterschenkel"
+    ],
+    "summary": "Eine Übung zur Aktivierung der Unterschenkelmuskulatur und zur Verbesserung von Balance und Koordination. Der Wechsel zwischen Fersen- und Zehenstand mobilisiert das Sprunggelenk und bereitet die Füße auf die Belastungen"
+  },
+  {
+    "id": "übung:Übungen/fusskreisen.md",
+    "type": "übung",
+    "path": "Übungen/fusskreisen.md",
+    "title": "Fußkreisen",
+    "concepts": [],
+    "phases": [
+      "Aufwärmen"
+    ],
+    "tags": [
+      "aufwärmen",
+      "beweglichkeit",
+      "balance",
+      "sturzprophylaxe",
+      "anfänger"
+    ],
+    "summary": "Fußkreisen mobilisiert die Sprunggelenke und aktiviert die Fuß- und Unterschenkelmuskulatur. Diese Übung verbessert die Beweglichkeit im Sprunggelenk, fördert die Durchblutung der Füße und bereitet auf Gleichgewichts- un"
+  },
+  {
+    "id": "übung:Übungen/hampelmann_modifiziert.md",
+    "type": "übung",
+    "path": "Übungen/hampelmann_modifiziert.md",
+    "title": "Hampelmann (modifiziert)",
+    "concepts": [],
+    "phases": [
+      "Aufwärmen"
+    ],
+    "tags": [
+      "aufwärmen",
+      "ausdauer",
+      "ganzkörper"
+    ],
+    "summary": "Eine schonende Variante des klassischen Hampelmanns zur Aktivierung des Herz-Kreislauf-Systems und zur Ganzkörpermobilisation. Die modifizierte Version ist gelenkschonender und für Rehabilitationssport besonders geeignet"
+  },
+  {
+    "id": "übung:Übungen/hüftkreisen.md",
+    "type": "übung",
+    "path": "Übungen/hüftkreisen.md",
+    "title": "Hüftkreisen",
+    "concepts": [],
+    "phases": [
+      "Aufwärmen"
+    ],
+    "tags": [
+      "aufwärmen",
+      "beweglichkeit",
+      "mobilisation"
+    ],
+    "summary": "Eine mobilisierende Übung zur Aktivierung des Hüftgelenks und der umliegenden Muskulatur. Hüftkreisen bereitet die Hüfte auf komplexere Bewegungen vor und verbessert die Beweglichkeit im gesamten Beckenbereich. Ideal als"
+  },
+  {
+    "id": "übung:Übungen/katze_kuh.md",
+    "type": "übung",
+    "path": "Übungen/katze_kuh.md",
+    "title": "Katze-Kuh (Wirbelsäulenmobilisation)",
+    "concepts": [],
+    "phases": [
+      "Ausklang"
+    ],
+    "tags": [
+      "ausklang",
+      "beweglichkeit",
+      "rücken",
+      "anfänger",
+      "entspannung",
+      "orthopädie"
+    ],
+    "summary": "Die Katze-Kuh-Übung ist eine sanfte Mobilisationsübung für die gesamte Wirbelsäule. Sie dehnt und entspannt die Rückenmuskulatur, verbessert die Beweglichkeit der Wirbelsäule und fördert die Körperwahrnehmung. Ideal als "
+  },
+  {
+    "id": "übung:Übungen/knie_zur_brust.md",
+    "type": "übung",
+    "path": "Übungen/knie_zur_brust.md",
+    "title": "Knie zur Brust",
+    "concepts": [],
+    "phases": [
+      "Aufwärmen"
+    ],
+    "tags": [
+      "aufwärmen",
+      "beweglichkeit",
+      "hüftmobilisation"
+    ],
+    "summary": "Eine mobilisierende Übung zur Aktivierung der Hüftbeuger und zur sanften Dehnung des unteren Rückens. Diese Übung verbessert die Beweglichkeit im Hüftgelenk und aktiviert gleichzeitig die Beinmuskulatur. Ideal zur Vorber"
+  },
+  {
+    "id": "übung:Übungen/kniebeuge_wandstütze.md",
+    "type": "übung",
+    "path": "Übungen/kniebeuge_wandstütze.md",
+    "title": "Kniebeuge (Wandstütze)",
+    "concepts": [],
+    "phases": [
+      "Hauptteil"
+    ],
+    "tags": [
+      "hauptteil",
+      "kraft",
+      "beine",
+      "mittel",
+      "orthopädie",
+      "allgemein"
+    ],
+    "summary": "Die Kniebeuge mit Wandstütze ist eine sichere Variante der klassischen Kniebeuge. Sie kräftigt die Bein- und Gesäßmuskulatur effektiv, bietet aber durch die Wandunterstützung mehr Stabilität und Kontrolle. Ideal für Reha"
+  },
+  {
+    "id": "übung:Übungen/kniebeuge_mit_stuhl.md",
+    "type": "übung",
+    "path": "Übungen/kniebeuge_mit_stuhl.md",
+    "title": "Kniebeuge mit Stuhl",
+    "concepts": [],
+    "phases": [
+      "Hauptteil"
+    ],
+    "tags": [
+      "hauptteil",
+      "kraft",
+      "beine"
+    ],
+    "summary": "Eine sichere und kontrollierte Variante der Kniebeuge mit Stuhl als Unterstützung. Diese Übung kräftigt die gesamte Beinmuskulatur und das Gesäß, während der Stuhl Sicherheit gibt und die korrekte Ausführungstiefe vorgib"
+  },
+  {
+    "id": "konzept:Konzepte/ganzkörperkräftigung.md",
+    "type": "konzept",
+    "path": "Konzepte/ganzkörperkräftigung.md",
+    "title": "Konzept: Ganzkörperkräftigung",
+    "concepts": [
+      "Ganzkörperkräftigung"
+    ],
+    "phases": [
+      "Aufwärmen",
+      "Hauptteil",
+      "Schwerpunkt",
+      "Ausklang"
+    ],
+    "tags": [
+      "kraft",
+      "ganzkörper",
+      "prävention",
+      "allgemein",
+      "muskelaufbau"
+    ],
+    "summary": "Dieses Konzept zielt auf eine ausgewogene Kräftigung aller großen Muskelgruppen des Körpers ab - von Kopf bis Fuß. Durch funktionelles Ganzkörpertraining wird Kraft aufgebaut, die Muskel-Skelett-Gesundheit verbessert und"
+  },
+  {
+    "id": "konzept:Konzepte/gelenkstabilität_mobilität.md",
+    "type": "konzept",
+    "path": "Konzepte/gelenkstabilität_mobilität.md",
+    "title": "Konzept: Gelenkstabilität & Mobilität",
+    "concepts": [
+      "Gelenkstabilität & Mobilität"
+    ],
+    "phases": [
+      "Aufwärmen",
+      "Hauptteil",
+      "Schwerpunkt",
+      "Ausklang"
+    ],
+    "tags": [
+      "gelenkstabilität",
+      "mobilität",
+      "orthopädie",
+      "arthrose",
+      "prävention"
+    ],
+    "summary": "Dieses Konzept vereint die scheinbar gegensätzlichen Ziele Stabilität und Beweglichkeit: Gelenke sollen einerseits stabil und belastbar sein, andererseits durch ausreichende Mobilität schmerzfreie Bewegungen in vollem Um"
+  },
+  {
+    "id": "konzept:Konzepte/herz_kreislauf_aktivierung.md",
+    "type": "konzept",
+    "path": "Konzepte/herz_kreislauf_aktivierung.md",
+    "title": "Konzept: Herz-Kreislauf-Aktivierung",
+    "concepts": [
+      "Herz-Kreislauf-Aktivierung"
+    ],
+    "phases": [
+      "Aufwärmen",
+      "Hauptteil",
+      "Schwerpunkt",
+      "Ausklang"
+    ],
+    "tags": [
+      "herz-kreislauf",
+      "ausdauer",
+      "prävention",
+      "herzsport",
+      "gesundheit"
+    ],
+    "summary": "Dieses Konzept zielt darauf ab, das Herz-Kreislauf-System schonend aber effektiv zu aktivieren, die Ausdauerleistung zu verbessern und die kardiovaskuläre Gesundheit zu fördern. Durch moderates Ausdauertraining in Kombin"
+  },
+  {
+    "id": "konzept:Konzepte/rückengesundheit.md",
+    "type": "konzept",
+    "path": "Konzepte/rückengesundheit.md",
+    "title": "Konzept: Rückengesundheit",
+    "concepts": [
+      "Rückengesundheit"
+    ],
+    "phases": [
+      "Aufwärmen",
+      "Hauptteil",
+      "Schwerpunkt",
+      "Ausklang"
+    ],
+    "tags": [
+      "rückengesundheit",
+      "orthopädie",
+      "stabilität",
+      "mobilität",
+      "core"
+    ],
+    "summary": "Das Konzept \"Rückengesundheit\" zielt darauf ab, durch gezielte Kräftigung der Rumpfmuskulatur, Mobilisation der Wirbelsäule und Verbesserung der Körperhaltung Rückenschmerzen vorzubeugen und zu reduzieren. Es kombiniert "
+  },
+  {
+    "id": "konzept:Konzepte/sturzprophylaxe_balance.md",
+    "type": "konzept",
+    "path": "Konzepte/sturzprophylaxe_balance.md",
+    "title": "Konzept: Sturzprophylaxe & Balance",
+    "concepts": [
+      "Sturzprophylaxe & Balance"
+    ],
+    "phases": [
+      "Aufwärmen",
+      "Hauptteil",
+      "Schwerpunkt",
+      "Ausklang"
+    ],
+    "tags": [
+      "sturzprophylaxe",
+      "balance",
+      "neurologie",
+      "orthopädie",
+      "senioren"
+    ],
+    "summary": "Dieses Konzept zielt darauf ab, das Gleichgewichtsvermögen zu verbessern, die Standfestigkeit zu erhöhen und das Sturzrisiko signifikant zu reduzieren. Durch gezielte Balance-Übungen, Kräftigung der stabilisierenden Musk"
+  },
+  {
+    "id": "übung:Übungen/kreuzheben_mit_wasserflasche.md",
+    "type": "übung",
+    "path": "Übungen/kreuzheben_mit_wasserflasche.md",
+    "title": "Kreuzheben mit Wasserflasche",
+    "concepts": [],
+    "phases": [
+      "Schwerpunkt"
+    ],
+    "tags": [
+      "schwerpunkt",
+      "kraft",
+      "hintere-kette"
+    ],
+    "summary": "Eine funktionelle Ganzkörperübung zur Kräftigung der hinteren Kette (Rücken, Gesäß, Oberschenkelrückseite) mit leichtem Gewicht. Diese Übung trainiert die korrekte Hebebewegung, die für viele Alltagssituationen wichtig i"
+  },
+  {
+    "id": "übung:Übungen/marschieren_auf_der_stelle.md",
+    "type": "übung",
+    "path": "Übungen/marschieren_auf_der_stelle.md",
+    "title": "Marschieren auf der Stelle",
+    "concepts": [],
+    "phases": [
+      "Aufwärmen"
+    ],
+    "tags": [
+      "aufwärmen",
+      "ausdauer",
+      "herz-kreislauf",
+      "koordination",
+      "anfänger"
+    ],
+    "summary": "Marschieren auf der Stelle aktiviert das Herz-Kreislauf-System und bereitet den gesamten Körper auf Belastung vor. Diese Übung erhöht die Herzfrequenz moderat, fördert die Durchblutung aller Muskelgruppen und verbessert "
+  },
+  {
+    "id": "übung:Übungen/nackenrollen.md",
+    "type": "übung",
+    "path": "Übungen/nackenrollen.md",
+    "title": "Nackenrollen",
+    "concepts": [],
+    "phases": [
+      "Aufwärmen"
+    ],
+    "tags": [
+      "aufwärmen",
+      "beweglichkeit",
+      "nacken",
+      "orthopädie",
+      "anfänger"
+    ],
+    "summary": "Nackenrollen mobilisiert die Halswirbelsäule und löst Verspannungen im Nacken-Schulter-Bereich. Diese Übung verbessert die Beweglichkeit der Halswirbelsäule, fördert die Durchblutung und reduziert Spannungskopfschmerzen."
+  },
+  {
+    "id": "übung:Übungen/oberkörper_heben_bauch.md",
+    "type": "übung",
+    "path": "Übungen/oberkörper_heben_bauch.md",
+    "title": "Oberkörper heben (Bauch)",
+    "concepts": [],
+    "phases": [
+      "Hauptteil"
+    ],
+    "tags": [
+      "hauptteil",
+      "kraft",
+      "bauch"
+    ],
+    "summary": "Eine grundlegende Übung zur Kräftigung der geraden Bauchmuskulatur in Rückenlage. Diese sanfte Form der Bauchmuskelübung ist rückenschonend und für fast alle Teilnehmer geeignet. Eine starke Bauchmuskulatur ist wichtig f"
+  },
+  {
+    "id": "übung:Übungen/planke_an_der_wand.md",
+    "type": "übung",
+    "path": "Übungen/planke_an_der_wand.md",
+    "title": "Planke an der Wand",
+    "concepts": [],
+    "phases": [
+      "Schwerpunkt"
+    ],
+    "tags": [
+      "schwerpunkt",
+      "kraft",
+      "rumpfstabilisation"
+    ],
+    "summary": "Eine schonende Variante der klassischen Planke zur Ganzkörperstabilisation. Durch die aufrechte Position an der Wand wird die Belastung deutlich reduziert, während dennoch die gesamte Rumpfmuskulatur aktiviert wird. Idea"
+  },
+  {
+    "id": "übung:Übungen/rumpfrotation_im_stand.md",
+    "type": "übung",
+    "path": "Übungen/rumpfrotation_im_stand.md",
+    "title": "Rumpfrotation im Stand",
+    "concepts": [],
+    "phases": [
+      "Aufwärmen"
+    ],
+    "tags": [
+      "aufwärmen",
+      "beweglichkeit",
+      "rumpfmobilisation"
+    ],
+    "summary": "Eine mobilisierende Übung zur Aktivierung der Rumpfmuskulatur und Verbesserung der Rotationsfähigkeit der Wirbelsäule. Diese Übung bereitet die Rückenmuskulatur auf dynamische Bewegungen vor und fördert die Beweglichkeit"
+  },
+  {
+    "id": "übung:Übungen/rumpfrotation_mit_gewicht.md",
+    "type": "übung",
+    "path": "Übungen/rumpfrotation_mit_gewicht.md",
+    "title": "Rumpfrotation mit Gewicht",
+    "concepts": [],
+    "phases": [
+      "Schwerpunkt"
+    ],
+    "tags": [
+      "schwerpunkt",
+      "kraft",
+      "rotation"
+    ],
+    "summary": "Eine dynamische Übung zur Kräftigung der seitlichen Bauch- und Rumpfmuskulatur mit leichtem Widerstand. Die Rotation mit Gewicht trainiert funktionell die Drehbewegungen des Alltags und verbessert die Rumpfkraft. Diese Ü"
+  },
+  {
+    "id": "übung:Übungen/schulterbrücke_einbeinig.md",
+    "type": "übung",
+    "path": "Übungen/schulterbrücke_einbeinig.md",
+    "title": "Schulterbrücke einbeinig",
+    "concepts": [],
+    "phases": [
+      "Schwerpunkt"
+    ],
+    "tags": [
+      "schwerpunkt",
+      "kraft",
+      "gesäß"
+    ],
+    "summary": "Eine fortgeschrittene Variante des Beckenlifts zur intensiven Kräftigung der Gesäß- und Oberschenkelrückseite. Durch das einbeinige Ausführen wird die Belastung erhöht und zusätzlich die Rumpfstabilität gefordert. Diese "
+  },
+  {
+    "id": "übung:Übungen/schulterkreisen.md",
+    "type": "übung",
+    "path": "Übungen/schulterkreisen.md",
+    "title": "Schulterkreisen",
+    "concepts": [],
+    "phases": [
+      "Aufwärmen"
+    ],
+    "tags": [
+      "aufwärmen",
+      "beweglichkeit",
+      "schulter",
+      "anfänger",
+      "allgemein"
+    ],
+    "summary": "Diese Übung mobilisiert die Schultergelenke und bereitet die Schultermuskulatur auf Belastung vor. Sie verbessert die Beweglichkeit im Schulterbereich und löst Verspannungen. Ideal als sanfte Aufwärmübung zu Beginn der T"
+  },
+  {
+    "id": "übung:Übungen/seitliche_rumpfdehnung_im_sitzen.md",
+    "type": "übung",
+    "path": "Übungen/seitliche_rumpfdehnung_im_sitzen.md",
+    "title": "Seitliche Rumpfdehnung im Sitzen",
+    "concepts": [],
+    "phases": [
+      "Ausklang"
+    ],
+    "tags": [
+      "ausklang",
+      "beweglichkeit",
+      "seitliche-dehnung"
+    ],
+    "summary": "Eine sanfte Dehnübung für die seitliche Rumpfmuskulatur im Sitzen. Diese Dehnung öffnet die Flanken, verbessert die Atmung und fördert die Entspannung der seitlichen Körperpartie. Ideal zum Abschluss der Trainingseinheit"
+  },
+  {
+    "id": "übung:Übungen/seitlicher_ausfallschritt.md",
+    "type": "übung",
+    "path": "Übungen/seitlicher_ausfallschritt.md",
+    "title": "Seitlicher Ausfallschritt",
+    "concepts": [],
+    "phases": [
+      "Schwerpunkt"
+    ],
+    "tags": [
+      "schwerpunkt",
+      "kraft",
+      "hüftstabilisation"
+    ],
+    "summary": "Eine multidimensionale Beinübung zur Kräftigung der Bein- und Gesäßmuskulatur in der Frontalebene. Der seitliche Ausfallschritt trainiert besonders die Innenschenkel und äußeren Hüftmuskeln und verbessert die seitliche S"
+  },
+  {
+    "id": "übung:Übungen/seitlicher_unterarmstütz_modifiziert.md",
+    "type": "übung",
+    "path": "Übungen/seitlicher_unterarmstütz_modifiziert.md",
+    "title": "Seitlicher Unterarmstütz (modifiziert)",
+    "concepts": [],
+    "phases": [
+      "Hauptteil"
+    ],
+    "tags": [
+      "hauptteil",
+      "kraft",
+      "rumpf"
+    ],
+    "summary": "Eine modifizierte Variante des seitlichen Unterarmstützes zur Kräftigung der seitlichen Rumpfmuskulatur. Mit angewinkelten Beinen ist diese Version deutlich einfacher als die klassische Form und eignet sich ideal für Reh"
+  },
+  {
+    "id": "übung:Übungen/seitneigung_armheben.md",
+    "type": "übung",
+    "path": "Übungen/seitneigung_armheben.md",
+    "title": "Seitneigung mit Armheben",
+    "concepts": [],
+    "phases": [
+      "Aufwärmen"
+    ],
+    "tags": [
+      "aufwärmen",
+      "beweglichkeit",
+      "rumpf",
+      "rückengesundheit",
+      "anfänger"
+    ],
+    "summary": "Seitneigung mit Armheben mobilisiert die seitliche Rumpfmuskulatur und verbessert die Beweglichkeit der Wirbelsäule. Diese Übung dehnt die Flanken, aktiviert die schräge Bauchmuskulatur und bereitet den Rumpf auf Rotatio"
+  },
+  {
+    "id": "übung:Übungen/seitstütz_knie_modifiziert.md",
+    "type": "übung",
+    "path": "Übungen/seitstütz_knie_modifiziert.md",
+    "title": "Seitstütz Knie (modifiziert)",
+    "concepts": [],
+    "phases": [
+      "Schwerpunkt"
+    ],
+    "tags": [
+      "schwerpunkt",
+      "kraft",
+      "seitliche-rumpfmuskulatur"
+    ],
+    "summary": "Eine modifizierte, kniende Variante des seitlichen Stützes zur intensiven Kräftigung der seitlichen Rumpfmuskulatur. Diese Version ist anspruchsvoller als der seitliche Unterarmstütz im Hauptteil und bietet eine gute Pro"
+  },
+  {
+    "id": "übung:Übungen/standwaage.md",
+    "type": "übung",
+    "path": "Übungen/standwaage.md",
+    "title": "Standwaage",
+    "concepts": [],
+    "phases": [
+      "Hauptteil"
+    ],
+    "tags": [
+      "hauptteil",
+      "balance",
+      "ganzkörper"
+    ],
+    "summary": "Eine funktionelle Gleichgewichtsübung, die Kraft, Balance und Koordination vereint. Die Standwaage kräftigt besonders die Gesäß- und Rückenmuskulatur des Standbeins sowie die hintere Oberschenkelmuskulatur. Gleichzeitig "
+  },
+  {
+    "id": "stunde:Stunden/stunde_01_rückenfit.md",
+    "type": "stunde",
+    "path": "Stunden/stunde_01_rückenfit.md",
+    "title": "Stunde 01: Rückenfit - Stabilität und Mobilität",
+    "concepts": [
+      "Rückenstabilität",
+      "Haltungsverbesserung und Wirbelsäulenmobilität"
+    ],
+    "phases": [
+      "Aufwärmen",
+      "Hauptteil",
+      "Schwerpunkt",
+      "Ausklang"
+    ],
+    "tags": [
+      "rückengesundheit",
+      "kraft",
+      "beweglichkeit",
+      "anfänger",
+      "orthopädie",
+      "allgemein"
+    ],
+    "summary": "- Konzept: Rückenstabilität, Haltungsverbesserung und Wirbelsäulenmobilität - Gesamtdauer: 45 Minuten - Schwierigkeitsgrad: Leicht bis Mittel - Zielgruppe: Orthopädie, Rückenschmerzen, allgemeine Fitness - Datum: 13.11.2"
+  },
+  {
+    "id": "stunde:Stunden/stunde_02_sturzprophylaxe.md",
+    "type": "stunde",
+    "path": "Stunden/stunde_02_sturzprophylaxe.md",
+    "title": "Stunde 02: Sturzprophylaxe & Sicherer Stand",
+    "concepts": [
+      "Sturzprophylaxe & Balance"
+    ],
+    "phases": [
+      "Aufwärmen",
+      "Hauptteil",
+      "Schwerpunkt",
+      "Ausklang"
+    ],
+    "tags": [
+      "sturzprophylaxe",
+      "balance",
+      "senioren",
+      "neurologie",
+      "mittel"
+    ],
+    "summary": "- Konzept: Sturzprophylaxe & Balance - Gesamtdauer: 45 Minuten - Schwierigkeitsgrad: Mittel - Zielgruppe: Senioren, Neurologie, Orthopädie (Sturzrisiko) - Datum: 13.11.2025"
+  },
+  {
+    "id": "stunde:Stunden/stunde_03_gelenkgesundheit.md",
+    "type": "stunde",
+    "path": "Stunden/stunde_03_gelenkgesundheit.md",
+    "title": "Stunde 03: Gelenkgesundheit",
+    "concepts": [
+      "Gelenkstabilität & Mobilität"
+    ],
+    "phases": [
+      "Aufwärmen",
+      "Hauptteil",
+      "Schwerpunkt",
+      "Ausklang"
+    ],
+    "tags": [
+      "gelenkstabilität",
+      "mobilität",
+      "orthopädie",
+      "mittel",
+      "arthrose"
+    ],
+    "summary": "- Konzept: Gelenkstabilität & Mobilität - Gesamtdauer: 45 Minuten - Schwierigkeitsgrad: Mittel - Zielgruppe: Orthopädie (Arthrose, Gelenkprobleme) - Datum: 13.11.2025"
+  },
+  {
+    "id": "stunde:Stunden/stunde_04_herz_kreislauf.md",
+    "type": "stunde",
+    "path": "Stunden/stunde_04_herz_kreislauf.md",
+    "title": "Stunde 04: Herz-Kreislauf-Aktivierung",
+    "concepts": [
+      "Herz-Kreislauf-Aktivierung"
+    ],
+    "phases": [
+      "Aufwärmen",
+      "Hauptteil",
+      "Schwerpunkt",
+      "Ausklang"
+    ],
+    "tags": [
+      "herz-kreislauf",
+      "ausdauer",
+      "allgemein",
+      "leicht-mittel",
+      "kardiovaskulär"
+    ],
+    "summary": "- Konzept: Herz-Kreislauf-Aktivierung - Gesamtdauer: 45 Minuten - Schwierigkeitsgrad: Leicht-Mittel - Zielgruppe: Herz-Kreislauf, Allgemein - Datum: 13.11.2025"
+  },
+  {
+    "id": "stunde:Stunden/stunde_05_ganzkörper.md",
+    "type": "stunde",
+    "path": "Stunden/stunde_05_ganzkörper.md",
+    "title": "Stunde 05: Ganzkörper-Kräftigung",
+    "concepts": [
+      "Ganzkörperkräftigung"
+    ],
+    "phases": [
+      "Aufwärmen",
+      "Hauptteil",
+      "Schwerpunkt",
+      "Ausklang"
+    ],
+    "tags": [
+      "ganzkörper",
+      "kraft",
+      "allgemein",
+      "mittel",
+      "prävention"
+    ],
+    "summary": "- Konzept: Ganzkörperkräftigung - Gesamtdauer: 45 Minuten - Schwierigkeitsgrad: Mittel - Zielgruppe: Allgemein, Orthopädie, Prävention - Datum: 13.11.2025"
+  },
+  {
+    "id": "übung:Übungen/tandemstand.md",
+    "type": "übung",
+    "path": "Übungen/tandemstand.md",
+    "title": "Tandemstand",
+    "concepts": [],
+    "phases": [
+      "Schwerpunkt"
+    ],
+    "tags": [
+      "schwerpunkt",
+      "balance",
+      "gangstabilität"
+    ],
+    "summary": "Eine anspruchsvolle Gleichgewichtsübung, bei der ein Fuß direkt vor dem anderen platziert wird. Der Tandemstand trainiert das Gleichgewicht intensiv und ist wichtig für die Gangstabilität. Diese Übung simuliert die schma"
+  },
+  {
+    "id": "übung:Übungen/trizeps_dips_am_stuhl.md",
+    "type": "übung",
+    "path": "Übungen/trizeps_dips_am_stuhl.md",
+    "title": "Trizeps-Dips am Stuhl",
+    "concepts": [],
+    "phases": [
+      "Hauptteil"
+    ],
+    "tags": [
+      "hauptteil",
+      "kraft",
+      "arme"
+    ],
+    "summary": "Eine effektive Übung zur Kräftigung der Armrückseite (Trizeps) mit Hilfe eines stabilen Stuhls. Die Übung stärkt die Armmuskulatur, die für viele Alltagsbewegungen wie Aufstehen oder Hochdrücken wichtig ist. Durch die ve"
+  },
+  {
+    "id": "übung:Übungen/ÜBUNGSINDEX.md",
+    "type": "übung",
+    "path": "Übungen/ÜBUNGSINDEX.md",
+    "title": "Übungsindex",
+    "concepts": [],
+    "phases": [],
+    "tags": [],
+    "summary": "Dieser Index listet alle dokumentierten Übungen sortiert nach Kategorien. Nutzen Sie diesen Index, um schnell passende Übungen für Ihre Stunden zu finden."
+  },
+  {
+    "id": "übung:Übungen/vogel_hund.md",
+    "type": "übung",
+    "path": "Übungen/vogel_hund.md",
+    "title": "Vogel-Hund (Vierfüßlerstand)",
+    "concepts": [],
+    "phases": [
+      "Schwerpunkt"
+    ],
+    "tags": [
+      "schwerpunkt",
+      "koordination",
+      "rumpfstabilisation"
+    ],
+    "summary": "Eine koordinative Rumpfstabilisationsübung im Vierfüßlerstand, die Balance, Kraft und Körperkontrolle vereint. Die Übung trainiert die diagonale Muskelkette und verbessert die Rumpfstabilität dynamisch. Besonders effekti"
+  },
+  {
+    "id": "übung:Übungen/wadenheben_einbeinig.md",
+    "type": "übung",
+    "path": "Übungen/wadenheben_einbeinig.md",
+    "title": "Wadenheben einbeinig",
+    "concepts": [],
+    "phases": [
+      "Schwerpunkt"
+    ],
+    "tags": [
+      "schwerpunkt",
+      "kraft",
+      "unterschenkel"
+    ],
+    "summary": "Eine intensivierte Variante des Wadenhebens auf einem Bein zur gezielten Kräftigung der Wadenmuskulatur. Das einbeinige Wadenheben erhöht die Belastung und fordert gleichzeitig das Gleichgewicht. Diese Übung ist wichtig "
+  },
+  {
+    "id": "übung:Übungen/wandliegestütze.md",
+    "type": "übung",
+    "path": "Übungen/wandliegestütze.md",
+    "title": "Wandliegestütze",
+    "concepts": [],
+    "phases": [
+      "Hauptteil"
+    ],
+    "tags": [
+      "hauptteil",
+      "kraft",
+      "oberkörper"
+    ],
+    "summary": "Eine schonende Variante der Liegestütze zur Kräftigung der Brust-, Schulter- und Armmuskulatur. Durch den aufrechten Winkel werden Handgelenke, Ellbogen und Schultern deutlich weniger belastet als bei klassischen Liegest"
+  }
+]

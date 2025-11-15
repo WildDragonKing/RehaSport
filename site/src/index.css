@@ -1,0 +1,194 @@
+:root {
+  color-scheme: light;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #0f172a;
+  background-color: #f8fafc;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #e2e8f0 0%, #f8fafc 100%);
+}
+
+a {
+  color: inherit;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+@media (max-width: 960px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+  padding: 1.25rem;
+}
+
+.nav-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.nav-tabs button {
+  border: none;
+  background: #e2e8f0;
+  color: #0f172a;
+  padding: 0.5rem 0.75rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-tabs button.active {
+  background: #0f172a;
+  color: #f8fafc;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.filter-group label {
+  font-weight: 600;
+}
+
+.filter-group select,
+.filter-group input {
+  border: 1px solid #cbd5f5;
+  border-radius: 8px;
+  padding: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.list-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: #f8fafc;
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.list-item.active {
+  border-color: #0f172a;
+  background: #e2e8f0;
+}
+
+.list-item:hover,
+.list-item:focus-visible {
+  border-color: #3b82f6;
+  transform: translateY(-1px);
+}
+
+.list-item small {
+  color: #475569;
+}
+
+.badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.badge.phase {
+  background: #ede9fe;
+  color: #5b21b6;
+}
+
+.badge.concept {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.detail-view {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.detail-view article {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.06);
+}
+
+.detail-view h1 {
+  margin-top: 0;
+}
+
+.detail-view .markdown :is(code, pre) {
+  font-family: "Fira Code", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  background: #0f172a;
+  color: #f8fafc;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+}
+
+.detail-view .markdown pre {
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.empty-state {
+  text-align: center;
+  color: #475569;
+  padding: 2rem 1rem;
+}
+
+@media (max-width: 600px) {
+  .nav-tabs button {
+    flex: 1 1 auto;
+    text-align: center;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+}
