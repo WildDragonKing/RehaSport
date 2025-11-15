@@ -5,39 +5,39 @@ import { describe, expect, it } from "vitest";
 import App from "./App";
 
 describe("App", () => {
-  it("zeigt die Startseite mit Hero und Navigation", () => {
+  it("zeigt die Ordnerübersicht", () => {
     const html = renderToString(
       <MemoryRouter initialEntries={["/"]}>
         <App />
       </MemoryRouter>
     );
 
-    expect(html).toContain("RehaSport Zentrum");
-    expect(html).toContain("RehaSport, der motiviert und wirkt");
-    expect(html).toContain("Zu den Kursen");
+    expect(html).toContain("RehaSport Reader");
+    expect(html).toContain("Stunden-Ordner");
+    expect(html).toContain("Ordner öffnen");
   });
 
-  it("zeigt die Kursübersicht mit Kurskarten", () => {
+  it("listet Stunden innerhalb eines Ordners", () => {
     const html = renderToString(
-      <MemoryRouter initialEntries={["/kurse"]}>
+      <MemoryRouter initialEntries={["/ordner/ruecken"]}>
         <App />
       </MemoryRouter>
     );
 
-    expect(html).toContain("Unsere Kursübersicht");
-    expect(html).toContain("Rückenfit &amp; Entspannung");
-    expect(html).toContain("Cardio Sanft");
+    expect(html).toContain("Rückenfit: Stabilität und Mobilisation");
+    expect(html).toContain("Stunde öffnen");
+    expect(html).toContain("Rücken, Rumpfstabilität");
   });
 
-  it("liefert Kontaktformular mit Pflichtfeldern", () => {
+  it("zeigt die Details einer Stunde mit Übungen", () => {
     const html = renderToString(
-      <MemoryRouter initialEntries={["/kontakt"]}>
+      <MemoryRouter initialEntries={["/ordner/ruecken/stabilitaet-und-mobilisation"]}>
         <App />
       </MemoryRouter>
     );
 
-    expect(html).toContain("Kontakt &amp; Anmeldung");
-    expect(html).toContain("Name*");
-    expect(html).toContain("Nachricht absenden");
+    expect(html).toContain("Aktive Übung");
+    expect(html).toContain("Vierfüßler diagonal");
+    expect(html).toContain("Dauer/Wiederholungen");
   });
 });

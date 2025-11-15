@@ -6,41 +6,51 @@ export interface InfoSection {
 
 export const infoSections: InfoSection[] = [
   {
-    title: "Was ist Rehabilitationssport?",
+    title: "Ordner & Struktur",
     body:
-      "Rehabilitationssport ist ein ärztlich verordnetes Gruppentraining. Es unterstützt Menschen nach Verletzungen oder bei chronischen Erkrankungen dabei, dauerhaft aktiv zu bleiben und Beschwerden vorzubeugen."
-  },
-  {
-    title: "Ablauf & Voraussetzungen",
-    body:
-      "Mit einer gültigen RehaSport-Verordnung (Formular 56) übernimmt die Krankenkasse in der Regel 50 Übungseinheiten innerhalb von 18 Monaten. Nach Genehmigung vereinbaren wir einen persönlichen Starttermin und wählen gemeinsam den passenden Kurs aus.",
+      "Jeder Ordner entspricht einer Trainingskategorie. Die Markdown-Dateien liegen unter /stunden/<ordner> und lassen sich frei erweitern.",
     bullets: [
-      "Kursdauer: 45 Minuten",
-      "Größe: maximal 12 Teilnehmer*innen",
-      "Trainer*innen mit B-Lizenz Rehabilitationssport"
+      "Ordnername = Kategorie in der App",
+      "Dateiname wird zum Slug für die URL",
+      "Sortierung erfolgt alphabetisch"
     ]
   },
   {
-    title: "Kosten & Verlängerung",
+    title: "Markdown-Aufbau",
     body:
-      "Die Teilnahme ist mit genehmigter Verordnung kostenfrei. Ohne Verordnung kannst du eine 10er-Karte erwerben oder Mitglied werden. Nach Ablauf der Verordnung beraten wir dich gern zu individuellen Anschlussangeboten."
+      "Titel als H1, danach die Abschnitte Beschreibung, Dauer, optional Fokus und schließlich eine nummerierte Liste der Übungen.",
+    bullets: [
+      "Übungen enthalten Unterlisten mit **Bezeichnern**",
+      "Anerkannte Labels: Beschreibung, Dauer/Wiederholungen, Equipment, Hinweise",
+      "Weitere Labels werden als freie Hinweise angezeigt"
+    ]
+  },
+  {
+    title: "Reader im Training",
+    body:
+      "Starte die Stunde über den Button \"Stunde öffnen\". Über die Aktive-Übung-Steuerung navigierst du live durch den Ablauf und behältst Hinweise sichtbar.",
+    bullets: [
+      "Aktive Übung jederzeit wechseln",
+      "Navigation mit Zurück/Weiter",
+      "Gerätefreundlich im Querformat"
+    ]
   }
 ];
 
 export const faqItems = [
   {
-    question: "Brauche ich eine Überweisung?",
+    question: "Wie füge ich neue Stunden hinzu?",
     answer:
-      "Ja. Sprich deine Hausärztin oder deinen Orthopäden auf das Formular 56 an. Nach Genehmigung durch die Krankenkasse meldest du dich bei uns."
+      "Lege im passenden Ordner eine neue Markdown-Datei an. Nach dem Speichern erscheint sie automatisch in der Übersicht."
   },
   {
-    question: "Kann ich mehrere Kurse pro Woche besuchen?",
+    question: "Welche Formatierung wird unterstützt?",
     answer:
-      "Im Rahmen der Verordnung ist ein Kurs pro Woche vorgesehen. Wenn Kapazitäten frei sind, kannst du zusätzliche Termine als Selbstzahler*in buchen."
+      "Listen, Überschriften und fett formatierte Labels werden ausgewertet. Freier Fließtext bleibt ebenfalls lesbar."
   },
   {
-    question: "Sind Schnupperstunden möglich?",
+    question: "Kann ich den Reader offline nutzen?",
     answer:
-      "Sehr gern! Wir bieten kostenfreie Kennenlerntermine an. Wähle einfach im Kontaktformular \"Schnupperstunde\" aus."
+      "Ja. Lade die Seite vor der Stunde einmal, dann bleiben Inhalte im Browser-Cache verfügbar."
   }
 ] as const;

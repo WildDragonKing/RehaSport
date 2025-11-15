@@ -11,9 +11,13 @@
     "test": "vitest"
   },
   "dependencies": {
+    "gray-matter": "^4.0.3",
+    "mdast-util-to-string": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.23.1"
+    "react-router-dom": "^6.23.1",
+    "remark-parse": "^11.0.0",
+    "unified": "^11.0.5"
   },
   "devDependencies": {
     "@types/node": "^24.10.1",

@@ -1,145 +1,79 @@
-# System-Übersicht: RehaSport Übungs- und Stundensammlung
+# System-Übersicht: RehaSport Reader
 
-## Zweck dieses Projekts
+## Zweck des Projekts
 
-Diese RehaSport-Sammlung dient als umfassendes Dokumentationssystem für Rehabilitations-Übungen und strukturierte Trainingsstunden. Das System ermöglicht:
-
-- **Zentrale Übungsdatenbank**: Alle Übungen mit detaillierten Beschreibungen, medizinischen Hinweisen und Anpassungsmöglichkeiten
-- **Strukturierte Stunden**: 45-minütige Trainingseinheiten nach bewährtem RehaSport-Konzept
-- **Barrierefreie Alternativen**: Jede Übung mit Anpassungen für Knie- und Schulterprobleme
-- **Konsistente Dokumentation**: Einheitliche Templates für einfache Erstellung und Wartung
+Der Reader dient Trainer*innen als digitales Handbuch für RehaSport-Stunden. Alle Inhalte liegen in Markdown-Dateien, die ohne zusätzliche Datenbank oder Buchungslogik direkt in der App angezeigt werden.
 
 ## Projektstruktur
 
 ```
 RehaSport/
-├── README.md                          # Haupteinstieg und Navigation
-├── Prüfung/                          # Referenzmaterialien und Prüfungsunterlagen
-├── Übungen/                          # Übungsdatenbank
-│   ├── _template_übung.md            # Vorlage für neue Übungen
-│   └── [einzelne Übungsdateien]      # z.B. kniebeuge_variationen.md
-├── Stunden/                          # Trainingseinheiten
-│   ├── _template_stunde.md           # Vorlage für neue Stunden
-│   └── [einzelne Stunden]            # z.B. stunde_01_rücken.md
-├── Anleitung/                        # Dokumentation
-│   ├── system_übersicht.md           # Diese Datei
-│   ├── übungen_erstellen.md          # Anleitung zum Erstellen von Übungen
-│   ├── stunden_planen.md             # Anleitung zum Planen von Stunden
-│   └── alternative_übungen.md        # Prinzipien für Anpassungen
-└── Konzepte/                         # Thematische Schwerpunkte
-    └── [Konzeptdateien]              # z.B. rückengesundheit.md
+├── README.md                      # Einstieg & Kurzanleitung
+├── stunden/                       # Ordner für Stunden-Kategorien
+│   └── <ordner>/<stunde>.md       # Eine Datei = eine Stunde
+├── docs/                          # Architektur- und Pflegehinweise
+└── site/                          # React-Frontend (Vite)
+    ├── src/content/sessions.ts    # Markdown-Parsing & Aggregation
+    ├── src/pages/                 # Seiten für Ordner & Reader
+    └── src/index.css              # Layout & Komponenten
 ```
 
 ## Arbeitsablauf
 
-### 1. Übungen erstellen
+1. **Ordner wählen**: Für jede Kategorie (z. B. `ruecken`, `balance`, `herz-kreislauf`) existiert ein Unterordner in `stunden/`.
+2. **Markdown kopieren**: Nutze eine bestehende Datei als Vorlage. Frontmatter und Abschnittsstruktur beibehalten.
+3. **Übungen pflegen**: Nummerierte Liste im Abschnitt `## Übungen`. Unterpunkte mit `**Label:**` für Details.
+4. **Speichern**: Die App erkennt neue Dateien automatisch – Browser aktualisieren reicht.
 
-1. Template kopieren: `Übungen/_template_übung.md`
-2. Mit Inhalt füllen (siehe [Übungen erstellen](übungen_erstellen.md))
-3. Speichern unter beschreibendem Namen
-4. **Wichtig**: Alternativen für Knie und Schulter dokumentieren
+## Aufbau einer Stunde
 
-### 2. Stunden planen
-
-1. Konzept/Thema festlegen (siehe [Konzepte/](../Konzepte/))
-2. Template kopieren: `Stunden/_template_stunde.md`
-3. Übungen auswählen und zuordnen (siehe [Stunden planen](stunden_planen.md))
-4. Zeitplan einhalten: 10-15-15-10 Minuten
-5. Für jede Übung Alternativen angeben
-
-### 3. Verknüpfungen nutzen
-
-- Stunden verlinken auf Übungsdateien: `[Übungsname](../Übungen/dateiname.md)`
-- Verwandte Übungen cross-referenzieren
-- Konzepte in Stunden referenzieren
-
-## Stundenaufbau (45 Minuten)
-
-Jede Trainingsstunde folgt diesem bewährten RehaSport-Schema:
-
-| Phase | Dauer | Ziel |
-|-------|-------|------|
-| **Aufwärmen** | 10 Min | Körper aktivieren, Gelenke mobilisieren, Herz-Kreislauf vorbereiten |
-| **Hauptteil** | 15 Min | Kraft und Ausdauer trainieren, funktionelle Bewegungen |
-| **Schwerpunkt** | 15 Min | Themenspezifische Übungen, gezielte Rehabilitation |
-| **Ausklang** | 10 Min | Dehnung, Entspannung, Regeneration |
-
-## Anpassungsprinzipien
-
-### Knieprobleme (häufig!)
-
-- Keine tiefen Kniebeugen
-- Begrenzte Belastung/Impact
-- Stuhl als Stütze
-- Beispiele: Sitzende Varianten, reduzierter Bewegungsumfang
-
-### Schulterprobleme (häufig!)
-
-- Begrenzte Überkopf-Bewegungen
-- Reduzierte Arm-Hebel
-- Keine Stützübungen mit vollem Gewicht
-- Beispiele: Arme auf Schulterhöhe statt über Kopf
-
-### Weitere Anpassungen
-
-- **Balance-Probleme**: Stuhl/Wand als Unterstützung
-- **Kardiovaskuläre Einschränkungen**: Intensität reduzieren, mehr Pausen
-- **Rückenschmerzen**: Neutrale Wirbelsäule betonen, Core-Stabilität
-
-## Tag-System
-
-Für bessere Organisation und Filterung verwenden wir einheitliche Tags:
-
-### Bereich-Tags
-
-- `#aufwärmen` `#hauptteil` `#schwerpunkt` `#ausklang`
-
-### Schwerpunkt-Tags
-
-- `#kraft` `#ausdauer` `#beweglichkeit` `#koordination` `#balance`
-
-### Anpassungs-Tags
-
-- `#knie-freundlich` `#schulter-freundlich` `#anfänger` `#fortgeschritten` `#senioren`
-
-### Zielgruppen-Tags
-
-- `#orthopädie` `#herz-kreislauf` `#neurologie` `#allgemein`
-
-## Best Practices
-
-1. **Konsistenz**: Immer die Templates verwenden
-2. **Vollständigkeit**: Alle Pflichtfelder ausfüllen, besonders Kontraindikationen
-3. **Medizinische Sicherheit**: Kontraindikationen und Alternativen ernst nehmen
-4. **Verlinkung**: Zusammenhänge durch Links dokumentieren
-5. **Aktualität**: Datum der letzten Änderung pflegen
-6. **Klarheit**: Einfache, verständliche Sprache für alle Teilnehmer
-
-## Nächste Schritte
-
-1. Lesen Sie [Übungen erstellen](übungen_erstellen.md)
-2. Lesen Sie [Stunden planen](stunden_planen.md)
-3. Lesen Sie [Alternative Übungen](alternative_übungen.md)
-4. Beginnen Sie mit 10-15 Basis-Übungen
-5. Erstellen Sie Ihre erste Beispielstunde
-
-## Häufige Fragen
-
-**Wie viele Übungen brauche ich für eine Stunde?**
-
-- Typischerweise 8-12 Übungen (2-3 pro Phase)
-
-**Muss ich für jede Übung Alternativen angeben?**
-
-- Ja, mindestens für Knie- und Schulterprobleme
-
-**Kann ich Übungen wiederverwenden?**
-
-- Ja! Das ist der Sinn der Übungsdatenbank - einmal dokumentieren, mehrfach nutzen
-
-**Wie detailliert sollen Übungsbeschreibungen sein?**
-
-- So detailliert, dass ein Übungsleiter sie ohne Vorkenntnisse ausführen kann
-
+```markdown
 ---
-**Letzte Aktualisierung**: 13.11.2025
+beschreibung: Kurzer Überblick über Zielgruppe und Schwerpunkt.
+dauer: 50 Minuten
+fokus: Herz-Kreislauf, Koordination
+---
+
+# Titel der Stunde
+
+## Beschreibung
+Freitext für Trainer*innen.
+
+## Dauer
+50 Minuten
+
+## Fokus
+Optional – mehrere Begriffe mit Komma trennen.
+
+## Übungen
+1. Name der Übung
+   - **Beschreibung:** Ablauf der Übung.
+   - **Dauer/Wiederholungen:** Zeit oder Wiederholungen.
+   - **Equipment:** Optionales Material.
+   - **Hinweise:** Alternativen, Coaching-Tipps.
+```
+
+## Navigation in der App
+
+- **Startseite**: Zeigt alle Ordner, sortiert nach Namen.
+- **Ordnerseite**: Zeigt alle Stunden inkl. Dauer und Fokus.
+- **Stundenseite**: Reader mit Aktive-Übung-Markierung, Vor-/Zurück-Steuerung und Detailansicht.
+
+## Stil- und UX-Vorgaben
+
+- Großzügige Abstände und klare Typografie (siehe `site/src/index.css`).
+- Buttons und Links besitzen sichtbare Fokuszustände.
+- Breadcrumb erleichtert die Orientierung während des Trainings.
+
+## Tests & Qualitätssicherung
+
+- `npm run test` rendert wichtige Seiten serverseitig und prüft Kerninhalte.
+- Vor Deployments zusätzlich `npm run build` ausführen.
+
+## Erweiterungen
+
+- Neue Kategorien: Ordner in `stunden/` anlegen.
+- Weitere Inhalte: Markdown-Dateien ergänzen – keine zusätzlichen Konfigurationen nötig.
+- UI-Anpassungen: In `site/src/index.css` gepflegt, möglichst mit bestehenden Variablen arbeiten.
+
+**Letzte Aktualisierung**: 14.11.2025
