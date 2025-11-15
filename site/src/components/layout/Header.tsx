@@ -4,6 +4,7 @@ import ThemeSwitcher from "../ui/ThemeSwitcher";
 
 const NAV_ITEMS = [
   { path: "/", label: "Ordner" },
+  { path: "/uebungen", label: "Übungen" },
   { path: "/info", label: "Hinweise" }
 ];
 
