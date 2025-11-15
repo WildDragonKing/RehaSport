@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import Button from "../components/ui/Button";
+import { findExerciseSlugByTitle } from "../content/exercises";
 import { getCategory, getSession } from "../content/sessions";
 
 function SessionPage(): JSX.Element {
@@ -43,6 +44,9 @@ function SessionPage(): JSX.Element {
     setActiveIndex((index) => Math.min(exercises.length - 1, index + 1));
   }
 
+  const totalExercises = exercises.length;
+  const activePosition = totalExercises > 0 ? `${safeIndex + 1} / ${totalExercises}` : undefined;
+
   return (
     <div className="container stack">
       <nav className="breadcrumb" aria-label="Navigation">
@@ -78,9 +82,13 @@ function SessionPage(): JSX.Element {
       </header>
 
       <section className="exercise-controls" aria-label="Steuerung">
-        <span className="exercise-status">
-          Aktive Übung: <strong>{activeExercise?.title ?? "-"}</strong>
-        </span>
+        <div className="exercise-status">
+          <span className="exercise-status__label">Aktive Übung</span>
+          <div className="exercise-status__content">
+            {activePosition ? <span className="exercise-status__position">{activePosition}</span> : null}
+            <strong className="exercise-status__title">{activeExercise?.title ?? "-"}</strong>
+          </div>
+        </div>
         <div className="exercise-buttons">
           <Button
             type="button"
@@ -106,20 +114,28 @@ function SessionPage(): JSX.Element {
       <ol className="exercise-list" aria-label="Übungsablauf">
         {exercises.map((exercise, index) => {
           const isActive = index === safeIndex;
+          const exerciseSlug = findExerciseSlugByTitle(exercise.title);
           return (
             <li key={exercise.title} className={isActive ? "exercise exercise--active" : "exercise"}>
-              <button
-                type="button"
-                className="exercise__header"
-                onClick={() => setActiveIndex(index)}
-                aria-pressed={isActive}
-              >
-                <span className="exercise__number" aria-hidden="true">
-                  {index + 1}
-                </span>
-                <span className="exercise__title">{exercise.title}</span>
-                {isActive ? <span className="exercise__badge">Aktiv</span> : null}
-              </button>
+              <div className="exercise__header">
+                <button
+                  type="button"
+                  className="exercise__selector"
+                  onClick={() => setActiveIndex(index)}
+                  aria-pressed={isActive}
+                >
+                  <span className="exercise__number" aria-hidden="true">
+                    {index + 1}
+                  </span>
+                  <span className="exercise__title">{exercise.title}</span>
+                  {isActive ? <span className="exercise__badge">Aktiv</span> : null}
+                </button>
+                {exerciseSlug ? (
+                  <Link className="exercise__link" to={`/uebungen/${exerciseSlug}`}>
+                    Zur Übung
+                  </Link>
+                ) : null}
+              </div>
               {exercise.details.length > 0 ? (
                 <dl className="exercise__details">
                   {exercise.details.map((detail) => (

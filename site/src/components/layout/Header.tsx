@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 
 const NAV_ITEMS = [
   { path: "/", label: "Ordner" },
+  { path: "/uebungen", label: "Übungen" },
   { path: "/info", label: "Hinweise" }
 ];
 
