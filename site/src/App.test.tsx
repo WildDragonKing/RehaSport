@@ -1,9 +1,24 @@
 import { renderToString } from "react-dom/server";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi, type Mock } from "vitest";
 
 import App from "./App";
 
-type MockUseContentIndex = ReturnType<typeof vi.fn>;
+type ContentIndexResult = {
+  entries: {
+    id: string;
+    type: "stunde";
+    path: string;
+    title: string;
+    summary: string;
+    concepts: string[];
+    phases: string[];
+    tags: string[];
+  }[];
+  isLoading: boolean;
+  error: undefined;
+};
+
+type MockUseContentIndex = Mock<[], ContentIndexResult>;
 
 const mockEntries = [
   {
@@ -19,7 +34,7 @@ const mockEntries = [
 ];
 
 vi.mock("./hooks/useContentIndex", () => {
-  const useContentIndex: MockUseContentIndex = vi.fn(() => ({
+  const useContentIndex: MockUseContentIndex = vi.fn<[], ContentIndexResult>(() => ({
     entries: mockEntries,
     isLoading: false,
     error: undefined
