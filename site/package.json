@@ -1,5 +1,11 @@
 {
   "name": "rehasport-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node ./build.mjs",
+    "generate:content": "node ../scripts/generate-content-index.js"
   "version": "0.1.0",
   "private": true,
   "type": "module",
