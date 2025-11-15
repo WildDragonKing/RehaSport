@@ -1,4 +1,28 @@
 import { renderToString } from "react-dom/server";
+import { MemoryRouter } from "react-router-dom";
+import { describe, expect, it } from "vitest";
+
+import App from "./App";
+
+describe("App", () => {
+  it("zeigt die Startseite mit Hero und Navigation", () => {
+    const html = renderToString(
+      <MemoryRouter initialEntries={["/"]}>
+        <App />
+      </MemoryRouter>
+    );
+
+    expect(html).toContain("RehaSport Zentrum");
+    expect(html).toContain("RehaSport, der motiviert und wirkt");
+    expect(html).toContain("Zu den Kursen");
+  });
+
+  it("zeigt die Kursübersicht mit Kurskarten", () => {
+    const html = renderToString(
+      <MemoryRouter initialEntries={["/kurse"]}>
+        <App />
+      </MemoryRouter>
+    );
 import { describe, expect, it, vi } from "vitest";
 
 import App from "./App";
@@ -25,16 +49,20 @@ vi.mock("./hooks/useContentIndex", () => {
     error: undefined
   }));
 
-  return { useContentIndex };
-});
+    expect(html).toContain("Unsere Kursübersicht");
+    expect(html).toContain("Rückenfit & Entspannung");
+    expect(html).toContain("Cardio Sanft");
+  });
 
-describe("App", () => {
-  it("rendert die Navigation und die Inhalte der aktiven Kategorie", () => {
-    const html = renderToString(<App />);
+  it("liefert Kontaktformular mit Pflichtfeldern", () => {
+    const html = renderToString(
+      <MemoryRouter initialEntries={["/kontakt"]}>
+        <App />
+      </MemoryRouter>
+    );
 
-    expect(html).toContain("Stunden");
-    expect(html).toContain("Übungen");
-    expect(html).toContain("Konzepte");
-    expect(html).toContain("Balance Basics");
+    expect(html).toContain("Kontakt & Anmeldung");
+    expect(html).toContain("Name*");
+    expect(html).toContain("Nachricht absenden");
   });
 });
