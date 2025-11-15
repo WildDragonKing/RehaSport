@@ -23,6 +23,31 @@ describe("App", () => {
         <App />
       </MemoryRouter>
     );
+import { describe, expect, it, vi } from "vitest";
+
+import App from "./App";
+import type { UseContentIndexResult } from "./hooks/useContentIndex";
+import type { ContentEntry } from "./types";
+
+const mockEntries: ContentEntry[] = [
+  {
+    id: "stunde-1",
+    type: "stunde",
+    path: "Stunden/balance-basics.md",
+    title: "Balance Basics",
+    summary: "Stabilität verbessern",
+    concepts: ["Balance"],
+    phases: ["Phase 1"],
+    tags: ["mobilität"]
+  }
+];
+
+vi.mock("./hooks/useContentIndex", () => {
+  const useContentIndex = vi.fn<[], UseContentIndexResult>(() => ({
+    entries: mockEntries,
+    isLoading: false,
+    error: undefined
+  }));
 
     expect(html).toContain("Unsere Kursübersicht");
     expect(html).toContain("Rückenfit & Entspannung");
