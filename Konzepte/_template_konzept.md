@@ -67,8 +67,8 @@
 
 **Stunden, die dieses Konzept nutzen:**
 
-- [Stunde 01: Titel](../Stunden/stunde_01.md) - Kurzbeschreibung
-- [Stunde 05: Titel](../Stunden/stunde_05.md) - Kurzbeschreibung
+- [Stunde 01: Titel](../stunden/kategorie/dateiname.md) - Kurzbeschreibung
+- [Stunde 05: Titel](../stunden/kategorie/dateiname.md) - Kurzbeschreibung
 
 ## 🔄 Progression
 

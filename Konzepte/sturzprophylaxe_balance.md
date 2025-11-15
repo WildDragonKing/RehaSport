@@ -85,8 +85,7 @@ Stürze gehören zu den häufigsten und folgenschwersten Gesundheitsrisiken im A
 
 **Stunden, die dieses Konzept nutzen:**
 
-- [Stunde 02: Sturzprophylaxe & Sicherer Stand](../Stunden/stunde_02_sturzprophylaxe.md) - Fokus auf Balance und Beinkraft
-- [Stunde 06: Gangstabilität](../Stunden/stunde_06_gangstabilität.md) - Funktionelles Gangtraining (geplant)
+- [Balance & Sturzprophylaxe](../stunden/balance/sturzprophylaxe.md) – Sicherer Stand mit progressivem Gleichgewichtstraining
 
 ## 🔄 Progression
 

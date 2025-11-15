@@ -87,8 +87,7 @@ Gelenke benötigen beides: Stabilität für Belastung und Mobilität für Funkti
 
 **Stunden, die dieses Konzept nutzen:**
 
-- [Stunde 03: Gelenkgesundheit](../Stunden/stunde_03_gelenkgesundheit.md) - Ganzheitlicher Gelenkfokus
-- [Stunde 05: Ganzkörper-Kräftigung](../Stunden/stunde_05_ganzkörper.md) - Kräftigung für Gelenkstabilität
+- [Schulter-Mobility](../stunden/schulter/schulter-mobility.md) – Gelenkschonende Mobilisation und Stabilitätstraining
 
 ## 🔄 Progression
 

@@ -6,6 +6,8 @@ Dies ist ein deutschsprachiges Dokumentationssystem für Rehabilitationssport (R
 
 **Projektsprache**: Deutsch (alle Inhalte, Dateinamen und Dokumentation)
 
+**Synchronisationspflicht**: Änderungen an diesen Copilot-Anweisungen, an `AGENTS.md` oder an `claude.md` müssen immer miteinander abgestimmt und im selben Commit vorgenommen werden. Halte die Dokumentation konsolidiert, entferne Redundanzen und verzichte auf unnötige zusätzliche Markdown-Dateien.
+
 ## Architektur & Struktur
 
 ### Kernkomponenten
