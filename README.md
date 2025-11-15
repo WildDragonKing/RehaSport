@@ -156,8 +156,25 @@ Alle Übungen einer Stunde verfolgen ein gemeinsames Ziel:
 
 Für bessere Organisation verwenden Sie Tags:
 
-**Bereich**: `#aufwärmen` `#hauptteil` `#schwerpunkt` `#ausklang`  
-**Schwerpunkt**: `#kraft` `#ausdauer` `#beweglichkeit` `#koordination` `#balance`  
+**Bereich**: `#aufwärmen` `#hauptteil` `#schwerpunkt` `#ausklang`
+**Schwerpunkt**: `#kraft` `#ausdauer` `#beweglichkeit` `#koordination` `#balance`
+
+## 🌐 GitHub Pages
+
+Die Projektseiten werden automatisch über GitHub Pages unter der Custom-Domain
+[`rehasport.buettgen.app`](https://rehasport.buettgen.app) bereitgestellt. Der Deployment-Workflow baut
+täglich einen aktuellen Inhaltsindex und veröffentlicht die statische Seite.
+
+### DNS-Konfiguration für die Custom-Domain
+
+1. Legen Sie im DNS Ihrer Domain einen **CNAME-Eintrag** auf Ihre GitHub-Pages-Standardadresse an.
+   - Format: `CNAME` → `<benutzername>.github.io`
+   - Beispiel: `rehasport.buettgen.app CNAME buettgen.github.io`
+2. Hinterlegen Sie die Domain ebenfalls in den Repository-Einstellungen unter **Settings → Pages**.
+3. Warten Sie, bis die DNS-Änderung propagiert ist (kann bis zu 24 Stunden dauern).
+4. Überprüfen Sie anschließend das Zertifikat (GitHub stellt automatisch ein TLS-Zertifikat bereit).
+
+Weitere Informationen bietet die offizielle Dokumentation zu [benutzerdefinierten Domains für GitHub Pages](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site).
 **Anpassung**: `#knie-freundlich` `#schulter-freundlich` `#anfänger` `#fortgeschritten` `#senioren`  
 **Zielgruppe**: `#orthopädie` `#herz-kreislauf` `#neurologie` `#allgemein`
 

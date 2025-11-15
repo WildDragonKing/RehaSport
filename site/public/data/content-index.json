@@ -1,0 +1,399 @@
+{
+  "generatedAt": "2025-11-15T12:09:24.949Z",
+  "branch": "main",
+  "repository": "buettgen/RehaSport",
+  "entries": [
+    {
+      "title": "[Übungsname]",
+      "summary": "[Übungsname]",
+      "category": "Übungen",
+      "relativePath": "Übungen/_template_übung.md",
+      "lastModified": "2025-11-15T12:04:11.970Z"
+    },
+    {
+      "title": "Anleitung: Alternative Übungen",
+      "summary": "Anleitung: Alternative Übungen",
+      "category": "Anleitung",
+      "relativePath": "Anleitung/alternative_übungen.md",
+      "lastModified": "2025-11-15T12:04:11.962Z"
+    },
+    {
+      "title": "Anleitung: Stunden planen",
+      "summary": "Anleitung: Stunden planen",
+      "category": "Anleitung",
+      "relativePath": "Anleitung/stunden_planen.md",
+      "lastModified": "2025-11-15T12:04:11.962Z"
+    },
+    {
+      "title": "Anleitung: Übungen erstellen",
+      "summary": "Anleitung: Übungen erstellen",
+      "category": "Anleitung",
+      "relativePath": "Anleitung/übungen_erstellen.md",
+      "lastModified": "2025-11-15T12:04:11.966Z"
+    },
+    {
+      "title": "Armheben mit Widerstand",
+      "summary": "Armheben mit Widerstand",
+      "category": "Übungen",
+      "relativePath": "Übungen/armheben_mit_widerstand.md",
+      "lastModified": "2025-11-15T12:04:11.970Z"
+    },
+    {
+      "title": "Armkreisen",
+      "summary": "Armkreisen",
+      "category": "Übungen",
+      "relativePath": "Übungen/armkreisen.md",
+      "lastModified": "2025-11-15T12:04:11.970Z"
+    },
+    {
+      "title": "Atemübung mit Armen",
+      "summary": "Atemübung mit Armen",
+      "category": "Übungen",
+      "relativePath": "Übungen/atemübung_mit_armen.md",
+      "lastModified": "2025-11-15T12:04:11.970Z"
+    },
+    {
+      "title": "Ausfallschritt zurück",
+      "summary": "Ausfallschritt zurück",
+      "category": "Übungen",
+      "relativePath": "Übungen/ausfallschritt_zurück.md",
+      "lastModified": "2025-11-15T12:04:11.970Z"
+    },
+    {
+      "title": "Beckenlift",
+      "summary": "Beckenlift",
+      "category": "Übungen",
+      "relativePath": "Übungen/beckenlift.md",
+      "lastModified": "2025-11-15T12:04:11.970Z"
+    },
+    {
+      "title": "Beinpendel seitlich",
+      "summary": "Beinpendel seitlich",
+      "category": "Übungen",
+      "relativePath": "Übungen/beinpendel_seitlich.md",
+      "lastModified": "2025-11-15T12:04:11.970Z"
+    },
+    {
+      "title": "Brustdehnung an der Wand",
+      "summary": "Brustdehnung an der Wand",
+      "category": "Übungen",
+      "relativePath": "Übungen/brustdehnung_an_der_wand.md",
+      "lastModified": "2025-11-15T12:04:11.970Z"
+    },
+    {
+      "title": "Dehnung Hüftbeuger",
+      "summary": "Dehnung Hüftbeuger",
+      "category": "Übungen",
+      "relativePath": "Übungen/dehnung_hüftbeuger.md",
+      "lastModified": "2025-11-15T12:04:11.970Z"
+    },
+    {
+      "title": "Dehnung Oberschenkelrückseite",
+      "summary": "Dehnung Oberschenkelrückseite",
+      "category": "Übungen",
+      "relativePath": "Übungen/dehnung_oberschenkelrückseite.md",
+      "lastModified": "2025-11-15T12:04:11.970Z"
+    },
+    {
+      "title": "Einbeinstand",
+      "summary": "Einbeinstand",
+      "category": "Übungen",
+      "relativePath": "Übungen/einbeinstand.md",
+      "lastModified": "2025-11-15T12:04:11.970Z"
+    },
+    {
+      "title": "Fersen- und Zehenstand",
+      "summary": "Fersen- und Zehenstand",
+      "category": "Übungen",
+      "relativePath": "Übungen/fersen_und_zehenstand.md",
+      "lastModified": "2025-11-15T12:04:11.970Z"
+    },
+    {
+      "title": "Fußkreisen",
+      "summary": "Fußkreisen",
+      "category": "Übungen",
+      "relativePath": "Übungen/fusskreisen.md",
+      "lastModified": "2025-11-15T12:04:11.970Z"
+    },
+    {
+      "title": "Hampelmann (modifiziert)",
+      "summary": "Hampelmann (modifiziert)",
+      "category": "Übungen",
+      "relativePath": "Übungen/hampelmann_modifiziert.md",
+      "lastModified": "2025-11-15T12:04:11.970Z"
+    },
+    {
+      "title": "Hüftkreisen",
+      "summary": "Hüftkreisen",
+      "category": "Übungen",
+      "relativePath": "Übungen/hüftkreisen.md",
+      "lastModified": "2025-11-15T12:04:11.970Z"
+    },
+    {
+      "title": "Katze-Kuh (Wirbelsäulenmobilisation)",
+      "summary": "Katze-Kuh (Wirbelsäulenmobilisation)",
+      "category": "Übungen",
+      "relativePath": "Übungen/katze_kuh.md",
+      "lastModified": "2025-11-15T12:04:11.970Z"
+    },
+    {
+      "title": "Knie zur Brust",
+      "summary": "Knie zur Brust",
+      "category": "Übungen",
+      "relativePath": "Übungen/knie_zur_brust.md",
+      "lastModified": "2025-11-15T12:04:11.970Z"
+    },
+    {
+      "title": "Kniebeuge (Wandstütze)",
+      "summary": "Kniebeuge (Wandstütze)",
+      "category": "Übungen",
+      "relativePath": "Übungen/kniebeuge_wandstütze.md",
+      "lastModified": "2025-11-15T12:04:11.974Z"
+    },
+    {
+      "title": "Kniebeuge mit Stuhl",
+      "summary": "Kniebeuge mit Stuhl",
+      "category": "Übungen",
+      "relativePath": "Übungen/kniebeuge_mit_stuhl.md",
+      "lastModified": "2025-11-15T12:04:11.970Z"
+    },
+    {
+      "title": "Konzept: [Konzeptname]",
+      "summary": "Konzept: [Konzeptname]",
+      "category": "Konzepte",
+      "relativePath": "Konzepte/_template_konzept.md",
+      "lastModified": "2025-11-15T12:04:11.966Z"
+    },
+    {
+      "title": "Konzept: Ganzkörperkräftigung",
+      "summary": "Konzept: Ganzkörperkräftigung",
+      "category": "Konzepte",
+      "relativePath": "Konzepte/ganzkörperkräftigung.md",
+      "lastModified": "2025-11-15T12:04:11.966Z"
+    },
+    {
+      "title": "Konzept: Gelenkstabilität & Mobilität",
+      "summary": "Konzept: Gelenkstabilität & Mobilität",
+      "category": "Konzepte",
+      "relativePath": "Konzepte/gelenkstabilität_mobilität.md",
+      "lastModified": "2025-11-15T12:04:11.966Z"
+    },
+    {
+      "title": "Konzept: Herz-Kreislauf-Aktivierung",
+      "summary": "Konzept: Herz-Kreislauf-Aktivierung",
+      "category": "Konzepte",
+      "relativePath": "Konzepte/herz_kreislauf_aktivierung.md",
+      "lastModified": "2025-11-15T12:04:11.966Z"
+    },
+    {
+      "title": "Konzept: Rückengesundheit",
+      "summary": "Konzept: Rückengesundheit",
+      "category": "Konzepte",
+      "relativePath": "Konzepte/rückengesundheit.md",
+      "lastModified": "2025-11-15T12:04:11.966Z"
+    },
+    {
+      "title": "Konzept: Sturzprophylaxe & Balance",
+      "summary": "Konzept: Sturzprophylaxe & Balance",
+      "category": "Konzepte",
+      "relativePath": "Konzepte/sturzprophylaxe_balance.md",
+      "lastModified": "2025-11-15T12:04:11.966Z"
+    },
+    {
+      "title": "Kreuzheben mit Wasserflasche",
+      "summary": "Kreuzheben mit Wasserflasche",
+      "category": "Übungen",
+      "relativePath": "Übungen/kreuzheben_mit_wasserflasche.md",
+      "lastModified": "2025-11-15T12:04:11.974Z"
+    },
+    {
+      "title": "Marschieren auf der Stelle",
+      "summary": "Marschieren auf der Stelle",
+      "category": "Übungen",
+      "relativePath": "Übungen/marschieren_auf_der_stelle.md",
+      "lastModified": "2025-11-15T12:04:11.974Z"
+    },
+    {
+      "title": "Nackenrollen",
+      "summary": "Nackenrollen",
+      "category": "Übungen",
+      "relativePath": "Übungen/nackenrollen.md",
+      "lastModified": "2025-11-15T12:04:11.974Z"
+    },
+    {
+      "title": "Oberkörper heben (Bauch)",
+      "summary": "Oberkörper heben (Bauch)",
+      "category": "Übungen",
+      "relativePath": "Übungen/oberkörper_heben_bauch.md",
+      "lastModified": "2025-11-15T12:04:11.974Z"
+    },
+    {
+      "title": "Planke an der Wand",
+      "summary": "Planke an der Wand",
+      "category": "Übungen",
+      "relativePath": "Übungen/planke_an_der_wand.md",
+      "lastModified": "2025-11-15T12:04:11.974Z"
+    },
+    {
+      "title": "Rumpfrotation im Stand",
+      "summary": "Rumpfrotation im Stand",
+      "category": "Übungen",
+      "relativePath": "Übungen/rumpfrotation_im_stand.md",
+      "lastModified": "2025-11-15T12:04:11.974Z"
+    },
+    {
+      "title": "Rumpfrotation mit Gewicht",
+      "summary": "Rumpfrotation mit Gewicht",
+      "category": "Übungen",
+      "relativePath": "Übungen/rumpfrotation_mit_gewicht.md",
+      "lastModified": "2025-11-15T12:04:11.974Z"
+    },
+    {
+      "title": "Schulterbrücke einbeinig",
+      "summary": "Schulterbrücke einbeinig",
+      "category": "Übungen",
+      "relativePath": "Übungen/schulterbrücke_einbeinig.md",
+      "lastModified": "2025-11-15T12:04:11.974Z"
+    },
+    {
+      "title": "Schulterkreisen",
+      "summary": "Schulterkreisen",
+      "category": "Übungen",
+      "relativePath": "Übungen/schulterkreisen.md",
+      "lastModified": "2025-11-15T12:04:11.974Z"
+    },
+    {
+      "title": "Seitliche Rumpfdehnung im Sitzen",
+      "summary": "Seitliche Rumpfdehnung im Sitzen",
+      "category": "Übungen",
+      "relativePath": "Übungen/seitliche_rumpfdehnung_im_sitzen.md",
+      "lastModified": "2025-11-15T12:04:11.974Z"
+    },
+    {
+      "title": "Seitlicher Ausfallschritt",
+      "summary": "Seitlicher Ausfallschritt",
+      "category": "Übungen",
+      "relativePath": "Übungen/seitlicher_ausfallschritt.md",
+      "lastModified": "2025-11-15T12:04:11.974Z"
+    },
+    {
+      "title": "Seitlicher Unterarmstütz (modifiziert)",
+      "summary": "Seitlicher Unterarmstütz (modifiziert)",
+      "category": "Übungen",
+      "relativePath": "Übungen/seitlicher_unterarmstütz_modifiziert.md",
+      "lastModified": "2025-11-15T12:04:11.974Z"
+    },
+    {
+      "title": "Seitneigung mit Armheben",
+      "summary": "Seitneigung mit Armheben",
+      "category": "Übungen",
+      "relativePath": "Übungen/seitneigung_armheben.md",
+      "lastModified": "2025-11-15T12:04:11.974Z"
+    },
+    {
+      "title": "Seitstütz Knie (modifiziert)",
+      "summary": "Seitstütz Knie (modifiziert)",
+      "category": "Übungen",
+      "relativePath": "Übungen/seitstütz_knie_modifiziert.md",
+      "lastModified": "2025-11-15T12:04:11.974Z"
+    },
+    {
+      "title": "Standwaage",
+      "summary": "Standwaage",
+      "category": "Übungen",
+      "relativePath": "Übungen/standwaage.md",
+      "lastModified": "2025-11-15T12:04:11.974Z"
+    },
+    {
+      "title": "Stunde [Nr]: [Titel/Thema]",
+      "summary": "Stunde [Nr]: [Titel/Thema]",
+      "category": "Stunden",
+      "relativePath": "Stunden/_template_stunde.md",
+      "lastModified": "2025-11-15T12:04:11.966Z"
+    },
+    {
+      "title": "Stunde 01: Rückenfit - Stabilität und Mobilität",
+      "summary": "Stunde 01: Rückenfit - Stabilität und Mobilität",
+      "category": "Stunden",
+      "relativePath": "Stunden/stunde_01_rückenfit.md",
+      "lastModified": "2025-11-15T12:04:11.966Z"
+    },
+    {
+      "title": "Stunde 02: Sturzprophylaxe & Sicherer Stand",
+      "summary": "Stunde 02: Sturzprophylaxe & Sicherer Stand",
+      "category": "Stunden",
+      "relativePath": "Stunden/stunde_02_sturzprophylaxe.md",
+      "lastModified": "2025-11-15T12:04:11.966Z"
+    },
+    {
+      "title": "Stunde 03: Gelenkgesundheit",
+      "summary": "Stunde 03: Gelenkgesundheit",
+      "category": "Stunden",
+      "relativePath": "Stunden/stunde_03_gelenkgesundheit.md",
+      "lastModified": "2025-11-15T12:04:11.966Z"
+    },
+    {
+      "title": "Stunde 04: Herz-Kreislauf-Aktivierung",
+      "summary": "Stunde 04: Herz-Kreislauf-Aktivierung",
+      "category": "Stunden",
+      "relativePath": "Stunden/stunde_04_herz_kreislauf.md",
+      "lastModified": "2025-11-15T12:04:11.970Z"
+    },
+    {
+      "title": "Stunde 05: Ganzkörper-Kräftigung",
+      "summary": "Stunde 05: Ganzkörper-Kräftigung",
+      "category": "Stunden",
+      "relativePath": "Stunden/stunde_05_ganzkörper.md",
+      "lastModified": "2025-11-15T12:04:11.970Z"
+    },
+    {
+      "title": "System-Übersicht: RehaSport Übungs- und Stundensammlung",
+      "summary": "System-Übersicht: RehaSport Übungs- und Stundensammlung",
+      "category": "Anleitung",
+      "relativePath": "Anleitung/system_übersicht.md",
+      "lastModified": "2025-11-15T12:04:11.966Z"
+    },
+    {
+      "title": "Tandemstand",
+      "summary": "Tandemstand",
+      "category": "Übungen",
+      "relativePath": "Übungen/tandemstand.md",
+      "lastModified": "2025-11-15T12:04:11.974Z"
+    },
+    {
+      "title": "Trizeps-Dips am Stuhl",
+      "summary": "Trizeps-Dips am Stuhl",
+      "category": "Übungen",
+      "relativePath": "Übungen/trizeps_dips_am_stuhl.md",
+      "lastModified": "2025-11-15T12:04:11.974Z"
+    },
+    {
+      "title": "Übungsindex",
+      "summary": "Übungsindex",
+      "category": "Übungen",
+      "relativePath": "Übungen/ÜBUNGSINDEX.md",
+      "lastModified": "2025-11-15T12:04:11.978Z"
+    },
+    {
+      "title": "Vogel-Hund (Vierfüßlerstand)",
+      "summary": "Vogel-Hund (Vierfüßlerstand)",
+      "category": "Übungen",
+      "relativePath": "Übungen/vogel_hund.md",
+      "lastModified": "2025-11-15T12:04:11.974Z"
+    },
+    {
+      "title": "Wadenheben einbeinig",
+      "summary": "Wadenheben einbeinig",
+      "category": "Übungen",
+      "relativePath": "Übungen/wadenheben_einbeinig.md",
+      "lastModified": "2025-11-15T12:04:11.978Z"
+    },
+    {
+      "title": "Wandliegestütze",
+      "summary": "Wandliegestütze",
+      "category": "Übungen",
+      "relativePath": "Übungen/wandliegestütze.md",
+      "lastModified": "2025-11-15T12:04:11.978Z"
+    }
+  ]
+}
