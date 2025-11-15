@@ -1,38 +1,35 @@
-import { ChangeEvent, useId } from "react";
-
 import { ThemeMode, useTheme } from "../theme/ThemeProvider";
 
-const OPTIONS: Array<{ value: ThemeMode; label: string }> = [
-  { value: "light", label: "Hell" },
-  { value: "dark", label: "Dunkel" },
-  { value: "system", label: "System" }
+const OPTIONS: Array<{ value: ThemeMode; label: string; icon: string }> = [
+  { value: "light", label: "Hell", icon: "☀️" },
+  { value: "dark", label: "Dunkel", icon: "🌙" },
+  { value: "system", label: "System", icon: "💻" }
 ];
 
 function ThemeSwitcher(): JSX.Element {
   const { mode, setMode } = useTheme();
-  const id = useId();
 
-  const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setMode(event.target.value as ThemeMode);
-  };
+  const currentOption = OPTIONS.find((opt) => opt.value === mode) ?? OPTIONS[2];
+
+  function cycleTheme(): void {
+    const currentIndex = OPTIONS.findIndex((opt) => opt.value === mode);
+    const nextIndex = (currentIndex + 1) % OPTIONS.length;
+    setMode(OPTIONS[nextIndex].value);
+  }
 
   return (
-    <label className="theme-switch" htmlFor={id}>
-      <span className="visually-hidden">Darstellungsmodus wählen</span>
-      <select
-        id={id}
-        value={mode}
-        onChange={handleChange}
-        className="theme-switch__select"
-        aria-label="Darstellungsmodus"
-      >
-        {OPTIONS.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-    </label>
+    <button
+      type="button"
+      className="theme-switch"
+      onClick={cycleTheme}
+      aria-label={`Theme: ${currentOption.label}. Klicken zum Wechseln`}
+      title={`Theme: ${currentOption.label}`}
+    >
+      <span className="theme-switch__icon" aria-hidden="true">
+        {currentOption.icon}
+      </span>
+      <span className="visually-hidden">{currentOption.label}</span>
+    </button>
   );
 }
 

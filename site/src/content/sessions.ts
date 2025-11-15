@@ -14,12 +14,19 @@ export interface SessionExercise {
   details: SessionExerciseDetail[];
 }
 
+export interface SessionPhase {
+  title: string;
+  description?: string;
+  exercises: SessionExercise[];
+}
+
 export interface SessionMeta {
   slug: string;
   title: string;
   description?: string;
   duration?: string;
   focus?: string;
+  phases: SessionPhase[];
   exercises: SessionExercise[];
   categorySlug: string;
   categoryTitle: string;
@@ -149,33 +156,90 @@ function parseSession(path: string, source: string): SessionMeta {
   let title = humanizeSlug(sessionSlug);
   let currentSection: string | null = null;
   const sections: Record<string, Content[]> = {};
+  const phases: SessionPhase[] = [];
+  let inPhasenplan = false;
+  let currentPhase: { title: string; description?: string; nodes: Content[] } | null = null;
 
   for (const node of tree.children) {
     if (node.type === "heading") {
       const heading = node as Heading;
+      const headingText = toString(heading).trim();
+
       if (heading.depth === 1) {
-        title = toString(heading).trim();
+        title = headingText;
         currentSection = null;
+        inPhasenplan = false;
         continue;
       }
+
       if (heading.depth === 2) {
-        currentSection = normalizeKey(toString(heading));
+        currentSection = normalizeKey(headingText);
         sections[currentSection] = [];
+        inPhasenplan = currentSection === normalizeKey("Phasenplan");
+
+        // Save previous phase if exists
+        if (currentPhase) {
+          phases.push({
+            title: currentPhase.title,
+            description: currentPhase.description,
+            exercises: parseExercises(currentPhase.nodes)
+          });
+          currentPhase = null;
+        }
+        continue;
+      }
+
+      if (heading.depth === 3 && inPhasenplan) {
+        // Save previous phase if exists
+        if (currentPhase) {
+          phases.push({
+            title: currentPhase.title,
+            description: currentPhase.description,
+            exercises: parseExercises(currentPhase.nodes)
+          });
+        }
+
+        // Start new phase
+        currentPhase = {
+          title: headingText,
+          nodes: []
+        };
         continue;
       }
     }
 
-    if (currentSection) {
+    if (currentPhase) {
+      // Check if this is a paragraph starting with **Ziel:**
+      if (node.type === "paragraph") {
+        const text = toString(node);
+        if (text.startsWith("Ziel:")) {
+          currentPhase.description = text.replace(/^Ziel:\s*/, "").trim();
+          continue;
+        }
+      }
+      currentPhase.nodes.push(node);
+    } else if (currentSection) {
       sections[currentSection].push(node);
     }
+  }
+
+  // Save last phase if exists
+  if (currentPhase) {
+    phases.push({
+      title: currentPhase.title,
+      description: currentPhase.description,
+      exercises: parseExercises(currentPhase.nodes)
+    });
   }
 
   const description = (data.beschreibung as string | undefined)?.trim() ?? extractText(sections["beschreibung"] ?? []);
   const duration = (data.dauer as string | undefined)?.trim() ?? extractText(sections["dauer"] ?? []);
   const focus = (data.fokus as string | undefined)?.trim() ?? extractText(sections["fokus"] ?? []);
-  const exercises = parseExercises(
-    sections["ubungen"] ?? sections["übungen"] ?? sections[normalizeKey("Phasenplan")] ?? []
-  );
+
+  // Fallback for old format without phases
+  const allExercises = phases.length > 0
+    ? phases.flatMap(phase => phase.exercises)
+    : parseExercises(sections["ubungen"] ?? sections["übungen"] ?? sections[normalizeKey("Phasenplan")] ?? []);
 
   return {
     slug: sessionSlug,
@@ -183,7 +247,8 @@ function parseSession(path: string, source: string): SessionMeta {
     description: description || undefined,
     duration: duration || undefined,
     focus: focus || undefined,
-    exercises,
+    phases,
+    exercises: allExercises,
     categorySlug,
     categoryTitle
   };
