@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import Button from "../components/ui/Button";
@@ -10,7 +10,74 @@ function SessionPage(): JSX.Element {
   const session = categorySlug && sessionSlug ? getSession(categorySlug, sessionSlug) : undefined;
   const category = categorySlug ? getCategory(categorySlug) : undefined;
   const [expandedExercises, setExpandedExercises] = useState<Set<string>>(new Set());
+  const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
   const exerciseRefs = useRef<Map<string, HTMLLIElement>>(new Map());
+
+  // Flatten exercises for navigation
+  const allExercises = session?.phases.flatMap((phase, phaseIndex) =>
+    phase.exercises.map((exercise, exerciseIndex) => ({
+      exercise,
+      key: `${phaseIndex}-${exerciseIndex}`,
+      phaseTitle: phase.title,
+      phaseIndex,
+      exerciseIndex
+    }))
+  ) ?? [];
+
+  const allExerciseKeys = allExercises.map(e => e.key);
+  const allExpanded = allExerciseKeys.length > 0 && allExerciseKeys.every(key => expandedExercises.has(key));
+
+  // Navigate to specific exercise
+  const goToExercise = useCallback((index: number) => {
+    if (index >= 0 && index < allExercises.length) {
+      setCurrentExerciseIndex(index);
+      const exerciseKey = allExercises[index].key;
+
+      // Expand the target exercise
+      setExpandedExercises(prev => {
+        const next = new Set(prev);
+        next.add(exerciseKey);
+        return next;
+      });
+
+      // Scroll to exercise
+      setTimeout(() => {
+        const element = exerciseRefs.current.get(exerciseKey);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 100);
+
+      // Haptic feedback
+      if ("vibrate" in navigator) {
+        navigator.vibrate(10);
+      }
+    }
+  }, [allExercises]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent): void {
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+        e.preventDefault();
+        goToExercise(currentExerciseIndex + 1);
+      } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+        e.preventDefault();
+        goToExercise(currentExerciseIndex - 1);
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [currentExerciseIndex, goToExercise]);
+
+  function toggleAll(): void {
+    if (allExpanded) {
+      setExpandedExercises(new Set());
+    } else {
+      setExpandedExercises(new Set(allExerciseKeys));
+    }
+  }
 
   function getPhaseColor(phaseTitle: string): string {
     const title = phaseTitle.toLowerCase();
@@ -21,7 +88,7 @@ function SessionPage(): JSX.Element {
     return "";
   }
 
-  function toggleExercise(exerciseKey: string): void {
+  function toggleExercise(exerciseKey: string, globalIndex: number): void {
     const isCurrentlyExpanded = expandedExercises.has(exerciseKey);
 
     // Haptic feedback for mobile devices
@@ -39,12 +106,15 @@ function SessionPage(): JSX.Element {
       return next;
     });
 
+    // Update current exercise index
+    setCurrentExerciseIndex(globalIndex);
+
     // Auto-scroll to expanded exercise
     if (!isCurrentlyExpanded) {
       setTimeout(() => {
         const element = exerciseRefs.current.get(exerciseKey);
         if (element) {
-          element.scrollIntoView({ behavior: "smooth", block: "nearest" });
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
         }
       }, 100);
     }
@@ -63,7 +133,7 @@ function SessionPage(): JSX.Element {
       <div className="container stack">
         <header className="page-header">
           <h1>Stunde nicht gefunden</h1>
-          <p className="page-lead">Die angeforderte Stunde existiert nicht oder konnte nicht geladen werden.</p>
+          <p className="page-lead">Die angeforderte Stunde existiert nicht.</p>
         </header>
         <Button to="/" variant="secondary">
           Zur Übersicht
@@ -72,12 +142,15 @@ function SessionPage(): JSX.Element {
     );
   }
 
+  const currentExercise = allExercises[currentExerciseIndex];
+
   return (
     <div className="container stack">
+      {/* Breadcrumb */}
       <nav className="breadcrumb" aria-label="Navigation">
         <ol>
           <li>
-            <Link to="/">Ordner</Link>
+            <Link to="/">Start</Link>
           </li>
           <li>
             <Link to={`/ordner/${category.slug}`}>{category.title}</Link>
@@ -86,6 +159,7 @@ function SessionPage(): JSX.Element {
         </ol>
       </nav>
 
+      {/* Page Header */}
       <header className="page-header">
         <p className="page-eyebrow">Stunde</p>
         <h1>{session.title}</h1>
@@ -106,6 +180,52 @@ function SessionPage(): JSX.Element {
         </dl>
       </header>
 
+      {/* Session Controls */}
+      {session.phases.length > 0 && allExerciseKeys.length > 0 ? (
+        <div className="session-controls">
+          <button
+            type="button"
+            className="button button--secondary"
+            onClick={toggleAll}
+            aria-label={allExpanded ? "Alle zuklappen" : "Alle aufklappen"}
+          >
+            {allExpanded ? "Alle zuklappen" : "Alle aufklappen"}
+          </button>
+          <span className="session-controls__info">
+            {currentExerciseIndex + 1} / {allExercises.length}
+          </span>
+        </div>
+      ) : null}
+
+      {/* Quick Navigation for Mobile */}
+      {allExercises.length > 1 ? (
+        <div className="session-nav">
+          <button
+            type="button"
+            className="session-nav__btn"
+            onClick={() => goToExercise(currentExerciseIndex - 1)}
+            disabled={currentExerciseIndex === 0}
+            aria-label="Vorherige Übung"
+          >
+            ←
+          </button>
+          <div className="session-nav__current">
+            <span className="session-nav__phase">{currentExercise?.phaseTitle}</span>
+            <span className="session-nav__title">{currentExercise?.exercise.title}</span>
+          </div>
+          <button
+            type="button"
+            className="session-nav__btn"
+            onClick={() => goToExercise(currentExerciseIndex + 1)}
+            disabled={currentExerciseIndex === allExercises.length - 1}
+            aria-label="Nächste Übung"
+          >
+            →
+          </button>
+        </div>
+      ) : null}
+
+      {/* Session Phases */}
       {session.phases.length > 0 ? (
         <div className="session-phases">
           {session.phases.map((phase, phaseIndex) => {
@@ -120,7 +240,9 @@ function SessionPage(): JSX.Element {
                 <ol className="exercise-list" aria-label={`Übungen: ${phase.title}`}>
                   {phase.exercises.map((exercise, exerciseIndex) => {
                     const exerciseKey = `${phaseIndex}-${exerciseIndex}`;
+                    const globalIndex = allExercises.findIndex(e => e.key === exerciseKey);
                     const isExpanded = expandedExercises.has(exerciseKey);
+                    const isActive = globalIndex === currentExerciseIndex;
                     const exerciseSlug = findExerciseSlugByTitle(exercise.title);
                     const primaryDetail = exercise.details.find((d) => d.label === "Durchführung");
                     const otherDetails = exercise.details.filter((d) => d.label !== "Durchführung");
@@ -131,11 +253,15 @@ function SessionPage(): JSX.Element {
                     const hasAlternatives = kneeDetail || shoulderDetail;
 
                     return (
-                      <li key={exerciseKey} className="exercise exercise--compact" ref={(el) => setExerciseRef(exerciseKey, el)}>
+                      <li
+                        key={exerciseKey}
+                        className={`exercise exercise--compact ${isActive ? "exercise--active" : ""}`}
+                        ref={(el) => setExerciseRef(exerciseKey, el)}
+                      >
                         <button
                           type="button"
                           className="exercise__toggle"
-                          onClick={() => toggleExercise(exerciseKey)}
+                          onClick={() => toggleExercise(exerciseKey, globalIndex)}
                           aria-expanded={isExpanded}
                           aria-label={`${exercise.title}, ${primaryDetail?.value ?? ""}, ${isExpanded ? "Details ausblenden" : "Details anzeigen"}`}
                         >
@@ -181,7 +307,7 @@ function SessionPage(): JSX.Element {
                             ) : null}
                             {exerciseSlug ? (
                               <Link className="exercise__link" to={`/uebungen/${exerciseSlug}`}>
-                                Zur Übung
+                                Zur Übung →
                               </Link>
                             ) : null}
                           </div>
