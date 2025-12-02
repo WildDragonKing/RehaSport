@@ -1,84 +1,159 @@
 import { Link } from "react-router-dom";
 
+import { exercises } from "../content/exercises";
 import { categories } from "../content/sessions";
 
 function HomePage(): JSX.Element {
+  const totalSessions = categories.reduce((acc, cat) => acc + cat.sessions.length, 0);
+  const totalExercises = exercises.length;
+
   return (
-    <div className="container stack">
-      <header className="page-header">
-        <p className="page-eyebrow">Reader</p>
-        <h1>RehaSport Reader</h1>
-        <p className="page-lead">
-          Der RehaSport Reader bringt vorbereitete RehaSport-Stunden direkt auf den Bildschirm. Statt nach
-          Zetteln zu suchen, öffnest du die passende Einheit im Browser und folgst dem Ablauf Schritt für Schritt.
-        </p>
-      </header>
-
-      <section className="info-card">
-        <h2>Was du damit machen kannst</h2>
-        <ul>
-          <li>Du siehst alle Stunden übersichtlich sortiert nach Trainingsschwerpunkt.</li>
-          <li>Jede Stunde beschreibt Aufwärmen, Hauptteil, Schwerpunkt und Ausklang in klarer Sprache.</li>
-          <li>Hinweise zu Alternativen helfen dir, Übungen spontan anzupassen.</li>
-        </ul>
-      </section>
-
-      <section className="info-card">
-        <h2>Mitmachen</h2>
-        <p>
-          Hast du eine neue Idee für eine Stunde oder möchtest Feedback geben? Das Projekt lebt von gemeinsamer
-          Weiterentwicklung. Auf GitHub findest du den Quellcode, kannst Ideen diskutieren und direkt neue Vorschläge als
-          Issue einreichen.
-        </p>
-        <div className="cta-links" role="group" aria-label="Mitmachen">
-          <a
-            className="button button--secondary"
-            href="https://github.com/WildDragonKing/RehaSport"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Zum GitHub-Projekt
-          </a>
-          <a
-            className="button button--primary"
-            href="https://github.com/WildDragonKing/RehaSport/issues"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Idee als Issue einreichen
-          </a>
+    <div className="home-page">
+      {/* Hero Section */}
+      <section className="hero">
+        <div className="container">
+          <div className="hero__content">
+            <h1 className="hero__title">RehaSport Reader</h1>
+            <p className="hero__subtitle">
+              Strukturierte Trainingsstunden mit Alternativen für Knie- und Schulterprobleme.
+            </p>
+            <div className="hero__stats">
+              <div className="hero__stat">
+                <span className="hero__stat-number">{totalSessions}</span>
+                <span className="hero__stat-label">Stunden</span>
+              </div>
+              <div className="hero__stat">
+                <span className="hero__stat-number">{totalExercises}</span>
+                <span className="hero__stat-label">Übungen</span>
+              </div>
+            </div>
+            <div className="hero__actions">
+              <Link className="button button--primary" to="/uebungen">
+                Alle Übungen
+              </Link>
+            </div>
+          </div>
+          <div className="hero__visual">
+            <div className="hero__schema">
+              <div className="schema-item schema-item--warmup">
+                <span className="schema-item__time">10</span>
+                <span className="schema-item__label">Aufwärmen</span>
+              </div>
+              <div className="schema-item schema-item--main">
+                <span className="schema-item__time">15</span>
+                <span className="schema-item__label">Hauptteil</span>
+              </div>
+              <div className="schema-item schema-item--focus">
+                <span className="schema-item__time">15</span>
+                <span className="schema-item__label">Schwerpunkt</span>
+              </div>
+              <div className="schema-item schema-item--cooldown">
+                <span className="schema-item__time">10</span>
+                <span className="schema-item__label">Ausklang</span>
+              </div>
+            </div>
+            <p className="hero__schema-label">45-Minuten-Schema</p>
+          </div>
         </div>
       </section>
 
-      <div className="category-grid">
-        {categories.map((category) => (
-          <article key={category.slug} className="category-card">
-            <div className="category-card__header">
-              <h2>{category.title}</h2>
-              <p className="category-card__description">{category.description}</p>
-            </div>
-            {category.focusTags.length > 0 ? (
-              <ul className="tag-list" aria-label="Schwerpunkte">
-                {category.focusTags.map((tag) => (
-                  <li key={tag} className="tag">
-                    {tag}
-                  </li>
-                ))}
-              </ul>
-            ) : null}
-            <div className="category-card__footer">
-              <span className="category-card__meta">
-                {category.sessions.length} {category.sessions.length === 1 ? "Stunde" : "Stunden"}
-              </span>
-              <Link className="button button--primary" to={`/ordner/${category.slug}`}>
-                Ordner öffnen
+      {/* Categories Section */}
+      <section className="categories-section">
+        <div className="container">
+          <header className="section-header">
+            <h2>Kategorien</h2>
+            <p>Wähle eine Kategorie für die verfügbaren Stunden</p>
+          </header>
+
+          <div className="category-grid">
+            {categories.map((category) => (
+              <Link key={category.slug} to={`/ordner/${category.slug}`} className="category-card">
+                <div className="category-card__icon" aria-hidden="true">
+                  {getCategoryIcon(category.slug)}
+                </div>
+                <div className="category-card__content">
+                  <h3 className="category-card__title">{category.title}</h3>
+                  <p className="category-card__description">{category.description}</p>
+                </div>
+                <div className="category-card__footer">
+                  <span className="category-card__meta">
+                    {category.sessions.length} {category.sessions.length === 1 ? "Stunde" : "Stunden"}
+                  </span>
+                  <span className="category-card__arrow" aria-hidden="true">→</span>
+                </div>
               </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="features-section">
+        <div className="container">
+          <div className="features-grid">
+            <div className="feature-card">
+              <div className="feature-card__icon" aria-hidden="true">🦵</div>
+              <h3>Knie-Alternativen</h3>
+              <p>Sichere Anpassungen für Knieprobleme</p>
             </div>
-          </article>
-        ))}
-      </div>
+            <div className="feature-card">
+              <div className="feature-card__icon" aria-hidden="true">💪</div>
+              <h3>Schulter-Alternativen</h3>
+              <p>Modifikationen für Schulterprobleme</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-card__icon" aria-hidden="true">⏱️</div>
+              <h3>45-Min-Einheiten</h3>
+              <p>Strukturiert im 10-15-15-10 Schema</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contribute Section */}
+      <section className="contribute-section">
+        <div className="container">
+          <div className="contribute-card">
+            <div className="contribute-card__content">
+              <h2>Mitmachen</h2>
+              <p>
+                Das Projekt lebt von gemeinsamer Weiterentwicklung.
+              </p>
+            </div>
+            <div className="contribute-card__actions">
+              <a
+                className="button button--secondary"
+                href="https://github.com/WildDragonKing/RehaSport"
+                target="_blank"
+                rel="noreferrer"
+              >
+                GitHub
+              </a>
+              <a
+                className="button button--primary"
+                href="https://github.com/WildDragonKing/RehaSport/issues"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Idee einreichen
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
+}
+
+function getCategoryIcon(slug: string): string {
+  const icons: Record<string, string> = {
+    ruecken: "🏋️",
+    balance: "⚖️",
+    schulter: "💪",
+    "herz-kreislauf": "❤️",
+    ganzkoerper: "🧘"
+  };
+  return icons[slug] || "📁";
 }
 
 export default HomePage;

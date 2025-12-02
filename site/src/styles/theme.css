@@ -1,53 +1,111 @@
 :root,
 :root[data-theme="light"] {
   color-scheme: light;
-  font-family: "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Inter", "SF Pro Display", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   line-height: 1.6;
   font-weight: 400;
-  --color-primary: #0f766e;
-  --color-primary-strong: #0e625b;
-  --color-primary-soft: #d1fae5;
-  --color-secondary: #1d4ed8;
-  --color-secondary-soft: #dbeafe;
-  --color-background: #f4f7fb;
+
+  /* Modernes, minimalistisches Farbschema */
+  --color-primary: #0066ff;
+  --color-primary-strong: #0052cc;
+  --color-primary-soft: rgba(0, 102, 255, 0.08);
+  --color-secondary: #00b377;
+  --color-secondary-soft: rgba(0, 179, 119, 0.08);
+
+  --color-background: #fafafa;
   --color-surface: #ffffff;
-  --color-border: #d8dee9;
-  --color-text: #0f172a;
-  --color-text-muted: #475569;
-  --color-accent: #f59e0b;
-  --shadow-sm: 0 4px 12px rgba(15, 23, 42, 0.08);
-  --shadow-md: 0 12px 30px rgba(15, 23, 42, 0.12);
-  --max-width: 1200px;
+  --color-surface-elevated: #ffffff;
+  --color-border: #e5e5e5;
+  --color-border-light: #f0f0f0;
+  --color-text: #1a1a1a;
+  --color-text-muted: #666666;
+  --color-text-light: #999999;
+
+  /* Phasen-Farben - sanfter und moderner */
+  --color-warmup: #ff6b35;
+  --color-main: #0066ff;
+  --color-focus: #8b5cf6;
+  --color-cooldown: #00b377;
+
+  /* Minimale Schatten */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.1);
+
+  /* Großzügiges Spacing */
+  --spacing-2xs: 0.25rem;
   --spacing-xs: 0.5rem;
   --spacing-sm: 0.75rem;
-  --spacing-md: 1.5rem;
-  --spacing-lg: 2.5rem;
-  --spacing-xl: 4rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
+
+  /* Moderne Radien */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Layout */
+  --max-width: 960px;
+  --header-height: 56px;
+  --mobile-nav-height: 64px;
+
+  /* Touch-Targets (mind. 44px für Barrierefreiheit) */
+  --touch-target-min: 44px;
+  --touch-target-comfortable: 48px;
+
   background-color: var(--color-background);
   color: var(--color-text);
 }
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --color-primary: #14b8a6;
-  --color-primary-strong: #0d9488;
-  --color-primary-soft: rgba(20, 184, 166, 0.18);
-  --color-secondary: #60a5fa;
-  --color-secondary-soft: rgba(96, 165, 250, 0.16);
-  --color-background: #0b1220;
-  --color-surface: #111b2f;
-  --color-border: #1f2a44;
-  --color-text: #e2e8f0;
-  --color-text-muted: #94a3b8;
-  --color-accent: #fbbf24;
-  --shadow-sm: 0 4px 16px rgba(2, 6, 23, 0.55);
-  --shadow-md: 0 12px 36px rgba(2, 6, 23, 0.65);
+
+  --color-primary: #4d9fff;
+  --color-primary-strong: #80bfff;
+  --color-primary-soft: rgba(77, 159, 255, 0.12);
+  --color-secondary: #34d399;
+  --color-secondary-soft: rgba(52, 211, 153, 0.12);
+
+  --color-background: #0a0a0a;
+  --color-surface: #141414;
+  --color-surface-elevated: #1f1f1f;
+  --color-border: #2a2a2a;
+  --color-border-light: #1f1f1f;
+  --color-text: #fafafa;
+  --color-text-muted: #a3a3a3;
+  --color-text-light: #737373;
+
+  /* Phasen-Farben für Dark Mode */
+  --color-warmup: #ff8f66;
+  --color-main: #4d9fff;
+  --color-focus: #a78bfa;
+  --color-cooldown: #34d399;
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+
   background-color: var(--color-background);
   color: var(--color-text);
 }
 
+/* Base reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 a {
   color: inherit;
+  text-decoration: none;
 }
 
 img {
@@ -61,4 +119,17 @@ input,
 select,
 textarea {
   font: inherit;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Touch-friendly selection */
+@media (pointer: coarse) {
+  * {
+    -webkit-touch-callout: none;
+  }
 }

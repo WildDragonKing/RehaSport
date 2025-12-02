@@ -3,18 +3,18 @@ import { NavLink } from "react-router-dom";
 import ThemeSwitcher from "../ui/ThemeSwitcher";
 
 const NAV_ITEMS = [
-  { path: "/", label: "Ordner" },
-  { path: "/uebungen", label: "Übungen" },
-  { path: "/info", label: "Hinweise" }
+  { path: "/", label: "Start", shortLabel: "Start" },
+  { path: "/uebungen", label: "Übungen", shortLabel: "Übungen" },
+  { path: "/info", label: "Hinweise", shortLabel: "Info" }
 ];
 
 function Header(): JSX.Element {
   return (
     <header className="site-header" role="banner">
-      <div className="container site-header__inner">
+      <div className="site-header__inner">
         <NavLink to="/" className="site-header__brand" aria-label="RehaSport Reader Startseite">
-          <span aria-hidden="true">📘</span>
-          <span>RehaSport Reader</span>
+          <span className="site-header__logo" aria-hidden="true">R</span>
+          <span className="site-header__brand-text">RehaSport</span>
         </NavLink>
         <div className="site-header__controls">
           <nav className="site-header__nav" aria-label="Hauptnavigation">
@@ -31,7 +31,8 @@ function Header(): JSX.Element {
                     .join(" ")
                 }
               >
-                {item.label}
+                <span className="site-header__link-full">{item.label}</span>
+                <span className="site-header__link-short">{item.shortLabel}</span>
               </NavLink>
             ))}
           </nav>
