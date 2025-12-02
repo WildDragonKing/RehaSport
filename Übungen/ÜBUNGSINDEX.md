@@ -4,8 +4,8 @@
 
 Dieser Index listet alle dokumentierten Übungen sortiert nach Kategorien. Nutzen Sie diesen Index, um schnell passende Übungen für Ihre Stunden zu finden.
 
-**Stand**: 13.11.2025  
-**Anzahl Übungen gesamt**: 37
+**Stand**: 02.12.2025
+**Anzahl Übungen gesamt**: 45
 
 ---
 
@@ -26,6 +26,8 @@ Dieser Index listet alle dokumentierten Übungen sortiert nach Kategorien. Nutze
 | Hampelmann (modifiziert) | Ausdauer | 1-2 Min | Leicht | [hampelmann_modifiziert.md](hampelmann_modifiziert.md) |
 | Fersen- und Zehenstand | Balance | 1-2 Min | Leicht | [fersen_und_zehenstand.md](fersen_und_zehenstand.md) |
 | Rumpfrotation im Stand | Beweglichkeit | 1-2 Min | Leicht | [rumpfrotation_im_stand.md](rumpfrotation_im_stand.md) |
+| Stab-Rotation im Stand | Beweglichkeit | 3 Min | Mittel | [stab_rotation_im_stand.md](stab_rotation_im_stand.md) |
+| Redondo-Ball Rückenmobilisation | Beweglichkeit | 3 Min | Leicht | [redondo_rueckenmobilisation.md](redondo_rueckenmobilisation.md) |
 
 ---
 
@@ -46,6 +48,8 @@ Dieser Index listet alle dokumentierten Übungen sortiert nach Kategorien. Nutze
 | Beinpendel seitlich | Kraft | 2-3 Min | Leicht | [beinpendel_seitlich.md](beinpendel_seitlich.md) |
 | Armheben mit Widerstand | Kraft | 2-3 Min | Leicht | [armheben_mit_widerstand.md](armheben_mit_widerstand.md) |
 | Oberkörper heben (Bauch) | Kraft | 2-3 Min | Leicht | [oberkörper_heben_bauch.md](oberkörper_heben_bauch.md) |
+| Stab-Schultermobilisation | Beweglichkeit | 4 Min | Mittel | [stab_schultermobilisation.md](stab_schultermobilisation.md) |
+| Redondo-Ball Beckenkippung | Koordination | 4 Min | Mittel | [redondo_beckenkippung.md](redondo_beckenkippung.md) |
 
 ---
 
@@ -65,6 +69,8 @@ Intensive, themenspezifische Übungen
 | Seitstütz Knie (modifiziert) | Kraft | 2-3 Min | Mittel | [seitstütz_knie_modifiziert.md](seitstütz_knie_modifiziert.md) |
 | Rumpfrotation mit Gewicht | Kraft | 2-3 Min | Mittel | [rumpfrotation_mit_gewicht.md](rumpfrotation_mit_gewicht.md) |
 | Tandemstand | Balance | 2-3 Min | Mittel | [tandemstand.md](tandemstand.md) |
+| Stab-Seitneigung | Kraft | 4 Min | Mittel | [stab_seitneigung.md](stab_seitneigung.md) |
+| Redondo-Ball Rumpfstabilisation | Kraft | 5 Min | Mittel | [redondo_rumpfstabilisation.md](redondo_rumpfstabilisation.md) |
 
 ---
 
@@ -80,6 +86,8 @@ Intensive, themenspezifische Übungen
 | Brustdehnung an der Wand | Beweglichkeit | 2-3 Min | Leicht | [brustdehnung_an_der_wand.md](brustdehnung_an_der_wand.md) |
 | Seitliche Rumpfdehnung im Sitzen | Beweglichkeit | 2-3 Min | Leicht | [seitliche_rumpfdehnung_im_sitzen.md](seitliche_rumpfdehnung_im_sitzen.md) |
 | Atemübung mit Armen | Beweglichkeit | 2-3 Min | Leicht | [atemübung_mit_armen.md](atemübung_mit_armen.md) |
+| Stab-Brustdehnung | Beweglichkeit | 3 Min | Leicht | [stab_brustdehnung.md](stab_brustdehnung.md) |
+| Redondo-Ball Entspannung | Beweglichkeit | 3 Min | Leicht | [redondo_entspannung.md](redondo_entspannung.md) |
 
 ---
 
@@ -104,6 +112,8 @@ Intensive, themenspezifische Übungen
 - [Wadenheben einbeinig](wadenheben_einbeinig.md)
 - [Seitstütz Knie (modifiziert)](seitstütz_knie_modifiziert.md)
 - [Rumpfrotation mit Gewicht](rumpfrotation_mit_gewicht.md)
+- [Stab-Seitneigung](stab_seitneigung.md)
+- [Redondo-Ball Rumpfstabilisation](redondo_rumpfstabilisation.md)
 
 ### Beweglichkeit
 
@@ -121,6 +131,11 @@ Intensive, themenspezifische Übungen
 - [Brustdehnung an der Wand](brustdehnung_an_der_wand.md)
 - [Seitliche Rumpfdehnung im Sitzen](seitliche_rumpfdehnung_im_sitzen.md)
 - [Atemübung mit Armen](atemübung_mit_armen.md)
+- [Stab-Rotation im Stand](stab_rotation_im_stand.md)
+- [Stab-Schultermobilisation](stab_schultermobilisation.md)
+- [Stab-Brustdehnung](stab_brustdehnung.md)
+- [Redondo-Ball Rückenmobilisation](redondo_rueckenmobilisation.md)
+- [Redondo-Ball Entspannung](redondo_entspannung.md)
 
 ### Ausdauer
 
@@ -130,6 +145,7 @@ Intensive, themenspezifische Übungen
 ### Koordination
 
 - [Vogel-Hund (Vierfüßlerstand)](vogel_hund.md)
+- [Redondo-Ball Beckenkippung](redondo_beckenkippung.md)
 
 ### Balance
 
@@ -396,6 +412,20 @@ Intensive, themenspezifische Übungen
 - [Kreuzheben mit Wasserflasche](kreuzheben_mit_wasserflasche.md) - Wasserflaschen
 - [Rumpfrotation mit Gewicht](rumpfrotation_mit_gewicht.md) - Wasserflaschen
 
+### Mit Gymnastikstab
+
+- [Stab-Rotation im Stand](stab_rotation_im_stand.md) - Brustwirbelsäulen-Mobilisation
+- [Stab-Schultermobilisation](stab_schultermobilisation.md) - Schulter-Beweglichkeit
+- [Stab-Seitneigung](stab_seitneigung.md) - Seitliche Rumpfkraft
+- [Stab-Brustdehnung](stab_brustdehnung.md) - Brust- und Schulterdehnung
+
+### Mit Redondo-Ball
+
+- [Redondo-Ball Rückenmobilisation](redondo_rueckenmobilisation.md) - Wirbelsäulen-Mobilisation
+- [Redondo-Ball Beckenkippung](redondo_beckenkippung.md) - Beckenkontrolle
+- [Redondo-Ball Rumpfstabilisation](redondo_rumpfstabilisation.md) - Core-Kräftigung
+- [Redondo-Ball Entspannung](redondo_entspannung.md) - Regeneration
+
 ---
 
 ## 📊 Verwendung in Stunden
@@ -444,44 +474,52 @@ Intensive, themenspezifische Übungen
 
 ## 🆕 Neueste Übungen
 
-1. **Atemübung mit Armen** - 13.11.2025 - Entspannung und bewusste Atmung
-2. **Seitliche Rumpfdehnung im Sitzen** - 13.11.2025 - Seitliche Flanken dehnen
-3. **Brustdehnung an der Wand** - 13.11.2025 - Brust und vordere Schulter
-4. **Dehnung Hüftbeuger** - 13.11.2025 - Hüftbeugemuskulatur
-5. **Dehnung Oberschenkelrückseite** - 13.11.2025 - Hamstrings dehnen
-6. **Tandemstand** - 13.11.2025 - Gleichgewicht und Gangstabilität
-7. **Rumpfrotation mit Gewicht** - 13.11.2025 - Rotationskraft
-8. **Seitstütz Knie (modifiziert)** - 13.11.2025 - Seitliche Rumpfkraft
-9. **Wadenheben einbeinig** - 13.11.2025 - Wadenmuskulatur intensiv
-10. **Vogel-Hund (Vierfüßlerstand)** - 13.11.2025 - Koordination und Rumpfstabilität
-11. **Schulterbrücke einbeinig** - 13.11.2025 - Gesäßkraft intensiv
-12. **Seitlicher Ausfallschritt** - 13.11.2025 - Multidimensionale Beinkraft
-13. **Kreuzheben mit Wasserflasche** - 13.11.2025 - Hintere Kette
-14. **Einbeinstand** - 13.11.2025 - Gleichgewicht und Sturzprophylaxe
-15. **Planke an der Wand** - 13.11.2025 - Rumpfstabilisation
-16. **Oberkörper heben (Bauch)** - 13.11.2025 - Bauchmuskulatur
-17. **Armheben mit Widerstand** - 13.11.2025 - Schulterkraft
-18. **Beinpendel seitlich** - 13.11.2025 - Hüftabduktoren
-19. **Standwaage** - 13.11.2025 - Balance und hintere Kette
-20. **Trizeps-Dips am Stuhl** - 13.11.2025 - Armrückseite
-21. **Seitlicher Unterarmstütz (modifiziert)** - 13.11.2025 - Seitliche Rumpfmuskulatur
-22. **Beckenlift** - 13.11.2025 - Gesäß und Oberschenkelrückseite
-23. **Ausfallschritt zurück** - 13.11.2025 - Beinkraft und Balance
-24. **Kniebeuge mit Stuhl** - 13.11.2025 - Sichere Beinübung
-25. **Wandliegestütze** - 13.11.2025 - Oberkörperkraft schonend
-26. **Rumpfrotation im Stand** - 13.11.2025 - Rumpfmobilisation
-27. **Fersen- und Zehenstand** - 13.11.2025 - Unterschenkel und Balance
-28. **Hampelmann (modifiziert)** - 13.11.2025 - Ganzkörper-Ausdauer
-29. **Knie zur Brust** - 13.11.2025 - Hüftmobilisation
-30. **Hüftkreisen** - 13.11.2025 - Hüftgelenksmobilisation
-31. **Seitneigung mit Armheben** - 13.11.2025 - Seitliche Mobilisation
-32. **Marschieren auf der Stelle** - 13.11.2025 - Ausdauer-Aufwärmen
-33. **Nackenrollen** - 13.11.2025 - Nackenmobilisation
-34. **Fußkreisen** - 13.11.2025 - Sprunggelenkmobilisation
-35. **Armkreisen** - 13.11.2025 - Schultermobilisation
-36. **Katze-Kuh** - 13.11.2025 - Wirbelsäulenmobilisation
-37. **Kniebeuge (Wandstütze)** - 13.11.2025 - Beinkraft mit Unterstützung
-38. **Schulterkreisen** - 13.11.2025 - Schultermobilisation
+1. **Stab-Rotation im Stand** - 02.12.2025 - Brustwirbelsäulen-Mobilisation mit Stab
+2. **Stab-Schultermobilisation** - 02.12.2025 - Schulterbeweglichkeit mit Stab
+3. **Stab-Seitneigung** - 02.12.2025 - Seitliche Rumpfkraft mit Stab
+4. **Stab-Brustdehnung** - 02.12.2025 - Brust- und Schulterdehnung mit Stab
+5. **Redondo-Ball Rückenmobilisation** - 02.12.2025 - Wirbelsäulen-Mobilisation
+6. **Redondo-Ball Beckenkippung** - 02.12.2025 - Beckenkontrolle und Core-Aktivierung
+7. **Redondo-Ball Rumpfstabilisation** - 02.12.2025 - Intensive Core-Kräftigung
+8. **Redondo-Ball Entspannung** - 02.12.2025 - Regeneration und Lockerung
+9. **Atemübung mit Armen** - 13.11.2025 - Entspannung und bewusste Atmung
+10. **Seitliche Rumpfdehnung im Sitzen** - 13.11.2025 - Seitliche Flanken dehnen
+11. **Brustdehnung an der Wand** - 13.11.2025 - Brust und vordere Schulter
+12. **Dehnung Hüftbeuger** - 13.11.2025 - Hüftbeugemuskulatur
+13. **Dehnung Oberschenkelrückseite** - 13.11.2025 - Hamstrings dehnen
+14. **Tandemstand** - 13.11.2025 - Gleichgewicht und Gangstabilität
+15. **Rumpfrotation mit Gewicht** - 13.11.2025 - Rotationskraft
+16. **Seitstütz Knie (modifiziert)** - 13.11.2025 - Seitliche Rumpfkraft
+17. **Wadenheben einbeinig** - 13.11.2025 - Wadenmuskulatur intensiv
+18. **Vogel-Hund (Vierfüßlerstand)** - 13.11.2025 - Koordination und Rumpfstabilität
+19. **Schulterbrücke einbeinig** - 13.11.2025 - Gesäßkraft intensiv
+20. **Seitlicher Ausfallschritt** - 13.11.2025 - Multidimensionale Beinkraft
+21. **Kreuzheben mit Wasserflasche** - 13.11.2025 - Hintere Kette
+22. **Einbeinstand** - 13.11.2025 - Gleichgewicht und Sturzprophylaxe
+23. **Planke an der Wand** - 13.11.2025 - Rumpfstabilisation
+24. **Oberkörper heben (Bauch)** - 13.11.2025 - Bauchmuskulatur
+25. **Armheben mit Widerstand** - 13.11.2025 - Schulterkraft
+26. **Beinpendel seitlich** - 13.11.2025 - Hüftabduktoren
+27. **Standwaage** - 13.11.2025 - Balance und hintere Kette
+28. **Trizeps-Dips am Stuhl** - 13.11.2025 - Armrückseite
+29. **Seitlicher Unterarmstütz (modifiziert)** - 13.11.2025 - Seitliche Rumpfmuskulatur
+30. **Beckenlift** - 13.11.2025 - Gesäß und Oberschenkelrückseite
+31. **Ausfallschritt zurück** - 13.11.2025 - Beinkraft und Balance
+32. **Kniebeuge mit Stuhl** - 13.11.2025 - Sichere Beinübung
+33. **Wandliegestütze** - 13.11.2025 - Oberkörperkraft schonend
+34. **Rumpfrotation im Stand** - 13.11.2025 - Rumpfmobilisation
+35. **Fersen- und Zehenstand** - 13.11.2025 - Unterschenkel und Balance
+36. **Hampelmann (modifiziert)** - 13.11.2025 - Ganzkörper-Ausdauer
+37. **Knie zur Brust** - 13.11.2025 - Hüftmobilisation
+38. **Hüftkreisen** - 13.11.2025 - Hüftgelenksmobilisation
+39. **Seitneigung mit Armheben** - 13.11.2025 - Seitliche Mobilisation
+40. **Marschieren auf der Stelle** - 13.11.2025 - Ausdauer-Aufwärmen
+41. **Nackenrollen** - 13.11.2025 - Nackenmobilisation
+42. **Fußkreisen** - 13.11.2025 - Sprunggelenkmobilisation
+43. **Armkreisen** - 13.11.2025 - Schultermobilisation
+44. **Katze-Kuh** - 13.11.2025 - Wirbelsäulenmobilisation
+45. **Kniebeuge (Wandstütze)** - 13.11.2025 - Beinkraft mit Unterstützung
+46. **Schulterkreisen** - 13.11.2025 - Schultermobilisation
 
 ---
 
@@ -522,5 +560,5 @@ Intensive, themenspezifische Übungen
 
 ---
 
-**Letzte Aktualisierung**: 13.11.2025  
+**Letzte Aktualisierung**: 02.12.2025
 **Nächste geplante Aktualisierung**: Bei neuen Übungen
