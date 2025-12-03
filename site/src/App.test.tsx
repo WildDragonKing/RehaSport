@@ -17,8 +17,8 @@ describe("App", () => {
     );
 
     expect(html).toContain("RehaSport Reader");
-    expect(html).toContain("Der RehaSport Reader bringt vorbereitete RehaSport-Stunden direkt auf den Bildschirm.");
-    expect(html).toContain("Was du damit machen kannst");
+    expect(html).toContain("Strukturierte Trainingsstunden");
+    expect(html).toContain("Kategorien");
   });
 
   it("listet Stunden innerhalb eines Ordners", () => {
@@ -44,35 +44,39 @@ describe("App", () => {
       </MemoryRouter>
     );
 
-    expect(html).toContain("Aktive Übung");
+    expect(html).toContain("exercise--active");
     expect(html).toContain("Stabilität &amp; Mobilisation");
-    expect(html).toContain("Übungsablauf");
+    expect(html).toContain("exercise-list");
     expect(html).toContain("Schulterkreisen");
-    expect(html).toContain("Zur Übung");
+    expect(html).toContain("session-phase");
   });
 
   it("listet verfügbare Übungen", () => {
     const html = renderToString(
       <MemoryRouter initialEntries={["/uebungen"]}>
-        <App />
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
       </MemoryRouter>
     );
 
     expect(html).toContain("Übungen entdecken");
-    expect(html).toContain("Armkreisen");
+    expect(html).toContain("Schulterkreisen");
     expect(html).toContain("Übung ansehen");
   });
 
   it("zeigt die Detailseite einer Übung", () => {
     const html = renderToString(
       <MemoryRouter initialEntries={["/uebungen/schulterkreisen"]}>
-        <App />
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
       </MemoryRouter>
     );
 
     expect(html).toContain("Übung");
     expect(html).toContain("Schulterkreisen");
-    expect(html).toContain("Verwandte Übungen");
+    expect(html).toContain("Kategorie");
   });
 
   it("liefert Übungen aus dem Content", () => {
@@ -88,7 +92,7 @@ describe("App", () => {
       </MemoryRouter>
     );
 
-    expect(html).toContain("aria-label=\"Übungsablauf\"");
+    expect(html).toContain("exercise-list");
     expect(html).toContain("Stabilität &amp; Mobilisation");
   });
 });

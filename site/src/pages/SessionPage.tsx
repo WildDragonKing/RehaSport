@@ -5,6 +5,31 @@ import Button from "../components/ui/Button";
 import { findExerciseSlugByTitle } from "../content/exercises";
 import { getCategory, getSession } from "../content/sessions";
 
+// Icons
+function ChevronDownIcon(): JSX.Element {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="m6 9 6 6 6-6" />
+    </svg>
+  );
+}
+
+function ChevronLeftIcon(): JSX.Element {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="m15 18-6-6 6-6" />
+    </svg>
+  );
+}
+
+function ChevronRightIcon(): JSX.Element {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="m9 18 6-6-6-6" />
+    </svg>
+  );
+}
+
 function SessionPage(): JSX.Element {
   const { categorySlug, sessionSlug } = useParams();
   const session = categorySlug && sessionSlug ? getSession(categorySlug, sessionSlug) : undefined;
@@ -33,14 +58,12 @@ function SessionPage(): JSX.Element {
       setCurrentExerciseIndex(index);
       const exerciseKey = allExercises[index].key;
 
-      // Expand the target exercise
       setExpandedExercises(prev => {
         const next = new Set(prev);
         next.add(exerciseKey);
         return next;
       });
 
-      // Scroll to exercise
       setTimeout(() => {
         const element = exerciseRefs.current.get(exerciseKey);
         if (element) {
@@ -48,7 +71,6 @@ function SessionPage(): JSX.Element {
         }
       }, 100);
 
-      // Haptic feedback
       if ("vibrate" in navigator) {
         navigator.vibrate(10);
       }
@@ -79,7 +101,7 @@ function SessionPage(): JSX.Element {
     }
   }
 
-  function getPhaseColor(phaseTitle: string): string {
+  function getPhaseColorClass(phaseTitle: string): string {
     const title = phaseTitle.toLowerCase();
     if (title.includes("aufwärmen") || title.includes("phase 1")) return "phase-warmup";
     if (title.includes("hauptteil") || title.includes("phase 2")) return "phase-main";
@@ -88,10 +110,18 @@ function SessionPage(): JSX.Element {
     return "";
   }
 
+  function getPhaseIndex(phaseTitle: string): number {
+    const title = phaseTitle.toLowerCase();
+    if (title.includes("aufwärmen") || title.includes("phase 1")) return 0;
+    if (title.includes("hauptteil") || title.includes("phase 2")) return 1;
+    if (title.includes("schwerpunkt") || title.includes("phase 3")) return 2;
+    if (title.includes("ausklang") || title.includes("phase 4")) return 3;
+    return -1;
+  }
+
   function toggleExercise(exerciseKey: string, globalIndex: number): void {
     const isCurrentlyExpanded = expandedExercises.has(exerciseKey);
 
-    // Haptic feedback for mobile devices
     if ("vibrate" in navigator && !isCurrentlyExpanded) {
       navigator.vibrate(10);
     }
@@ -106,10 +136,8 @@ function SessionPage(): JSX.Element {
       return next;
     });
 
-    // Update current exercise index
     setCurrentExerciseIndex(globalIndex);
 
-    // Auto-scroll to expanded exercise
     if (!isCurrentlyExpanded) {
       setTimeout(() => {
         const element = exerciseRefs.current.get(exerciseKey);
@@ -130,114 +158,100 @@ function SessionPage(): JSX.Element {
 
   if (!session || !category) {
     return (
-      <div className="container stack">
-        <header className="page-header">
-          <h1>Stunde nicht gefunden</h1>
-          <p className="page-lead">Die angeforderte Stunde existiert nicht.</p>
-        </header>
-        <Button to="/" variant="secondary">
-          Zur Übersicht
-        </Button>
+      <div className="container">
+        <div className="empty-state">
+          <div className="empty-state-icon">📋</div>
+          <h1 className="empty-state-title">Stunde nicht gefunden</h1>
+          <p className="empty-state-description">
+            Die angeforderte Trainingsstunde existiert nicht.
+          </p>
+          <Button to="/" variant="secondary">
+            Zur Übersicht
+          </Button>
+        </div>
       </div>
     );
   }
 
   const currentExercise = allExercises[currentExerciseIndex];
+  const currentPhaseIndex = currentExercise ? getPhaseIndex(currentExercise.phaseTitle) : 0;
 
   return (
-    <div className="container stack">
+    <div className="container stack" style={{ paddingBottom: "100px" }}>
       {/* Breadcrumb */}
       <nav className="breadcrumb" aria-label="Navigation">
-        <ol>
-          <li>
-            <Link to="/">Start</Link>
-          </li>
-          <li>
-            <Link to={`/ordner/${category.slug}`}>{category.title}</Link>
-          </li>
-          <li aria-current="page">{session.title}</li>
-        </ol>
+        <Link to="/" className="breadcrumb-link">Start</Link>
+        <span className="breadcrumb-separator">/</span>
+        <Link to={`/ordner/${category.slug}`} className="breadcrumb-link">{category.title}</Link>
+        <span className="breadcrumb-separator">/</span>
+        <span className="breadcrumb-current">{session.title}</span>
       </nav>
 
       {/* Page Header */}
-      <header className="page-header">
-        <p className="page-eyebrow">Stunde</p>
+      <header className="stack-sm">
         <h1>{session.title}</h1>
-        {session.description ? <p className="page-lead">{session.description}</p> : null}
-        <dl className="session-info">
-          {session.duration ? (
+        {session.description && (
+          <p className="text-muted" style={{ fontSize: "1.125rem" }}>
+            {session.description}
+          </p>
+        )}
+
+        {/* Meta */}
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "1.5rem", marginTop: "0.5rem" }}>
+          {session.duration && (
             <div>
-              <dt>Dauer</dt>
-              <dd>{session.duration}</dd>
+              <span className="text-light" style={{ fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.05em" }}>Dauer</span>
+              <p style={{ fontWeight: 500 }}>{session.duration}</p>
             </div>
-          ) : null}
-          {session.focus ? (
+          )}
+          {session.focus && (
             <div>
-              <dt>Fokus</dt>
-              <dd>{session.focus}</dd>
+              <span className="text-light" style={{ fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.05em" }}>Fokus</span>
+              <p style={{ fontWeight: 500 }}>{session.focus}</p>
             </div>
-          ) : null}
-        </dl>
+          )}
+        </div>
       </header>
 
+      {/* Phase Timeline */}
+      {session.phases.length > 0 && (
+        <div className="phase-timeline">
+          <div className={`phase-timeline-segment warmup ${currentPhaseIndex === 0 ? "active" : ""}`} />
+          <div className={`phase-timeline-segment main ${currentPhaseIndex === 1 ? "active" : ""}`} />
+          <div className={`phase-timeline-segment focus ${currentPhaseIndex === 2 ? "active" : ""}`} />
+          <div className={`phase-timeline-segment cooldown ${currentPhaseIndex === 3 ? "active" : ""}`} />
+        </div>
+      )}
+
       {/* Session Controls */}
-      {session.phases.length > 0 && allExerciseKeys.length > 0 ? (
-        <div className="session-controls">
-          <button
-            type="button"
-            className="button button--secondary"
-            onClick={toggleAll}
-            aria-label={allExpanded ? "Alle zuklappen" : "Alle aufklappen"}
-          >
+      {session.phases.length > 0 && allExerciseKeys.length > 0 && (
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1rem" }}>
+          <Button variant="ghost" size="sm" onClick={toggleAll}>
             {allExpanded ? "Alle zuklappen" : "Alle aufklappen"}
-          </button>
-          <span className="session-controls__info">
+          </Button>
+          <span className="text-muted" style={{ fontSize: "0.875rem", fontWeight: 500 }}>
             {currentExerciseIndex + 1} / {allExercises.length}
           </span>
         </div>
-      ) : null}
-
-      {/* Quick Navigation for Mobile */}
-      {allExercises.length > 1 ? (
-        <div className="session-nav">
-          <button
-            type="button"
-            className="session-nav__btn"
-            onClick={() => goToExercise(currentExerciseIndex - 1)}
-            disabled={currentExerciseIndex === 0}
-            aria-label="Vorherige Übung"
-          >
-            ←
-          </button>
-          <div className="session-nav__current">
-            <span className="session-nav__phase">{currentExercise?.phaseTitle}</span>
-            <span className="session-nav__title">{currentExercise?.exercise.title}</span>
-          </div>
-          <button
-            type="button"
-            className="session-nav__btn"
-            onClick={() => goToExercise(currentExerciseIndex + 1)}
-            disabled={currentExerciseIndex === allExercises.length - 1}
-            aria-label="Nächste Übung"
-          >
-            →
-          </button>
-        </div>
-      ) : null}
+      )}
 
       {/* Session Phases */}
       {session.phases.length > 0 ? (
-        <div className="session-phases">
+        <div className="accordion">
           {session.phases.map((phase, phaseIndex) => {
-            const phaseColorClass = getPhaseColor(phase.title);
+            const phaseColorClass = getPhaseColorClass(phase.title);
             return (
-              <section key={phase.title} className={`session-phase ${phaseColorClass}`}>
-                <header className="session-phase__header">
-                  <h2 className="session-phase__title">{phase.title}</h2>
-                  {phase.description ? <p className="session-phase__description">{phase.description}</p> : null}
-                </header>
+              <section key={phase.title} className={`phase-indicator ${phaseColorClass}`} style={{ padding: 0, borderRadius: "var(--radius-xl)", overflow: "hidden" }}>
+                <div style={{ padding: "1rem 1.25rem", borderBottom: "1px solid var(--color-border-light)" }}>
+                  <h2 style={{ fontSize: "1.125rem", fontWeight: 600, margin: 0 }}>{phase.title}</h2>
+                  {phase.description && (
+                    <p className="text-muted" style={{ fontSize: "0.875rem", marginTop: "0.25rem" }}>
+                      {phase.description}
+                    </p>
+                  )}
+                </div>
 
-                <ol className="exercise-list" aria-label={`Übungen: ${phase.title}`}>
+                <ol style={{ listStyle: "none", padding: 0, margin: 0 }}>
                   {phase.exercises.map((exercise, exerciseIndex) => {
                     const exerciseKey = `${phaseIndex}-${exerciseIndex}`;
                     const globalIndex = allExercises.findIndex(e => e.key === exerciseKey);
@@ -247,71 +261,90 @@ function SessionPage(): JSX.Element {
                     const primaryDetail = exercise.details.find((d) => d.label === "Durchführung");
                     const otherDetails = exercise.details.filter((d) => d.label !== "Durchführung");
 
-                    // Extract alternative indicators
                     const kneeDetail = otherDetails.find((d) => d.label === "Knie-Alternative");
                     const shoulderDetail = otherDetails.find((d) => d.label === "Schulter-Alternative");
-                    const hasAlternatives = kneeDetail || shoulderDetail;
 
                     return (
                       <li
                         key={exerciseKey}
-                        className={`exercise exercise--compact ${isActive ? "exercise--active" : ""}`}
                         ref={(el) => setExerciseRef(exerciseKey, el)}
+                        className={`accordion-item ${isExpanded ? "expanded" : ""}`}
+                        style={{
+                          border: "none",
+                          borderRadius: 0,
+                          borderTop: exerciseIndex > 0 ? "1px solid var(--color-border-light)" : "none",
+                          backgroundColor: isActive ? "var(--color-primary-softer)" : "transparent"
+                        }}
                       >
                         <button
                           type="button"
-                          className="exercise__toggle"
+                          className="accordion-header"
                           onClick={() => toggleExercise(exerciseKey, globalIndex)}
                           aria-expanded={isExpanded}
-                          aria-label={`${exercise.title}, ${primaryDetail?.value ?? ""}, ${isExpanded ? "Details ausblenden" : "Details anzeigen"}`}
                         >
-                          <span className="exercise__number" aria-hidden="true">
-                            {exerciseIndex + 1}
-                          </span>
-                          <div className="exercise__main">
-                            <div className="exercise__title-row">
-                              <strong className="exercise__title">{exercise.title}</strong>
-                              {hasAlternatives ? (
-                                <span className="exercise__alternatives" aria-label="Alternativen verfügbar">
-                                  {kneeDetail ? (
-                                    <span className="alternative-icon alternative-icon--knee" title="Knie-Alternative">
-                                      K
-                                    </span>
-                                  ) : null}
-                                  {shoulderDetail ? (
-                                    <span className="alternative-icon alternative-icon--shoulder" title="Schulter-Alternative">
-                                      S
-                                    </span>
-                                  ) : null}
+                          <div className="accordion-header-content">
+                            <span style={{
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              width: "28px",
+                              height: "28px",
+                              borderRadius: "50%",
+                              backgroundColor: "var(--color-surface-muted)",
+                              fontSize: "0.875rem",
+                              fontWeight: 600,
+                              flexShrink: 0
+                            }}>
+                              {exerciseIndex + 1}
+                            </span>
+                            <div style={{ minWidth: 0 }}>
+                              <span className="accordion-header-title">{exercise.title}</span>
+                              {primaryDetail && (
+                                <span className="text-muted" style={{ display: "block", fontSize: "0.875rem", marginTop: "0.125rem" }}>
+                                  {primaryDetail.value}
                                 </span>
-                              ) : null}
+                              )}
                             </div>
-                            {primaryDetail ? <span className="exercise__primary">{primaryDetail.value}</span> : null}
                           </div>
-                          <span className="exercise__icon" aria-hidden="true">
-                            {isExpanded ? "−" : "+"}
-                          </span>
+
+                          <div className="accordion-header-meta">
+                            {kneeDetail && (
+                              <span className="badge badge-knee" title="Knie-Alternative">🦵</span>
+                            )}
+                            {shoulderDetail && (
+                              <span className="badge badge-shoulder" title="Schulter-Alternative">💪</span>
+                            )}
+                            <span className="accordion-chevron">
+                              <ChevronDownIcon />
+                            </span>
+                          </div>
                         </button>
 
-                        {isExpanded ? (
-                          <div className="exercise__expanded">
-                            {otherDetails.length > 0 ? (
-                              <dl className="exercise__details">
+                        {isExpanded && (
+                          <div className="accordion-content">
+                            {otherDetails.length > 0 && (
+                              <div className="stack-sm">
                                 {otherDetails.map((detail) => (
-                                  <div key={`${exerciseKey}-${detail.label}`} className={detail.label.includes("Alternative") ? "detail--alternative" : ""}>
-                                    <dt>{detail.label}</dt>
-                                    <dd>{detail.value}</dd>
+                                  <div
+                                    key={`${exerciseKey}-${detail.label}`}
+                                    className={detail.label.includes("Alternative") ? "alternative-card" : "quick-info-card"}
+                                    style={detail.label.includes("Knie") ? { backgroundColor: "var(--color-secondary-soft)" } : detail.label.includes("Schulter") ? { backgroundColor: "var(--color-phase-focus-bg)" } : {}}
+                                  >
+                                    <div className="quick-info-card-title">{detail.label}</div>
+                                    <div className="quick-info-card-content">{detail.value}</div>
                                   </div>
                                 ))}
-                              </dl>
-                            ) : null}
-                            {exerciseSlug ? (
-                              <Link className="exercise__link" to={`/uebungen/${exerciseSlug}`}>
-                                Zur Übung →
-                              </Link>
-                            ) : null}
+                              </div>
+                            )}
+                            {exerciseSlug && (
+                              <div style={{ marginTop: "1rem" }}>
+                                <Button to={`/uebungen/${exerciseSlug}`} variant="ghost" size="sm">
+                                  Zur vollständigen Übung →
+                                </Button>
+                              </div>
+                            )}
                           </div>
-                        ) : null}
+                        )}
                       </li>
                     );
                   })}
@@ -321,7 +354,53 @@ function SessionPage(): JSX.Element {
           })}
         </div>
       ) : (
-        <p>Keine Übungen gefunden.</p>
+        <p className="text-muted">Keine Übungen in dieser Stunde gefunden.</p>
+      )}
+
+      {/* Sticky Bottom Navigation */}
+      {allExercises.length > 1 && (
+        <div className="bottom-nav">
+          <div className="bottom-nav-content">
+            <Button
+              variant="ghost"
+              icon
+              onClick={() => goToExercise(currentExerciseIndex - 1)}
+              disabled={currentExerciseIndex === 0}
+              aria-label="Vorherige Übung"
+            >
+              <ChevronLeftIcon />
+            </Button>
+
+            <div className="bottom-nav-center">
+              <span
+                className={`bottom-nav-dot ${currentPhaseIndex === 0 ? "active" : ""}`}
+                style={{ backgroundColor: "var(--color-phase-warmup)" }}
+              />
+              <span
+                className={`bottom-nav-dot ${currentPhaseIndex === 1 ? "active" : ""}`}
+                style={{ backgroundColor: "var(--color-phase-main)" }}
+              />
+              <span
+                className={`bottom-nav-dot ${currentPhaseIndex === 2 ? "active" : ""}`}
+                style={{ backgroundColor: "var(--color-phase-focus)" }}
+              />
+              <span
+                className={`bottom-nav-dot ${currentPhaseIndex === 3 ? "active" : ""}`}
+                style={{ backgroundColor: "var(--color-phase-cooldown)" }}
+              />
+            </div>
+
+            <Button
+              variant="ghost"
+              icon
+              onClick={() => goToExercise(currentExerciseIndex + 1)}
+              disabled={currentExerciseIndex === allExercises.length - 1}
+              aria-label="Nächste Übung"
+            >
+              <ChevronRightIcon />
+            </Button>
+          </div>
+        </div>
       )}
     </div>
   );

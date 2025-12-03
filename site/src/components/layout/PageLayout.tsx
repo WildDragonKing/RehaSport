@@ -10,7 +10,7 @@ function PageLayout(): JSX.Element {
         Zum Inhalt springen
       </a>
       <Header />
-      <main id="hauptinhalt">
+      <main id="hauptinhalt" className="page-main">
         <Outlet />
       </main>
       <Footer />
