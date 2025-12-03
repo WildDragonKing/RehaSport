@@ -2,7 +2,13 @@
   "permissions": {
     "allow": [
       "Bash(npm run build:*)",
-      "Bash(npm install)"
+      "Bash(npm install)",
+      "Bash(dir:*)",
+      "Bash(git -C \"D:\\Projects\\personal\\RehaSport\" log --oneline -20)",
+      "Bash(npm test:*)",
+      "Bash(npm run dev:*)",
+      "Skill(frontend-design:frontend-design)",
+      "Bash(gh issue create:*)"
     ],
     "deny": [],
     "ask": []

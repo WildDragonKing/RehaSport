@@ -1,85 +1,107 @@
 import { Link } from "react-router-dom";
 
+import Button from "../components/ui/Button";
 import { exercises } from "../content/exercises";
 import { categories } from "../content/sessions";
+
+// Icons
+function ArrowRightIcon(): JSX.Element {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M5 12h14M12 5l7 7-7 7" />
+    </svg>
+  );
+}
+
+function getCategoryIcon(slug: string): string {
+  const icons: Record<string, string> = {
+    ruecken: "🌿",
+    balance: "🍃",
+    schulter: "🌸",
+    "herz-kreislauf": "🌺",
+    ganzkoerper: "🌳",
+    gymnastikstab: "🎋",
+    "redondo-ball": "🔮"
+  };
+  return icons[slug] || "🌱";
+}
 
 function HomePage(): JSX.Element {
   const totalSessions = categories.reduce((acc, cat) => acc + cat.sessions.length, 0);
   const totalExercises = exercises.length;
 
   return (
-    <div className="home-page">
+    <div className="stack-lg">
       {/* Hero Section */}
       <section className="hero">
+        {/* Animated Background Blobs */}
+        <div className="hero-background" aria-hidden="true">
+          <div className="hero-blob hero-blob-1" />
+          <div className="hero-blob hero-blob-2" />
+          <div className="hero-blob hero-blob-3" />
+        </div>
+
         <div className="container">
-          <div className="hero__content">
-            <h1 className="hero__title">RehaSport Reader</h1>
-            <p className="hero__subtitle">
-              Strukturierte Trainingsstunden mit Alternativen für Knie- und Schulterprobleme.
+          <div className="hero-content">
+            <h1 className="hero-title animate-fade-up fill-backwards">
+              Bewegung, die gut tut
+            </h1>
+            <p className="hero-subtitle animate-fade-up fill-backwards delay-100">
+              Strukturierte Trainingsstunden mit sicheren Alternativen
+              für Knie- und Schulterprobleme.
             </p>
-            <div className="hero__stats">
-              <div className="hero__stat">
-                <span className="hero__stat-number">{totalSessions}</span>
-                <span className="hero__stat-label">Stunden</span>
+            <div className="animate-fade-up fill-backwards delay-200">
+              <a href="#kategorien" className="btn btn-primary btn-lg">
+                Training starten
+              </a>
+            </div>
+
+            {/* Stats */}
+            <div className="hero-stats animate-fade-up fill-backwards delay-300">
+              <div className="hero-stat">
+                <div className="hero-stat-value">{totalSessions}</div>
+                <div className="hero-stat-label">Stunden</div>
               </div>
-              <div className="hero__stat">
-                <span className="hero__stat-number">{totalExercises}</span>
-                <span className="hero__stat-label">Übungen</span>
+              <div className="hero-stat">
+                <div className="hero-stat-value">{totalExercises}</div>
+                <div className="hero-stat-label">Übungen</div>
+              </div>
+              <div className="hero-stat">
+                <div className="hero-stat-value">45</div>
+                <div className="hero-stat-label">Minuten</div>
               </div>
             </div>
-            <div className="hero__actions">
-              <Link className="button button--primary" to="/uebungen">
-                Alle Übungen
-              </Link>
-            </div>
-          </div>
-          <div className="hero__visual">
-            <div className="hero__schema">
-              <div className="schema-item schema-item--warmup">
-                <span className="schema-item__time">10</span>
-                <span className="schema-item__label">Aufwärmen</span>
-              </div>
-              <div className="schema-item schema-item--main">
-                <span className="schema-item__time">15</span>
-                <span className="schema-item__label">Hauptteil</span>
-              </div>
-              <div className="schema-item schema-item--focus">
-                <span className="schema-item__time">15</span>
-                <span className="schema-item__label">Schwerpunkt</span>
-              </div>
-              <div className="schema-item schema-item--cooldown">
-                <span className="schema-item__time">10</span>
-                <span className="schema-item__label">Ausklang</span>
-              </div>
-            </div>
-            <p className="hero__schema-label">45-Minuten-Schema</p>
           </div>
         </div>
       </section>
 
       {/* Categories Section */}
-      <section className="categories-section">
+      <section id="kategorien" className="section">
         <div className="container">
           <header className="section-header">
-            <h2>Kategorien</h2>
-            <p>Wähle eine Kategorie für die verfügbaren Stunden</p>
+            <h2 className="section-title">Wähle deinen Fokus</h2>
+            <p className="section-subtitle">
+              Jede Kategorie enthält strukturierte 45-Minuten-Einheiten
+              mit Aufwärmen, Hauptteil, Schwerpunkt und Ausklang.
+            </p>
           </header>
 
-          <div className="category-grid">
-            {categories.map((category) => (
-              <Link key={category.slug} to={`/ordner/${category.slug}`} className="category-card">
-                <div className="category-card__icon" aria-hidden="true">
+          <div className="grid-categories">
+            {categories.map((category, index) => (
+              <Link
+                key={category.slug}
+                to={`/ordner/${category.slug}`}
+                className="card card-hover category-card animate-fade-up fill-backwards"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <div className="category-card-icon" aria-hidden="true">
                   {getCategoryIcon(category.slug)}
                 </div>
-                <div className="category-card__content">
-                  <h3 className="category-card__title">{category.title}</h3>
-                  <p className="category-card__description">{category.description}</p>
-                </div>
-                <div className="category-card__footer">
-                  <span className="category-card__meta">
-                    {category.sessions.length} {category.sessions.length === 1 ? "Stunde" : "Stunden"}
-                  </span>
-                  <span className="category-card__arrow" aria-hidden="true">→</span>
+                <h3 className="category-card-title">{category.title}</h3>
+                <p className="category-card-description">{category.description}</p>
+                <div className="category-card-meta">
+                  <span>{category.sessions.length} {category.sessions.length === 1 ? "Stunde" : "Stunden"}</span>
+                  <ArrowRightIcon />
                 </div>
               </Link>
             ))}
@@ -87,73 +109,90 @@ function HomePage(): JSX.Element {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="features-section">
+      {/* 45-Min Schema */}
+      <section className="section" style={{ backgroundColor: "var(--color-surface-muted)" }}>
         <div className="container">
-          <div className="features-grid">
-            <div className="feature-card">
-              <div className="feature-card__icon" aria-hidden="true">🦵</div>
-              <h3>Knie-Alternativen</h3>
-              <p>Sichere Anpassungen für Knieprobleme</p>
+          <header className="section-header">
+            <h2 className="section-title">Das 45-Minuten-Schema</h2>
+            <p className="section-subtitle">
+              Jede Stunde folgt einer bewährten Struktur für sicheres und effektives Training.
+            </p>
+          </header>
+
+          <div className="time-infographic">
+            <div className="time-bar-container">
+              <div className="time-bar-segment warmup">10 min</div>
+              <div className="time-bar-segment main">15 min</div>
+              <div className="time-bar-segment focus">15 min</div>
+              <div className="time-bar-segment cooldown">10 min</div>
             </div>
-            <div className="feature-card">
-              <div className="feature-card__icon" aria-hidden="true">💪</div>
-              <h3>Schulter-Alternativen</h3>
-              <p>Modifikationen für Schulterprobleme</p>
-            </div>
-            <div className="feature-card">
-              <div className="feature-card__icon" aria-hidden="true">⏱️</div>
-              <h3>45-Min-Einheiten</h3>
-              <p>Strukturiert im 10-15-15-10 Schema</p>
+            <div className="time-legend">
+              <div className="time-legend-item">
+                <span className="phase-dot phase-dot-warmup" />
+                <span><strong>Aufwärmen</strong> – Mobilisation</span>
+              </div>
+              <div className="time-legend-item">
+                <span className="phase-dot phase-dot-main" />
+                <span><strong>Hauptteil</strong> – Kräftigung</span>
+              </div>
+              <div className="time-legend-item">
+                <span className="phase-dot phase-dot-focus" />
+                <span><strong>Schwerpunkt</strong> – Vertiefung</span>
+              </div>
+              <div className="time-legend-item">
+                <span className="phase-dot phase-dot-cooldown" />
+                <span><strong>Ausklang</strong> – Entspannung</span>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Contribute Section */}
-      <section className="contribute-section">
+      {/* Features Section */}
+      <section className="section">
         <div className="container">
-          <div className="contribute-card">
-            <div className="contribute-card__content">
-              <h2>Mitmachen</h2>
-              <p>
-                Das Projekt lebt von gemeinsamer Weiterentwicklung.
-              </p>
+          <div className="grid-features">
+            <div className="card feature-card">
+              <div className="feature-card-icon">🦵</div>
+              <div className="feature-card-content">
+                <h4>Knie-Alternativen</h4>
+                <p>Sichere Anpassungen bei Knieproblemen – weniger Belastung, gleicher Nutzen.</p>
+              </div>
             </div>
-            <div className="contribute-card__actions">
-              <a
-                className="button button--secondary"
-                href="https://github.com/WildDragonKing/RehaSport"
-                target="_blank"
-                rel="noreferrer"
-              >
-                GitHub
-              </a>
-              <a
-                className="button button--primary"
-                href="https://github.com/WildDragonKing/RehaSport/issues"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Idee einreichen
-              </a>
+            <div className="card feature-card">
+              <div className="feature-card-icon">💪</div>
+              <div className="feature-card-content">
+                <h4>Schulter-Alternativen</h4>
+                <p>Modifikationen für eingeschränkte Schulterbeweglichkeit.</p>
+              </div>
             </div>
+            <div className="card feature-card">
+              <div className="feature-card-icon">📱</div>
+              <div className="feature-card-content">
+                <h4>Mobile-optimiert</h4>
+                <p>Perfekt lesbar auf dem Handy während des Trainings.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="section">
+        <div className="container">
+          <div className="card card-body-lg text-center" style={{ backgroundColor: "var(--color-primary-soft)" }}>
+            <h2 style={{ marginBottom: "0.5rem" }}>Alle Übungen entdecken</h2>
+            <p className="text-muted" style={{ marginBottom: "1.5rem" }}>
+              Durchsuche die komplette Übungsbibliothek mit Filtern nach Phase und Schwierigkeit.
+            </p>
+            <Button to="/uebungen">
+              Zur Übungsbibliothek
+            </Button>
           </div>
         </div>
       </section>
     </div>
   );
-}
-
-function getCategoryIcon(slug: string): string {
-  const icons: Record<string, string> = {
-    ruecken: "🏋️",
-    balance: "⚖️",
-    schulter: "💪",
-    "herz-kreislauf": "❤️",
-    ganzkoerper: "🧘"
-  };
-  return icons[slug] || "📁";
 }
 
 export default HomePage;

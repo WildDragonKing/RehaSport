@@ -1,12 +1,26 @@
+import { Link } from "react-router-dom";
+
 function Footer(): JSX.Element {
   const currentYear = new Date().getFullYear();
+
   return (
-    <footer className="site-footer" role="contentinfo">
-      <div className="container site-footer__inner">
-        <p>© {currentYear} RehaSport Reader. Bereit für klare Stundenabläufe.</p>
-        <div className="site-footer__links">
-          <a className="site-footer__link" href="#">Impressum</a>
-          <a className="site-footer__link" href="#">Datenschutz</a>
+    <footer className="footer" role="contentinfo">
+      <div className="container footer-content">
+        <p className="footer-copyright">
+          © {currentYear} RehaSport Reader
+        </p>
+        <div className="footer-links">
+          <Link to="/info" className="footer-link">
+            Info
+          </Link>
+          <a
+            href="https://github.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-link"
+          >
+            GitHub
+          </a>
         </div>
       </div>
     </footer>

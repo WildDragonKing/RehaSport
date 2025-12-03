@@ -1,10 +1,13 @@
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 import { Link } from "react-router-dom";
 
-type ButtonVariant = "primary" | "secondary";
+type ButtonVariant = "primary" | "secondary" | "accent" | "ghost";
+type ButtonSize = "sm" | "default" | "lg";
 
 type ButtonBaseProps = {
   variant?: ButtonVariant;
+  size?: ButtonSize;
+  icon?: boolean;
   className?: string;
   children: ReactNode;
 };
@@ -25,23 +28,44 @@ type ButtonProps = ButtonAsButton | ButtonAsLink;
 
 function Button(props: ButtonProps): JSX.Element {
   const variant = props.variant ?? "primary";
-  const classes = ["button", `button--${variant}`];
-  if (props.className) {
-    classes.push(props.className);
-  }
+  const size = props.size ?? "default";
+  const isIcon = props.icon ?? false;
+
+  // Variant classes using CSS classes from index.css
+  const variantClasses: Record<ButtonVariant, string> = {
+    primary: "btn-primary",
+    secondary: "btn-secondary",
+    accent: "btn-accent",
+    ghost: "btn-ghost",
+  };
+
+  // Size classes
+  const sizeClasses: Record<ButtonSize, string> = {
+    sm: "btn-sm",
+    default: "",
+    lg: "btn-lg",
+  };
+
+  const classes = [
+    "btn",
+    variantClasses[variant],
+    sizeClasses[size],
+    isIcon ? "btn-icon" : "",
+    props.className,
+  ].filter(Boolean).join(" ");
 
   if ("to" in props && props.to) {
-    const { to, variant: _variant, className: _className, children, ...rest } = props;
+    const { to, variant: _v, size: _s, icon: _i, className: _c, children, ...rest } = props;
     return (
-      <Link to={to} className={classes.join(" ")} {...rest}>
+      <Link to={to} className={classes} {...rest}>
         {children}
       </Link>
     );
   }
 
-  const { variant: _variant, className: _className, children, type = "button", ...rest } = props as ButtonAsButton;
+  const { variant: _v, size: _s, icon: _i, className: _c, children, type = "button", ...rest } = props as ButtonAsButton;
   return (
-    <button type={type} className={classes.join(" ")} {...rest}>
+    <button type={type} className={classes} {...rest}>
       {children}
     </button>
   );
