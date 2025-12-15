@@ -1,0 +1,96 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Button from '@components/Button.astro';
+import { categories, getCategory } from '@/lib/sessions';
+
+export function getStaticPaths() {
+  return categories.map((category) => ({
+    params: { categorySlug: category.slug },
+  }));
+}
+
+const { categorySlug } = Astro.params;
+const category = getCategory(categorySlug);
+const basePath = import.meta.env.BASE_URL || '/';
+
+if (!category) {
+  return Astro.redirect(basePath);
+}
+---
+
+<BaseLayout title={category.title} description={category.description}>
+  <div class="container stack">
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb" aria-label="Navigation">
+      <a href={basePath} class="breadcrumb-link">Start</a>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-current">{category.title}</span>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="stack-sm">
+      <h1>{category.title}</h1>
+      {category.description && (
+        <p class="text-muted" style="font-size: 1.125rem; max-width: 640px">
+          {category.description}
+        </p>
+      )}
+      {category.focusTags.length > 0 && (
+        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem">
+          {category.focusTags.map((tag) => (
+            <span class="badge badge-primary">{tag}</span>
+          ))}
+        </div>
+      )}
+    </header>
+
+    <!-- Sessions Grid -->
+    <section aria-label={`Stunden in ${category.title}`}>
+      <div class="grid-sessions">
+        {category.sessions.map((session) => (
+          <a
+            href={`${basePath}ordner/${category.slug}/${session.slug}/`}
+            class="card card-hover card-body session-card"
+          >
+            <div class="session-card-header">
+              <h2 class="session-card-title">{session.title}</h2>
+              {session.duration && (
+                <span class="session-card-duration">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg>
+                  {session.duration}
+                </span>
+              )}
+            </div>
+
+            <div class="session-card-phases">
+              <span class="session-card-phase-dot warmup" title="Aufwärmen"></span>
+              <span class="session-card-phase-dot main" title="Hauptteil"></span>
+              <span class="session-card-phase-dot focus" title="Schwerpunkt"></span>
+              <span class="session-card-phase-dot cooldown" title="Ausklang"></span>
+            </div>
+
+            {session.description && (
+              <p class="session-card-description">{session.description}</p>
+            )}
+
+            {session.focus && (
+              <p class="text-light" style="font-size: 0.875rem">
+                Fokus: {session.focus}
+              </p>
+            )}
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- Back Button -->
+    <div>
+      <Button href={basePath} variant="ghost">
+        ← Alle Kategorien
+      </Button>
+    </div>
+  </div>
+</BaseLayout>
