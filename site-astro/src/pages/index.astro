@@ -1,0 +1,186 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Button from '@components/Button.astro';
+import { categories } from '@/lib/sessions';
+import { exercises } from '@/lib/exercises';
+
+const totalSessions = categories.reduce((acc, cat) => acc + cat.sessions.length, 0);
+const totalExercises = exercises.length;
+const basePath = import.meta.env.BASE_URL || '/';
+
+function getCategoryIcon(slug: string): string {
+  const icons: Record<string, string> = {
+    ruecken: "🌿",
+    balance: "🍃",
+    schulter: "🌸",
+    "herz-kreislauf": "🌺",
+    ganzkoerper: "🌳",
+    gymnastikstab: "🎋",
+    "redondo-ball": "🔮"
+  };
+  return icons[slug] || "🌱";
+}
+---
+
+<BaseLayout title="Start">
+  <div class="stack-lg">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-background" aria-hidden="true">
+        <div class="hero-blob hero-blob-1"></div>
+        <div class="hero-blob hero-blob-2"></div>
+        <div class="hero-blob hero-blob-3"></div>
+      </div>
+
+      <div class="container">
+        <div class="hero-content">
+          <h1 class="hero-title animate-fade-up fill-backwards">
+            Bewegung, die gut tut
+          </h1>
+          <p class="hero-subtitle animate-fade-up fill-backwards delay-100">
+            Strukturierte Trainingsstunden mit sicheren Alternativen
+            für Knie- und Schulterprobleme.
+          </p>
+          <div class="animate-fade-up fill-backwards delay-200">
+            <a href="#kategorien" class="btn btn-primary btn-lg">
+              Training starten
+            </a>
+          </div>
+
+          <div class="hero-stats animate-fade-up fill-backwards delay-300">
+            <div class="hero-stat">
+              <div class="hero-stat-value">{totalSessions}</div>
+              <div class="hero-stat-label">Stunden</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-value">{totalExercises}</div>
+              <div class="hero-stat-label">Übungen</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-value">45</div>
+              <div class="hero-stat-label">Minuten</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section id="kategorien" class="section">
+      <div class="container">
+        <header class="section-header">
+          <h2 class="section-title">Wähle deinen Fokus</h2>
+          <p class="section-subtitle">
+            Jede Kategorie enthält strukturierte 45-Minuten-Einheiten
+            mit Aufwärmen, Hauptteil, Schwerpunkt und Ausklang.
+          </p>
+        </header>
+
+        <div class="grid-categories">
+          {categories.map((category, index) => (
+            <a
+              href={`${basePath}ordner/${category.slug}/`}
+              class="card card-hover category-card animate-fade-up fill-backwards"
+              style={`animation-delay: ${index * 100}ms`}
+            >
+              <div class="category-card-icon" aria-hidden="true">
+                {getCategoryIcon(category.slug)}
+              </div>
+              <h3 class="category-card-title">{category.title}</h3>
+              <p class="category-card-description">{category.description}</p>
+              <div class="category-card-meta">
+                <span>{category.sessions.length} {category.sessions.length === 1 ? "Stunde" : "Stunden"}</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- 45-Min Schema -->
+    <section class="section" style="background-color: var(--color-surface-muted)">
+      <div class="container">
+        <header class="section-header">
+          <h2 class="section-title">Das 45-Minuten-Schema</h2>
+          <p class="section-subtitle">
+            Jede Stunde folgt einer bewährten Struktur für sicheres und effektives Training.
+          </p>
+        </header>
+
+        <div class="time-infographic">
+          <div class="time-bar-container">
+            <div class="time-bar-segment warmup">10 min</div>
+            <div class="time-bar-segment main">15 min</div>
+            <div class="time-bar-segment focus">15 min</div>
+            <div class="time-bar-segment cooldown">10 min</div>
+          </div>
+          <div class="time-legend">
+            <div class="time-legend-item">
+              <span class="phase-dot phase-dot-warmup"></span>
+              <span><strong>Aufwärmen</strong> – Mobilisation</span>
+            </div>
+            <div class="time-legend-item">
+              <span class="phase-dot phase-dot-main"></span>
+              <span><strong>Hauptteil</strong> – Kräftigung</span>
+            </div>
+            <div class="time-legend-item">
+              <span class="phase-dot phase-dot-focus"></span>
+              <span><strong>Schwerpunkt</strong> – Vertiefung</span>
+            </div>
+            <div class="time-legend-item">
+              <span class="phase-dot phase-dot-cooldown"></span>
+              <span><strong>Ausklang</strong> – Entspannung</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section">
+      <div class="container">
+        <div class="grid-features">
+          <div class="card feature-card">
+            <div class="feature-card-icon">🦵</div>
+            <div class="feature-card-content">
+              <h4>Knie-Alternativen</h4>
+              <p>Sichere Anpassungen bei Knieproblemen – weniger Belastung, gleicher Nutzen.</p>
+            </div>
+          </div>
+          <div class="card feature-card">
+            <div class="feature-card-icon">💪</div>
+            <div class="feature-card-content">
+              <h4>Schulter-Alternativen</h4>
+              <p>Modifikationen für eingeschränkte Schulterbeweglichkeit.</p>
+            </div>
+          </div>
+          <div class="card feature-card">
+            <div class="feature-card-icon">📱</div>
+            <div class="feature-card-content">
+              <h4>Mobile-optimiert</h4>
+              <p>Perfekt lesbar auf dem Handy während des Trainings.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section">
+      <div class="container">
+        <div class="card card-body-lg text-center" style="background-color: var(--color-primary-soft)">
+          <h2 style="margin-bottom: 0.5rem">Alle Übungen entdecken</h2>
+          <p class="text-muted" style="margin-bottom: 1.5rem">
+            Durchsuche die komplette Übungsbibliothek mit Filtern nach Phase und Schwierigkeit.
+          </p>
+          <Button href={`${basePath}uebungen/`}>
+            Zur Übungsbibliothek
+          </Button>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

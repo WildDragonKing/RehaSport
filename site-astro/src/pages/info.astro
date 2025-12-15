@@ -1,0 +1,188 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { infoSections, faqItems } from '@/lib/info';
+---
+
+<BaseLayout title="Info" description="Über RehaSport Reader - Strukturierte Trainingsstunden für Rehabilitation und Gesundheitssport">
+  <div class="container stack-lg">
+    <!-- Page Header -->
+    <header class="stack-sm text-center" style="max-width: 640px; margin: 0 auto">
+      <h1>Über RehaSport Reader</h1>
+      <p class="text-muted" style="font-size: 1.125rem">
+        Strukturierte Trainingsstunden für Rehabilitation und Gesundheitssport.
+        Alle Übungen mit sicheren Alternativen bei Knie- und Schulterbeschwerden.
+      </p>
+    </header>
+
+    <!-- 45-Minuten-Schema Infographic -->
+    <section class="section" style="padding: 2rem 0">
+      <div class="section-header">
+        <h2 class="section-title">Das 45-Minuten-Schema</h2>
+        <p class="section-subtitle">
+          Jede Trainingsstunde folgt einer bewährten Struktur für sicheres und effektives Training.
+        </p>
+      </div>
+
+      <div class="time-infographic">
+        <div class="time-bar-container">
+          <div class="time-bar-segment warmup">10 min</div>
+          <div class="time-bar-segment main">15 min</div>
+          <div class="time-bar-segment focus">15 min</div>
+          <div class="time-bar-segment cooldown">10 min</div>
+        </div>
+        <div class="time-legend">
+          <div class="time-legend-item">
+            <span class="phase-dot phase-dot-warmup"></span>
+            <div>
+              <strong>Aufwärmen</strong>
+              <span class="text-muted" style="display: block; font-size: 0.8125rem">Mobilisation, Kreislauf aktivieren</span>
+            </div>
+          </div>
+          <div class="time-legend-item">
+            <span class="phase-dot phase-dot-main"></span>
+            <div>
+              <strong>Hauptteil</strong>
+              <span class="text-muted" style="display: block; font-size: 0.8125rem">Kräftigung, funktionelle Übungen</span>
+            </div>
+          </div>
+          <div class="time-legend-item">
+            <span class="phase-dot phase-dot-focus"></span>
+            <div>
+              <strong>Schwerpunkt</strong>
+              <span class="text-muted" style="display: block; font-size: 0.8125rem">Vertiefung des Stundenthemas</span>
+            </div>
+          </div>
+          <div class="time-legend-item">
+            <span class="phase-dot phase-dot-cooldown"></span>
+            <div>
+              <strong>Ausklang</strong>
+              <span class="text-muted" style="display: block; font-size: 0.8125rem">Dehnung, Entspannung</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Info Sections Grid -->
+    <section aria-label="Informationen">
+      <div class="grid-sessions">
+        {infoSections.map((section) => (
+          <article class="card card-body">
+            <h2 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 0.75rem">
+              {section.title}
+            </h2>
+            <p class="text-muted" style={section.bullets ? "margin-bottom: 1rem" : ""}>
+              {section.body}
+            </p>
+            {section.bullets && (
+              <ul style="list-style: none; padding: 0; margin: 0">
+                {section.bullets.map((bullet) => (
+                  <li
+                    class="text-muted"
+                    style="display: flex; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.5rem"
+                  >
+                    <span class="text-primary" style="margin-top: 0.25rem">•</span>
+                    <span>{bullet}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="stack-sm" aria-label="Häufige Fragen">
+      <h2 class="section-title text-center">Häufige Fragen</h2>
+
+      <div data-faq-container>
+        {faqItems.map((item) => (
+          <div class="faq-item" data-faq-item>
+            <button
+              type="button"
+              class="faq-question"
+              data-faq-trigger
+              aria-expanded="false"
+            >
+              <span>{item.question}</span>
+              <span class="faq-chevron" style="color: var(--color-text-light); transition: transform 0.2s ease">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m6 9 6 6 6-6" />
+                </svg>
+              </span>
+            </button>
+            <div class="faq-answer" data-faq-answer hidden>
+              {item.answer}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Footer Info -->
+    <section class="card card-body text-center" style="background-color: var(--color-surface-muted)">
+      <h2 style="font-size: 1.25rem; margin-bottom: 0.5rem">Open Source</h2>
+      <p class="text-muted" style="margin-bottom: 1rem">
+        RehaSport Reader ist ein offenes Projekt. Feedback und Beiträge sind willkommen.
+      </p>
+      <a
+        href="https://github.com/WildDragonKing/RehaSport"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn btn-secondary"
+      >
+        Auf GitHub ansehen
+      </a>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  [data-faq-item].open .faq-chevron {
+    transform: rotate(180deg);
+  }
+
+  .faq-answer {
+    animation: slide-down 0.3s ease-out;
+  }
+
+  @keyframes slide-down {
+    from {
+      opacity: 0;
+      transform: translateY(-12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
+<script>
+  const faqItems = document.querySelectorAll('[data-faq-item]');
+
+  faqItems.forEach((item) => {
+    const trigger = item.querySelector<HTMLButtonElement>('[data-faq-trigger]');
+    const answer = item.querySelector<HTMLElement>('[data-faq-answer]');
+
+    trigger?.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+
+      // Close all other items
+      faqItems.forEach((otherItem) => {
+        if (otherItem !== item) {
+          otherItem.classList.remove('open');
+          otherItem.querySelector<HTMLButtonElement>('[data-faq-trigger]')?.setAttribute('aria-expanded', 'false');
+          const otherAnswer = otherItem.querySelector<HTMLElement>('[data-faq-answer]');
+          if (otherAnswer) otherAnswer.hidden = true;
+        }
+      });
+
+      // Toggle current item
+      item.classList.toggle('open', !isOpen);
+      trigger.setAttribute('aria-expanded', String(!isOpen));
+      if (answer) answer.hidden = isOpen;
+    });
+  });
+</script>
