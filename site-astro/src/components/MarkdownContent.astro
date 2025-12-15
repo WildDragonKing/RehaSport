@@ -1,0 +1,107 @@
+---
+import type { Content, Paragraph, Text, InlineCode } from "mdast";
+
+interface Props {
+  nodes: Content[];
+}
+
+const { nodes } = Astro.props;
+const basePath = import.meta.env.BASE_URL || '/';
+
+type MarkdownNode = Content;
+
+function isText(node: MarkdownNode): node is Text {
+  return node.type === "text";
+}
+
+function resolveLinkTarget(url: string): string {
+  const exerciseMatch = url.match(/([^/]+)\.md$/);
+  if (exerciseMatch) {
+    return `${basePath}uebungen/${exerciseMatch[1]}/`;
+  }
+  if (url.startsWith("http")) {
+    return url;
+  }
+  return url;
+}
+
+function renderChildren(children: MarkdownNode[] | undefined): string {
+  if (!children) return '';
+  return children.map(child => renderNode(child)).join('');
+}
+
+function escapeHtml(text: string): string {
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function renderNode(node: MarkdownNode): string {
+  switch (node.type) {
+    case "paragraph":
+      return `<p>${renderChildren(node.children as MarkdownNode[])}</p>`;
+    case "list": {
+      const tag = node.ordered ? "ol" : "ul";
+      const start = node.start ? ` start="${node.start}"` : '';
+      return `<${tag}${start}>${renderChildren(node.children as MarkdownNode[])}</${tag}>`;
+    }
+    case "listItem": {
+      const hasSingleParagraph = node.children.length === 1 && node.children[0]?.type === "paragraph";
+      const paragraph = hasSingleParagraph ? (node.children[0] as Paragraph) : undefined;
+      const content = hasSingleParagraph && paragraph
+        ? renderChildren(paragraph.children as MarkdownNode[])
+        : renderChildren(node.children as MarkdownNode[]);
+      return `<li>${content}</li>`;
+    }
+    case "strong":
+      return `<strong>${renderChildren(node.children as MarkdownNode[])}</strong>`;
+    case "emphasis":
+      return `<em>${renderChildren(node.children as MarkdownNode[])}</em>`;
+    case "break":
+      return '<br />';
+    case "thematicBreak":
+      return '<hr />';
+    case "heading": {
+      const depth = Math.min(node.depth + 1, 6);
+      return `<h${depth}>${renderChildren(node.children as MarkdownNode[])}</h${depth}>`;
+    }
+    case "link": {
+      const target = resolveLinkTarget(node.url);
+      const isExternal = target.startsWith("http");
+      const attrs = isExternal ? ' target="_blank" rel="noreferrer"' : '';
+      return `<a href="${escapeHtml(target)}"${attrs}>${renderChildren(node.children as MarkdownNode[])}</a>`;
+    }
+    case "inlineCode":
+      return `<code>${escapeHtml((node as InlineCode).value)}</code>`;
+    case "code":
+      return `<pre><code>${escapeHtml(node.value)}</code></pre>`;
+    case "blockquote":
+      return `<blockquote>${renderChildren(node.children as MarkdownNode[])}</blockquote>`;
+    case "table": {
+      const rows = node.children.map((row, rowIndex) => {
+        const cells = row.children.map((cell, _cellIndex) => {
+          const tag = rowIndex === 0 ? "th" : "td";
+          return `<${tag}>${renderChildren(cell.children as MarkdownNode[])}</${tag}>`;
+        }).join('');
+        return `<tr>${cells}</tr>`;
+      }).join('');
+      return `<div class="markdown-table-wrapper"><table><tbody>${rows}</tbody></table></div>`;
+    }
+    case "html":
+      return '';
+    default: {
+      if (isText(node)) {
+        return escapeHtml(node.value);
+      }
+      return '';
+    }
+  }
+}
+
+const html = renderChildren(nodes);
+---
+
+<Fragment set:html={html} />

@@ -1,0 +1,160 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Button from '@components/Button.astro';
+import MarkdownContent from '@components/MarkdownContent.astro';
+import { exercises, getExercise } from '@/lib/exercises';
+
+export function getStaticPaths() {
+  return exercises.map((exercise) => ({
+    params: { exerciseSlug: exercise.slug },
+  }));
+}
+
+const { exerciseSlug } = Astro.params;
+const exercise = getExercise(exerciseSlug);
+const basePath = import.meta.env.BASE_URL || '/';
+
+if (!exercise) {
+  return Astro.redirect(`${basePath}uebungen/`);
+}
+
+// Find alternative sections
+const kneeSection = exercise.sections.find(s => s.title.toLowerCase().includes("knie"));
+const shoulderSection = exercise.sections.find(s => s.title.toLowerCase().includes("schulter"));
+const otherSections = exercise.sections.filter(s =>
+  !s.title.toLowerCase().includes("knie") &&
+  !s.title.toLowerCase().includes("schulter")
+);
+---
+
+<BaseLayout title={exercise.title} description={exercise.summary}>
+  <div class="container stack">
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb" aria-label="Navigation">
+      <a href={basePath} class="breadcrumb-link">Start</a>
+      <span class="breadcrumb-separator">/</span>
+      <a href={`${basePath}uebungen/`} class="breadcrumb-link">Übungen</a>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-current">{exercise.title}</span>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="stack-sm">
+      <h1>{exercise.title}</h1>
+      {exercise.summary && (
+        <p class="text-muted" style="font-size: 1.125rem; max-width: 640px">
+          {exercise.summary}
+        </p>
+      )}
+
+      {exercise.tags.length > 0 && (
+        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem">
+          {exercise.tags.map((tag) => (
+            <span class="badge badge-primary">#{tag}</span>
+          ))}
+        </div>
+      )}
+    </header>
+
+    <!-- Quick Info Cards -->
+    <div class="quick-info-grid">
+      {exercise.area && (
+        <div class="quick-info-card">
+          <div class="quick-info-card-title">Bereich</div>
+          <div class="quick-info-card-content">{exercise.area}</div>
+        </div>
+      )}
+      {exercise.focus && (
+        <div class="quick-info-card">
+          <div class="quick-info-card-title">Schwerpunkt</div>
+          <div class="quick-info-card-content">{exercise.focus}</div>
+        </div>
+      )}
+      {exercise.difficulty && (
+        <div class="quick-info-card">
+          <div class="quick-info-card-title">Schwierigkeit</div>
+          <div class="quick-info-card-content">{exercise.difficulty}</div>
+        </div>
+      )}
+      {exercise.duration && (
+        <div class="quick-info-card">
+          <div class="quick-info-card-title">Dauer</div>
+          <div class="quick-info-card-content">{exercise.duration}</div>
+        </div>
+      )}
+    </div>
+
+    <!-- Alternatives Section (prominent) -->
+    {(kneeSection || shoulderSection) && (
+      <section class="stack-sm">
+        <h2>Alternativen bei Beschwerden</h2>
+        <div class="alternatives-grid">
+          {kneeSection && (
+            <div class="alternative-card alternative-card-knee">
+              <div class="alternative-card-header">
+                <span class="alternative-card-icon">🦵</span>
+                <span class="alternative-card-title">Bei Kniebeschwerden</span>
+              </div>
+              <div class="alternative-card-content">
+                <MarkdownContent nodes={kneeSection.nodes} />
+              </div>
+            </div>
+          )}
+          {shoulderSection && (
+            <div class="alternative-card alternative-card-shoulder">
+              <div class="alternative-card-header">
+                <span class="alternative-card-icon">💪</span>
+                <span class="alternative-card-title">Bei Schulterbeschwerden</span>
+              </div>
+              <div class="alternative-card-content">
+                <MarkdownContent nodes={shoulderSection.nodes} />
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+    )}
+
+    <!-- Other Content Sections -->
+    {otherSections.length > 0 && (
+      <section class="stack">
+        {otherSections.map((section) => (
+          <article id={section.id} class="card card-body">
+            <h2 style="font-size: 1.25rem; margin-bottom: 1rem">{section.title}</h2>
+            <div style="color: var(--color-text-muted)">
+              <MarkdownContent nodes={section.nodes} />
+            </div>
+          </article>
+        ))}
+      </section>
+    )}
+
+    <!-- Related Exercises -->
+    {exercise.related.length > 0 && (
+      <section class="stack-sm">
+        <h2>Verwandte Übungen</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem">
+          {exercise.related.map((relatedSlug) => {
+            const related = getExercise(relatedSlug);
+            if (!related) return null;
+            return (
+              <a
+                href={`${basePath}uebungen/${related.slug}/`}
+                class="chip"
+              >
+                {related.title}
+              </a>
+            );
+          })}
+        </div>
+      </section>
+    )}
+
+    <!-- Navigation -->
+    <div style="padding-top: 1rem">
+      <Button href={`${basePath}uebungen/`} variant="ghost">
+        ← Alle Übungen
+      </Button>
+    </div>
+  </div>
+</BaseLayout>
