@@ -27,31 +27,54 @@ RehaSport/
 
 ## Aufbau einer Stunde
 
+Alle Stunden folgen dem **45-Minuten-Schema** (10-15-15-5):
+
+| Phase | Dauer | Zweck |
+|-------|-------|-------|
+| Aufwärmen | 10 Min | Aktivierung, Mobilisation |
+| Hauptteil | 15 Min | Kraft, Ausdauer |
+| Schwerpunkt | 15 Min | Themenspezifische Vertiefung |
+| Ausklang | 5 Min | Cool-down, Dehnung |
+
+**Jede Übung benötigt:**
+- 🦵 Knie-Alternative
+- 💪 Schulter-Alternative
+
 ```markdown
 ---
 beschreibung: Kurzer Überblick über Zielgruppe und Schwerpunkt.
-dauer: 50 Minuten
-fokus: Herz-Kreislauf, Koordination
+dauer: 45 Minuten
+fokus: Rücken, Mobilität, Stabilität
+konzept: ../../Konzepte/[konzeptname].md
 ---
 
 # Titel der Stunde
 
-## Beschreibung
-Freitext für Trainer*innen.
+## Übersicht
+- **Konzept:** [Konzeptname](../../Konzepte/[konzeptname].md)
+- **Gesamtdauer:** 45 Minuten
+- **Schwierigkeitsgrad:** Leicht/Mittel/Schwer
+- **Zielgruppe:** Beschreibung der Zielgruppe
 
-## Dauer
-50 Minuten
+## Phasenplan
 
-## Fokus
-Optional – mehrere Begriffe mit Komma trennen.
+### Phase 1: Aufwärmen (10 Minuten)
+1. [Übungsname](../../Übungen/dateiname.md)
+   - **Durchführung:** Sätze x Wiederholungen
+   - **Knie-Alternative:** 🦵 Konkrete Alternative
+   - **Schulter-Alternative:** 💪 Konkrete Alternative
 
-## Übungen
-1. Name der Übung
-   - **Beschreibung:** Ablauf der Übung.
-   - **Dauer/Wiederholungen:** Zeit oder Wiederholungen.
-   - **Equipment:** Optionales Material.
-   - **Hinweise:** Alternativen, Coaching-Tipps.
+### Phase 2: Hauptteil (15 Minuten)
+...
+
+### Phase 3: Schwerpunkt (15 Minuten)
+...
+
+### Phase 4: Ausklang (5 Minuten)
+...
 ```
+
+**Template verwenden:** `stunden/_template_stunde.md`
 
 ## Navigation in der App
 

@@ -2,8 +2,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import Button from "../components/ui/Button";
+import StarRating from "../components/ui/StarRating";
 import { findExerciseSlugByTitle } from "../content/exercises";
 import { getCategory, getSession } from "../content/sessions";
+import { useRatings } from "../hooks/useRatings";
 
 // Icons
 function ChevronDownIcon(): JSX.Element {
@@ -37,6 +39,16 @@ function SessionPage(): JSX.Element {
   const [expandedExercises, setExpandedExercises] = useState<Set<string>>(new Set());
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
   const exerciseRefs = useRef<Map<string, HTMLLIElement>>(new Map());
+  const { getRating, setRating } = useRatings();
+
+  const sessionId = categorySlug && sessionSlug ? `${categorySlug}/${sessionSlug}` : null;
+  const currentRating = sessionId ? getRating(sessionId, "session") : null;
+
+  const handleRate = (rating: number) => {
+    if (sessionId) {
+      setRating(sessionId, "session", rating);
+    }
+  };
 
   // Flatten exercises for navigation
   const allExercises = session?.phases.flatMap((phase, phaseIndex) =>
@@ -356,6 +368,20 @@ function SessionPage(): JSX.Element {
       ) : (
         <p className="text-muted">Keine Übungen in dieser Stunde gefunden.</p>
       )}
+
+      {/* Rating Section */}
+      <section className="rating-card">
+        <div className="rating-card-header">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="currentColor" style={{ color: "var(--color-rating-star)" }} />
+          </svg>
+          <span className="rating-card-title">Wie hat Ihnen diese Stunde gefallen?</span>
+        </div>
+        <p className="rating-card-subtitle">
+          Gut bewertete Stunden dienen als Inspiration für neue Trainingseinheiten.
+        </p>
+        <StarRating rating={currentRating} onRate={handleRate} size="lg" />
+      </section>
 
       {/* Sticky Bottom Navigation */}
       {allExercises.length > 1 && (

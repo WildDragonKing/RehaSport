@@ -56,7 +56,7 @@ Dieses Dokument definiert verbindliche Standards für die RehaSport-Sammlung. **
 
 - [ ] **Konzept**: Klar definiertes Thema
 - [ ] **Lernziele**: Mindestens 3 Ziele
-- [ ] **45-Minuten-Schema**: Exakt 10-15-15-10 Minuten
+- [ ] **45-Minuten-Schema**: Exakt 10-15-15-5 Minuten
 - [ ] **Jede Übung**: Hat Knie-Alternative
 - [ ] **Jede Übung**: Hat Schulter-Alternative
 - [ ] **Hinweise für Übungsleiter**: Mindestens 3 Punkte
@@ -94,8 +94,8 @@ Dieses Dokument definiert verbindliche Standards für die RehaSport-Sammlung. **
 ❌ **Fehler 1**: Beliebige Übungssammlung ohne Konzept  
 ✅ **Richtig**: Alle Übungen dienen einem klaren Thema
 
-❌ **Fehler 2**: Falsche Zeitaufteilung (20-20-5-0)  
-✅ **Richtig**: Exakt 10-15-15-10 Minuten
+❌ **Fehler 2**: Falsche Zeitaufteilung (20-20-5-0)
+✅ **Richtig**: Exakt 10-15-15-5 Minuten
 
 ❌ **Fehler 3**: Keine Alternativen für Übungen  
 ✅ **Richtig**: Jede Übung hat Knie- UND Schulter-Alternative
@@ -126,7 +126,7 @@ Bevor Sie eine Übung als "fertig" markieren:
 
 Bevor Sie eine Stunde als "fertig" markieren:
 
-1. **Template verwendet**: `Stunden/_template_stunde.md` kopiert
+1. **Template verwendet**: `stunden/_template_stunde.md` kopiert
 2. **Anleitung gelesen**: [stunden_planen.md](Anleitung/stunden_planen.md) befolgt
 3. **Konzept definiert**: Klares Thema, das sich durch alle Phasen zieht
 4. **Zeitrechnung korrekt**: Alle Übungszeiten ergeben 45 Min (inkl. Puffer)
@@ -164,7 +164,7 @@ Bevor Sie eine Stunde als "fertig" markieren:
 6. Zeitcheck: Rechnung prüfen (= 45 Min?)
 7. Kohärenz: Passt alles zum Konzept?
 8. Prüfen: Checkliste durchgehen
-9. Speichern: In Stunden/ mit korrektem Namen
+9. Speichern: In stunden/ mit korrektem Namen
 10. Verlinken: Übungen aktualisieren (wird verwendet in...)
 ```
 

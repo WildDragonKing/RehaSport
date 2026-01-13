@@ -10,20 +10,20 @@ Diese Richtlinien gelten für das gesamte Repository.
 - Die `README.md` dient ausschließlich als kompakter Projektüberblick und soll keine tiefgehenden technischen Details enthalten.
 - Die Einleitung der `README.md` muss leicht verständlich und nicht technisch formuliert sein und wortgleich auf der Startseite des Frontends erscheinen.
 - Die Startseite des Frontends muss eine gut sichtbare Verlinkung auf das GitHub-Projekt sowie auf die Issue-Erstellung enthalten, damit neue Stundenideen gesammelt werden können.
-- Nutze die verbindlichen Leitfäden im Verzeichnis `Anleitung/` (z. B. `stunden_planen.md`, `alternative_übungen.md`, `übungen_erstellen.md`) als Grundlage für Inhalte in den entsprechenden Bereichen.
+- Nutze die verbindlichen Leitfäden im Verzeichnis `Anleitung/` (z. B. `stunden_planen.md`, `alternative_übungen.md`, `übungen_erstellen.md`) als Grundlage für Inhalte in den entsprechenden Bereichen.
 - Verweise bei Konzept- oder Stundenanpassungen konsequent auf die Dateien im Ordner `Konzepte/` und halte die Querverlinkungen zwischen Konzepten, Stunden und Übungen aktuell.
 - Halte alle Projektdokumente konsolidiert und vermeide redundante Inhalte; erstelle nur dann neue Markdown-Dateien, wenn sie zwingend notwendig und langfristig gepflegt werden.
 - Jede Änderung am Projekt, die Dokumentation betrifft, muss in den entsprechenden Markdown-Dateien (einschließlich dieser `AGENTS.md`) zeitgleich nachgeführt werden. Alle Markdown-Dokumente sind stets aktuell zu halten.
 
 ## Abgleich der KI-Anweisungen
-- Die Richtlinien in `AGENTS.md`, `.github/copilot-instructions.md` und `claude.md` müssen stets synchron gehalten werden.
+- Die Richtlinien in `AGENTS.md`, `.github/copilot-instructions.md` und `CLAUDE.md` müssen stets synchron gehalten werden.
 - Übernehme relevante Wissensinhalte aus den KI-Anweisungen gegenseitig, sodass alle drei Dokumente dieselben Kernregeln widerspiegeln.
 - Prüfe nach jeder Änderung an einem der Dokumente, ob Anpassungen in den beiden anderen erforderlich sind, und führe sie im selben Commit durch.
 
 ## Zentrale Projektleitplanken (Auszug aus den KI-Anweisungen)
-- Trainingsstunden folgen strikt dem 45-Minuten-Schema (10 Min Aufwärmen, 15 Min Hauptteil, 15 Min Schwerpunkt, 10 Min Ausklang).
+- Trainingsstunden folgen strikt dem 45-Minuten-Schema (10 Min Aufwärmen, 15 Min Hauptteil, 15 Min Schwerpunkt, 5 Min Ausklang).
 - Jede Übung benötigt dokumentierte Alternativen für Knie- (`🦵`) und Schulterbeschwerden (`💪`) sowie vollständige Kontraindikationen.
-- Templates in `Übungen/` und `Stunden/` dürfen nicht verändert werden und sind stets die Ausgangsbasis für neue Inhalte.
+- Templates in `Übungen/` und `stunden/` dürfen nicht verändert werden und sind stets die Ausgangsbasis für neue Inhalte.
 - Alle Inhalte (inklusive Dateinamen) werden auf Deutsch verfasst und mit konsistenten Tags gemäß Dokumentation versehen.
 
 ## Frontend (Verzeichnis `site/`)

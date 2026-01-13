@@ -13,10 +13,10 @@ Dies ist ein deutschsprachiges Dokumentationssystem für Rehabilitationssport (R
 ### Kernkomponenten
 
 - **`Übungen/`** - Übungsdatenbank mit detaillierten medizinischen Informationen
-- **`Stunden/`** - 45-minütige Trainingsstunden nach dem 10-15-15-10-Minuten-Schema
+- **`stunden/`** - 45-minütige Trainingsstunden nach dem 10-15-15-5-Minuten-Schema
 - **`Anleitung/`** - Systemdokumentation und Erstellungshilfen
 - **`Konzepte/`** - Thematische Konzepte, die Übungen verbinden
-- **Templates** - `_template_übung.md` und `_template_stunde.md` (MÜSSEN verwendet werden, niemals ändern)
+- **Templates** - `Übungen/_template_übung.md` und `stunden/_template_stunde.md` (MÜSSEN verwendet werden, niemals ändern)
 
 ### Die 45-Minuten-Struktur
 
@@ -27,7 +27,7 @@ ALLE Trainingsstunden MÜSSEN exakt dieser Zeitaufteilung folgen:
 | Aufwärmen | 10 Min | Aktivierung, Mobilisation |
 | Hauptteil | 15 Min | Kraft, Ausdauer |
 | Schwerpunkt | 15 Min | Themenspezifische Vertiefung |
-| Ausklang | 10 Min | Cool-down, Dehnung |
+| Ausklang | 5 Min | Cool-down, Dehnung |
 
 ## Kritische medizinische Anforderungen
 
@@ -81,7 +81,7 @@ Jede Übung muss dokumentieren:
 ### Neue Trainingsstunde erstellen
 
 1. Konzept/Thema wählen (muss durch alle Übungen kohärent sein)
-2. `Stunden/_template_stunde.md` kopieren
+2. `stunden/_template_stunde.md` kopieren
 3. 8-12 Übungen aus Datenbank auswählen (2-3 pro Phase)
 4. Timing prüfen - muss exakt 45 Minuten ergeben
 5. Sicherstellen, dass JEDE Übung Knie- UND Schulteralternativen hat
@@ -137,7 +137,7 @@ Beim Löschen von Übungen:
 - ❌ Vage Alternativen wie "Bei Problemen anpassen"
 - ❌ Fehlende Kontraindikationen (medizinisches Sicherheitsrisiko!)
 - ❌ Zufällige Übungssammlung ohne kohärentes Konzept
-- ❌ Falsche Zeitverteilung (muss 10-15-15-10 sein, nicht 20-20-5-0)
+- ❌ Falsche Zeitverteilung (muss 10-15-15-5 sein, nicht 20-20-5-0)
 - ❌ Templates verwenden ohne erforderliche Dokumentation zu lesen
 
 ## Entwicklungs-Kommandos
@@ -148,7 +148,7 @@ Kein Build-System - dies ist ein reines Dokumentationsprojekt mit Markdown-Datei
 
 Beim Erstellen von Inhalten diese Beispiele studieren:
 - **Übungsbeispiel**: `Übungen/schulterkreisen.md`
-- **Stundenbeispiel**: `Stunden/stunde_01_rückenfit.md`
+- **Stundenbeispiel**: `stunden/ruecken/stabilitaet-und-mobilisation.md`
 - **Anpassungsleitfaden**: `Anleitung/alternative_übungen.md`
 - **Qualitätscheckliste**: `CONTRIBUTING.md` (Abschnitt "Checkliste vor dem Veröffentlichen")
 

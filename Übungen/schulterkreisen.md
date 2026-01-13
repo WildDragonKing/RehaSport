@@ -87,7 +87,9 @@ Die Schulter ist das beweglichste Gelenk des menschlichen Körpers mit dem grö�
 
 ## Wird verwendet in
 
-- [Stunde 01: Rückenfit](../Stunden/stunde_01_rückenfit.md)
+- [Stabilität & Mobilisation](../stunden/ruecken/stabilitaet-und-mobilisation.md)
+- [Gymnastikstab](../stunden/ruecken/gymnastikstab.md)
+- [Redondo-Ball](../stunden/ruecken/redondo_ball.md)
 
 ---
 **Tags**: #aufwärmen #beweglichkeit #schulter #anfänger #allgemein  

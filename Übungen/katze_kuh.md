@@ -93,7 +93,9 @@ Die Katze-Kuh-Übung stammt ursprünglich aus dem Yoga (Marjaryasana-Bitilasana)
 
 ## Wird verwendet in
 
-- [Stunde 01: Rückenfit](../Stunden/stunde_01_rückenfit.md)
+- [Stabilität & Mobilisation](../stunden/ruecken/stabilitaet-und-mobilisation.md)
+- [Gymnastikstab](../stunden/ruecken/gymnastikstab.md)
+- [Redondo-Ball](../stunden/ruecken/redondo_ball.md)
 
 ---
 **Tags**: #ausklang #beweglichkeit #rücken #anfänger #entspannung #orthopädie  

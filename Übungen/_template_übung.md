@@ -81,7 +81,7 @@
 
 ## Wird verwendet in
 
-- [Stunde XX: Titel](../Stunden/stunde_xx.md)
+- [Stunde XX: Titel](../stunden/kategorie/stunde_xx.md)
 - *(Wird automatisch ergänzt, wenn die Übung in Stunden verwendet wird)*
 
 ---

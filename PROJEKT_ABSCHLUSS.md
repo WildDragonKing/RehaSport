@@ -54,7 +54,7 @@
 
 **Alle Stunden erfüllen:**
 
-- ✅ Exakte 10-15-15-10 Minuten Zeitaufteilung
+- ✅ Exakte 10-15-15-5 Minuten Zeitaufteilung
 - ✅ 8-15 Übungen pro Stunde
 - ✅ JEDE Übung hat Knie-Alternative
 - ✅ JEDE Übung hat Schulter-Alternative
@@ -102,9 +102,9 @@ RehaSport/
 │   ├── ÜBUNGSINDEX.md ✅ (37 Übungen indexiert)
 │   ├── _template_übung.md ✅
 │   └── [37 Übungsdateien] ✅
-├── Stunden/
+├── stunden/
 │   ├── _template_stunde.md ✅
-│   └── [5 Stundendateien] ✅
+│   └── [7 Stundendateien in Unterordnern] ✅
 ├── Konzepte/
 │   ├── _template_konzept.md ✅
 │   └── [5 Konzeptdateien] ✅
@@ -144,7 +144,7 @@ RehaSport/
 - [x] Alle Übungen mit Schulter-Alternativen
 - [x] 4-5 Konzepte entwickelt (5 ✅)
 - [x] 5 Trainingsstunden erstellt
-- [x] Alle Stunden folgen 10-15-15-10 Schema
+- [x] Alle Stunden folgen 10-15-15-5 Schema
 - [x] ÜBUNGSINDEX aktualisiert
 
 ### Qualität

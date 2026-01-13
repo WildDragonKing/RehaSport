@@ -7,6 +7,7 @@ import ExercisesPage from "./pages/ExercisesPage";
 import HomePage from "./pages/HomePage";
 import InfoPage from "./pages/InfoPage";
 import SessionPage from "./pages/SessionPage";
+import SessionsPage from "./pages/SessionsPage";
 
 function App(): JSX.Element {
   return (
@@ -15,6 +16,7 @@ function App(): JSX.Element {
         <Route index element={<HomePage />} />
         <Route path="ordner/:categorySlug" element={<CategoryPage />} />
         <Route path="ordner/:categorySlug/:sessionSlug" element={<SessionPage />} />
+        <Route path="stunden" element={<SessionsPage />} />
         <Route path="uebungen" element={<ExercisesPage />} />
         <Route path="uebungen/:exerciseSlug" element={<ExerciseDetailPage />} />
         <Route path="info" element={<InfoPage />} />

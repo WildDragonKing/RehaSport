@@ -13,7 +13,7 @@ Jede Stunde ist klar strukturiert:
 | **Aufwärmen** | 10 Min | 22% | Aktivierung, Mobilisation, Vorbereitung |
 | **Hauptteil** | 15 Min | 33% | Kraft, Ausdauer, funktionelle Bewegungen |
 | **Schwerpunkt** | 15 Min | 33% | Themenspezifische Übungen |
-| **Ausklang** | 10 Min | 22% | Dehnung, Entspannung, Regeneration |
+| **Ausklang** | 5 Min | 11% | Dehnung, Entspannung, Regeneration |
 
 ## Konzept-basierte Planung
 
@@ -47,7 +47,7 @@ Wählen Sie ein Thema, das:
 
 ### 2. Template kopieren
 
-1. Öffnen Sie `Stunden/_template_stunde.md`
+1. Öffnen Sie `stunden/_template_stunde.md`
 2. Kopieren Sie den Inhalt
 3. Erstellen Sie neue Datei: z.B. `stunde_01_rücken_stabilität.md`
 
@@ -136,7 +136,7 @@ Formulieren Sie 3-5 konkrete Ziele:
 - **💪 Alternative bei Schulterproblemen**: Unterarmstütz statt Liegestütz-Position
 ```
 
-#### Phase 4: Ausklang (10 Min)
+#### Phase 4: Ausklang (5 Min)
 
 **Ziel:** Dehnung, Entspannung
 
@@ -236,10 +236,10 @@ Konzept: (unklar)
 - 2 Übungen à 7-8 Minuten
 - ODER 3 Übungen à 5 Minuten
 
-**Ausklang (10 Min):**
+**Ausklang (5 Min):**
 
-- 2 Übungen à 5 Minuten
-- ODER 3 Übungen à 3-4 Minuten
+- 1-2 Übungen à 2-3 Minuten
+- Fokus auf Entspannung und Dehnung
 
 ### Pufferzeit einplanen
 
@@ -250,7 +250,7 @@ Konzept: (unklar)
 ## Checkliste vor dem Veröffentlichen
 
 - [ ] Konzept ist klar definiert
-- [ ] Alle 4 Phasen zeitlich korrekt (10-15-15-10)
+- [ ] Alle 4 Phasen zeitlich korrekt (10-15-15-5)
 - [ ] Lernziele sind formuliert
 - [ ] Benötigte Materialien aufgelistet
 - [ ] Jede Übung hat Knie-Alternative
@@ -305,8 +305,8 @@ Konzept: (unklar)
 ❌ **Keine Alternativen**: "Bei Problemen pausieren"  
 ✅ **Konkrete Alternativen**: Für Knie und Schulter
 
-❌ **Falsche Zeitaufteilung**: 20-20-5-0 Minuten  
-✅ **Standard-Schema**: 10-15-15-10 Minuten
+❌ **Falsche Zeitaufteilung**: 20-20-5-0 Minuten
+✅ **Standard-Schema**: 10-15-15-5 Minuten
 
 ## Nächste Schritte
 
