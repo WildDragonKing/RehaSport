@@ -85,8 +85,8 @@ Die Bauchmuskulatur arbeitet als funktionelle Einheit mit der Rückenmuskulatur 
 
 ## Wird verwendet in
 
-- [Stunde 01: Rückenfit](../Stunden/stunde_01_rückenfit.md)
-- *(Wird automatisch ergänzt, wenn die Übung in Stunden verwendet wird)*
+- [Stabilität & Mobilisation](../stunden/ruecken/stabilitaet-und-mobilisation.md)
+- [Redondo-Ball](../stunden/ruecken/redondo_ball.md)
 
 ---
 **Tags**: #hauptteil #kraft #bauch  

@@ -5,6 +5,33 @@ import SearchBar from "../components/search/SearchBar";
 import FilterPanel from "../components/search/FilterPanel";
 import { useExerciseSearch } from "../hooks/useSearch";
 
+// Get gradient based on exercise focus area
+function getExerciseGradient(area?: string): string {
+  const gradients: Record<string, string> = {
+    "Rücken": "linear-gradient(135deg, var(--color-sage-100) 0%, var(--color-sage-50) 100%)",
+    "Schulter": "linear-gradient(135deg, var(--color-phase-focus-bg) 0%, var(--color-sand-50) 100%)",
+    "Balance": "linear-gradient(135deg, var(--color-phase-cooldown-bg) 0%, var(--color-sage-50) 100%)",
+    "Ganzkörper": "linear-gradient(135deg, var(--color-sage-200) 0%, var(--color-sage-50) 100%)",
+    "Mobilisation": "linear-gradient(135deg, var(--color-phase-warmup-bg) 0%, var(--color-sand-50) 100%)",
+    "Dehnung": "linear-gradient(135deg, var(--color-phase-cooldown-bg) 0%, var(--color-sand-50) 100%)",
+  };
+  return gradients[area || ""] || "linear-gradient(135deg, var(--color-surface-muted) 0%, var(--color-surface) 100%)";
+}
+
+function getAreaIcon(area?: string): string {
+  const icons: Record<string, string> = {
+    "Rücken": "🌿",
+    "Schulter": "🌸",
+    "Balance": "🍃",
+    "Ganzkörper": "🌳",
+    "Mobilisation": "☀️",
+    "Dehnung": "🌙",
+    "Kräftigung": "💪",
+    "Koordination": "🎯",
+  };
+  return icons[area || ""] || "🌱";
+}
+
 function ExercisesPage(): JSX.Element {
   const {
     filteredExercises,
@@ -20,112 +47,131 @@ function ExercisesPage(): JSX.Element {
 
   return (
     <div className="container stack">
-      {/* Page Header with Search */}
-      <header className="stack-sm">
-        <h1>Übungsbibliothek</h1>
-        <p className="text-muted" style={{ maxWidth: "600px" }}>
-          Alle dokumentierten Übungen mit Alternativen für Knie- und Schulterprobleme.
-        </p>
-        <div style={{ maxWidth: "480px" }}>
-          <SearchBar value={query} onChange={setQuery} />
+      {/* Page Header */}
+      <header className="exercises-header animate-fade-up fill-backwards">
+        <div className="exercises-header-content">
+          <h1 className="exercises-title">Übungsbibliothek</h1>
+          <p className="exercises-subtitle">
+            {filteredExercises.length} dokumentierte Übungen mit Alternativen für Knie- und Schulterprobleme
+          </p>
+        </div>
+        <div className="exercises-search animate-fade-up fill-backwards delay-100">
+          <SearchBar value={query} onChange={setQuery} placeholder="Übung suchen..." />
         </div>
       </header>
 
       {/* Filters */}
-      <FilterPanel
-        selectedPhases={selectedPhases}
-        onPhasesChange={setSelectedPhases}
-        selectedDifficulty={selectedDifficulty}
-        onDifficultyChange={setSelectedDifficulty}
-        onClear={clearFilters}
-        hasActiveFilters={hasActiveFilters}
-      />
+      <div className="animate-fade-up fill-backwards delay-200">
+        <FilterPanel
+          selectedPhases={selectedPhases}
+          onPhasesChange={setSelectedPhases}
+          selectedDifficulty={selectedDifficulty}
+          onDifficultyChange={setSelectedDifficulty}
+          onClear={clearFilters}
+          hasActiveFilters={hasActiveFilters}
+        />
+      </div>
 
-      {/* Results Count */}
-      <p className="text-muted" style={{ fontSize: "0.875rem" }}>
-        {filteredExercises.length} {filteredExercises.length === 1 ? "Übung" : "Übungen"} gefunden
-      </p>
+      {/* Results Info */}
+      <div className="exercises-results-info animate-fade-up fill-backwards delay-300">
+        <span className="exercises-results-count">
+          {filteredExercises.length} {filteredExercises.length === 1 ? "Übung" : "Übungen"}
+        </span>
+        {hasActiveFilters && (
+          <span className="exercises-results-filter">mit aktiven Filtern</span>
+        )}
+      </div>
 
       {/* Exercises Grid */}
       {filteredExercises.length > 0 ? (
-        <ul className="grid-exercises" aria-label="Übungen">
-          {filteredExercises.map((exercise) => (
-            <li key={exercise.slug}>
-              <article className="card card-hover card-body" style={{ height: "100%", display: "flex", flexDirection: "column" }}>
-                <header style={{ flex: 1 }}>
-                  <h2 style={{ fontSize: "1.125rem", fontWeight: 500, marginBottom: "0.5rem" }}>
-                    <Link
-                      to={`/uebungen/${exercise.slug}`}
-                      style={{ color: "var(--color-text)" }}
-                    >
-                      {exercise.title}
+        <ul className="exercises-grid" aria-label="Übungen">
+          {filteredExercises.map((exercise, index) => {
+            const delayClass = index < 6 ? `delay-${(index % 6) * 100 + 100}` : "";
+
+            return (
+              <li key={exercise.slug} className={`animate-fade-up fill-backwards ${delayClass}`}>
+                <article className="exercise-card">
+                  {/* Card Header with Gradient */}
+                  <div className="exercise-card-header" style={{ background: getExerciseGradient(exercise.area) }}>
+                    <div className="exercise-card-area">
+                      <span className="exercise-card-area-icon">{getAreaIcon(exercise.area)}</span>
+                      <span className="exercise-card-area-name">{exercise.area || "Übung"}</span>
+                    </div>
+                    {exercise.difficulty && (
+                      <div className="exercise-card-difficulty">
+                        {exercise.difficulty}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Card Body */}
+                  <div className="exercise-card-body">
+                    <h2 className="exercise-card-title">
+                      <Link to={`/uebungen/${exercise.slug}`}>
+                        {exercise.title}
+                      </Link>
+                    </h2>
+
+                    {exercise.summary && (
+                      <p className="exercise-card-description">
+                        {exercise.summary}
+                      </p>
+                    )}
+
+                    {/* Meta Info */}
+                    <div className="exercise-card-meta">
+                      {exercise.focus && (
+                        <div className="exercise-card-meta-item">
+                          <span className="exercise-card-meta-label">Schwerpunkt</span>
+                          <span className="exercise-card-meta-value">{exercise.focus}</span>
+                        </div>
+                      )}
+                      {exercise.duration && (
+                        <div className="exercise-card-meta-item">
+                          <span className="exercise-card-meta-label">Dauer</span>
+                          <span className="exercise-card-meta-value">{exercise.duration}</span>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Tags */}
+                    {exercise.tags.length > 0 && (
+                      <div className="exercise-card-tags">
+                        {exercise.tags.slice(0, 3).map((tag) => (
+                          <span key={`${exercise.slug}-${tag}`} className="exercise-card-tag">
+                            #{tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* CTA Link */}
+                    <Link to={`/uebungen/${exercise.slug}`} className="exercise-card-link">
+                      <span>Details ansehen</span>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                      </svg>
                     </Link>
-                  </h2>
-                  {exercise.summary && (
-                    <p className="text-muted" style={{ fontSize: "0.9375rem", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
-                      {exercise.summary}
-                    </p>
-                  )}
-                </header>
-
-                {/* Meta Grid */}
-                <dl style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "0.75rem", marginTop: "1rem", fontSize: "0.875rem" }}>
-                  {exercise.area && (
-                    <div>
-                      <dt className="text-light" style={{ fontSize: "0.75rem" }}>Bereich</dt>
-                      <dd style={{ fontWeight: 500 }}>{exercise.area}</dd>
-                    </div>
-                  )}
-                  {exercise.focus && (
-                    <div>
-                      <dt className="text-light" style={{ fontSize: "0.75rem" }}>Schwerpunkt</dt>
-                      <dd style={{ fontWeight: 500 }}>{exercise.focus}</dd>
-                    </div>
-                  )}
-                  {exercise.duration && (
-                    <div>
-                      <dt className="text-light" style={{ fontSize: "0.75rem" }}>Dauer</dt>
-                      <dd style={{ fontWeight: 500 }}>{exercise.duration}</dd>
-                    </div>
-                  )}
-                  {exercise.difficulty && (
-                    <div>
-                      <dt className="text-light" style={{ fontSize: "0.75rem" }}>Schwierigkeit</dt>
-                      <dd style={{ fontWeight: 500 }}>{exercise.difficulty}</dd>
-                    </div>
-                  )}
-                </dl>
-
-                {/* Tags */}
-                {exercise.tags.length > 0 && (
-                  <ul style={{ display: "flex", flexWrap: "wrap", gap: "0.375rem", marginTop: "1rem" }}>
-                    {exercise.tags.slice(0, 3).map((tag) => (
-                      <li key={`${exercise.slug}-${tag}`} className="badge badge-primary">
-                        #{tag}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-
-                {/* CTA */}
-                <div style={{ marginTop: "1rem" }}>
-                  <Button to={`/uebungen/${exercise.slug}`} size="sm">
-                    Details ansehen
-                  </Button>
-                </div>
-              </article>
-            </li>
-          ))}
+                  </div>
+                </article>
+              </li>
+            );
+          })}
         </ul>
       ) : (
-        <div className="empty-state">
-          <div className="empty-state-icon">🔍</div>
-          <h2 className="empty-state-title">Keine Übungen gefunden</h2>
-          <p className="empty-state-description">
-            Versuche andere Suchbegriffe oder Filter.
+        <div className="exercises-empty animate-fade-up fill-backwards">
+          <div className="exercises-empty-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.3-4.3" />
+            </svg>
+          </div>
+          <h2 className="exercises-empty-title">Keine Übungen gefunden</h2>
+          <p className="exercises-empty-text">
+            Versuche andere Suchbegriffe oder ändere die Filter.
           </p>
           {hasActiveFilters && (
-            <Button variant="ghost" onClick={clearFilters}>
+            <Button variant="secondary" onClick={clearFilters}>
               Filter zurücksetzen
             </Button>
           )}

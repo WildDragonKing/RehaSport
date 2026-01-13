@@ -4,8 +4,8 @@
 
 Dieser Index listet alle dokumentierten Übungen sortiert nach Kategorien. Nutzen Sie diesen Index, um schnell passende Übungen für Ihre Stunden zu finden.
 
-**Stand**: 02.12.2025
-**Anzahl Übungen gesamt**: 45
+**Stand**: 13.01.2026
+**Anzahl Übungen gesamt**: 63
 
 ---
 
@@ -28,6 +28,11 @@ Dieser Index listet alle dokumentierten Übungen sortiert nach Kategorien. Nutze
 | Rumpfrotation im Stand | Beweglichkeit | 1-2 Min | Leicht | [rumpfrotation_im_stand.md](rumpfrotation_im_stand.md) |
 | Stab-Rotation im Stand | Beweglichkeit | 3 Min | Mittel | [stab_rotation_im_stand.md](stab_rotation_im_stand.md) |
 | Redondo-Ball Rückenmobilisation | Beweglichkeit | 3 Min | Leicht | [redondo_rueckenmobilisation.md](redondo_rueckenmobilisation.md) |
+| Pezziball Beckenmobilisation | Beweglichkeit | 3-4 Min | Leicht | [pezziball_beckenmobilisation.md](pezziball_beckenmobilisation.md) |
+| Pezziball Armkreisen | Koordination | 2-3 Min | Leicht-Mittel | [pezziball_armkreisen.md](pezziball_armkreisen.md) |
+| Pezziball Fußrollen | Koordination | 2-3 Min | Leicht | [pezziball_fussrollen.md](pezziball_fussrollen.md) |
+| Gewichtsverlagerung mit Ball | Balance | 2-3 Min | Leicht | [gewichtsverlagerung_mit_ball.md](gewichtsverlagerung_mit_ball.md) |
+| Sitzgymnastik Fußwippe | Beweglichkeit | 2-3 Min | Leicht | [sitzgymnastik_fusswippe.md](sitzgymnastik_fusswippe.md) |
 
 ---
 
@@ -50,6 +55,13 @@ Dieser Index listet alle dokumentierten Übungen sortiert nach Kategorien. Nutze
 | Oberkörper heben (Bauch) | Kraft | 2-3 Min | Leicht | [oberkörper_heben_bauch.md](oberkörper_heben_bauch.md) |
 | Stab-Schultermobilisation | Beweglichkeit | 4 Min | Mittel | [stab_schultermobilisation.md](stab_schultermobilisation.md) |
 | Redondo-Ball Beckenkippung | Koordination | 4 Min | Mittel | [redondo_beckenkippung.md](redondo_beckenkippung.md) |
+| Theraband Rudern | Kraft | 3-4 Min | Leicht-Mittel | [theraband_rudern.md](theraband_rudern.md) |
+| Theraband Außenrotation | Kraft | 3-4 Min | Leicht | [theraband_aussenrotation.md](theraband_aussenrotation.md) |
+| Theraband Beinabspreizen | Kraft | 3-4 Min | Leicht-Mittel | [theraband_beinabspreizen.md](theraband_beinabspreizen.md) |
+| Theraband Brustpresse | Kraft | 3-4 Min | Leicht-Mittel | [theraband_brustpresse.md](theraband_brustpresse.md) |
+| Sitzgymnastik Kniestrecken | Kraft | 3-4 Min | Leicht | [sitzgymnastik_kniestrecken.md](sitzgymnastik_kniestrecken.md) |
+| Sitzgymnastik Schulterblätter zusammenziehen | Kraft | 2-3 Min | Leicht | [sitzgymnastik_schulterblatt_zusammenziehen.md](sitzgymnastik_schulterblatt_zusammenziehen.md) |
+| Sitzgymnastik Kopfdrehung mit Widerstand | Kraft | 2-3 Min | Leicht | [sitzgymnastik_kopfdrehung.md](sitzgymnastik_kopfdrehung.md) |
 
 ---
 
@@ -71,6 +83,9 @@ Intensive, themenspezifische Übungen
 | Tandemstand | Balance | 2-3 Min | Mittel | [tandemstand.md](tandemstand.md) |
 | Stab-Seitneigung | Kraft | 4 Min | Mittel | [stab_seitneigung.md](stab_seitneigung.md) |
 | Redondo-Ball Rumpfstabilisation | Kraft | 5 Min | Mittel | [redondo_rumpfstabilisation.md](redondo_rumpfstabilisation.md) |
+| Tandemgang | Balance | 3-4 Min | Mittel | [tandemgang.md](tandemgang.md) |
+| Uhrenübung | Balance | 3-4 Min | Mittel | [uhrenuebung.md](uhrenuebung.md) |
+| Pezziball Brücke | Kraft | 4-5 Min | Mittel | [pezziball_bruecke.md](pezziball_bruecke.md) |
 
 ---
 
@@ -88,6 +103,9 @@ Intensive, themenspezifische Übungen
 | Atemübung mit Armen | Beweglichkeit | 2-3 Min | Leicht | [atemübung_mit_armen.md](atemübung_mit_armen.md) |
 | Stab-Brustdehnung | Beweglichkeit | 3 Min | Leicht | [stab_brustdehnung.md](stab_brustdehnung.md) |
 | Redondo-Ball Entspannung | Beweglichkeit | 3 Min | Leicht | [redondo_entspannung.md](redondo_entspannung.md) |
+| Progressive Muskelentspannung | Entspannung | 5-8 Min | Leicht | [progressive_muskelentspannung.md](progressive_muskelentspannung.md) |
+| Atemübung 4-7-8 | Entspannung | 3-5 Min | Leicht | [atemuebung_4_7_8.md](atemuebung_4_7_8.md) |
+| Body Scan | Entspannung | 5-10 Min | Leicht | [body_scan.md](body_scan.md) |
 
 ---
 
@@ -146,6 +164,9 @@ Intensive, themenspezifische Übungen
 
 - [Vogel-Hund (Vierfüßlerstand)](vogel_hund.md)
 - [Redondo-Ball Beckenkippung](redondo_beckenkippung.md)
+- [Pezziball Armkreisen](pezziball_armkreisen.md)
+- [Pezziball Fußrollen](pezziball_fussrollen.md)
+- [Uhrenübung](uhrenuebung.md)
 
 ### Balance
 
@@ -153,6 +174,14 @@ Intensive, themenspezifische Übungen
 - [Standwaage](standwaage.md)
 - [Einbeinstand](einbeinstand.md)
 - [Tandemstand](tandemstand.md)
+- [Tandemgang](tandemgang.md)
+- [Gewichtsverlagerung mit Ball](gewichtsverlagerung_mit_ball.md)
+
+### Entspannung
+
+- [Progressive Muskelentspannung](progressive_muskelentspannung.md)
+- [Atemübung 4-7-8](atemuebung_4_7_8.md)
+- [Body Scan](body_scan.md)
 
 ---
 
@@ -430,45 +459,19 @@ Intensive, themenspezifische Übungen
 
 ## 📊 Verwendung in Stunden
 
-### In welchen Stunden wird die Übung verwendet?
+### Verfügbare Trainingsstunden
 
-**Schulterkreisen**
+| Stunde | Konzept | Ordner |
+|--------|---------|--------|
+| [Stabilität & Mobilisation](../stunden/ruecken/stabilitaet-und-mobilisation.md) | Rückengesundheit | ruecken |
+| [Gymnastikstab](../stunden/ruecken/gymnastikstab.md) | Rückengesundheit | ruecken |
+| [Redondo-Ball](../stunden/ruecken/redondo_ball.md) | Rückengesundheit | ruecken |
+| [Sturzprophylaxe](../stunden/balance/sturzprophylaxe.md) | Balance | balance |
+| [Kraft und Balance](../stunden/ganzkoerper/kraft-und-balance.md) | Ganzkörper | ganzkoerper |
+| [Ausdauer-Aktivierung](../stunden/herz-kreislauf/ausdauer-aktivierung.md) | Herz-Kreislauf | herz-kreislauf |
+| [Schulter-Mobility](../stunden/schulter/schulter-mobility.md) | Schulter | schulter |
 
-- [Stunde 01: Rückenfit](../Stunden/stunde_01_rückenfit.md)
-
-**Kniebeuge (Wandstütze)**
-
-- [Stunde 01: Rückenfit](../Stunden/stunde_01_rückenfit.md)
-
-**Katze-Kuh**
-
-- [Stunde 01: Rückenfit](../Stunden/stunde_01_rückenfit.md)
-
-**Beckenlift**
-
-- [Stunde 01: Rückenfit](../Stunden/stunde_01_rückenfit.md)
-
-**Oberkörper heben (Bauch)**
-
-- [Stunde 01: Rückenfit](../Stunden/stunde_01_rückenfit.md)
-
-**Vogel-Hund**
-
-- [Stunde 01: Rückenfit](../Stunden/stunde_01_rückenfit.md)
-
-**Dehnung Oberschenkelrückseite**
-
-- [Stunde 01: Rückenfit](../Stunden/stunde_01_rückenfit.md)
-
-**Seitliche Rumpfdehnung im Sitzen**
-
-- [Stunde 01: Rückenfit](../Stunden/stunde_01_rückenfit.md)
-
-**Atemübung mit Armen**
-
-- [Stunde 01: Rückenfit](../Stunden/stunde_01_rückenfit.md)
-
-*Hinweis: Die meisten neu erstellten Übungen sind noch keiner Stunde zugeordnet und können für zukünftige Stundenplanungen verwendet werden.*
+*Hinweis: Jede Übung enthält im Abschnitt "Wird verwendet in" Links zu den Stunden, in denen sie vorkommt.*
 
 ---
 
@@ -560,5 +563,39 @@ Intensive, themenspezifische Übungen
 
 ---
 
-**Letzte Aktualisierung**: 02.12.2025
+**Letzte Aktualisierung**: 13.01.2026
 **Nächste geplante Aktualisierung**: Bei neuen Übungen
+
+---
+
+## 🆕 Neueste Übungen (Januar 2026)
+
+### Theraband-Übungen
+- [Theraband Rudern](theraband_rudern.md) - Oberer Rücken, Haltung
+- [Theraband Außenrotation](theraband_aussenrotation.md) - Rotatorenmanschette
+- [Theraband Beinabspreizen](theraband_beinabspreizen.md) - Hüftstabilisatoren
+- [Theraband Brustpresse](theraband_brustpresse.md) - Brustmuskulatur
+
+### Pezziball-Übungen
+- [Pezziball Beckenmobilisation](pezziball_beckenmobilisation.md) - LWS-Mobilisation
+- [Pezziball Brücke](pezziball_bruecke.md) - Rumpfstabilität
+- [Pezziball Armkreisen](pezziball_armkreisen.md) - Koordination/Balance
+- [Pezziball Fußrollen](pezziball_fussrollen.md) - Fußkoordination
+
+### Balance & Koordination
+- [Tandemgang](tandemgang.md) - Dynamisches Gleichgewicht
+- [Uhrenübung](uhrenuebung.md) - Dual-Task-Balance
+- [Gewichtsverlagerung mit Ball](gewichtsverlagerung_mit_ball.md) - Einstieg Balance
+
+### Sitzgymnastik (neu)
+
+- [Sitzgymnastik Fußwippe](sitzgymnastik_fusswippe.md) - Durchblutung
+- [Sitzgymnastik Kniestrecken](sitzgymnastik_kniestrecken.md) - Quadrizeps
+- [Sitzgymnastik Schulterblätter zusammenziehen](sitzgymnastik_schulterblatt_zusammenziehen.md) - Haltung
+- [Sitzgymnastik Kopfdrehung mit Widerstand](sitzgymnastik_kopfdrehung.md) - HWS-Stabilität
+
+### Entspannungsübungen (neu)
+
+- [Progressive Muskelentspannung](progressive_muskelentspannung.md) - Kurzform nach Jacobson
+- [Atemübung 4-7-8](atemuebung_4_7_8.md) - Tiefe Entspannung
+- [Body Scan](body_scan.md) - Achtsame Körperwahrnehmung

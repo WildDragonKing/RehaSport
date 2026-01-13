@@ -104,29 +104,23 @@ konzept: ../../Konzepte/rückengesundheit.md
    - **Knie-Alternative 🦵:** Beidbeinige Brücke mit Ball zwischen Knien.
    - **Schulter-Alternative 💪:** Arme am Boden belassen, Schultern entspannen.
 
-### Phase 4: Ausklang (10 Minuten)
+### Phase 4: Ausklang (5 Minuten)
 **Ziel:** Muskulatur dehnen, Entspannen, Atmung beruhigen.
 
 1. [Redondo-Ball Entspannung](../../Übungen/redondo_entspannung.md)
-   - **Durchführung:** 45-60 Sekunden Ball unter Kreuzbein, dann unter BWS.
+   - **Durchführung:** 30-45 Sekunden Ball unter Kreuzbein, dann unter BWS.
    - **Coaching:** Gewicht sinken lassen, tiefe Bauchatmung, entspannen.
    - **Knie-Alternative 🦵:** Beine lang ausstrecken oder auf Stuhl ablegen.
    - **Schulter-Alternative 💪:** Arme neben dem Körper statt über Kopf.
 
-2. [Katze-Kuh](../../Übungen/katze_kuh.md)
-   - **Durchführung:** 1-2 Minuten im Vierfüßler, langsamer Wechsel.
-   - **Coaching:** Bewegung fließend, Atmung führt die Bewegung.
-   - **Knie-Alternative 🦵:** Sitzende Variante auf Stuhl.
-   - **Schulter-Alternative 💪:** Hände weiter vorne oder auf Unterarme.
-
-3. [Dehnung Hüftbeuger](../../Übungen/dehnung_hüftbeuger.md)
-   - **Durchführung:** 2 x 30 Sekunden pro Seite im Halbkniestand.
+2. [Dehnung Hüftbeuger](../../Übungen/dehnung_hüftbeuger.md)
+   - **Durchführung:** 2 x 20 Sekunden pro Seite im Halbkniestand.
    - **Coaching:** Oberkörper aufrecht, Becken nach vorne schieben.
    - **Knie-Alternative 🦵:** Im Stand mit kleinem Ausfallschritt.
    - **Schulter-Alternative 💪:** Arm nur bis Schulterhöhe heben.
 
-4. [Atemübung mit Armen](../../Übungen/atemuebung_mit_armen.md)
-   - **Durchführung:** 8-10 tiefe Atemzüge mit Armbewegung.
+3. [Atemübung mit Armen](../../Übungen/atemuebung_mit_armen.md)
+   - **Durchführung:** 6-8 tiefe Atemzüge mit Armbewegung.
    - **Coaching:** Einatmen – Arme heben, Ausatmen – Arme senken.
    - **Knie-Alternative 🦵:** Im Sitzen ausführen.
    - **Schulter-Alternative 💪:** Arme nur bis Schulterhöhe.

@@ -84,8 +84,8 @@ Bewusstes Atmen aktiviert das parasympathische Nervensystem (Entspannung) und re
 
 ## Wird verwendet in
 
-- [Stunde 01: Rückenfit](../Stunden/stunde_01_rückenfit.md)
-- *(Wird automatisch ergänzt, wenn die Übung in Stunden verwendet wird)*
+- [Gymnastikstab](../stunden/ruecken/gymnastikstab.md)
+- [Redondo-Ball](../stunden/ruecken/redondo_ball.md)
 
 ---
 **Tags**: #ausklang #entspannung #atmung  

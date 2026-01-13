@@ -340,7 +340,9 @@ async function getFiles(dir, pattern) {
 }
 
 async function validateFile(filePath) {
-  const content = await readFile(filePath, "utf-8");
+  // Normalize line endings to handle both Unix (LF) and Windows (CRLF)
+  const rawContent = await readFile(filePath, "utf-8");
+  const content = rawContent.replace(/\r\n/g, "\n");
   const isExercise = filePath.includes("Übungen") || filePath.includes("Uebungen");
   const isSession = filePath.includes("stunden");
 

@@ -14,7 +14,7 @@ function Footer(): JSX.Element {
             Info
           </Link>
           <a
-            href="https://github.com"
+            href="https://github.com/WildDragonKing/RehaSport"
             target="_blank"
             rel="noopener noreferrer"
             className="footer-link"

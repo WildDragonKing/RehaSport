@@ -1,7 +1,8 @@
 #!/usr/bin/env sh
 
 # Content-Validierung für geänderte Markdown-Dateien
-STAGED_MD=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.md$' | grep -E '(Übungen|stunden)' || true)
+# Nur Dateien in Übungen/ und stunden/ Verzeichnissen validieren (nicht Anleitung/)
+STAGED_MD=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.md$' | grep -E '^(Übungen/|stunden/)' || true)
 
 if [ -n "$STAGED_MD" ]; then
   echo "📋 Validiere geänderte Markdown-Dateien..."

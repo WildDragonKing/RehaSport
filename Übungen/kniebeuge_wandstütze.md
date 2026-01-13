@@ -93,7 +93,8 @@ Die Kniebeuge gilt als eine der funktionellsten Übungen überhaupt, da sie Allt
 
 ## Wird verwendet in
 
-- [Stunde 01: Rückenfit](../Stunden/stunde_01_rückenfit.md)
+- [Stabilität & Mobilisation](../stunden/ruecken/stabilitaet-und-mobilisation.md)
+- [Gymnastikstab](../stunden/ruecken/gymnastikstab.md)
 
 ---
 **Tags**: #hauptteil #kraft #beine #mittel #orthopädie #allgemein  

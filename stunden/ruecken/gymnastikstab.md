@@ -104,29 +104,23 @@ konzept: ../../Konzepte/rückengesundheit.md
    - **Knie-Alternative 🦵:** Im Sitzen auf Stuhl ausführen.
    - **Schulter-Alternative 💪:** Stab locker halten, kleinere Bewegung.
 
-### Phase 4: Ausklang (10 Minuten)
+### Phase 4: Ausklang (5 Minuten)
 **Ziel:** Muskulatur dehnen, Entspannen, Atmung beruhigen.
 
 1. [Stab-Brustdehnung](../../Übungen/stab_brustdehnung.md)
-   - **Durchführung:** 3 x 20-30 Sekunden Dehnung, Stab hinter dem Rücken.
+   - **Durchführung:** 2 x 20 Sekunden Dehnung, Stab hinter dem Rücken.
    - **Coaching:** Nur bis zur angenehmen Dehnung, ruhig atmen.
    - **Knie-Alternative 🦵:** Im Sitzen ausführen.
    - **Schulter-Alternative 💪:** Breiterer Griff, kleinerer Bewegungsumfang.
 
-2. [Katze-Kuh](../../Übungen/katze_kuh.md)
-   - **Durchführung:** 1-2 Minuten im Vierfüßler, langsamer Wechsel.
-   - **Coaching:** Bewegung fließend, Atmung führt die Bewegung.
-   - **Knie-Alternative 🦵:** Sitzende Variante auf Stuhl.
-   - **Schulter-Alternative 💪:** Hände weiter vorne oder auf Unterarme.
-
-3. [Seitliche Rumpfdehnung im Sitzen](../../Übungen/seitliche_rumpfdehnung_im_sitzen.md)
-   - **Durchführung:** 2 x 20 Sekunden pro Seite, Stab über Kopf.
+2. [Seitliche Rumpfdehnung im Sitzen](../../Übungen/seitliche_rumpfdehnung_im_sitzen.md)
+   - **Durchführung:** 2 x 15 Sekunden pro Seite, Stab über Kopf.
    - **Coaching:** Länge in der Wirbelsäule, sanfte Dehnung.
    - **Knie-Alternative 🦵:** Füße flach am Boden, kein zusätzlicher Druck.
    - **Schulter-Alternative 💪:** Stab nur bis Schulterhöhe oder weglassen.
 
-4. [Atemübung mit Armen](../../Übungen/atemuebung_mit_armen.md)
-   - **Durchführung:** 8-10 tiefe Atemzüge mit Armbewegung.
+3. [Atemübung mit Armen](../../Übungen/atemuebung_mit_armen.md)
+   - **Durchführung:** 6-8 tiefe Atemzüge mit Armbewegung.
    - **Coaching:** Einatmen – Arme heben, Ausatmen – Arme senken.
    - **Knie-Alternative 🦵:** Im Sitzen ausführen.
    - **Schulter-Alternative 💪:** Arme nur bis Schulterhöhe.

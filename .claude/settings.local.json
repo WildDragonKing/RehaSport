@@ -8,9 +8,23 @@
       "Bash(npm test:*)",
       "Bash(npm run dev:*)",
       "Skill(frontend-design:frontend-design)",
-      "Bash(gh issue create:*)"
+      "Bash(gh issue create:*)",
+      "Skill(frontend-design)",
+      "Skill(frontend-design:*)",
+      "Bash(npx tsc:*)",
+      "Bash(grep:*)",
+      "Bash(find:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfeat: erweitere Übungsbibliothek und verbessere Web-App\n\n- Neue Übungen: Pezziball, Theraband, Sitzgymnastik, Balance, Entspannung\n- Neue Trainingsstunden: Koordination, Pezziball, Theraband, Knie-Hüfte, Sitzgymnastik\n- Web-App: Bewertungssystem mit StarRating-Komponente und useRatings-Hook\n- Web-App: SessionsPage für Stundenübersicht\n- Aktualisiere Templates und Dokumentation\n- Füge .gitignore hinzu\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfeat: erweitere Übungsbibliothek und verbessere Web-App\n\n- Neue Übungen: Pezziball, Theraband, Sitzgymnastik, Balance, Entspannung\n- Neue Trainingsstunden: Koordination, Pezziball, Theraband, Knie-Hüfte, Sitzgymnastik\n- Web-App: Bewertungssystem mit StarRating-Komponente und useRatings-Hook\n- Web-App: SessionsPage für Stundenübersicht\n- Aktualisiere Templates und Dokumentation\n- Füge .gitignore hinzu\n- Korrigiere pre-commit Hook \\(validiert nur Übungen/ und stunden/\\)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(node scripts/validate-content.js:*)",
+      "Bash(node -e:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfeat: erweitere Übungsbibliothek und verbessere Web-App\n\n- Neue Übungen: Pezziball, Theraband, Sitzgymnastik, Balance, Entspannung\n- Neue Trainingsstunden: Koordination, Pezziball, Theraband, Knie-Hüfte, Sitzgymnastik\n- Web-App: Bewertungssystem mit StarRating-Komponente und useRatings-Hook\n- Web-App: SessionsPage für Stundenübersicht\n- Aktualisiere Templates und Dokumentation\n- Füge .gitignore hinzu\n- Korrigiere pre-commit Hook \\(validiert nur Übungen/ und stunden/\\)\n- Korrigiere Validierungsskript für Windows CRLF-Zeilenenden\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")"
     ],
     "deny": [],
-    "ask": []
+    "ask": [],
+    "additionalDirectories": [
+      "d:\\Projects\\personal\\RehaSport"
+    ]
   }
 }

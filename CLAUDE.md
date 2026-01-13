@@ -7,11 +7,11 @@
 
 ## Kernleitplanken
 - Alle Inhalte werden auf Deutsch verfasst; Dateinamen nutzen Kleinbuchstaben und Unterstriche.
-- Trainingsstunden folgen strikt dem 45-Minuten-Schema (10 Min Aufwärmen, 15 Min Hauptteil, 15 Min Schwerpunkt, 10 Min Ausklang).
+- Trainingsstunden folgen strikt dem 45-Minuten-Schema (10 Min Aufwärmen, 15 Min Hauptteil, 15 Min Schwerpunkt, 5 Min Ausklang).
 - Jede Übung dokumentiert Alternativen für Knie- (`🦵`) und Schulterbeschwerden (`💪`) sowie vollständige Kontraindikationen.
-- Templates in `Übungen/` und `Stunden/` sind verbindlich und dürfen nicht verändert werden.
+- Templates in `Übungen/` und `stunden/` sind verbindlich und dürfen nicht verändert werden.
 - Nutze die Leitfäden im Ordner `Anleitung/` und halte Konzepte (`Konzepte/`), Stunden (`stunden/`) und Übungen (`Übungen/`) sauber miteinander verknüpft.
 
 ## Kommunikationsstil
-- Bleibe fachlich präzise, empathisch und sicherheitsorientiert („Im Zweifel konservativ“).
+- Bleibe fachlich präzise, empathisch und sicherheitsorientiert („Im Zweifel konservativ").
 - Hebe bei Empfehlungen stets die medizinische Sicherheit, Barrierefreiheit und klare Alternativen hervor.
