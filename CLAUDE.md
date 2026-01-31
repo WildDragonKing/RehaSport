@@ -9,45 +9,67 @@
 - Alle Inhalte werden auf Deutsch verfasst; Dateinamen nutzen Kleinbuchstaben und Unterstriche.
 - Trainingsstunden folgen strikt dem 45-Minuten-Schema (10 Min Aufwärmen, 15 Min Hauptteil, 15 Min Schwerpunkt, 5 Min Ausklang).
 - Jede Übung dokumentiert Alternativen für Knie- (`🦵`) und Schulterbeschwerden (`💪`) sowie vollständige Kontraindikationen.
-- Templates in `Übungen/` und `stunden/` sind verbindlich und dürfen nicht verändert werden.
-- Nutze die Leitfäden im Ordner `Anleitung/` und halte Konzepte (`Konzepte/`), Stunden (`stunden/`) und Übungen (`Übungen/`) sauber miteinander verknüpft.
 
 ## Kommunikationsstil
 - Bleibe fachlich präzise, empathisch und sicherheitsorientiert („Im Zweifel konservativ").
 - Hebe bei Empfehlungen stets die medizinische Sicherheit, Barrierefreiheit und klare Alternativen hervor.
 
-## Umbau: Firebase-Migration (Stand: Januar 2026)
+## Firebase-Architektur (Stand: Januar 2026)
 
-### Architektur-Änderungen
-- **Hosting:** Firebase Hosting (statt GitHub Pages)
-- **Datenbank:** Firestore (statt lokale Markdown-Dateien als Quelle)
-- **Auth:** Firebase Auth mit Rollen (Admin, Trainer)
-- **KI-Backend:** Google Gemini via Cloud Functions
+### Projekt-Setup
 - **Projekt-ID:** `rehasport-trainer`
+- **Hosting:** Firebase Hosting
+- **Datenbank:** Firestore (einzige Datenquelle)
+- **Auth:** Firebase Auth mit Google SSO
+- **MCP:** Firebase MCP-Server für Deployment (`firebase_init`, `firebase_get_security_rules`)
 
-### Benutzerrollen
-- **Admin:** Vollzugriff, kann Trainer einladen und Entwürfe freigeben
-- **Trainer:** KI-Builder nutzen, eigene Stunden/Gruppen verwalten (Entwürfe brauchen Admin-Freigabe)
-- **Teilnehmer:** Öffentlicher Zugang ohne Login
+### Benutzerrollen & Einladungssystem
+- **Admin:** Vollzugriff, kann Trainer einladen, Entwürfe freigeben
+- **Trainer:** Nur mit Einladung registrierbar, eigene Stunden/Gruppen verwalten
+- **Teilnehmer:** Öffentlicher Zugang ohne Login (Stunden ansehen, Bewertungen abgeben)
+- Erster User wird automatisch Admin
+- Trainer-Einladungen über `/admin/trainer` (nur Admin)
 
-### Neue Verzeichnisstruktur
-- `site/src/firebase/` - Firebase-Konfiguration und -Services
-- `site/src/contexts/` - React Contexts (Auth)
-- `site/src/pages/admin/` - Admin-Bereich
-- `functions/` - Cloud Functions (Gemini-Integration, noch zu erstellen)
+### Firestore Collections
+```
+firestore/
+├── sessions/{sessionId}     - Trainingsstunden (status: draft|published)
+├── exercises/{exerciseId}   - Übungsbibliothek
+├── groups/{groupId}         - Trainingsgruppen mit Einschränkungen
+├── drafts/{draftId}         - KI-generierte Entwürfe
+├── users/{userId}           - Benutzerprofile (role: admin|trainer)
+├── ratings/{ratingId}       - Aggregierte Bewertungen (totalRatings, sumRatings)
+├── invitations/{id}         - Trainer-Einladungen
+└── config/{configId}        - App-Konfiguration
+```
 
-### Datenformat
-- Stunden und Übungen werden in Firestore als JSON-Dokumente gespeichert
-- Das 45-Minuten-Schema bleibt erhalten (4 Phasen)
-- Alternativen (🦵 Knie, 💪 Schulter) werden als strukturierte Objekte gespeichert
-- Markdown-Dateien bleiben als Backup, sind aber nicht mehr die primäre Datenquelle
+### Bewertungssystem
+- Aggregierte Bewertungen: ein Dokument pro Session/Übung
+- Felder: `totalRatings`, `sumRatings`, `averageRating`
+- Eigene Bewertung wird in localStorage gespeichert
+- Öffentlich ohne Login nutzbar
 
-### KI-Stunden-Builder
-- Nutzt Google Gemini für Stunden-Generierung
-- Prompt enthält: Thema, Schwierigkeit, Gruppen-Einschränkungen, verfügbare Übungen
-- Generierte Stunden werden als Entwürfe gespeichert
-- Admin-Freigabe erforderlich vor Veröffentlichung
+### Verzeichnisstruktur
+```
+site/
+├── src/
+│   ├── firebase/        - Firebase Config, Auth, Migration
+│   ├── contexts/        - AuthContext, ContentContext
+│   ├── hooks/           - useRatings (aggregiert)
+│   ├── pages/admin/     - Admin-Bereich (Dashboard, Trainer, Export)
+│   └── content/         - Firestore-Loader (sessions-firestore, exercises-firestore)
+├── firebase.json        - Firebase-Konfiguration
+└── firestore.rules      - Sicherheitsregeln
+```
 
-### Gruppen-System
-- Trainer können Gruppen mit Einschränkungen anlegen (z.B. Knieprobleme)
-- Stunden können für Gruppen angepasst werden (Alternativen werden automatisch angezeigt)
+### MCP-Server Nutzung
+Für Firebase-Operationen den MCP-Server verwenden:
+- `firebase_get_environment` - Projekt-Status prüfen
+- `firebase_init` - Features initialisieren und Regeln deployen
+- `firebase_get_security_rules` - Aktuelle Regeln abrufen
+- `firebase_list_projects` - Verfügbare Projekte
+
+### Offene Features
+- [ ] KI-Stunden-Builder mit Google Gemini
+- [ ] Teilnehmer-Modus (Timer, Swipe-Navigation)
+- [ ] Mobile-Optimierung und PWA-Update

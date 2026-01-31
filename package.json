@@ -10,6 +10,7 @@
     "prepare": "husky"
   },
   "devDependencies": {
+    "firebase-tools": "^15.5.1",
     "husky": "^9.0.0"
   },
   "lint-staged": {

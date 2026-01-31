@@ -2,16 +2,14 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useContent } from '../../contexts/ContentContext';
-import { hasFirestoreData, migrateAll, type MigrationResult } from '../../firebase/migration';
+import { hasFirestoreData } from '../../firebase/migration';
 import { exportFirestoreData, type ExportResult } from '../../firebase/export';
 
 export default function DashboardPage(): JSX.Element {
   const { user, isAdmin } = useAuth();
-  const { categories, sessions, exercises, dataSource, isFirestoreAvailable, refresh } = useContent();
+  const { categories, sessions, exercises, isFirestoreAvailable } = useContent();
 
   const [firestoreStats, setFirestoreStats] = useState<{ sessions: number; exercises: number } | null>(null);
-  const [migrating, setMigrating] = useState(false);
-  const [migrationResult, setMigrationResult] = useState<MigrationResult | null>(null);
   const [exporting, setExporting] = useState(false);
   const [exportResult, setExportResult] = useState<ExportResult | null>(null);
 
@@ -22,35 +20,6 @@ export default function DashboardPage(): JSX.Element {
     };
     checkFirestore();
   }, []);
-
-  const handleMigration = async () => {
-    if (!user?.id || !isAdmin) return;
-
-    if (!confirm('Möchtest du wirklich alle lokalen Daten nach Firestore migrieren? Bestehende Daten werden überschrieben.')) {
-      return;
-    }
-
-    setMigrating(true);
-    setMigrationResult(null);
-
-    try {
-      const result = await migrateAll(user.id);
-      setMigrationResult(result);
-      // Refresh stats
-      const stats = await hasFirestoreData();
-      setFirestoreStats(stats);
-      // Refresh content
-      await refresh();
-    } catch (error) {
-      setMigrationResult({
-        sessions: 0,
-        exercises: 0,
-        errors: [error instanceof Error ? error.message : 'Unbekannter Fehler'],
-      });
-    } finally {
-      setMigrating(false);
-    }
-  };
 
   const handleExport = async () => {
     setExporting(true);
@@ -137,63 +106,34 @@ export default function DashboardPage(): JSX.Element {
         </div>
       </div>
 
-      {/* Firestore Migration (Admin only) */}
+      {/* Admin Tools */}
       {isAdmin && (
         <div className="bg-white rounded-xl shadow-sm border border-sage-200 p-6">
-          <h2 className="text-lg font-semibold text-sage-900 mb-4">Datenbank-Status</h2>
+          <h2 className="text-lg font-semibold text-sage-900 mb-4">Admin-Tools</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Local Data */}
+            {/* Firestore Status */}
             <div className="p-4 bg-sage-50 rounded-lg">
-              <h3 className="font-medium text-sage-800 mb-2">Lokale Daten</h3>
-              <p className="text-sm text-sage-600">
-                {sessions.length} Stunden, {exercises.length} Übungen
-              </p>
-              <p className="text-xs text-sage-500 mt-1">
-                Aus Markdown-Dateien
-              </p>
-            </div>
-
-            {/* Firestore Data */}
-            <div className="p-4 bg-sand-50 rounded-lg">
-              <h3 className="font-medium text-sand-800 mb-2">Firestore-Daten</h3>
+              <h3 className="font-medium text-sage-800 mb-2">Firestore-Datenbank</h3>
               {firestoreStats ? (
                 <>
-                  <p className="text-sm text-sand-600">
+                  <p className="text-sm text-sage-600">
                     {firestoreStats.sessions} Stunden, {firestoreStats.exercises} Übungen
                   </p>
-                  <p className="text-xs text-sand-500 mt-1">
-                    {firestoreStats.sessions > 0 ? 'Bereit zur Nutzung' : 'Noch nicht migriert'}
+                  <p className="text-xs text-sage-500 mt-1">
+                    {isFirestoreAvailable ? 'Verbunden' : 'Nicht verfügbar'}
                   </p>
                 </>
               ) : (
-                <p className="text-sm text-sand-600">Lädt...</p>
+                <p className="text-sm text-sage-600">Lädt...</p>
               )}
             </div>
-          </div>
 
-          {/* Actions */}
-          <div className="mt-6 flex flex-wrap gap-4">
-            {/* Migration Button */}
-            <div className="flex-1 min-w-[250px] p-4 bg-amber-50 border border-amber-200 rounded-lg">
-              <p className="text-sm text-amber-800 mb-3">
-                {firestoreStats && firestoreStats.sessions === 0
-                  ? 'Lokale Daten nach Firestore migrieren.'
-                  : 'Migration erneut ausführen.'}
-              </p>
-              <button
-                onClick={handleMigration}
-                disabled={migrating}
-                className="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium rounded-lg disabled:opacity-50 transition-colors"
-              >
-                {migrating ? 'Migriere...' : firestoreStats && firestoreStats.sessions > 0 ? 'Erneut migrieren' : 'Daten migrieren'}
-              </button>
-            </div>
-
-            {/* Export Button */}
-            <div className="flex-1 min-w-[250px] p-4 bg-blue-50 border border-blue-200 rounded-lg">
-              <p className="text-sm text-blue-800 mb-3">
-                Alle Firestore-Daten als ZIP exportieren.
+            {/* Export */}
+            <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <h3 className="font-medium text-blue-800 mb-2">Backup erstellen</h3>
+              <p className="text-sm text-blue-700 mb-3">
+                Alle Daten als ZIP exportieren.
               </p>
               <button
                 onClick={handleExport}
@@ -217,30 +157,6 @@ export default function DashboardPage(): JSX.Element {
                 </>
               ) : (
                 <p className="text-red-800">Fehler: {exportResult.error}</p>
-              )}
-            </div>
-          )}
-
-          {/* Migration Result */}
-          {migrationResult && (
-            <div className={`mt-4 p-4 rounded-lg ${migrationResult.errors.length > 0 ? 'bg-red-50 border border-red-200' : 'bg-green-50 border border-green-200'}`}>
-              <h4 className="font-medium mb-2">
-                {migrationResult.errors.length > 0 ? 'Migration mit Fehlern abgeschlossen' : 'Migration erfolgreich!'}
-              </h4>
-              <p className="text-sm">
-                {migrationResult.sessions} Stunden und {migrationResult.exercises} Übungen migriert.
-              </p>
-              {migrationResult.errors.length > 0 && (
-                <details className="mt-2">
-                  <summary className="text-sm text-red-600 cursor-pointer">
-                    {migrationResult.errors.length} Fehler anzeigen
-                  </summary>
-                  <ul className="mt-2 text-xs text-red-600 list-disc list-inside">
-                    {migrationResult.errors.map((err, i) => (
-                      <li key={i}>{err}</li>
-                    ))}
-                  </ul>
-                </details>
               )}
             </div>
           )}

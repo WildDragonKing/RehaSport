@@ -24,6 +24,8 @@ const AdminLayout = lazy(() => import("./components/layout/AdminLayout"));
 const DashboardPage = lazy(() => import("./pages/admin/DashboardPage"));
 const BuilderPage = lazy(() => import("./pages/admin/BuilderPage"));
 const SessionsManagePage = lazy(() => import("./pages/admin/SessionsManagePage"));
+const ExercisesManagePage = lazy(() => import("./pages/admin/ExercisesManagePage"));
+const CategoriesPage = lazy(() => import("./pages/admin/CategoriesPage"));
 const GroupsPage = lazy(() => import("./pages/admin/GroupsPage"));
 const DraftsPage = lazy(() => import("./pages/admin/DraftsPage"));
 const TrainersPage = lazy(() => import("./pages/admin/TrainersPage"));
@@ -61,6 +63,8 @@ function App(): JSX.Element {
               <Route index element={<DashboardPage />} />
               <Route path="builder" element={<BuilderPage />} />
               <Route path="stunden" element={<SessionsManagePage />} />
+              <Route path="uebungen" element={<ExercisesManagePage />} />
+              <Route path="kategorien" element={<CategoriesPage />} />
               <Route path="gruppen" element={<GroupsPage />} />
               <Route path="entwuerfe" element={<DraftsPage />} />
               <Route path="trainer" element={<TrainersPage />} />

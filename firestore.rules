@@ -3,7 +3,6 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Helper functions
     function isAuthenticated() {
       return request.auth != null;
     }
@@ -24,97 +23,65 @@ service cloud.firestore {
       return isAuthenticated() && request.auth.uid == userId;
     }
 
-    // Sessions (Trainingsstunden)
     match /sessions/{sessionId} {
-      // Anyone can read published sessions
       allow read: if resource.data.status == 'published';
-      // Trainers can read their own drafts
       allow read: if isTrainer() && resource.data.createdBy == request.auth.uid;
-      // Admin can read all sessions
       allow read: if isAdmin();
-      // Trainers can create sessions
       allow create: if isTrainer();
-      // Trainers can update their own sessions, admin can update all
       allow update: if isAdmin() || (isTrainer() && resource.data.createdBy == request.auth.uid);
-      // Admin can delete any session, trainers can delete their own
       allow delete: if isAdmin() || (isTrainer() && resource.data.createdBy == request.auth.uid);
     }
 
-    // Exercises (Übungen)
-    match /exercises/{exerciseId} {
-      // Anyone can read exercises
+    // Categories (Kategorien - nur Admin kann verwalten)
+    match /categories/{categoryId} {
       allow read: if true;
-      // Trainers can create and update exercises
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /exercises/{exerciseId} {
+      allow read: if true;
       allow create, update: if isTrainer();
-      // Only admin can delete exercises
       allow delete: if isAdmin();
     }
 
-    // Groups (Trainingsgruppen)
     match /groups/{groupId} {
-      // Trainers can read all groups
       allow read: if isTrainer();
-      // Trainers can create groups
       allow create: if isTrainer();
-      // Trainers can update/delete their own groups, admin can do all
       allow update, delete: if isAdmin() || (isTrainer() && resource.data.createdBy == request.auth.uid);
     }
 
-    // Drafts (KI-generierte Entwürfe)
     match /drafts/{draftId} {
-      // Trainers can read their own drafts, admin can read all
       allow read: if isAdmin() || (isTrainer() && resource.data.createdBy == request.auth.uid);
-      // Trainers can create drafts
       allow create: if isTrainer();
-      // Trainers can update their own pending drafts, admin can update all
       allow update: if isAdmin() || (isTrainer() && resource.data.createdBy == request.auth.uid && resource.data.status == 'pending');
-      // Trainers can delete their own drafts, admin can delete all
       allow delete: if isAdmin() || (isTrainer() && resource.data.createdBy == request.auth.uid);
     }
 
-    // Users (Benutzer)
     match /users/{userId} {
-      // Users can read their own profile
       allow read: if isOwner(userId);
-      // Admin can read all users
       allow read: if isAdmin();
-      // Users can create their own profile (for first-time signup)
       allow create: if isOwner(userId);
-      // Admin can create any user, users can update their own
       allow update: if isAdmin() || isOwner(userId);
-      // Only admin can delete users
       allow delete: if isAdmin();
     }
 
-    // Config (App-Konfiguration)
     match /config/{configId} {
-      // Anyone authenticated can read config
       allow read: if isAuthenticated();
-      // First user can create admin config, then only admin can modify
       allow create: if isAuthenticated();
       allow update, delete: if isAdmin();
     }
 
-    // Ratings (Bewertungen - öffentlich ohne Login)
     match /ratings/{ratingId} {
-      // Anyone can read ratings
       allow read: if true;
-      // Anyone can create/update their own rating (by visitorId)
       allow create: if true;
-      allow update: if resource.data.visitorId == request.resource.data.visitorId;
-      // Only admin can delete ratings
+      allow update: if true;
       allow delete: if isAdmin();
     }
 
-    // Invitations (Einladungen)
     match /invitations/{invitationId} {
-      // Anyone can read an invitation (needed for registration)
       allow read: if true;
-      // Only admin can create invitations
       allow create: if isAdmin();
-      // Invitations can be updated when used (mark as used)
       allow update: if isAuthenticated();
-      // Only admin can delete invitations
       allow delete: if isAdmin();
     }
   }

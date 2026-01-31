@@ -12,11 +12,13 @@ const navItems: NavItem[] = [
   { to: '/admin', label: 'Dashboard', end: true },
   { to: '/admin/builder', label: 'Stunden-Builder' },
   { to: '/admin/stunden', label: 'Meine Stunden' },
+  { to: '/admin/uebungen', label: 'Übungen verwalten' },
   { to: '/admin/gruppen', label: 'Gruppen' },
   { to: '/admin/entwuerfe', label: 'Entwürfe' },
 ];
 
 const adminOnlyItems: NavItem[] = [
+  { to: '/admin/kategorien', label: 'Kategorien' },
   { to: '/admin/trainer', label: 'Trainer verwalten' },
 ];
 
