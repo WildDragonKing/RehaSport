@@ -2,30 +2,16 @@ import { createContext, useContext, useEffect, useState, ReactNode, useCallback 
 import type { CategoryMeta, SessionMeta } from '../content/sessions';
 import type { ExerciseMeta } from '../content/exercises';
 
-// Import both local and Firestore loaders
-import {
-  categories as localCategories,
-  getAllSessions as getLocalSessions,
-  getCategory as getLocalCategory,
-  getSession as getLocalSession,
-} from '../content/sessions';
-import {
-  exercises as localExercises,
-  getExercise as getLocalExercise,
-} from '../content/exercises';
+// Firestore loaders
 import {
   getCategories as getFirestoreCategories,
   getAllSessions as getFirestoreSessions,
-  getCategory as getFirestoreCategory,
-  getSession as getFirestoreSession,
 } from '../content/sessions-firestore';
 import {
   getAllExercises as getFirestoreExercises,
-  getExercise as getFirestoreExercise,
 } from '../content/exercises-firestore';
-import { hasFirestoreData } from '../firebase/migration';
 
-type DataSource = 'local' | 'firestore' | 'auto';
+type DataSource = 'firestore';
 
 interface ContentContextType {
   // Data source
@@ -46,6 +32,7 @@ interface ContentContextType {
   // Exercises
   exercises: ExerciseMeta[];
   getExercise: (slug: string) => ExerciseMeta | undefined;
+  findExerciseByTitle: (title: string) => ExerciseMeta | undefined;
 
   // Refresh
   refresh: () => Promise<void>;
@@ -55,77 +42,48 @@ const ContentContext = createContext<ContentContextType | undefined>(undefined);
 
 interface ContentProviderProps {
   children: ReactNode;
-  preferFirestore?: boolean;
 }
 
-export function ContentProvider({ children, preferFirestore = false }: ContentProviderProps) {
-  const [dataSource, setDataSource] = useState<DataSource>('local');
-  const [isFirestoreAvailable, setIsFirestoreAvailable] = useState(false);
-  const [loading, setLoading] = useState(false);
+export function ContentProvider({ children }: ContentProviderProps) {
+  const [dataSource, setDataSource] = useState<DataSource>('firestore');
+  const [isFirestoreAvailable, setIsFirestoreAvailable] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Local data (available immediately at build time)
-  const [categories, setCategories] = useState<CategoryMeta[]>(localCategories);
-  const [sessions, setSessions] = useState<SessionMeta[]>(getLocalSessions());
-  const [exercises, setExercises] = useState<ExerciseMeta[]>(localExercises);
+  // Start with empty data, load from Firestore
+  const [categories, setCategories] = useState<CategoryMeta[]>([]);
+  const [sessions, setSessions] = useState<SessionMeta[]>([]);
+  const [exercises, setExercises] = useState<ExerciseMeta[]>([]);
 
-  // Check Firestore availability and load data
+  // Load data from Firestore
   const loadData = useCallback(async () => {
-    // Skip if we're already loading or explicitly using local data
-    if (dataSource === 'local') {
-      setLoading(false);
-      return;
-    }
-
     setLoading(true);
     setError(null);
 
     try {
-      // Check if Firestore has data
-      const firestoreData = await hasFirestoreData();
-      const hasData = firestoreData.sessions > 0 && firestoreData.exercises > 0;
-      setIsFirestoreAvailable(hasData);
+      // Load from Firestore
+      const [firestoreCategories, firestoreSessions, firestoreExercises] = await Promise.all([
+        getFirestoreCategories(),
+        getFirestoreSessions(),
+        getFirestoreExercises(),
+      ]);
 
-      // Determine actual data source
-      let actualSource: 'local' | 'firestore' = 'local';
-      if (dataSource === 'firestore' || (dataSource === 'auto' && hasData && preferFirestore)) {
-        actualSource = 'firestore';
-      }
-
-      if (actualSource === 'firestore') {
-        // Load from Firestore
-        const [firestoreCategories, firestoreSessions, firestoreExercises] = await Promise.all([
-          getFirestoreCategories(),
-          getFirestoreSessions(),
-          getFirestoreExercises(),
-        ]);
-
-        setCategories(firestoreCategories as CategoryMeta[]);
-        setSessions(firestoreSessions as SessionMeta[]);
-        setExercises(firestoreExercises as unknown as ExerciseMeta[]);
-      } else {
-        // Use local data (already set as default)
-        setCategories(localCategories);
-        setSessions(getLocalSessions());
-        setExercises(localExercises);
-      }
+      setCategories(firestoreCategories as CategoryMeta[]);
+      setSessions(firestoreSessions as SessionMeta[]);
+      setExercises(firestoreExercises as unknown as ExerciseMeta[]);
+      setIsFirestoreAvailable(true);
     } catch (err) {
-      console.error('Failed to load content:', err);
+      console.error('Failed to load content from Firestore:', err);
       setError(err instanceof Error ? err.message : 'Fehler beim Laden der Inhalte');
-      // Fallback to local data
-      setCategories(localCategories);
-      setSessions(getLocalSessions());
-      setExercises(localExercises);
+      setIsFirestoreAvailable(false);
     } finally {
       setLoading(false);
     }
-  }, [dataSource, preferFirestore]);
+  }, []);
 
   useEffect(() => {
-    if (dataSource !== 'local') {
-      loadData();
-    }
-  }, [loadData, dataSource]);
+    loadData();
+  }, [loadData]);
 
   // Getter functions that work with current state
   const getCategory = useCallback(
@@ -144,6 +102,14 @@ export function ContentProvider({ children, preferFirestore = false }: ContentPr
     [exercises]
   );
 
+  const findExerciseByTitle = useCallback(
+    (title: string) => exercises.find(e =>
+      e.title.toLowerCase() === title.toLowerCase() ||
+      e.title.toLowerCase().includes(title.toLowerCase())
+    ),
+    [exercises]
+  );
+
   const value: ContentContextType = {
     dataSource,
     setDataSource,
@@ -156,6 +122,7 @@ export function ContentProvider({ children, preferFirestore = false }: ContentPr
     getSession,
     exercises,
     getExercise,
+    findExerciseByTitle,
     refresh: loadData,
   };
 

@@ -95,6 +95,17 @@ service cloud.firestore {
       allow update, delete: if isAdmin();
     }
 
+    // Ratings (Bewertungen - öffentlich ohne Login)
+    match /ratings/{ratingId} {
+      // Anyone can read ratings
+      allow read: if true;
+      // Anyone can create/update their own rating (by visitorId)
+      allow create: if true;
+      allow update: if resource.data.visitorId == request.resource.data.visitorId;
+      // Only admin can delete ratings
+      allow delete: if isAdmin();
+    }
+
     // Invitations (Einladungen)
     match /invitations/{invitationId} {
       // Anyone can read an invitation (needed for registration)

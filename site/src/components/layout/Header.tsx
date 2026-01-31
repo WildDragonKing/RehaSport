@@ -58,12 +58,33 @@ function Header(): JSX.Element {
         {/* Actions */}
         <div className="header-actions">
           <ThemeSwitcher />
-          <NavLink
-            to={isTrainer ? "/admin" : "/login"}
-            className="ml-2 px-3 py-1.5 text-sm font-medium text-sage-700 hover:text-sage-900 hover:bg-sage-100 rounded-lg transition-colors"
-          >
-            Login
-          </NavLink>
+          {isTrainer ? (
+            <>
+              <NavLink
+                to="/admin"
+                className="ml-2 px-3 py-1.5 text-sm font-medium bg-sage-600 hover:bg-sage-700 text-white rounded-lg transition-colors"
+              >
+                Admin
+              </NavLink>
+              <button
+                onClick={() => {
+                  import("../../firebase/auth").then(({ signOut }) => {
+                    signOut().then(() => window.location.href = "/");
+                  });
+                }}
+                className="ml-2 px-3 py-1.5 text-sm font-medium text-sage-600 hover:text-sage-800 hover:bg-sage-100 rounded-lg transition-colors"
+              >
+                Abmelden
+              </button>
+            </>
+          ) : (
+            <NavLink
+              to="/login"
+              className="ml-2 px-3 py-1.5 text-sm font-medium text-sage-700 hover:text-sage-900 hover:bg-sage-100 rounded-lg transition-colors"
+            >
+              Login
+            </NavLink>
+          )}
         </div>
       </div>
     </header>

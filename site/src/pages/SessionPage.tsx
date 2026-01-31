@@ -3,9 +3,8 @@ import { Link, useParams } from "react-router-dom";
 
 import Button from "../components/ui/Button";
 import StarRating from "../components/ui/StarRating";
-import { findExerciseSlugByTitle } from "../content/exercises";
-import { getCategory, getSession } from "../content/sessions";
-import { useRatings } from "../hooks/useRatings";
+import { useContent } from "../contexts/ContentContext";
+import { useRatings, type RatingSummary } from "../hooks/useRatings";
 
 // Icons
 function ChevronDownIcon(): JSX.Element {
@@ -34,19 +33,31 @@ function ChevronRightIcon(): JSX.Element {
 
 function SessionPage(): JSX.Element {
   const { categorySlug, sessionSlug } = useParams();
+  const { getSession, getCategory, findExerciseByTitle } = useContent();
   const session = categorySlug && sessionSlug ? getSession(categorySlug, sessionSlug) : undefined;
   const category = categorySlug ? getCategory(categorySlug) : undefined;
   const [expandedExercises, setExpandedExercises] = useState<Set<string>>(new Set());
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
   const exerciseRefs = useRef<Map<string, HTMLLIElement>>(new Map());
-  const { getRating, setRating } = useRatings();
+  const { getRating, setRating, getSummary } = useRatings();
+  const [ratingSummary, setRatingSummary] = useState<RatingSummary | null>(null);
 
   const sessionId = categorySlug && sessionSlug ? `${categorySlug}/${sessionSlug}` : null;
   const currentRating = sessionId ? getRating(sessionId, "session") : null;
 
-  const handleRate = (rating: number) => {
+  // Load rating summary
+  useEffect(() => {
     if (sessionId) {
-      setRating(sessionId, "session", rating);
+      getSummary(sessionId, "session").then(setRatingSummary);
+    }
+  }, [sessionId, getSummary]);
+
+  const handleRate = async (rating: number) => {
+    if (sessionId) {
+      await setRating(sessionId, "session", rating);
+      // Refresh summary after rating
+      const summary = await getSummary(sessionId, "session");
+      setRatingSummary(summary);
     }
   };
 
@@ -269,7 +280,8 @@ function SessionPage(): JSX.Element {
                     const globalIndex = allExercises.findIndex(e => e.key === exerciseKey);
                     const isExpanded = expandedExercises.has(exerciseKey);
                     const isActive = globalIndex === currentExerciseIndex;
-                    const exerciseSlug = findExerciseSlugByTitle(exercise.title);
+                    const foundExercise = findExerciseByTitle(exercise.title);
+                    const exerciseSlug = foundExercise?.slug;
                     const primaryDetail = exercise.details.find((d) => d.label === "Durchführung");
                     const otherDetails = exercise.details.filter((d) => d.label !== "Durchführung");
 
@@ -381,6 +393,11 @@ function SessionPage(): JSX.Element {
           Gut bewertete Stunden dienen als Inspiration für neue Trainingseinheiten.
         </p>
         <StarRating rating={currentRating} onRate={handleRate} size="lg" />
+        {ratingSummary && ratingSummary.totalRatings > 0 && (
+          <p className="text-sm text-sage-500 mt-3">
+            Durchschnitt: {ratingSummary.averageRating.toFixed(1)} ⭐ ({ratingSummary.totalRatings} {ratingSummary.totalRatings === 1 ? 'Bewertung' : 'Bewertungen'})
+          </p>
+        )}
       </section>
 
       {/* Sticky Bottom Navigation */}
