@@ -69,7 +69,27 @@ Für Firebase-Operationen den MCP-Server verwenden:
 - `firebase_get_security_rules` - Aktuelle Regeln abrufen
 - `firebase_list_projects` - Verfügbare Projekte
 
+### Entwicklungs-Commands
+- `npx firebase deploy` - Firebase CLI nicht global installiert, immer npx nutzen
+- `cd site && npm run build` - Vite Build für Frontend
+- `cd functions && npm run build` - TypeScript Build für Cloud Functions
+
+### Cloud Functions (functions/src/index.ts)
+- **Region:** `europe-west1` für alle Functions
+- **Gemini Modell:** `gemini-3-flash-preview` (Fallback: `gemini-2.5-flash`)
+- **Rate Limiting:** Firestore Transactions nutzen um Race Conditions zu vermeiden
+- **TypeScript Pattern:** Bei Firestore-Docs `{ ...data, id: doc.id }` statt `{ id, ...data }` um Duplikat-Fehler zu vermeiden
+
+### UI-Patterns
+- **Dark Mode:** Tailwind `dark:` Varianten für alle Admin-Komponenten (z.B. `bg-white dark:bg-gray-800`)
+- **Farben:** Sage-Palette (Erdtöne) + Lime-Akzente für interaktive Elemente
+- **Animationen:** CSS-Klassen in index.css: `animate-fade-in`, `card-hover`, `btn-lime`
+
 ### Offene Features
-- [ ] KI-Stunden-Builder mit Google Gemini
+- [x] KI-Stunden-Builder mit Google Gemini
+- [x] Bulk-Generator für Übungen und Stunden
+- [x] Dark Mode für Admin-Bereich
+- [x] Error Logging mit Google Cloud Logging
 - [ ] Teilnehmer-Modus (Timer, Swipe-Navigation)
 - [ ] Mobile-Optimierung und PWA-Update
+- [ ] Domain rehasport.buettgen.app (manuell in Firebase Console)
