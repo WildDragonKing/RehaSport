@@ -3,6 +3,7 @@ import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase
 import { db } from '../../firebase/config';
 import { useAuth } from '../../contexts/AuthContext';
 import { useContent } from '../../contexts/ContentContext';
+import { seedCategoriesFromSessions } from '../../firebase/seed-categories';
 
 interface Category {
   id: string;
@@ -21,6 +22,8 @@ export default function CategoriesPage(): JSX.Element {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState({ title: '', description: '', slug: '' });
   const [saving, setSaving] = useState(false);
+  const [seeding, setSeeding] = useState(false);
+  const [seedResult, setSeedResult] = useState<{ created: string[]; existing: string[]; errors: string[] } | null>(null);
 
   useEffect(() => {
     loadCategories();
@@ -117,6 +120,27 @@ export default function CategoriesPage(): JSX.Element {
     setFormData({ title: '', description: '', slug: '' });
   };
 
+  const handleSeedFromSessions = async () => {
+    if (!confirm('Kategorien aus vorhandenen Stunden erstellen? Bestehende Kategorien werden nicht überschrieben.')) {
+      return;
+    }
+
+    setSeeding(true);
+    setSeedResult(null);
+
+    try {
+      const result = await seedCategoriesFromSessions();
+      setSeedResult(result);
+      await loadCategories();
+      await refresh();
+    } catch (error) {
+      console.error('Failed to seed categories:', error);
+      alert('Fehler beim Erstellen der Kategorien');
+    } finally {
+      setSeeding(false);
+    }
+  };
+
   if (!isAdmin) {
     return (
       <div className="text-center py-12">
@@ -127,10 +151,39 @@ export default function CategoriesPage(): JSX.Element {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-display font-bold text-sage-900">Kategorien</h1>
-        <p className="mt-2 text-sage-600">Verwalte die Kategorien für Trainingsstunden</p>
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-3xl font-display font-bold text-sage-900">Kategorien</h1>
+          <p className="mt-2 text-sage-600">Verwalte die Kategorien für Trainingsstunden</p>
+        </div>
+        <button
+          onClick={handleSeedFromSessions}
+          disabled={seeding}
+          className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white font-medium rounded-lg disabled:opacity-50 transition-colors"
+        >
+          {seeding ? 'Erstelle...' : 'Aus Stunden generieren'}
+        </button>
       </div>
+
+      {seedResult && (
+        <div className={`p-4 rounded-lg ${seedResult.errors.length > 0 ? 'bg-amber-50 border border-amber-200' : 'bg-green-50 border border-green-200'}`}>
+          <p className="font-medium text-sage-800">
+            {seedResult.created.length > 0
+              ? `${seedResult.created.length} Kategorien erstellt: ${seedResult.created.join(', ')}`
+              : 'Keine neuen Kategorien erstellt'}
+          </p>
+          {seedResult.existing.length > 0 && (
+            <p className="text-sm text-sage-600 mt-1">
+              Bereits vorhanden: {seedResult.existing.join(', ')}
+            </p>
+          )}
+          {seedResult.errors.length > 0 && (
+            <p className="text-sm text-red-600 mt-1">
+              Fehler: {seedResult.errors.join(', ')}
+            </p>
+          )}
+        </div>
+      )}
 
       {/* Add/Edit Form */}
       <div className="bg-white rounded-xl shadow-sm border border-sage-200 p-6">
