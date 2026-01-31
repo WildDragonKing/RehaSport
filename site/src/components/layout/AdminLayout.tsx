@@ -19,6 +19,8 @@ const navItems: NavItem[] = [
 
 const adminOnlyItems: NavItem[] = [
   { to: '/admin/kategorien', label: 'Kategorien' },
+  { to: '/admin/regeln', label: 'Stunden-Regeln' },
+  { to: '/admin/analytics', label: 'Analytics' },
   { to: '/admin/trainer', label: 'Trainer verwalten' },
 ];
 

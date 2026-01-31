@@ -132,44 +132,60 @@ export async function getAllSessions(): Promise<SessionMeta[]> {
 }
 
 /**
- * Fetch categories with their sessions from Firestore
+ * Fetch categories from Firestore categories collection and merge with sessions
  */
 export async function getCategories(): Promise<CategoryMeta[]> {
   if (cachedCategories && isCacheValid()) {
     return cachedCategories;
   }
 
-  const sessions = await getAllSessions();
+  // Load categories from categories collection
+  const categoriesRef = collection(db, 'categories');
+  const categoriesSnapshot = await getDocs(categoriesRef);
   const categoryMap = new Map<string, CategoryMeta>();
+
+  // First, add all categories from the categories collection
+  for (const catDoc of categoriesSnapshot.docs) {
+    const data = catDoc.data();
+    categoryMap.set(data.slug, {
+      slug: data.slug,
+      title: data.title,
+      description: data.description || '',
+      focusTags: data.focusTags || [],
+      sessions: [],
+    });
+  }
+
+  // Then load sessions and add them to their categories
+  const sessions = await getAllSessions();
 
   for (const session of sessions) {
     const existing = categoryMap.get(session.categorySlug);
-    if (!existing) {
+    if (existing) {
+      existing.sessions.push(session);
+      // Add focus tags from sessions
+      if (session.focus) {
+        const parts = session.focus.split(',').map(t => t.trim()).filter(Boolean);
+        for (const part of parts) {
+          if (!existing.focusTags.includes(part)) {
+            existing.focusTags.push(part);
+          }
+        }
+      }
+    } else {
+      // Session has a category that's not in the categories collection
+      // Create it dynamically (backwards compatibility)
       categoryMap.set(session.categorySlug, {
         slug: session.categorySlug,
         title: session.categoryTitle,
-        description: session.description,
+        description: session.description || '',
         focusTags: session.focus ? session.focus.split(',').map(t => t.trim()).filter(Boolean) : [],
         sessions: [session],
       });
-      continue;
-    }
-
-    existing.sessions.push(session);
-    if (!existing.description && session.description) {
-      existing.description = session.description;
-    }
-    if (session.focus) {
-      const parts = session.focus.split(',').map(t => t.trim()).filter(Boolean);
-      for (const part of parts) {
-        if (!existing.focusTags.includes(part)) {
-          existing.focusTags.push(part);
-        }
-      }
     }
   }
 
-  // Sort
+  // Sort sessions within each category and sort focus tags
   for (const category of categoryMap.values()) {
     category.sessions.sort((a, b) => a.title.localeCompare(b.title, 'de'));
     category.focusTags.sort((a, b) => a.localeCompare(b, 'de'));

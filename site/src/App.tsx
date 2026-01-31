@@ -26,6 +26,8 @@ const BuilderPage = lazy(() => import("./pages/admin/BuilderPage"));
 const SessionsManagePage = lazy(() => import("./pages/admin/SessionsManagePage"));
 const ExercisesManagePage = lazy(() => import("./pages/admin/ExercisesManagePage"));
 const CategoriesPage = lazy(() => import("./pages/admin/CategoriesPage"));
+const SessionRulesPage = lazy(() => import("./pages/admin/SessionRulesPage"));
+const AnalyticsPage = lazy(() => import("./pages/admin/AnalyticsPage"));
 const GroupsPage = lazy(() => import("./pages/admin/GroupsPage"));
 const DraftsPage = lazy(() => import("./pages/admin/DraftsPage"));
 const TrainersPage = lazy(() => import("./pages/admin/TrainersPage"));
@@ -65,6 +67,8 @@ function App(): JSX.Element {
               <Route path="stunden" element={<SessionsManagePage />} />
               <Route path="uebungen" element={<ExercisesManagePage />} />
               <Route path="kategorien" element={<CategoriesPage />} />
+              <Route path="regeln" element={<SessionRulesPage />} />
+              <Route path="analytics" element={<AnalyticsPage />} />
               <Route path="gruppen" element={<GroupsPage />} />
               <Route path="entwuerfe" element={<DraftsPage />} />
               <Route path="trainer" element={<TrainersPage />} />
