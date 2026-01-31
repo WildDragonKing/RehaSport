@@ -254,9 +254,10 @@ function parseSession(path: string, source: string): SessionMeta {
   };
 }
 
-const allSessions: SessionMeta[] = Object.entries(rawModules).map(([path, value]) =>
-  parseSession(path, value as string)
-);
+const allSessions: SessionMeta[] = Object.entries(rawModules)
+  // Filter out template files
+  .filter(([path]) => !path.includes('_template'))
+  .map(([path, value]) => parseSession(path, value as string));
 
 const categoryMap = new Map<string, CategoryMeta>();
 

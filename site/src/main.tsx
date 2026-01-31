@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import { registerSW } from "virtual:pwa-register";
 
 import App from "./App";
+import { ErrorBoundary } from "./components/ErrorBoundary";
 import { ThemeProvider } from "./components/theme/ThemeProvider";
 import "./index.css";
 
@@ -23,10 +24,12 @@ if ("serviceWorker" in navigator) {
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <ThemeProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </ThemeProvider>
+    <ErrorBoundary>
+      <ThemeProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ThemeProvider>
+    </ErrorBoundary>
   </React.StrictMode>
 );

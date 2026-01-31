@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 
+import { useAuth } from "../../contexts/AuthContext";
 import ThemeSwitcher from "../ui/ThemeSwitcher";
 
 const NAV_ITEMS = [
@@ -20,6 +21,8 @@ function LeafIcon(): JSX.Element {
 }
 
 function Header(): JSX.Element {
+  const { user, isTrainer } = useAuth();
+
   return (
     <header className="glass-header" role="banner">
       <div className="container header-inner">
@@ -55,6 +58,12 @@ function Header(): JSX.Element {
         {/* Actions */}
         <div className="header-actions">
           <ThemeSwitcher />
+          <NavLink
+            to={isTrainer ? "/admin" : "/login"}
+            className="ml-2 px-3 py-1.5 text-sm font-medium text-sage-700 hover:text-sage-900 hover:bg-sage-100 rounded-lg transition-colors"
+          >
+            Login
+          </NavLink>
         </div>
       </div>
     </header>

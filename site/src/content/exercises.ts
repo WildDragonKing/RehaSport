@@ -202,9 +202,10 @@ function parseExercise(path: string, source: string): ExerciseMeta {
   };
 }
 
-const allExercises: ExerciseMeta[] = Object.entries(rawModules).map(([path, value]) =>
-  parseExercise(path, value as string)
-);
+const allExercises: ExerciseMeta[] = Object.entries(rawModules)
+  // Filter out template files
+  .filter(([path]) => !path.includes('_template'))
+  .map(([path, value]) => parseExercise(path, value as string));
 
 allExercises.sort((a, b) => a.title.localeCompare(b.title, "de"));
 

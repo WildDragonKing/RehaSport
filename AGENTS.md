@@ -38,3 +38,29 @@ Diese Richtlinien gelten für das gesamte Repository.
 ## Tests
 - Falls Tests ergänzt werden müssen, platziere sie neben der zugehörigen Implementierung (z. B. `*.test.tsx`).
 - Dokumentiere im Pull-Request-Text, welche Test- oder Build-Befehle ausgeführt wurden.
+
+## Umbau: Firebase-Migration (Stand: Januar 2026)
+
+### Architektur-Änderungen
+- **Hosting:** Firebase Hosting (statt GitHub Pages)
+- **Datenbank:** Firestore (statt lokale Markdown-Dateien als Quelle)
+- **Auth:** Firebase Auth mit Rollen (Admin, Trainer)
+- **KI-Backend:** Google Gemini via Cloud Functions
+- **Projekt-ID:** `rehasport-trainer`
+
+### Benutzerrollen
+- **Admin:** Vollzugriff, kann Trainer einladen und Entwürfe freigeben
+- **Trainer:** KI-Builder nutzen, eigene Stunden/Gruppen verwalten (Entwürfe brauchen Admin-Freigabe)
+- **Teilnehmer:** Öffentlicher Zugang ohne Login
+
+### Neue Verzeichnisstruktur
+- `site/src/firebase/` - Firebase-Konfiguration und -Services
+- `site/src/contexts/` - React Contexts (Auth)
+- `site/src/pages/admin/` - Admin-Bereich
+- `functions/` - Cloud Functions (Gemini-Integration)
+
+### Datenformat
+- Stunden und Übungen werden in Firestore als JSON-Dokumente gespeichert
+- Das 45-Minuten-Schema bleibt erhalten (4 Phasen)
+- Alternativen (🦵 Knie, 💪 Schulter) werden als strukturierte Objekte gespeichert
+- Markdown-Dateien bleiben als Backup, sind aber nicht mehr die primäre Datenquelle
