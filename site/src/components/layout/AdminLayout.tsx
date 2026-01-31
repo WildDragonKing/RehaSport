@@ -11,6 +11,7 @@ interface NavItem {
 const navItems: NavItem[] = [
   { to: '/admin', label: 'Dashboard', end: true },
   { to: '/admin/builder', label: 'Stunden-Builder' },
+  { to: '/admin/generator', label: 'Bulk Generator' },
   { to: '/admin/stunden', label: 'Meine Stunden' },
   { to: '/admin/uebungen', label: 'Übungen verwalten' },
   { to: '/admin/gruppen', label: 'Gruppen' },
@@ -43,16 +44,16 @@ export default function AdminLayout(): JSX.Element {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-sage-50">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sage-600" />
+      <div className="min-h-screen flex items-center justify-center bg-sage-50 dark:bg-gray-900">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sage-600 dark:border-sage-400" />
       </div>
     );
   }
 
   if (!user) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-sage-50">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sage-600" />
+      <div className="min-h-screen flex items-center justify-center bg-sage-50 dark:bg-gray-900">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sage-600 dark:border-sage-400" />
       </div>
     );
   }
@@ -60,34 +61,34 @@ export default function AdminLayout(): JSX.Element {
   const allNavItems = isAdmin ? [...navItems, ...adminOnlyItems] : navItems;
 
   return (
-    <div className="min-h-screen bg-sage-50">
+    <div className="min-h-screen bg-sage-50 dark:bg-gray-900">
       {/* Top Navigation */}
-      <header className="bg-white border-b border-sage-200 sticky top-0 z-50">
+      <header className="bg-white dark:bg-gray-800 border-b border-sage-200 dark:border-gray-700 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <div className="flex items-center gap-4">
               <NavLink to="/" className="flex items-center gap-2">
-                <span className="text-xl font-display font-bold text-sage-800">
+                <span className="text-xl font-display font-bold text-sage-800 dark:text-sage-200">
                   RehaSport
                 </span>
               </NavLink>
-              <span className="px-2 py-1 text-xs font-medium bg-sage-100 text-sage-700 rounded">
+              <span className="px-2 py-1 text-xs font-medium bg-sage-100 dark:bg-sage-800 text-sage-700 dark:text-sage-300 rounded">
                 Admin
               </span>
             </div>
 
             {/* User Menu */}
             <div className="flex items-center gap-4">
-              <div className="text-sm text-sage-600">
+              <div className="text-sm text-sage-600 dark:text-sage-400">
                 <span className="font-medium">{user.displayName || user.email}</span>
-                <span className="ml-2 text-xs text-sage-400">
+                <span className="ml-2 text-xs text-sage-400 dark:text-sage-500">
                   ({isAdmin ? 'Admin' : 'Trainer'})
                 </span>
               </div>
               <button
                 onClick={handleLogout}
-                className="px-3 py-1.5 text-sm text-sage-600 hover:text-sage-800 hover:bg-sage-100 rounded-lg transition-colors"
+                className="px-3 py-1.5 text-sm text-sage-600 dark:text-sage-400 hover:text-sage-800 dark:hover:text-sage-200 hover:bg-sage-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
               >
                 Abmelden
               </button>
@@ -98,7 +99,7 @@ export default function AdminLayout(): JSX.Element {
 
       <div className="flex">
         {/* Sidebar Navigation */}
-        <aside className="w-64 bg-white border-r border-sage-200 min-h-[calc(100vh-4rem)] sticky top-16">
+        <aside className="w-64 bg-white dark:bg-gray-800 border-r border-sage-200 dark:border-gray-700 min-h-[calc(100vh-4rem)] sticky top-16">
           <nav className="p-4 space-y-1">
             {allNavItems.map((item) => (
               <NavLink
@@ -108,8 +109,8 @@ export default function AdminLayout(): JSX.Element {
                 className={({ isActive }) =>
                   `block px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                     isActive
-                      ? 'bg-sage-100 text-sage-900'
-                      : 'text-sage-600 hover:bg-sage-50 hover:text-sage-800'
+                      ? 'bg-sage-100 dark:bg-sage-800 text-sage-900 dark:text-sage-100'
+                      : 'text-sage-600 dark:text-sage-400 hover:bg-sage-50 dark:hover:bg-gray-700 hover:text-sage-800 dark:hover:text-sage-200'
                   }`
                 }
               >
@@ -119,20 +120,20 @@ export default function AdminLayout(): JSX.Element {
           </nav>
 
           {/* Quick Links */}
-          <div className="p-4 border-t border-sage-100 mt-4">
-            <p className="text-xs font-medium text-sage-400 uppercase tracking-wider mb-2">
+          <div className="p-4 border-t border-sage-100 dark:border-gray-700 mt-4">
+            <p className="text-xs font-medium text-sage-400 dark:text-sage-500 uppercase tracking-wider mb-2">
               Schnellzugriff
             </p>
             <div className="space-y-1">
               <NavLink
                 to="/stunden"
-                className="block px-4 py-2 text-sm text-sage-500 hover:text-sage-700 transition-colors"
+                className="block px-4 py-2 text-sm text-sage-500 dark:text-sage-400 hover:text-sage-700 dark:hover:text-sage-300 transition-colors"
               >
                 Öffentliche Stunden
               </NavLink>
               <NavLink
                 to="/uebungen"
-                className="block px-4 py-2 text-sm text-sage-500 hover:text-sage-700 transition-colors"
+                className="block px-4 py-2 text-sm text-sage-500 dark:text-sage-400 hover:text-sage-700 dark:hover:text-sage-300 transition-colors"
               >
                 Übungsbibliothek
               </NavLink>

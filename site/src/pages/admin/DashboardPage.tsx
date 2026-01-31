@@ -46,7 +46,7 @@ export default function DashboardPage(): JSX.Element {
         <h1 className="text-3xl font-display font-bold text-sage-900">
           Willkommen, {user?.displayName || user?.email?.split('@')[0]}!
         </h1>
-        <p className="mt-2 text-sage-600">
+        <p className="mt-2 text-sage-600 dark:text-sage-300">
           Hier findest du eine Übersicht deiner Aktivitäten und Schnellzugriffe.
         </p>
       </div>
@@ -76,7 +76,7 @@ export default function DashboardPage(): JSX.Element {
       </div>
 
       {/* Quick Actions */}
-      <div className="bg-white rounded-xl shadow-sm border border-sage-200 p-6">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 p-6">
         <h2 className="text-lg font-semibold text-sage-900 mb-4">Schnellaktionen</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <QuickAction
@@ -108,24 +108,24 @@ export default function DashboardPage(): JSX.Element {
 
       {/* Admin Tools */}
       {isAdmin && (
-        <div className="bg-white rounded-xl shadow-sm border border-sage-200 p-6">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 p-6">
           <h2 className="text-lg font-semibold text-sage-900 mb-4">Admin-Tools</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Firestore Status */}
-            <div className="p-4 bg-sage-50 rounded-lg">
-              <h3 className="font-medium text-sage-800 mb-2">Firestore-Datenbank</h3>
+            <div className="p-4 bg-sage-50 dark:bg-gray-900 rounded-lg">
+              <h3 className="font-medium text-sage-800 dark:text-sage-100 mb-2">Firestore-Datenbank</h3>
               {firestoreStats ? (
                 <>
-                  <p className="text-sm text-sage-600">
+                  <p className="text-sm text-sage-600 dark:text-sage-300">
                     {firestoreStats.sessions} Stunden, {firestoreStats.exercises} Übungen
                   </p>
-                  <p className="text-xs text-sage-500 mt-1">
+                  <p className="text-xs text-sage-500 dark:text-sage-400 mt-1">
                     {isFirestoreAvailable ? 'Verbunden' : 'Nicht verfügbar'}
                   </p>
                 </>
               ) : (
-                <p className="text-sm text-sage-600">Lädt...</p>
+                <p className="text-sm text-sage-600 dark:text-sage-300">Lädt...</p>
               )}
             </div>
 
@@ -176,16 +176,16 @@ interface StatCardProps {
 
 function StatCard({ title, value, subtitle, link, color }: StatCardProps): JSX.Element {
   const colorClasses = {
-    sage: 'bg-sage-50 border-sage-200',
-    sand: 'bg-sand-50 border-sand-200',
-    terracotta: 'bg-terracotta-50 border-terracotta-200',
+    sage: 'bg-sage-50 dark:bg-gray-900 border-sage-200 dark:border-gray-700',
+    sand: 'bg-sand-50 dark:bg-gray-900 border-sand-200 dark:border-gray-700',
+    terracotta: 'bg-terracotta-50 dark:bg-gray-900 border-terracotta-200 dark:border-gray-700',
   };
 
   const content = (
     <div className={`p-6 rounded-xl border ${colorClasses[color]} transition-shadow hover:shadow-md`}>
-      <p className="text-sm font-medium text-sage-500">{title}</p>
+      <p className="text-sm font-medium text-sage-500 dark:text-sage-400">{title}</p>
       <p className="mt-2 text-3xl font-bold text-sage-900">{value}</p>
-      <p className="mt-1 text-sm text-sage-600">{subtitle}</p>
+      <p className="mt-1 text-sm text-sage-600 dark:text-sage-300">{subtitle}</p>
     </div>
   );
 
@@ -207,14 +207,14 @@ function QuickAction({ to, title, description, icon }: QuickActionProps): JSX.El
   return (
     <Link
       to={to}
-      className="flex items-center gap-4 p-4 bg-sage-50 rounded-lg hover:bg-sage-100 transition-colors group"
+      className="flex items-center gap-4 p-4 bg-sage-50 dark:bg-gray-900 rounded-lg hover:bg-sage-100 dark:hover:bg-gray-700 transition-colors group"
     >
       <div className="w-10 h-10 flex items-center justify-center bg-sage-200 rounded-lg text-sage-700 font-bold group-hover:bg-sage-300 transition-colors">
         {icon}
       </div>
       <div>
-        <p className="font-medium text-sage-800">{title}</p>
-        <p className="text-sm text-sage-600">{description}</p>
+        <p className="font-medium text-sage-800 dark:text-sage-100">{title}</p>
+        <p className="text-sm text-sage-600 dark:text-sage-300">{description}</p>
       </div>
     </Link>
   );

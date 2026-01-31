@@ -37,7 +37,7 @@ export default function TrainersPage(): JSX.Element {
   if (!isAdmin) {
     return (
       <div className="text-center py-12">
-        <p className="text-sage-600">Nur Administratoren können Trainer verwalten.</p>
+        <p className="text-sage-600 dark:text-sage-300">Nur Administratoren können Trainer verwalten.</p>
       </div>
     );
   }
@@ -76,17 +76,17 @@ export default function TrainersPage(): JSX.Element {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-display font-bold text-sage-900">
+        <h1 className="text-3xl font-display font-bold text-sage-900 dark:text-sage-100">
           Trainer verwalten
         </h1>
-        <p className="mt-2 text-sage-600">
+        <p className="mt-2 text-sage-600 dark:text-sage-300">
           Lade neue Trainer ein und verwalte bestehende Zugänge
         </p>
       </div>
 
       {/* Invite Form */}
-      <div className="bg-white rounded-xl shadow-sm border border-sage-200 p-6">
-        <h2 className="text-lg font-semibold text-sage-900 mb-4">Neuen Trainer einladen</h2>
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 p-6">
+        <h2 className="text-lg font-semibold text-sage-900 dark:text-sage-100 mb-4">Neuen Trainer einladen</h2>
 
         <div className="flex gap-4">
           <input
@@ -94,7 +94,7 @@ export default function TrainersPage(): JSX.Element {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="trainer@beispiel.de"
-            className="flex-1 px-4 py-3 border border-sage-300 rounded-lg focus:ring-2 focus:ring-sage-500"
+            className="flex-1 px-4 py-3 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-gray-700 dark:text-sage-100"
           />
           <button
             onClick={handleInvite}
@@ -115,21 +115,21 @@ export default function TrainersPage(): JSX.Element {
           </div>
         )}
 
-        <p className="mt-4 text-sm text-sage-500">
-          Der eingeladene Trainer kann sich dann unter <code className="bg-sage-100 px-1 rounded">/login</code> mit seinem Google-Konto anmelden.
+        <p className="mt-4 text-sm text-sage-500 dark:text-sage-400">
+          Der eingeladene Trainer kann sich dann unter <code className="bg-sage-100 dark:bg-gray-700 px-1 rounded">/login</code> mit seinem Google-Konto anmelden.
         </p>
       </div>
 
       {/* Pending Invitations */}
       {pendingInvitations.length > 0 && (
-        <div className="bg-white rounded-xl shadow-sm border border-sage-200 p-6">
-          <h2 className="text-lg font-semibold text-sage-900 mb-4">Offene Einladungen</h2>
-          <div className="divide-y divide-sage-100">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 p-6">
+          <h2 className="text-lg font-semibold text-sage-900 dark:text-sage-100 mb-4">Offene Einladungen</h2>
+          <div className="divide-y divide-sage-100 dark:divide-gray-700">
             {pendingInvitations.map((inv) => (
               <div key={inv.id} className="py-3 flex items-center justify-between">
                 <div>
-                  <p className="font-medium text-sage-800">{inv.email}</p>
-                  <p className="text-sm text-sage-500">
+                  <p className="font-medium text-sage-800 dark:text-sage-100">{inv.email}</p>
+                  <p className="text-sm text-sage-500 dark:text-sage-400">
                     Eingeladen am {inv.createdAt?.toDate?.().toLocaleDateString('de') || 'Unbekannt'}
                     {inv.expiresAt && (
                       <> • Gültig bis {inv.expiresAt.toDate().toLocaleDateString('de')}</>
@@ -143,20 +143,20 @@ export default function TrainersPage(): JSX.Element {
       )}
 
       {/* Active Trainers */}
-      <div className="bg-white rounded-xl shadow-sm border border-sage-200 p-6">
-        <h2 className="text-lg font-semibold text-sage-900 mb-4">Aktive Trainer</h2>
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 p-6">
+        <h2 className="text-lg font-semibold text-sage-900 dark:text-sage-100 mb-4">Aktive Trainer</h2>
 
         {loading ? (
-          <p className="text-sage-500 text-sm">Laden...</p>
+          <p className="text-sage-500 dark:text-sage-400 text-sm">Laden...</p>
         ) : trainers.length > 0 ? (
-          <div className="divide-y divide-sage-100">
+          <div className="divide-y divide-sage-100 dark:divide-gray-700">
             {trainers.map((trainer) => (
               <div key={trainer.id} className="py-4 flex items-center justify-between">
                 <div>
-                  <p className="font-medium text-sage-800">
+                  <p className="font-medium text-sage-800 dark:text-sage-100">
                     {trainer.displayName || trainer.email}
                   </p>
-                  <p className="text-sm text-sage-500">
+                  <p className="text-sm text-sage-500 dark:text-sage-400">
                     {trainer.role === 'admin' ? 'Administrator' : 'Trainer'}
                     {trainer.email && trainer.displayName && ` • ${trainer.email}`}
                   </p>
@@ -164,7 +164,7 @@ export default function TrainersPage(): JSX.Element {
                 <span className={`px-2 py-1 text-xs rounded ${
                   trainer.role === 'admin'
                     ? 'bg-purple-100 text-purple-700'
-                    : 'bg-sage-100 text-sage-700'
+                    : 'bg-sage-100 dark:bg-gray-700 text-sage-700 dark:text-sage-300'
                 }`}>
                   {trainer.role === 'admin' ? 'Admin' : 'Trainer'}
                 </span>
@@ -172,7 +172,7 @@ export default function TrainersPage(): JSX.Element {
             ))}
           </div>
         ) : (
-          <p className="text-sage-500 text-sm">Noch keine Trainer registriert.</p>
+          <p className="text-sage-500 dark:text-sage-400 text-sm">Noch keine Trainer registriert.</p>
         )}
       </div>
     </div>

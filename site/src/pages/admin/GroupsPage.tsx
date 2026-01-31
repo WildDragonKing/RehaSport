@@ -39,10 +39,10 @@ export default function GroupsPage(): JSX.Element {
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-display font-bold text-sage-900">
+          <h1 className="text-3xl font-display font-bold text-sage-900 dark:text-sage-100">
             Trainingsgruppen
           </h1>
-          <p className="mt-2 text-sage-600">
+          <p className="mt-2 text-sage-600 dark:text-sage-300">
             Verwalte Gruppen mit spezifischen Einschränkungen
           </p>
         </div>
@@ -56,12 +56,12 @@ export default function GroupsPage(): JSX.Element {
 
       {/* Create Form */}
       {showForm && (
-        <div className="bg-white rounded-xl shadow-sm border border-sage-200 p-6">
-          <h2 className="text-lg font-semibold text-sage-900 mb-4">Neue Gruppe erstellen</h2>
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 p-6">
+          <h2 className="text-lg font-semibold text-sage-900 dark:text-sage-100 mb-4">Neue Gruppe erstellen</h2>
 
           <div className="space-y-4">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-sage-700 mb-2">
+              <label htmlFor="name" className="block text-sm font-medium text-sage-700 dark:text-sage-300 mb-2">
                 Gruppenname
               </label>
               <input
@@ -69,17 +69,17 @@ export default function GroupsPage(): JSX.Element {
                 type="text"
                 value={newGroup.name}
                 onChange={(e) => setNewGroup({ ...newGroup, name: e.target.value })}
-                className="w-full px-4 py-3 border border-sage-300 rounded-lg focus:ring-2 focus:ring-sage-500"
+                className="w-full px-4 py-3 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-gray-700 dark:text-sage-100"
                 placeholder="z.B. Montags-Gruppe, Senioren-Fit"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-sage-700 mb-2">
+              <label className="block text-sm font-medium text-sage-700 dark:text-sage-300 mb-2">
                 Einschränkungen der Gruppe
               </label>
               <div className="flex flex-wrap gap-3">
-                <label className="flex items-center gap-2 px-4 py-2 border rounded-lg cursor-pointer hover:bg-sage-50">
+                <label className="flex items-center gap-2 px-4 py-2 border border-sage-200 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-sage-50 dark:hover:bg-gray-700 dark:text-sage-100">
                   <input
                     type="checkbox"
                     checked={newGroup.restrictions.includes('knee')}
@@ -88,7 +88,7 @@ export default function GroupsPage(): JSX.Element {
                   />
                   <span>🦵 Knieprobleme</span>
                 </label>
-                <label className="flex items-center gap-2 px-4 py-2 border rounded-lg cursor-pointer hover:bg-sage-50">
+                <label className="flex items-center gap-2 px-4 py-2 border border-sage-200 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-sage-50 dark:hover:bg-gray-700 dark:text-sage-100">
                   <input
                     type="checkbox"
                     checked={newGroup.restrictions.includes('shoulder')}
@@ -98,13 +98,13 @@ export default function GroupsPage(): JSX.Element {
                   <span>💪 Schulterprobleme</span>
                 </label>
               </div>
-              <p className="mt-2 text-xs text-sage-500">
+              <p className="mt-2 text-xs text-sage-500 dark:text-sage-400">
                 Bei diesen Einschränkungen werden automatisch Alternativen in den Stunden angezeigt.
               </p>
             </div>
 
             <div>
-              <label htmlFor="description" className="block text-sm font-medium text-sage-700 mb-2">
+              <label htmlFor="description" className="block text-sm font-medium text-sage-700 dark:text-sage-300 mb-2">
                 Beschreibung (optional)
               </label>
               <textarea
@@ -112,7 +112,7 @@ export default function GroupsPage(): JSX.Element {
                 value={newGroup.description}
                 onChange={(e) => setNewGroup({ ...newGroup, description: e.target.value })}
                 rows={2}
-                className="w-full px-4 py-3 border border-sage-300 rounded-lg focus:ring-2 focus:ring-sage-500"
+                className="w-full px-4 py-3 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-gray-700 dark:text-sage-100"
                 placeholder="Notizen zur Gruppe..."
               />
             </div>
@@ -127,7 +127,7 @@ export default function GroupsPage(): JSX.Element {
               </button>
               <button
                 onClick={() => setShowForm(false)}
-                className="px-4 py-2 text-sage-600 hover:bg-sage-100 rounded-lg transition-colors"
+                className="px-4 py-2 text-sage-600 dark:text-sage-300 hover:bg-sage-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
               >
                 Abbrechen
               </button>
@@ -140,10 +140,10 @@ export default function GroupsPage(): JSX.Element {
       {groups.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {groups.map((group) => (
-            <div key={group.id} className="bg-white rounded-xl shadow-sm border border-sage-200 p-6">
-              <h3 className="text-lg font-semibold text-sage-800">{group.name}</h3>
+            <div key={group.id} className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 p-6">
+              <h3 className="text-lg font-semibold text-sage-800 dark:text-sage-100">{group.name}</h3>
               {group.description && (
-                <p className="mt-1 text-sm text-sage-600">{group.description}</p>
+                <p className="mt-1 text-sm text-sage-600 dark:text-sage-300">{group.description}</p>
               )}
               <div className="mt-4 flex flex-wrap gap-2">
                 {group.restrictions.length > 0 ? (
@@ -156,11 +156,11 @@ export default function GroupsPage(): JSX.Element {
                     </span>
                   ))
                 ) : (
-                  <span className="text-sm text-sage-500">Keine Einschränkungen</span>
+                  <span className="text-sm text-sage-500 dark:text-sage-400">Keine Einschränkungen</span>
                 )}
               </div>
               <div className="mt-4 flex gap-2">
-                <button className="text-sm text-sage-600 hover:text-sage-800">Bearbeiten</button>
+                <button className="text-sm text-sage-600 dark:text-sage-300 hover:text-sage-800 dark:hover:text-sage-100">Bearbeiten</button>
                 <button className="text-sm text-red-600 hover:text-red-800">Löschen</button>
               </div>
             </div>
@@ -168,9 +168,9 @@ export default function GroupsPage(): JSX.Element {
         </div>
       ) : (
         !showForm && (
-          <div className="text-center py-12 bg-sage-50 rounded-xl">
-            <p className="text-sage-600">Noch keine Gruppen angelegt.</p>
-            <p className="mt-2 text-sm text-sage-500">
+          <div className="text-center py-12 bg-sage-50 dark:bg-gray-900 rounded-xl">
+            <p className="text-sage-600 dark:text-sage-300">Noch keine Gruppen angelegt.</p>
+            <p className="mt-2 text-sm text-sage-500 dark:text-sage-400">
               Erstelle Gruppen, um Stunden für Teilnehmer mit bestimmten Einschränkungen anzupassen.
             </p>
           </div>

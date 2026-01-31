@@ -31,6 +31,7 @@ const AnalyticsPage = lazy(() => import("./pages/admin/AnalyticsPage"));
 const GroupsPage = lazy(() => import("./pages/admin/GroupsPage"));
 const DraftsPage = lazy(() => import("./pages/admin/DraftsPage"));
 const TrainersPage = lazy(() => import("./pages/admin/TrainersPage"));
+const BulkGeneratorPage = lazy(() => import("./pages/admin/BulkGeneratorPage"));
 
 function LoadingSpinner() {
   return (
@@ -72,6 +73,7 @@ function App(): JSX.Element {
               <Route path="gruppen" element={<GroupsPage />} />
               <Route path="entwuerfe" element={<DraftsPage />} />
               <Route path="trainer" element={<TrainersPage />} />
+              <Route path="generator" element={<BulkGeneratorPage />} />
             </Route>
 
             {/* Catch-all */}

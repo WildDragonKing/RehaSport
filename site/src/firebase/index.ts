@@ -1,5 +1,5 @@
 // Firebase configuration and app
-export { db, auth, storage } from './config';
+export { db, auth, storage, functions } from './config';
 
 // Types
 export * from './types';

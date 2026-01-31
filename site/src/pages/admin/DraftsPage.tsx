@@ -18,10 +18,10 @@ export default function DraftsPage(): JSX.Element {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-display font-bold text-sage-900">
+        <h1 className="text-3xl font-display font-bold text-sage-900 dark:text-sage-100">
           Entwürfe
         </h1>
-        <p className="mt-2 text-sage-600">
+        <p className="mt-2 text-sage-600 dark:text-sage-300">
           {isAdmin
             ? 'Prüfe und genehmige Stunden-Entwürfe von Trainern'
             : 'Deine KI-generierten Stunden-Entwürfe'}
@@ -29,14 +29,14 @@ export default function DraftsPage(): JSX.Element {
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex gap-2 border-b border-sage-200">
-        <button className="px-4 py-2 text-sage-800 border-b-2 border-sage-600 font-medium">
+      <div className="flex gap-2 border-b border-sage-200 dark:border-gray-700">
+        <button className="px-4 py-2 text-sage-800 dark:text-sage-100 border-b-2 border-sage-600 font-medium">
           Ausstehend
         </button>
-        <button className="px-4 py-2 text-sage-500 hover:text-sage-700">
+        <button className="px-4 py-2 text-sage-500 dark:text-sage-400 hover:text-sage-700 dark:hover:text-sage-200">
           Genehmigt
         </button>
-        <button className="px-4 py-2 text-sage-500 hover:text-sage-700">
+        <button className="px-4 py-2 text-sage-500 dark:text-sage-400 hover:text-sage-700 dark:hover:text-sage-200">
           Abgelehnt
         </button>
       </div>
@@ -47,12 +47,12 @@ export default function DraftsPage(): JSX.Element {
           {drafts.map((draft) => (
             <div
               key={draft.id}
-              className="bg-white rounded-xl shadow-sm border border-sage-200 p-6"
+              className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 p-6"
             >
               <div className="flex items-start justify-between">
                 <div>
-                  <h3 className="text-lg font-semibold text-sage-800">{draft.title}</h3>
-                  <p className="text-sm text-sage-500 mt-1">
+                  <h3 className="text-lg font-semibold text-sage-800 dark:text-sage-100">{draft.title}</h3>
+                  <p className="text-sm text-sage-500 dark:text-sage-400 mt-1">
                     Kategorie: {draft.category} • Erstellt: {draft.createdAt.toLocaleDateString('de')}
                   </p>
                 </div>
@@ -94,9 +94,9 @@ export default function DraftsPage(): JSX.Element {
           ))}
         </div>
       ) : (
-        <div className="text-center py-12 bg-sage-50 rounded-xl">
-          <p className="text-sage-600">Keine Entwürfe vorhanden.</p>
-          <p className="mt-2 text-sm text-sage-500">
+        <div className="text-center py-12 bg-sage-50 dark:bg-gray-900 rounded-xl">
+          <p className="text-sage-600 dark:text-sage-300">Keine Entwürfe vorhanden.</p>
+          <p className="mt-2 text-sm text-sage-500 dark:text-sage-400">
             Entwürfe erscheinen hier, wenn du mit dem KI-Builder eine Stunde generierst.
           </p>
         </div>

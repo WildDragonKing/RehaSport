@@ -35,11 +35,13 @@ export interface SessionPhase {
 // Trainingsstunde
 export interface Session {
   id?: string;
+  slug: string;
   title: string;
   description?: string;
   duration: string;
   focus?: string;
   category: string;
+  categorySlug: string;
   categoryTitle?: string;
   status: 'draft' | 'published';
   createdBy: string;

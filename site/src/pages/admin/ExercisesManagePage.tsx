@@ -222,7 +222,7 @@ export default function ExercisesManagePage(): JSX.Element {
   if (!isTrainer) {
     return (
       <div className="text-center py-12">
-        <p className="text-sage-600">Nur Trainer können Übungen verwalten.</p>
+        <p className="text-sage-600 dark:text-sage-300">Nur Trainer können Übungen verwalten.</p>
       </div>
     );
   }
@@ -231,8 +231,8 @@ export default function ExercisesManagePage(): JSX.Element {
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-display font-bold text-sage-900">Übungen</h1>
-          <p className="mt-2 text-sage-600">Verwalte die Übungsbibliothek</p>
+          <h1 className="text-3xl font-display font-bold text-sage-900 dark:text-sage-100">Übungen</h1>
+          <p className="mt-2 text-sage-600 dark:text-sage-300">Verwalte die Übungsbibliothek</p>
         </div>
         <button
           onClick={() => setShowForm(!showForm)}
@@ -244,74 +244,74 @@ export default function ExercisesManagePage(): JSX.Element {
 
       {/* Add/Edit Form */}
       {showForm && (
-        <div className="bg-white rounded-xl shadow-sm border border-sage-200 p-6">
-          <h2 className="text-lg font-semibold text-sage-900 mb-4">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 p-6">
+          <h2 className="text-lg font-semibold text-sage-900 dark:text-sage-100 mb-4">
             {editingId ? 'Übung bearbeiten' : 'Neue Übung erstellen'}
           </h2>
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Basic Info */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-sage-700 mb-1">Titel *</label>
+                <label className="block text-sm font-medium text-sage-700 dark:text-sage-300 mb-1">Titel *</label>
                 <input
                   type="text"
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="w-full px-3 py-2 border border-sage-300 rounded-lg focus:ring-2 focus:ring-sage-500"
+                  className="w-full px-3 py-2 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-gray-700 dark:text-sage-100"
                   required
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-sage-700 mb-1">Slug</label>
+                <label className="block text-sm font-medium text-sage-700 dark:text-sage-300 mb-1">Slug</label>
                 <input
                   type="text"
                   value={formData.slug}
                   onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
                   placeholder={formData.title ? generateSlug(formData.title) : 'automatisch'}
-                  className="w-full px-3 py-2 border border-sage-300 rounded-lg focus:ring-2 focus:ring-sage-500"
+                  className="w-full px-3 py-2 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-gray-700 dark:text-sage-100"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-sage-700 mb-1">Kurzbeschreibung *</label>
+              <label className="block text-sm font-medium text-sage-700 dark:text-sage-300 mb-1">Kurzbeschreibung *</label>
               <textarea
                 value={formData.summary}
                 onChange={(e) => setFormData({ ...formData, summary: e.target.value })}
                 rows={2}
-                className="w-full px-3 py-2 border border-sage-300 rounded-lg focus:ring-2 focus:ring-sage-500"
+                className="w-full px-3 py-2 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-gray-700 dark:text-sage-100"
                 required
               />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <label className="block text-sm font-medium text-sage-700 mb-1">Körperbereich</label>
+                <label className="block text-sm font-medium text-sage-700 dark:text-sage-300 mb-1">Körperbereich</label>
                 <select
                   value={formData.area}
                   onChange={(e) => setFormData({ ...formData, area: e.target.value })}
-                  className="w-full px-3 py-2 border border-sage-300 rounded-lg focus:ring-2 focus:ring-sage-500"
+                  className="w-full px-3 py-2 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-gray-700 dark:text-sage-100"
                 >
                   <option value="">Auswählen...</option>
                   {AREA_OPTIONS.map(a => <option key={a} value={a}>{a}</option>)}
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-sage-700 mb-1">Schwerpunkt</label>
+                <label className="block text-sm font-medium text-sage-700 dark:text-sage-300 mb-1">Schwerpunkt</label>
                 <input
                   type="text"
                   value={formData.focus}
                   onChange={(e) => setFormData({ ...formData, focus: e.target.value })}
                   placeholder="z.B. Kraft, Beweglichkeit"
-                  className="w-full px-3 py-2 border border-sage-300 rounded-lg focus:ring-2 focus:ring-sage-500"
+                  className="w-full px-3 py-2 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-gray-700 dark:text-sage-100"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-sage-700 mb-1">Schwierigkeit</label>
+                <label className="block text-sm font-medium text-sage-700 dark:text-sage-300 mb-1">Schwierigkeit</label>
                 <select
                   value={formData.difficulty}
                   onChange={(e) => setFormData({ ...formData, difficulty: e.target.value })}
-                  className="w-full px-3 py-2 border border-sage-300 rounded-lg focus:ring-2 focus:ring-sage-500"
+                  className="w-full px-3 py-2 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-gray-700 dark:text-sage-100"
                 >
                   {DIFFICULTY_OPTIONS.map(d => <option key={d} value={d}>{d}</option>)}
                 </select>
@@ -319,29 +319,29 @@ export default function ExercisesManagePage(): JSX.Element {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-sage-700 mb-1">Ausführung</label>
+              <label className="block text-sm font-medium text-sage-700 dark:text-sage-300 mb-1">Ausführung</label>
               <textarea
                 value={formData.execution}
                 onChange={(e) => setFormData({ ...formData, execution: e.target.value })}
                 rows={4}
                 placeholder="Beschreibe die Ausführung der Übung..."
-                className="w-full px-3 py-2 border border-sage-300 rounded-lg focus:ring-2 focus:ring-sage-500"
+                className="w-full px-3 py-2 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-gray-700 dark:text-sage-100"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-sage-700 mb-1">Tipps</label>
+              <label className="block text-sm font-medium text-sage-700 dark:text-sage-300 mb-1">Tipps</label>
               <textarea
                 value={formData.tips}
                 onChange={(e) => setFormData({ ...formData, tips: e.target.value })}
                 rows={2}
                 placeholder="Zusätzliche Tipps..."
-                className="w-full px-3 py-2 border border-sage-300 rounded-lg focus:ring-2 focus:ring-sage-500"
+                className="w-full px-3 py-2 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-gray-700 dark:text-sage-100"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-sage-700 mb-1">
+              <label className="block text-sm font-medium text-sage-700 dark:text-sage-300 mb-1">
                 Kontraindikationen (kommagetrennt)
               </label>
               <input
@@ -349,13 +349,13 @@ export default function ExercisesManagePage(): JSX.Element {
                 value={formData.contraindications}
                 onChange={(e) => setFormData({ ...formData, contraindications: e.target.value })}
                 placeholder="z.B. Knieprobleme, Bluthochdruck"
-                className="w-full px-3 py-2 border border-sage-300 rounded-lg focus:ring-2 focus:ring-sage-500"
+                className="w-full px-3 py-2 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-gray-700 dark:text-sage-100"
               />
             </div>
 
             {/* Alternatives */}
-            <div className="border-t border-sage-200 pt-4">
-              <h3 className="font-medium text-sage-800 mb-3">Alternativen bei Einschränkungen</h3>
+            <div className="border-t border-sage-200 dark:border-gray-700 pt-4">
+              <h3 className="font-medium text-sage-800 dark:text-sage-100 mb-3">Alternativen bei Einschränkungen</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="p-4 bg-amber-50 rounded-lg">
                   <p className="text-sm font-medium text-amber-800 mb-2">🦵 Knie-Alternative</p>
@@ -395,7 +395,7 @@ export default function ExercisesManagePage(): JSX.Element {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-sage-700 mb-1">
+              <label className="block text-sm font-medium text-sage-700 dark:text-sage-300 mb-1">
                 Tags (kommagetrennt)
               </label>
               <input
@@ -403,7 +403,7 @@ export default function ExercisesManagePage(): JSX.Element {
                 value={formData.tags}
                 onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
                 placeholder="z.B. Aufwärmen, Dehnung, Stuhl"
-                className="w-full px-3 py-2 border border-sage-300 rounded-lg focus:ring-2 focus:ring-sage-500"
+                className="w-full px-3 py-2 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-gray-700 dark:text-sage-100"
               />
             </div>
 
@@ -434,30 +434,30 @@ export default function ExercisesManagePage(): JSX.Element {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Übungen suchen..."
-          className="w-full md:w-96 px-4 py-2 border border-sage-300 rounded-lg focus:ring-2 focus:ring-sage-500"
+          className="w-full md:w-96 px-4 py-2 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-gray-700 dark:text-sage-100"
         />
       </div>
 
       {/* Exercises List */}
-      <div className="bg-white rounded-xl shadow-sm border border-sage-200 overflow-hidden">
-        <div className="px-6 py-4 bg-sage-50 border-b border-sage-200">
-          <h2 className="text-lg font-semibold text-sage-800">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 overflow-hidden">
+        <div className="px-6 py-4 bg-sage-50 dark:bg-gray-900 border-b border-sage-200 dark:border-gray-700">
+          <h2 className="text-lg font-semibold text-sage-800 dark:text-sage-100">
             Übungsbibliothek ({filteredExercises.length})
           </h2>
         </div>
         {loading ? (
-          <div className="p-6 text-center text-sage-500">Lädt...</div>
+          <div className="p-6 text-center text-sage-500 dark:text-sage-400">Lädt...</div>
         ) : filteredExercises.length === 0 ? (
-          <div className="p-6 text-center text-sage-500">
+          <div className="p-6 text-center text-sage-500 dark:text-sage-400">
             {searchTerm ? 'Keine Übungen gefunden.' : 'Noch keine Übungen vorhanden.'}
           </div>
         ) : (
-          <div className="divide-y divide-sage-100">
+          <div className="divide-y divide-sage-100 dark:divide-gray-700">
             {filteredExercises.map((exercise) => (
-              <div key={exercise.id} className="px-6 py-4 flex items-center justify-between hover:bg-sage-50">
+              <div key={exercise.id} className="px-6 py-4 flex items-center justify-between hover:bg-sage-50 dark:hover:bg-gray-700">
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-medium text-sage-800 truncate">{exercise.title}</h3>
-                  <p className="text-sm text-sage-500 truncate">
+                  <h3 className="font-medium text-sage-800 dark:text-sage-100 truncate">{exercise.title}</h3>
+                  <p className="text-sm text-sage-500 dark:text-sage-400 truncate">
                     {exercise.area && `${exercise.area} • `}
                     {exercise.difficulty}
                     {exercise.tags?.length > 0 && ` • ${exercise.tags.slice(0, 3).join(', ')}`}
@@ -472,7 +472,7 @@ export default function ExercisesManagePage(): JSX.Element {
                   )}
                   <button
                     onClick={() => handleEdit(exercise)}
-                    className="p-2 text-sage-500 hover:text-sage-700 transition-colors"
+                    className="p-2 text-sage-500 dark:text-sage-400 hover:text-sage-700 dark:hover:text-sage-200 transition-colors"
                     title="Bearbeiten"
                   >
                     ✏️

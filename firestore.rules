@@ -85,6 +85,11 @@ service cloud.firestore {
       allow delete: if isAdmin();
     }
 
+    // Rate Limits (für KI-Anfragen)
+    match /rateLimits/{userId} {
+      allow read, write: if false; // Nur Server-Zugriff
+    }
+
     match /invitations/{invitationId} {
       allow read: if true;
       allow create: if isAdmin();
