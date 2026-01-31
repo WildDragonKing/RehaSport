@@ -92,7 +92,9 @@ export async function signInWithGoogle(): Promise<User | null> {
   });
 
   // Mark invitation as used
-  await useInvitation(invitation.id);
+  if (invitation.id) {
+    await useInvitation(invitation.id);
+  }
 
   return {
     id: firebaseUser.uid,

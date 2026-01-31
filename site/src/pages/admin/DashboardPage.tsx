@@ -100,8 +100,8 @@ export default function DashboardPage(): JSX.Element {
         />
         <StatCard
           title="Datenquelle"
-          value={isFirestoreAvailable ? 'Firestore' : 'Lokal'}
-          subtitle={dataSource === 'auto' ? 'automatisch gewählt' : 'manuell festgelegt'}
+          value="Firestore"
+          subtitle={isFirestoreAvailable ? 'verbunden' : 'nicht verfügbar'}
           color="terracotta"
         />
       </div>
