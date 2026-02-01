@@ -7,23 +7,20 @@ import { getFunctions } from "firebase/functions";
 import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAAO8Q3H1g6Rhn595rK4c8XFk6e9e5oQi0",
-  authDomain: "rehasport-trainer.firebaseapp.com",
-  projectId: "rehasport-trainer",
-  storageBucket: "rehasport-trainer.firebasestorage.app",
-  messagingSenderId: "234869309599",
-  appId: "1:234869309599:web:b096a83bfc31b6fd14e2aa",
-  measurementId: "G-CSDLVS43P7",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
 // Initialize App Check with reCAPTCHA v3
-// Site key is public and safe to include in client-side code
-const RECAPTCHA_V3_SITE_KEY =
-  import.meta.env.VITE_RECAPTCHA_V3_SITE_KEY ||
-  "6LckQFwsAAAAAFextFX1Zhw4zdxjn2QPZQpnzdUE";
+const RECAPTCHA_V3_SITE_KEY = import.meta.env.VITE_RECAPTCHA_V3_SITE_KEY;
 
 // Initialize App Check (only in browser)
 if (typeof window !== "undefined" && RECAPTCHA_V3_SITE_KEY) {
