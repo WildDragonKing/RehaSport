@@ -27,15 +27,6 @@
             "command": "if [[ \"$CLAUDE_FILE_PATH\" == *.test.ts || \"$CLAUDE_FILE_PATH\" == *.test.tsx ]]; then cd \"$CLAUDE_PROJECT_DIR/site\" && npx vitest run \"$CLAUDE_FILE_PATH\" 2>&1 | tail -20 || true; fi"
           }
         ]
-      },
-      {
-        "matcher": "Edit|Write",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "if [[ \"$CLAUDE_FILE_PATH\" == */Übungen/*.md || \"$CLAUDE_FILE_PATH\" == */stunden/*.md ]]; then cd \"$CLAUDE_PROJECT_DIR\" && node scripts/validate-content.js 2>&1 | head -15 || true; fi"
-          }
-        ]
       }
     ]
   }

@@ -101,14 +101,11 @@ Für Firebase-Operationen den MCP-Server verwenden:
 - **Auto-Format:** Prettier nach Edit/Write für site/
 - **TypeScript Check:** tsc --noEmit nach .ts/.tsx Änderungen
 - **Test Runner:** Vitest für .test.ts/.test.tsx Dateien
-- **Content Validation:** validate-content.js für Übungen/*.md und stunden/*.md
 - **Gotcha:** `matcher` muss ein Regex-String sein, kein Objekt
 
 ### Skills (.claude/skills/)
 - `/deploy` - Build + Firebase Deploy (site + functions)
 - `/new-admin-page` - Admin-Seite mit Dark Mode Template
-- `/new-exercise` - Neue Übung mit Knie-/Schulter-Alternativen Template
-- `/validate` - Content-Validierung für Übungen und Stunden
 
 ### Agents (.claude/agents/)
 - `security-reviewer` - Sicherheitsanalyse für Firebase Rules und Auth
