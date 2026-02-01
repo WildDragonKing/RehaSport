@@ -1,7 +1,8 @@
 import { Link, useParams } from "react-router-dom";
 
 import Button from "../components/ui/Button";
-import { getCategory, type SessionMeta } from "../content/sessions";
+import { useContent } from "../contexts/ContentContext";
+import type { SessionMeta } from "../content/sessions";
 
 const CATEGORY_STYLES: Record<string, { icon: string; gradient: string }> = {
   ruecken: {
@@ -53,7 +54,31 @@ function getCategoryStyle(slug: string) {
 
 function CategoryPage(): JSX.Element {
   const { categorySlug } = useParams();
+  const { getCategory, loading } = useContent();
   const category = categorySlug ? getCategory(categorySlug) : undefined;
+
+  if (loading) {
+    return (
+      <div className="container">
+        <div className="sessions-empty animate-fade-up fill-backwards">
+          <div className="sessions-empty-icon">
+            <svg
+              width="48"
+              height="48"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              className="animate-spin"
+            >
+              <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+            </svg>
+          </div>
+          <h2 className="sessions-empty-title">Lade Kategorie...</h2>
+        </div>
+      </div>
+    );
+  }
 
   if (!category) {
     return (

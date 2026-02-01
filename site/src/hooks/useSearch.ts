@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
-import { exercises, type ExerciseMeta } from "../content/exercises";
+import { useContent } from "../contexts/ContentContext";
+import type { ExerciseMeta } from "../content/exercises";
 
 export interface SearchFilters {
   query: string;
@@ -17,9 +18,11 @@ export interface UseSearchResult {
   setSelectedDifficulty: (difficulty: string | null) => void;
   clearFilters: () => void;
   hasActiveFilters: boolean;
+  loading: boolean;
 }
 
 export function useExerciseSearch(): UseSearchResult {
+  const { exercises, loading } = useContent();
   const [query, setQuery] = useState("");
   const [selectedPhases, setSelectedPhases] = useState<string[]>([]);
   const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(
@@ -58,7 +61,7 @@ export function useExerciseSearch(): UseSearchResult {
     }
 
     return results;
-  }, [query, selectedPhases, selectedDifficulty]);
+  }, [exercises, query, selectedPhases, selectedDifficulty]);
 
   const clearFilters = () => {
     setQuery("");
@@ -81,6 +84,7 @@ export function useExerciseSearch(): UseSearchResult {
     setSelectedDifficulty,
     clearFilters,
     hasActiveFilters,
+    loading,
   };
 }
 

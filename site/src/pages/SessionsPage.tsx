@@ -3,11 +3,8 @@ import { Link } from "react-router-dom";
 
 import Button from "../components/ui/Button";
 import SearchBar from "../components/search/SearchBar";
-import {
-  categories,
-  getAllSessions,
-  type SessionMeta,
-} from "../content/sessions";
+import { useContent } from "../contexts/ContentContext";
+import type { SessionMeta } from "../content/sessions";
 
 const CATEGORY_STYLES: Record<string, { icon: string; gradient: string }> = {
   ruecken: {
@@ -58,9 +55,44 @@ function getCategoryStyle(slug: string) {
 }
 
 function SessionsPage(): JSX.Element {
-  const allSessions = useMemo(() => getAllSessions(), []);
+  const { sessions: allSessions, categories, loading, error } = useContent();
   const [query, setQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  if (loading) {
+    return (
+      <div className="container stack">
+        <div className="sessions-empty animate-fade-up fill-backwards">
+          <div className="sessions-empty-icon">
+            <svg
+              width="48"
+              height="48"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              className="animate-spin"
+            >
+              <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+            </svg>
+          </div>
+          <h2 className="sessions-empty-title">Lade Trainingsstunden...</h2>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container stack">
+        <div className="sessions-empty animate-fade-up fill-backwards">
+          <div className="sessions-empty-icon">⚠️</div>
+          <h2 className="sessions-empty-title">Fehler beim Laden</h2>
+          <p className="sessions-empty-text">{error}</p>
+        </div>
+      </div>
+    );
+  }
 
   const filteredSessions = useMemo(() => {
     let result = allSessions;

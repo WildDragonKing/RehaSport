@@ -52,7 +52,31 @@ function ExercisesPage(): JSX.Element {
     setSelectedDifficulty,
     clearFilters,
     hasActiveFilters,
+    loading,
   } = useExerciseSearch();
+
+  if (loading) {
+    return (
+      <div className="container stack">
+        <div className="exercises-empty animate-fade-up fill-backwards">
+          <div className="exercises-empty-icon">
+            <svg
+              width="48"
+              height="48"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              className="animate-spin"
+            >
+              <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+            </svg>
+          </div>
+          <h2 className="exercises-empty-title">Lade Übungen...</h2>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container stack">

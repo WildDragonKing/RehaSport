@@ -70,7 +70,13 @@
       "mcp__plugin_claude-mem_mcp-search__search",
       "mcp__plugin_claude-mem_mcp-search__get_observations",
       "WebFetch(domain:docs.claude-mem.ai)",
-      "Bash(env)"
+      "Bash(env)",
+      "Bash(gh api:*)",
+      "Bash(npm ls:*)",
+      "Bash(npm audit:*)",
+      "Bash(~/.bun/bin/bun:*)",
+      "mcp__plugin_firebase_firebase__firestore_query_collection",
+      "mcp__plugin_firebase_firebase__firestore_list_collections"
     ],
     "deny": [],
     "ask": [],

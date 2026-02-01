@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 
 import Button from "../components/ui/Button";
-import { exercises } from "../content/exercises";
-import { categories } from "../content/sessions";
+import { useContent } from "../contexts/ContentContext";
 
 // Icons
 function ArrowRightIcon(): JSX.Element {
@@ -36,11 +35,27 @@ function getCategoryIcon(slug: string): string {
 }
 
 function HomePage(): JSX.Element {
+  const { categories, exercises, loading } = useContent();
+
   const totalSessions = categories.reduce(
     (acc, cat) => acc + cat.sessions.length,
     0,
   );
   const totalExercises = exercises.length;
+
+  if (loading) {
+    return (
+      <div className="stack-lg">
+        <section className="hero">
+          <div className="container">
+            <div className="hero-content">
+              <h1 className="hero-title">Lade...</h1>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
 
   return (
     <div className="stack-lg">
