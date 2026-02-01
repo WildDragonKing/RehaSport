@@ -43,14 +43,17 @@ export interface CategoryMeta {
 const rawModules = import.meta.glob("@stunden/**/*.md", {
   eager: true,
   import: "default",
-  query: "?raw"
+  query: "?raw",
 });
 
 function normalizePath(path: string): string {
   return path.replace(/\\/g, "/");
 }
 
-function slugPartsFromPath(path: string): { categorySlug: string; sessionSlug: string } {
+function slugPartsFromPath(path: string): {
+  categorySlug: string;
+  sessionSlug: string;
+} {
   const normalized = normalizePath(path);
   const match = normalized.match(/stunden\/([^/]+)\/([^/]+)\.md$/);
   if (!match) {
@@ -64,7 +67,7 @@ function humanizeSlug(slug: string): string {
     ae: "ä",
     oe: "ö",
     ue: "ü",
-    ss: "ß"
+    ss: "ß",
   };
 
   const words = slug.split("-").map((word) => {
@@ -96,7 +99,9 @@ function extractText(nodes: Content[]): string {
 }
 
 function parseDetail(item: ListItem): SessionExerciseDetail | undefined {
-  const paragraph = item.children.find((child): child is Paragraph => child.type === "paragraph");
+  const paragraph = item.children.find(
+    (child): child is Paragraph => child.type === "paragraph",
+  );
   if (!paragraph) {
     return undefined;
   }
@@ -107,16 +112,22 @@ function parseDetail(item: ListItem): SessionExerciseDetail | undefined {
 
   if (first && first.type === "strong") {
     label = toString(first).replace(/:$/, "").trim();
-    valueNodes = rest.length > 0 ? rest : [{ type: "text", value: "" } as const];
+    valueNodes =
+      rest.length > 0 ? rest : [{ type: "text", value: "" } as const];
   }
 
-  const value = toString({ type: "paragraph", children: valueNodes } as Paragraph).trim();
+  const value = toString({
+    type: "paragraph",
+    children: valueNodes,
+  } as Paragraph).trim();
   return value ? { label, value } : undefined;
 }
 
 function parseExercises(sectionNodes: Content[]): SessionExercise[] {
   const exercises: SessionExercise[] = [];
-  const listNodes = sectionNodes.filter((node): node is List => node.type === "list");
+  const listNodes = sectionNodes.filter(
+    (node): node is List => node.type === "list",
+  );
 
   if (listNodes.length === 0) {
     return exercises;
@@ -124,10 +135,14 @@ function parseExercises(sectionNodes: Content[]): SessionExercise[] {
 
   for (const listNode of listNodes) {
     for (const item of listNode.children) {
-      const titleNode = item.children.find((child): child is Paragraph => child.type === "paragraph");
+      const titleNode = item.children.find(
+        (child): child is Paragraph => child.type === "paragraph",
+      );
       const title = titleNode ? toString(titleNode).trim() : "Übung";
 
-      const detailList = item.children.find((child): child is List => child.type === "list");
+      const detailList = item.children.find(
+        (child): child is List => child.type === "list",
+      );
       const details: SessionExerciseDetail[] = [];
 
       if (detailList) {
@@ -158,7 +173,11 @@ function parseSession(path: string, source: string): SessionMeta {
   const sections: Record<string, Content[]> = {};
   const phases: SessionPhase[] = [];
   let inPhasenplan = false;
-  let currentPhase: { title: string; description?: string; nodes: Content[] } | null = null;
+  let currentPhase: {
+    title: string;
+    description?: string;
+    nodes: Content[];
+  } | null = null;
 
   for (const node of tree.children) {
     if (node.type === "heading") {
@@ -182,7 +201,7 @@ function parseSession(path: string, source: string): SessionMeta {
           phases.push({
             title: currentPhase.title,
             description: currentPhase.description,
-            exercises: parseExercises(currentPhase.nodes)
+            exercises: parseExercises(currentPhase.nodes),
           });
           currentPhase = null;
         }
@@ -195,14 +214,14 @@ function parseSession(path: string, source: string): SessionMeta {
           phases.push({
             title: currentPhase.title,
             description: currentPhase.description,
-            exercises: parseExercises(currentPhase.nodes)
+            exercises: parseExercises(currentPhase.nodes),
           });
         }
 
         // Start new phase
         currentPhase = {
           title: headingText,
-          nodes: []
+          nodes: [],
         };
         continue;
       }
@@ -228,18 +247,30 @@ function parseSession(path: string, source: string): SessionMeta {
     phases.push({
       title: currentPhase.title,
       description: currentPhase.description,
-      exercises: parseExercises(currentPhase.nodes)
+      exercises: parseExercises(currentPhase.nodes),
     });
   }
 
-  const description = (data.beschreibung as string | undefined)?.trim() ?? extractText(sections["beschreibung"] ?? []);
-  const duration = (data.dauer as string | undefined)?.trim() ?? extractText(sections["dauer"] ?? []);
-  const focus = (data.fokus as string | undefined)?.trim() ?? extractText(sections["fokus"] ?? []);
+  const description =
+    (data.beschreibung as string | undefined)?.trim() ??
+    extractText(sections["beschreibung"] ?? []);
+  const duration =
+    (data.dauer as string | undefined)?.trim() ??
+    extractText(sections["dauer"] ?? []);
+  const focus =
+    (data.fokus as string | undefined)?.trim() ??
+    extractText(sections["fokus"] ?? []);
 
   // Fallback for old format without phases
-  const allExercises = phases.length > 0
-    ? phases.flatMap(phase => phase.exercises)
-    : parseExercises(sections["ubungen"] ?? sections["übungen"] ?? sections[normalizeKey("Phasenplan")] ?? []);
+  const allExercises =
+    phases.length > 0
+      ? phases.flatMap((phase) => phase.exercises)
+      : parseExercises(
+          sections["ubungen"] ??
+            sections["übungen"] ??
+            sections[normalizeKey("Phasenplan")] ??
+            [],
+        );
 
   return {
     slug: sessionSlug,
@@ -250,13 +281,13 @@ function parseSession(path: string, source: string): SessionMeta {
     phases,
     exercises: allExercises,
     categorySlug,
-    categoryTitle
+    categoryTitle,
   };
 }
 
 const allSessions: SessionMeta[] = Object.entries(rawModules)
   // Filter out template files
-  .filter(([path]) => !path.includes('_template'))
+  .filter(([path]) => !path.includes("_template"))
   .map(([path, value]) => parseSession(path, value as string));
 
 const categoryMap = new Map<string, CategoryMeta>();
@@ -268,8 +299,13 @@ for (const session of allSessions) {
       slug: session.categorySlug,
       title: session.categoryTitle,
       description: session.description,
-      focusTags: session.focus ? session.focus.split(",").map((entry) => entry.trim()).filter(Boolean) : [],
-      sessions: [session]
+      focusTags: session.focus
+        ? session.focus
+            .split(",")
+            .map((entry) => entry.trim())
+            .filter(Boolean)
+        : [],
+      sessions: [session],
     });
     continue;
   }
@@ -279,7 +315,10 @@ for (const session of allSessions) {
     existing.description = session.description;
   }
   if (session.focus) {
-    const parts = session.focus.split(",").map((entry) => entry.trim()).filter(Boolean);
+    const parts = session.focus
+      .split(",")
+      .map((entry) => entry.trim())
+      .filter(Boolean);
     for (const part of parts) {
       if (!existing.focusTags.includes(part)) {
         existing.focusTags.push(part);
@@ -294,16 +333,20 @@ for (const category of categoryMap.values()) {
 }
 
 export const categories = Array.from(categoryMap.values()).sort((a, b) =>
-  a.title.localeCompare(b.title, "de")
+  a.title.localeCompare(b.title, "de"),
 );
 
 export function getCategory(slug: string): CategoryMeta | undefined {
   return categories.find((category) => category.slug === slug);
 }
 
-export function getSession(categorySlug: string, sessionSlug: string): SessionMeta | undefined {
+export function getSession(
+  categorySlug: string,
+  sessionSlug: string,
+): SessionMeta | undefined {
   return allSessions.find(
-    (session) => session.categorySlug === categorySlug && session.slug === sessionSlug
+    (session) =>
+      session.categorySlug === categorySlug && session.slug === sessionSlug,
   );
 }
 

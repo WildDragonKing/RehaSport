@@ -16,7 +16,7 @@ describe("Button", () => {
     render(
       <MemoryRouter>
         <Button to="/test">Zum Link</Button>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     const link = screen.getByRole("link", { name: "Zum Link" });
@@ -66,7 +66,7 @@ describe("Button", () => {
         <Button to="/test" aria-label="Zugänglicher Link">
           Link
         </Button>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     const link = screen.getByRole("link", { name: "Zugänglicher Link" });

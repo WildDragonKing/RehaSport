@@ -6,19 +6,32 @@ import {
   onAuthStateChanged,
   User as FirebaseUser,
   createUserWithEmailAndPassword,
-} from 'firebase/auth';
-import { doc, getDoc, setDoc, Timestamp, deleteDoc } from 'firebase/firestore';
-import { auth, db } from './config';
-import { getUser, createUser, getInvitation, useInvitation, getInvitationByEmail } from './firestore';
-import type { User, UserRole } from './types';
+} from "firebase/auth";
+import { doc, getDoc, setDoc, Timestamp, deleteDoc } from "firebase/firestore";
+import { auth, db } from "./config";
+import {
+  getUser,
+  createUser,
+  getInvitation,
+  useInvitation,
+  getInvitationByEmail,
+} from "./firestore";
+import type { User, UserRole } from "./types";
 
 export type AuthUser = FirebaseUser;
 
 const googleProvider = new GoogleAuthProvider();
 
 // Sign in with email and password
-export async function signIn(email: string, password: string): Promise<User | null> {
-  const userCredential = await signInWithEmailAndPassword(auth, email, password);
+export async function signIn(
+  email: string,
+  password: string,
+): Promise<User | null> {
+  const userCredential = await signInWithEmailAndPassword(
+    auth,
+    email,
+    password,
+  );
   const userData = await getUser(userCredential.user.uid);
   return userData;
 }
@@ -27,7 +40,7 @@ export async function signIn(email: string, password: string): Promise<User | nu
 export async function signInWithGoogle(): Promise<User | null> {
   const userCredential = await signInWithPopup(auth, googleProvider);
   const firebaseUser = userCredential.user;
-  const email = firebaseUser.email || '';
+  const email = firebaseUser.email || "";
 
   // Check if user document already exists (returning user)
   let userData = await getUser(firebaseUser.uid);
@@ -40,24 +53,24 @@ export async function signInWithGoogle(): Promise<User | null> {
   // New user - check if they're allowed to register
 
   // Check if this is the first user (make them admin)
-  const adminDoc = await getDoc(doc(db, 'config', 'admin'));
+  const adminDoc = await getDoc(doc(db, "config", "admin"));
   const isFirstUser = !adminDoc.exists();
 
   if (isFirstUser) {
     // First user becomes admin automatically
-    const newUser: Omit<User, 'id' | 'createdAt' | 'updatedAt'> = {
+    const newUser: Omit<User, "id" | "createdAt" | "updatedAt"> = {
       email,
       displayName: firebaseUser.displayName || undefined,
-      role: 'admin',
+      role: "admin",
     };
 
-    await setDoc(doc(db, 'users', firebaseUser.uid), {
+    await setDoc(doc(db, "users", firebaseUser.uid), {
       ...newUser,
       createdAt: Timestamp.now(),
       updatedAt: Timestamp.now(),
     });
 
-    await setDoc(doc(db, 'config', 'admin'), {
+    await setDoc(doc(db, "config", "admin"), {
       userId: firebaseUser.uid,
       createdAt: Timestamp.now(),
     });
@@ -74,18 +87,20 @@ export async function signInWithGoogle(): Promise<User | null> {
   if (!invitation) {
     // No invitation found - reject login
     await firebaseSignOut(auth);
-    throw new Error('Keine Einladung gefunden. Bitte kontaktiere einen Administrator.');
+    throw new Error(
+      "Keine Einladung gefunden. Bitte kontaktiere einen Administrator.",
+    );
   }
 
   // Valid invitation found - create user
-  const newUser: Omit<User, 'id' | 'createdAt' | 'updatedAt'> = {
+  const newUser: Omit<User, "id" | "createdAt" | "updatedAt"> = {
     email,
     displayName: firebaseUser.displayName || undefined,
     role: invitation.role,
     invitedBy: invitation.invitedBy,
   };
 
-  await setDoc(doc(db, 'users', firebaseUser.uid), {
+  await setDoc(doc(db, "users", firebaseUser.uid), {
     ...newUser,
     createdAt: Timestamp.now(),
     updatedAt: Timestamp.now(),
@@ -112,28 +127,32 @@ export async function registerWithInvitation(
   invitationId: string,
   email: string,
   password: string,
-  displayName?: string
+  displayName?: string,
 ): Promise<User> {
   // Verify invitation
   const invitation = await getInvitation(invitationId);
   if (!invitation) {
-    throw new Error('Einladung nicht gefunden');
+    throw new Error("Einladung nicht gefunden");
   }
   if (invitation.usedAt) {
-    throw new Error('Einladung wurde bereits verwendet');
+    throw new Error("Einladung wurde bereits verwendet");
   }
   if (invitation.email !== email) {
-    throw new Error('E-Mail stimmt nicht mit der Einladung überein');
+    throw new Error("E-Mail stimmt nicht mit der Einladung überein");
   }
   if (invitation.expiresAt.toDate() < new Date()) {
-    throw new Error('Einladung ist abgelaufen');
+    throw new Error("Einladung ist abgelaufen");
   }
 
   // Create Firebase auth user
-  const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  const userCredential = await createUserWithEmailAndPassword(
+    auth,
+    email,
+    password,
+  );
 
   // Create user document
-  const userData: Omit<User, 'id' | 'createdAt' | 'updatedAt'> = {
+  const userData: Omit<User, "id" | "createdAt" | "updatedAt"> = {
     email,
     displayName,
     role: invitation.role,
@@ -152,7 +171,9 @@ export async function registerWithInvitation(
 }
 
 // Listen to auth state changes
-export function onAuthChange(callback: (user: AuthUser | null) => void): () => void {
+export function onAuthChange(
+  callback: (user: AuthUser | null) => void,
+): () => void {
   return onAuthStateChanged(auth, callback);
 }
 
@@ -169,10 +190,10 @@ export function hasRole(user: User | null, roles: UserRole[]): boolean {
 
 // Check if user is admin
 export function isAdmin(user: User | null): boolean {
-  return hasRole(user, ['admin']);
+  return hasRole(user, ["admin"]);
 }
 
 // Check if user is trainer or admin
 export function isTrainer(user: User | null): boolean {
-  return hasRole(user, ['admin', 'trainer']);
+  return hasRole(user, ["admin", "trainer"]);
 }

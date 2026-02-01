@@ -23,8 +23,12 @@ const SessionsPage = lazy(() => import("./pages/SessionsPage"));
 const AdminLayout = lazy(() => import("./components/layout/AdminLayout"));
 const DashboardPage = lazy(() => import("./pages/admin/DashboardPage"));
 const BuilderPage = lazy(() => import("./pages/admin/BuilderPage"));
-const SessionsManagePage = lazy(() => import("./pages/admin/SessionsManagePage"));
-const ExercisesManagePage = lazy(() => import("./pages/admin/ExercisesManagePage"));
+const SessionsManagePage = lazy(
+  () => import("./pages/admin/SessionsManagePage"),
+);
+const ExercisesManagePage = lazy(
+  () => import("./pages/admin/ExercisesManagePage"),
+);
 const CategoriesPage = lazy(() => import("./pages/admin/CategoriesPage"));
 const SessionRulesPage = lazy(() => import("./pages/admin/SessionRulesPage"));
 const AnalyticsPage = lazy(() => import("./pages/admin/AnalyticsPage"));
@@ -51,10 +55,16 @@ function App(): JSX.Element {
             <Route element={<PageLayout />}>
               <Route index element={<HomePage />} />
               <Route path="ordner/:categorySlug" element={<CategoryPage />} />
-              <Route path="ordner/:categorySlug/:sessionSlug" element={<SessionPage />} />
+              <Route
+                path="ordner/:categorySlug/:sessionSlug"
+                element={<SessionPage />}
+              />
               <Route path="stunden" element={<SessionsPage />} />
               <Route path="uebungen" element={<ExercisesPage />} />
-              <Route path="uebungen/:exerciseSlug" element={<ExerciseDetailPage />} />
+              <Route
+                path="uebungen/:exerciseSlug"
+                element={<ExerciseDetailPage />}
+              />
               <Route path="info" element={<InfoPage />} />
             </Route>
 

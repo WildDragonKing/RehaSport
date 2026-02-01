@@ -90,6 +90,21 @@ Für Firebase-Operationen den MCP-Server verwenden:
 - [x] Bulk-Generator für Übungen und Stunden
 - [x] Dark Mode für Admin-Bereich
 - [x] Error Logging mit Google Cloud Logging
+- [x] Claude Code Automationen (Hooks, Skills, Agents)
 - [ ] Teilnehmer-Modus (Timer, Swipe-Navigation)
 - [ ] Mobile-Optimierung und PWA-Update
 - [ ] Domain rehasport.buettgen.app (manuell in Firebase Console)
+
+## Claude Code Automationen (.claude/)
+
+### Hooks (settings.json)
+- **Auto-Format:** Prettier nach Edit/Write für site/
+- **TypeScript Check:** tsc --noEmit nach .ts/.tsx Änderungen
+- **Gotcha:** `matcher` muss ein Regex-String sein, kein Objekt
+
+### Skills (.claude/skills/)
+- `/deploy` - Build + Firebase Deploy (site + functions)
+- `/new-admin-page` - Admin-Seite mit Dark Mode Template
+
+### Agents (.claude/agents/)
+- `security-reviewer` - Sicherheitsanalyse für Firebase Rules und Auth

@@ -1,5 +1,5 @@
-import React, { Component, ErrorInfo, ReactNode } from 'react';
-import { logComponentError } from '../firebase/errorLogging';
+import React, { Component, ErrorInfo, ReactNode } from "react";
+import { logComponentError } from "../firebase/errorLogging";
 
 interface Props {
   children: ReactNode;
@@ -24,11 +24,13 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('ErrorBoundary caught an error:', error, errorInfo);
+    console.error("ErrorBoundary caught an error:", error, errorInfo);
     this.setState({ errorInfo });
 
     // Log to Google Cloud Logging
-    logComponentError(error, { componentStack: errorInfo.componentStack || undefined });
+    logComponentError(error, {
+      componentStack: errorInfo.componentStack || undefined,
+    });
   }
 
   public render() {

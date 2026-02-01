@@ -22,7 +22,9 @@ export interface UseSearchResult {
 export function useExerciseSearch(): UseSearchResult {
   const [query, setQuery] = useState("");
   const [selectedPhases, setSelectedPhases] = useState<string[]>([]);
-  const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
+  const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(
+    null,
+  );
 
   const filteredExercises = useMemo(() => {
     let results = [...exercises];
@@ -36,18 +38,23 @@ export function useExerciseSearch(): UseSearchResult {
           ex.summary?.toLowerCase().includes(q) ||
           ex.tags.some((tag) => tag.toLowerCase().includes(q)) ||
           ex.area?.toLowerCase().includes(q) ||
-          ex.focus?.toLowerCase().includes(q)
+          ex.focus?.toLowerCase().includes(q),
       );
     }
 
     // Phase-Filter (aus Tags ableiten)
     if (selectedPhases.length > 0) {
-      results = results.filter((ex) => selectedPhases.some((phase) => ex.tags.includes(phase)));
+      results = results.filter((ex) =>
+        selectedPhases.some((phase) => ex.tags.includes(phase)),
+      );
     }
 
     // Schwierigkeits-Filter
     if (selectedDifficulty) {
-      results = results.filter((ex) => ex.difficulty?.toLowerCase() === selectedDifficulty.toLowerCase());
+      results = results.filter(
+        (ex) =>
+          ex.difficulty?.toLowerCase() === selectedDifficulty.toLowerCase(),
+      );
     }
 
     return results;
@@ -59,7 +66,10 @@ export function useExerciseSearch(): UseSearchResult {
     setSelectedDifficulty(null);
   };
 
-  const hasActiveFilters = query.trim() !== "" || selectedPhases.length > 0 || selectedDifficulty !== null;
+  const hasActiveFilters =
+    query.trim() !== "" ||
+    selectedPhases.length > 0 ||
+    selectedDifficulty !== null;
 
   return {
     filteredExercises,
@@ -70,7 +80,7 @@ export function useExerciseSearch(): UseSearchResult {
     selectedDifficulty,
     setSelectedDifficulty,
     clearFilters,
-    hasActiveFilters
+    hasActiveFilters,
   };
 }
 
@@ -78,7 +88,7 @@ export const PHASE_OPTIONS = [
   { id: "aufwaermen", label: "Aufwärmen" },
   { id: "hauptteil", label: "Hauptteil" },
   { id: "schwerpunkt", label: "Schwerpunkt" },
-  { id: "ausklang", label: "Ausklang" }
+  { id: "ausklang", label: "Ausklang" },
 ];
 
 export const DIFFICULTY_OPTIONS = ["Leicht", "Mittel", "Fortgeschritten"];

@@ -7,7 +7,16 @@ import { categories } from "../content/sessions";
 // Icons
 function ArrowRightIcon(): JSX.Element {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <path d="M5 12h14M12 5l7 7-7 7" />
     </svg>
   );
@@ -21,13 +30,16 @@ function getCategoryIcon(slug: string): string {
     "herz-kreislauf": "🌺",
     ganzkoerper: "🌳",
     gymnastikstab: "🎋",
-    "redondo-ball": "🔮"
+    "redondo-ball": "🔮",
   };
   return icons[slug] || "🌱";
 }
 
 function HomePage(): JSX.Element {
-  const totalSessions = categories.reduce((acc, cat) => acc + cat.sessions.length, 0);
+  const totalSessions = categories.reduce(
+    (acc, cat) => acc + cat.sessions.length,
+    0,
+  );
   const totalExercises = exercises.length;
 
   return (
@@ -47,8 +59,8 @@ function HomePage(): JSX.Element {
               Bewegung, die gut tut
             </h1>
             <p className="hero-subtitle animate-fade-up fill-backwards delay-100">
-              Strukturierte Trainingsstunden mit sicheren Alternativen
-              für Knie- und Schulterprobleme.
+              Strukturierte Trainingsstunden mit sicheren Alternativen für Knie-
+              und Schulterprobleme.
             </p>
             <div className="animate-fade-up fill-backwards delay-200">
               <a href="#kategorien" className="btn btn-primary btn-lg">
@@ -81,8 +93,8 @@ function HomePage(): JSX.Element {
           <header className="section-header">
             <h2 className="section-title">Wähle deinen Fokus</h2>
             <p className="section-subtitle">
-              Jede Kategorie enthält strukturierte 45-Minuten-Einheiten
-              mit Aufwärmen, Hauptteil, Schwerpunkt und Ausklang.
+              Jede Kategorie enthält strukturierte 45-Minuten-Einheiten mit
+              Aufwärmen, Hauptteil, Schwerpunkt und Ausklang.
             </p>
           </header>
 
@@ -98,9 +110,14 @@ function HomePage(): JSX.Element {
                   {getCategoryIcon(category.slug)}
                 </div>
                 <h3 className="category-card-title">{category.title}</h3>
-                <p className="category-card-description">{category.description}</p>
+                <p className="category-card-description">
+                  {category.description}
+                </p>
                 <div className="category-card-meta">
-                  <span>{category.sessions.length} {category.sessions.length === 1 ? "Stunde" : "Stunden"}</span>
+                  <span>
+                    {category.sessions.length}{" "}
+                    {category.sessions.length === 1 ? "Stunde" : "Stunden"}
+                  </span>
                   <ArrowRightIcon />
                 </div>
               </Link>
@@ -110,12 +127,16 @@ function HomePage(): JSX.Element {
       </section>
 
       {/* 45-Min Schema */}
-      <section className="section" style={{ backgroundColor: "var(--color-surface-muted)" }}>
+      <section
+        className="section"
+        style={{ backgroundColor: "var(--color-surface-muted)" }}
+      >
         <div className="container">
           <header className="section-header">
             <h2 className="section-title">Das 45-Minuten-Schema</h2>
             <p className="section-subtitle">
-              Jede Stunde folgt einer bewährten Struktur für sicheres und effektives Training.
+              Jede Stunde folgt einer bewährten Struktur für sicheres und
+              effektives Training.
             </p>
           </header>
 
@@ -129,19 +150,27 @@ function HomePage(): JSX.Element {
             <div className="time-legend">
               <div className="time-legend-item">
                 <span className="phase-dot phase-dot-warmup" />
-                <span><strong>Aufwärmen</strong> – Mobilisation</span>
+                <span>
+                  <strong>Aufwärmen</strong> – Mobilisation
+                </span>
               </div>
               <div className="time-legend-item">
                 <span className="phase-dot phase-dot-main" />
-                <span><strong>Hauptteil</strong> – Kräftigung</span>
+                <span>
+                  <strong>Hauptteil</strong> – Kräftigung
+                </span>
               </div>
               <div className="time-legend-item">
                 <span className="phase-dot phase-dot-focus" />
-                <span><strong>Schwerpunkt</strong> – Vertiefung</span>
+                <span>
+                  <strong>Schwerpunkt</strong> – Vertiefung
+                </span>
               </div>
               <div className="time-legend-item">
                 <span className="phase-dot phase-dot-cooldown" />
-                <span><strong>Ausklang</strong> – Entspannung</span>
+                <span>
+                  <strong>Ausklang</strong> – Entspannung
+                </span>
               </div>
             </div>
           </div>
@@ -156,7 +185,10 @@ function HomePage(): JSX.Element {
               <div className="feature-card-icon">🦵</div>
               <div className="feature-card-content">
                 <h4>Knie-Alternativen</h4>
-                <p>Sichere Anpassungen bei Knieproblemen – weniger Belastung, gleicher Nutzen.</p>
+                <p>
+                  Sichere Anpassungen bei Knieproblemen – weniger Belastung,
+                  gleicher Nutzen.
+                </p>
               </div>
             </div>
             <div className="card feature-card">
@@ -180,14 +212,16 @@ function HomePage(): JSX.Element {
       {/* CTA Section */}
       <section className="section">
         <div className="container">
-          <div className="card card-body-lg text-center" style={{ backgroundColor: "var(--color-primary-soft)" }}>
+          <div
+            className="card card-body-lg text-center"
+            style={{ backgroundColor: "var(--color-primary-soft)" }}
+          >
             <h2 style={{ marginBottom: "0.5rem" }}>Alle Übungen entdecken</h2>
             <p className="text-muted" style={{ marginBottom: "1.5rem" }}>
-              Durchsuche die komplette Übungsbibliothek mit Filtern nach Phase und Schwierigkeit.
+              Durchsuche die komplette Übungsbibliothek mit Filtern nach Phase
+              und Schwierigkeit.
             </p>
-            <Button to="/uebungen">
-              Zur Übungsbibliothek
-            </Button>
+            <Button to="/uebungen">Zur Übungsbibliothek</Button>
           </div>
         </div>
       </section>

@@ -25,7 +25,7 @@ export interface ExerciseMeta {
 const rawModules = import.meta.glob("@uebungen/**/*.md", {
   eager: true,
   import: "default",
-  query: "?raw"
+  query: "?raw",
 });
 
 function normalizePath(path: string): string {
@@ -66,7 +66,9 @@ function parseKeyValueList(nodes: Content[]): Record<string, string> {
   }
 
   for (const item of listNode.children) {
-    const paragraph = item.children.find((child): child is Paragraph => child.type === "paragraph");
+    const paragraph = item.children.find(
+      (child): child is Paragraph => child.type === "paragraph",
+    );
     if (!paragraph) {
       continue;
     }
@@ -88,7 +90,10 @@ function parseKeyValueList(nodes: Content[]): Record<string, string> {
       }
     }
 
-    const value = toString({ type: "paragraph", children: valueNodes } as Paragraph).trim();
+    const value = toString({
+      type: "paragraph",
+      children: valueNodes,
+    } as Paragraph).trim();
 
     if (key && value) {
       result[normalizeKey(key)] = value;
@@ -112,7 +117,9 @@ function extractTags(tree: Root): string[] {
     if (label !== "tags") {
       continue;
     }
-    const text = toString(paragraph).replace(/^tags:\s*/i, "").trim();
+    const text = toString(paragraph)
+      .replace(/^tags:\s*/i, "")
+      .trim();
     return text
       .split(/\s+/)
       .map((tag) => tag.replace(/^#/, "").trim())
@@ -131,12 +138,16 @@ function extractRelated(nodes: Content[]): string[] {
   const slugs: string[] = [];
 
   for (const item of listNode.children) {
-    const paragraph = item.children.find((child): child is Paragraph => child.type === "paragraph");
+    const paragraph = item.children.find(
+      (child): child is Paragraph => child.type === "paragraph",
+    );
     if (!paragraph) {
       continue;
     }
 
-    const linkNode = paragraph.children.find((child): child is Link => child.type === "link");
+    const linkNode = paragraph.children.find(
+      (child): child is Link => child.type === "link",
+    );
     if (!linkNode) {
       continue;
     }
@@ -169,7 +180,8 @@ function parseExercise(path: string, source: string): ExerciseMeta {
 
       if (heading.depth === 2) {
         const sectionTitle = toString(heading).trim();
-        const sectionId = normalizeKey(sectionTitle) || `abschnitt-${sections.length + 1}`;
+        const sectionId =
+          normalizeKey(sectionTitle) || `abschnitt-${sections.length + 1}`;
         currentSection = { id: sectionId, title: sectionTitle, nodes: [] };
         sections.push(currentSection);
         continue;
@@ -181,11 +193,19 @@ function parseExercise(path: string, source: string): ExerciseMeta {
     }
   }
 
-  const sectionMap = new Map(sections.map((section) => [normalizeKey(section.title), section]));
+  const sectionMap = new Map(
+    sections.map((section) => [normalizeKey(section.title), section]),
+  );
 
-  const summary = extractText(sectionMap.get(normalizeKey("Beschreibung"))?.nodes ?? []);
-  const categoryInfo = parseKeyValueList(sectionMap.get(normalizeKey("Kategorie"))?.nodes ?? []);
-  const related = extractRelated(sectionMap.get(normalizeKey("Verwandte Übungen"))?.nodes ?? []);
+  const summary = extractText(
+    sectionMap.get(normalizeKey("Beschreibung"))?.nodes ?? [],
+  );
+  const categoryInfo = parseKeyValueList(
+    sectionMap.get(normalizeKey("Kategorie"))?.nodes ?? [],
+  );
+  const related = extractRelated(
+    sectionMap.get(normalizeKey("Verwandte Übungen"))?.nodes ?? [],
+  );
   const tags = extractTags(tree);
 
   return {
@@ -198,20 +218,22 @@ function parseExercise(path: string, source: string): ExerciseMeta {
     difficulty: categoryInfo["schwierigkeitsgrad"],
     tags,
     related,
-    sections
+    sections,
   };
 }
 
 const allExercises: ExerciseMeta[] = Object.entries(rawModules)
   // Filter out template files
-  .filter(([path]) => !path.includes('_template'))
+  .filter(([path]) => !path.includes("_template"))
   .map(([path, value]) => parseExercise(path, value as string));
 
 allExercises.sort((a, b) => a.title.localeCompare(b.title, "de"));
 
-const exerciseMap = new Map(allExercises.map((exercise) => [exercise.slug, exercise]));
+const exerciseMap = new Map(
+  allExercises.map((exercise) => [exercise.slug, exercise]),
+);
 const exerciseTitleMap = new Map(
-  allExercises.map((exercise) => [normalizeKey(exercise.title), exercise.slug])
+  allExercises.map((exercise) => [normalizeKey(exercise.title), exercise.slug]),
 );
 
 export const exercises = [...allExercises];

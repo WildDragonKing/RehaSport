@@ -6,9 +6,7 @@ function Footer(): JSX.Element {
   return (
     <footer className="footer" role="contentinfo">
       <div className="container footer-content">
-        <p className="footer-copyright">
-          © {currentYear} RehaSport Reader
-        </p>
+        <p className="footer-copyright">© {currentYear} RehaSport Reader</p>
         <div className="footer-links">
           <Link to="/info" className="footer-link">
             Info

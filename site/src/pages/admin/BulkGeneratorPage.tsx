@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import { httpsCallable } from 'firebase/functions';
-import { functions } from '../../firebase/config';
-import { useAuth } from '../../contexts/AuthContext';
+import { useState, useEffect } from "react";
+import { httpsCallable } from "firebase/functions";
+import { functions } from "../../firebase/config";
+import { useAuth } from "../../contexts/AuthContext";
 
 interface GenerationIdea {
   title: string;
@@ -14,8 +14,8 @@ interface GenerationIdea {
 
 interface GenerationJob {
   id: string;
-  type: 'exercise' | 'session';
-  status: 'pending' | 'processing' | 'completed' | 'failed';
+  type: "exercise" | "session";
+  status: "pending" | "processing" | "completed" | "failed";
   userPrompt: string;
   ideas: GenerationIdea[];
   totalCount: number;
@@ -28,14 +28,14 @@ interface GenerationJob {
 
 export default function BulkGeneratorPage(): JSX.Element {
   const { user } = useAuth();
-  const [type, setType] = useState<'exercise' | 'session'>('exercise');
-  const [prompt, setPrompt] = useState('');
+  const [type, setType] = useState<"exercise" | "session">("exercise");
+  const [prompt, setPrompt] = useState("");
   const [count, setCount] = useState(5);
   const [ideas, setIdeas] = useState<GenerationIdea[]>([]);
   const [jobs, setJobs] = useState<GenerationJob[]>([]);
   const [generating, setGenerating] = useState(false);
   const [starting, setStarting] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   // Load user's jobs on mount
   useEffect(() => {
@@ -46,7 +46,9 @@ export default function BulkGeneratorPage(): JSX.Element {
 
   // Poll for job updates
   useEffect(() => {
-    const activeJobs = jobs.filter(j => j.status === 'pending' || j.status === 'processing');
+    const activeJobs = jobs.filter(
+      (j) => j.status === "pending" || j.status === "processing",
+    );
     if (activeJobs.length === 0) return;
 
     const interval = setInterval(() => {
@@ -58,61 +60,66 @@ export default function BulkGeneratorPage(): JSX.Element {
 
   const loadJobs = async () => {
     try {
-      const getUserJobs = httpsCallable<unknown, { jobs: GenerationJob[] }>(functions, 'getUserJobs');
+      const getUserJobs = httpsCallable<unknown, { jobs: GenerationJob[] }>(
+        functions,
+        "getUserJobs",
+      );
       const result = await getUserJobs({});
       setJobs(result.data.jobs);
     } catch (err) {
-      console.error('Failed to load jobs:', err);
+      console.error("Failed to load jobs:", err);
     }
   };
 
   const handleGenerateIdeas = async () => {
     if (!prompt.trim()) {
-      setError('Bitte gib eine Idee ein');
+      setError("Bitte gib eine Idee ein");
       return;
     }
 
     setGenerating(true);
-    setError('');
+    setError("");
     setIdeas([]);
 
     try {
       const generateIdeas = httpsCallable<
         { prompt: string; type: string; count: number },
         { ideas: GenerationIdea[] }
-      >(functions, 'generateIdeas');
+      >(functions, "generateIdeas");
 
       const result = await generateIdeas({ prompt, type, count });
-      setIdeas(result.data.ideas.map(idea => ({ ...idea, selected: true })));
+      setIdeas(result.data.ideas.map((idea) => ({ ...idea, selected: true })));
     } catch (err) {
-      console.error('Generate ideas error:', err);
-      setError('Ideen-Generierung fehlgeschlagen. Bitte versuche es erneut.');
+      console.error("Generate ideas error:", err);
+      setError("Ideen-Generierung fehlgeschlagen. Bitte versuche es erneut.");
     } finally {
       setGenerating(false);
     }
   };
 
   const toggleIdea = (index: number) => {
-    setIdeas(prev => prev.map((idea, i) =>
-      i === index ? { ...idea, selected: !idea.selected } : idea
-    ));
+    setIdeas((prev) =>
+      prev.map((idea, i) =>
+        i === index ? { ...idea, selected: !idea.selected } : idea,
+      ),
+    );
   };
 
   const handleStartGeneration = async () => {
-    const selectedIdeas = ideas.filter(i => i.selected);
+    const selectedIdeas = ideas.filter((i) => i.selected);
     if (selectedIdeas.length === 0) {
-      setError('Bitte wähle mindestens eine Idee aus');
+      setError("Bitte wähle mindestens eine Idee aus");
       return;
     }
 
     setStarting(true);
-    setError('');
+    setError("");
 
     try {
       const startBulkGeneration = httpsCallable<
         { ideas: GenerationIdea[]; type: string; userPrompt: string },
         { jobId: string }
-      >(functions, 'startBulkGeneration');
+      >(functions, "startBulkGeneration");
 
       await startBulkGeneration({
         ideas: selectedIdeas,
@@ -122,19 +129,24 @@ export default function BulkGeneratorPage(): JSX.Element {
 
       // Clear form and reload jobs
       setIdeas([]);
-      setPrompt('');
+      setPrompt("");
       await loadJobs();
     } catch (err: unknown) {
-      console.error('Start generation error:', err);
-      const message = err instanceof Error ? err.message : 'Generierung konnte nicht gestartet werden';
+      console.error("Start generation error:", err);
+      const message =
+        err instanceof Error
+          ? err.message
+          : "Generierung konnte nicht gestartet werden";
       setError(message);
     } finally {
       setStarting(false);
     }
   };
 
-  const selectedCount = ideas.filter(i => i.selected).length;
-  const activeJob = jobs.find(j => j.status === 'pending' || j.status === 'processing');
+  const selectedCount = ideas.filter((i) => i.selected).length;
+  const activeJob = jobs.find(
+    (j) => j.status === "pending" || j.status === "processing",
+  );
 
   return (
     <div className="max-w-4xl space-y-8">
@@ -152,7 +164,8 @@ export default function BulkGeneratorPage(): JSX.Element {
       {activeJob && (
         <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4">
           <p className="text-amber-800 dark:text-amber-200">
-            ⏳ Du hast einen aktiven Job. Bitte warte bis dieser fertig ist bevor du einen neuen startest.
+            ⏳ Du hast einen aktiven Job. Bitte warte bis dieser fertig ist
+            bevor du einen neuen startest.
           </p>
         </div>
       )}
@@ -164,32 +177,36 @@ export default function BulkGeneratorPage(): JSX.Element {
         </h2>
         <div className="grid grid-cols-2 gap-4">
           <button
-            onClick={() => setType('exercise')}
+            onClick={() => setType("exercise")}
             disabled={!!activeJob}
             className={`p-4 rounded-xl border-2 text-left transition-colors disabled:opacity-50 ${
-              type === 'exercise'
-                ? 'border-lime-500 bg-lime-50 dark:bg-lime-900/20'
-                : 'border-sage-200 dark:border-gray-700 hover:border-sage-300 dark:hover:border-gray-600'
+              type === "exercise"
+                ? "border-lime-500 bg-lime-50 dark:bg-lime-900/20"
+                : "border-sage-200 dark:border-gray-700 hover:border-sage-300 dark:hover:border-gray-600"
             }`}
           >
             <div className="text-2xl mb-2">🏋️</div>
-            <h3 className="font-semibold text-sage-800 dark:text-sage-100">Übungen</h3>
+            <h3 className="font-semibold text-sage-800 dark:text-sage-100">
+              Übungen
+            </h3>
             <p className="text-sm text-sage-600 dark:text-sage-300">
               Neue Übungen für die Bibliothek
             </p>
           </button>
 
           <button
-            onClick={() => setType('session')}
+            onClick={() => setType("session")}
             disabled={!!activeJob}
             className={`p-4 rounded-xl border-2 text-left transition-colors disabled:opacity-50 ${
-              type === 'session'
-                ? 'border-lime-500 bg-lime-50 dark:bg-lime-900/20'
-                : 'border-sage-200 dark:border-gray-700 hover:border-sage-300 dark:hover:border-gray-600'
+              type === "session"
+                ? "border-lime-500 bg-lime-50 dark:bg-lime-900/20"
+                : "border-sage-200 dark:border-gray-700 hover:border-sage-300 dark:hover:border-gray-600"
             }`}
           >
             <div className="text-2xl mb-2">📋</div>
-            <h3 className="font-semibold text-sage-800 dark:text-sage-100">Stunden</h3>
+            <h3 className="font-semibold text-sage-800 dark:text-sage-100">
+              Stunden
+            </h3>
             <p className="text-sm text-sage-600 dark:text-sage-300">
               Komplette Trainingsstunden
             </p>
@@ -213,9 +230,11 @@ export default function BulkGeneratorPage(): JSX.Element {
               onChange={(e) => setPrompt(e.target.value)}
               rows={3}
               disabled={!!activeJob}
-              placeholder={type === 'exercise'
-                ? 'z.B. Schulterübungen für Senioren mit eingeschränkter Beweglichkeit'
-                : 'z.B. Rückenstunde mit Fokus auf Stabilisation und Kräftigung'}
+              placeholder={
+                type === "exercise"
+                  ? "z.B. Schulterübungen für Senioren mit eingeschränkter Beweglichkeit"
+                  : "z.B. Rückenstunde mit Fokus auf Stabilisation und Kräftigung"
+              }
               className="w-full px-4 py-3 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-lime-500 dark:bg-gray-700 dark:text-sage-100 disabled:opacity-50"
             />
           </div>
@@ -231,8 +250,10 @@ export default function BulkGeneratorPage(): JSX.Element {
                 disabled={!!activeJob}
                 className="px-4 py-2 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-lime-500 dark:bg-gray-700 dark:text-sage-100 disabled:opacity-50"
               >
-                {[3, 5, 7, 10].map(n => (
-                  <option key={n} value={n}>{n} Ideen</option>
+                {[3, 5, 7, 10].map((n) => (
+                  <option key={n} value={n}>
+                    {n} Ideen
+                  </option>
                 ))}
               </select>
             </div>
@@ -248,9 +269,7 @@ export default function BulkGeneratorPage(): JSX.Element {
                   Generiere...
                 </>
               ) : (
-                <>
-                  ✨ Ideen generieren
-                </>
+                <>✨ Ideen generieren</>
               )}
             </button>
           </div>
@@ -281,8 +300,8 @@ export default function BulkGeneratorPage(): JSX.Element {
                 key={index}
                 className={`flex items-start gap-4 p-4 rounded-lg cursor-pointer transition-colors ${
                   idea.selected
-                    ? 'bg-lime-50 dark:bg-lime-900/20 border border-lime-200 dark:border-lime-800'
-                    : 'bg-sage-50 dark:bg-gray-900 border border-transparent hover:border-sage-200 dark:hover:border-gray-700'
+                    ? "bg-lime-50 dark:bg-lime-900/20 border border-lime-200 dark:border-lime-800"
+                    : "bg-sage-50 dark:bg-gray-900 border border-transparent hover:border-sage-200 dark:hover:border-gray-700"
                 }`}
               >
                 <input
@@ -292,9 +311,13 @@ export default function BulkGeneratorPage(): JSX.Element {
                   className="mt-1 w-5 h-5 rounded border-sage-300 text-lime-600 focus:ring-lime-500"
                 />
                 <div className="flex-1">
-                  <h3 className="font-medium text-sage-800 dark:text-sage-100">{idea.title}</h3>
-                  <p className="text-sm text-sage-600 dark:text-sage-300 mt-1">{idea.summary}</p>
-                  {type === 'exercise' && (
+                  <h3 className="font-medium text-sage-800 dark:text-sage-100">
+                    {idea.title}
+                  </h3>
+                  <p className="text-sm text-sage-600 dark:text-sage-300 mt-1">
+                    {idea.summary}
+                  </p>
+                  {type === "exercise" && (
                     <div className="flex gap-2 mt-2">
                       {idea.area && (
                         <span className="text-xs px-2 py-1 bg-sage-200 dark:bg-gray-700 text-sage-700 dark:text-sage-300 rounded">
@@ -331,7 +354,9 @@ export default function BulkGeneratorPage(): JSX.Element {
                 </>
               ) : (
                 <>
-                  🚀 {selectedCount} {type === 'exercise' ? 'Übungen' : 'Stunden'} im Hintergrund generieren
+                  🚀 {selectedCount}{" "}
+                  {type === "exercise" ? "Übungen" : "Stunden"} im Hintergrund
+                  generieren
                 </>
               )}
             </button>
@@ -351,37 +376,41 @@ export default function BulkGeneratorPage(): JSX.Element {
               <div
                 key={job.id}
                 className={`p-4 rounded-lg border ${
-                  job.status === 'processing'
-                    ? 'border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-900/20'
-                    : job.status === 'completed'
-                    ? 'border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/20'
-                    : job.status === 'failed'
-                    ? 'border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20'
-                    : 'border-sage-200 dark:border-gray-700 bg-sage-50 dark:bg-gray-900'
+                  job.status === "processing"
+                    ? "border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-900/20"
+                    : job.status === "completed"
+                      ? "border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/20"
+                      : job.status === "failed"
+                        ? "border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20"
+                        : "border-sage-200 dark:border-gray-700 bg-sage-50 dark:bg-gray-900"
                 }`}
               >
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
                     <span className="text-lg">
-                      {job.status === 'processing' && '🔄'}
-                      {job.status === 'completed' && '✅'}
-                      {job.status === 'failed' && '❌'}
-                      {job.status === 'pending' && '⏳'}
+                      {job.status === "processing" && "🔄"}
+                      {job.status === "completed" && "✅"}
+                      {job.status === "failed" && "❌"}
+                      {job.status === "pending" && "⏳"}
                     </span>
                     <span className="font-medium text-sage-800 dark:text-sage-100">
-                      {job.type === 'exercise' ? 'Übungen' : 'Stunden'}
+                      {job.type === "exercise" ? "Übungen" : "Stunden"}
                     </span>
                     <span className="text-sm text-sage-500 dark:text-sage-400">
-                      • {job.userPrompt.substring(0, 40)}{job.userPrompt.length > 40 ? '...' : ''}
+                      • {job.userPrompt.substring(0, 40)}
+                      {job.userPrompt.length > 40 ? "..." : ""}
                     </span>
                   </div>
                   <span className="text-sm text-sage-500 dark:text-sage-400">
-                    {new Date(job.createdAt.seconds * 1000).toLocaleDateString('de-DE', {
-                      day: '2-digit',
-                      month: '2-digit',
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    })}
+                    {new Date(job.createdAt.seconds * 1000).toLocaleDateString(
+                      "de-DE",
+                      {
+                        day: "2-digit",
+                        month: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      },
+                    )}
                   </span>
                 </div>
 
@@ -398,13 +427,15 @@ export default function BulkGeneratorPage(): JSX.Element {
                   <div className="h-2 bg-sage-200 dark:bg-gray-700 rounded-full overflow-hidden">
                     <div
                       className={`h-full transition-all duration-500 ${
-                        job.status === 'completed'
-                          ? 'bg-green-500'
-                          : job.status === 'failed'
-                          ? 'bg-red-500'
-                          : 'bg-lime-500'
+                        job.status === "completed"
+                          ? "bg-green-500"
+                          : job.status === "failed"
+                            ? "bg-red-500"
+                            : "bg-lime-500"
                       }`}
-                      style={{ width: `${(job.completedCount / job.totalCount) * 100}%` }}
+                      style={{
+                        width: `${(job.completedCount / job.totalCount) * 100}%`,
+                      }}
                     />
                   </div>
                 </div>
@@ -417,13 +448,19 @@ export default function BulkGeneratorPage(): JSX.Element {
                 )}
 
                 {/* Results Link */}
-                {job.status === 'completed' && job.generatedIds.length > 0 && (
+                {job.status === "completed" && job.generatedIds.length > 0 && (
                   <div className="mt-2">
                     <a
-                      href={job.type === 'exercise' ? '/admin/uebungen' : '/admin/entwuerfe'}
+                      href={
+                        job.type === "exercise"
+                          ? "/admin/uebungen"
+                          : "/admin/entwuerfe"
+                      }
                       className="text-sm text-lime-600 dark:text-lime-400 hover:underline"
                     >
-                      {job.generatedIds.length} {job.type === 'exercise' ? 'Übungen' : 'Entwürfe'} ansehen →
+                      {job.generatedIds.length}{" "}
+                      {job.type === "exercise" ? "Übungen" : "Entwürfe"} ansehen
+                      →
                     </a>
                   </div>
                 )}
@@ -439,11 +476,19 @@ export default function BulkGeneratorPage(): JSX.Element {
           Wie funktioniert der Bulk Generator?
         </h3>
         <ul className="text-sm text-sage-600 dark:text-sage-300 space-y-2">
-          <li>• Gib eine Idee ein und lass dir mehrere Variationen generieren</li>
+          <li>
+            • Gib eine Idee ein und lass dir mehrere Variationen generieren
+          </li>
           <li>• Wähle aus welche du erstellen möchtest (max. 10 pro Job)</li>
-          <li>• Die Generierung läuft im Hintergrund - du kannst die Seite schließen</li>
+          <li>
+            • Die Generierung läuft im Hintergrund - du kannst die Seite
+            schließen
+          </li>
           <li>• Übungen werden direkt in die Bibliothek gespeichert</li>
-          <li>• Stunden werden als Entwürfe gespeichert und müssen freigegeben werden</li>
+          <li>
+            • Stunden werden als Entwürfe gespeichert und müssen freigegeben
+            werden
+          </li>
           <li>• Nur ein aktiver Job pro User möglich</li>
         </ul>
       </div>

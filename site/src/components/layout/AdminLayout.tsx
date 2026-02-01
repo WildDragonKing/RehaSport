@@ -1,6 +1,6 @@
-import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
-import { useEffect } from 'react';
+import { Outlet, NavLink, useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
+import { useEffect } from "react";
 
 interface NavItem {
   to: string;
@@ -9,20 +9,20 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { to: '/admin', label: 'Dashboard', end: true },
-  { to: '/admin/builder', label: 'Stunden-Builder' },
-  { to: '/admin/generator', label: 'Bulk Generator' },
-  { to: '/admin/stunden', label: 'Meine Stunden' },
-  { to: '/admin/uebungen', label: 'Übungen verwalten' },
-  { to: '/admin/gruppen', label: 'Gruppen' },
-  { to: '/admin/entwuerfe', label: 'Entwürfe' },
+  { to: "/admin", label: "Dashboard", end: true },
+  { to: "/admin/builder", label: "Stunden-Builder" },
+  { to: "/admin/generator", label: "Bulk Generator" },
+  { to: "/admin/stunden", label: "Meine Stunden" },
+  { to: "/admin/uebungen", label: "Übungen verwalten" },
+  { to: "/admin/gruppen", label: "Gruppen" },
+  { to: "/admin/entwuerfe", label: "Entwürfe" },
 ];
 
 const adminOnlyItems: NavItem[] = [
-  { to: '/admin/kategorien', label: 'Kategorien' },
-  { to: '/admin/regeln', label: 'Stunden-Regeln' },
-  { to: '/admin/analytics', label: 'Analytics' },
-  { to: '/admin/trainer', label: 'Trainer verwalten' },
+  { to: "/admin/kategorien", label: "Kategorien" },
+  { to: "/admin/regeln", label: "Stunden-Regeln" },
+  { to: "/admin/analytics", label: "Analytics" },
+  { to: "/admin/trainer", label: "Trainer verwalten" },
 ];
 
 export default function AdminLayout(): JSX.Element {
@@ -32,13 +32,13 @@ export default function AdminLayout(): JSX.Element {
 
   const handleLogout = async () => {
     await logout();
-    navigate('/');
+    navigate("/");
   };
 
   // Redirect to login if not authenticated
   useEffect(() => {
     if (!loading && !user) {
-      navigate('/login', { state: { from: location.pathname } });
+      navigate("/login", { state: { from: location.pathname } });
     }
   }, [loading, user, navigate, location.pathname]);
 
@@ -81,9 +81,11 @@ export default function AdminLayout(): JSX.Element {
             {/* User Menu */}
             <div className="flex items-center gap-4">
               <div className="text-sm text-sage-600 dark:text-sage-400">
-                <span className="font-medium">{user.displayName || user.email}</span>
+                <span className="font-medium">
+                  {user.displayName || user.email}
+                </span>
                 <span className="ml-2 text-xs text-sage-400 dark:text-sage-500">
-                  ({isAdmin ? 'Admin' : 'Trainer'})
+                  ({isAdmin ? "Admin" : "Trainer"})
                 </span>
               </div>
               <button
@@ -109,8 +111,8 @@ export default function AdminLayout(): JSX.Element {
                 className={({ isActive }) =>
                   `block px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                     isActive
-                      ? 'bg-sage-100 dark:bg-sage-800 text-sage-900 dark:text-sage-100'
-                      : 'text-sage-600 dark:text-sage-400 hover:bg-sage-50 dark:hover:bg-gray-700 hover:text-sage-800 dark:hover:text-sage-200'
+                      ? "bg-sage-100 dark:bg-sage-800 text-sage-900 dark:text-sage-100"
+                      : "text-sage-600 dark:text-sage-400 hover:bg-sage-50 dark:hover:bg-gray-700 hover:text-sage-800 dark:hover:text-sage-200"
                   }`
                 }
               >

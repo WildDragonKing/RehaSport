@@ -1,11 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import {
-  doc,
-  getDoc,
-  setDoc,
-  updateDoc,
-  increment,
-} from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc, increment } from "firebase/firestore";
 import { db } from "../firebase/config";
 
 export interface RatingDoc {
@@ -51,7 +45,9 @@ function sanitizeId(id: string): string {
 
 export function useRatings() {
   const [myRatings, setMyRatings] = useState<Map<string, number>>(new Map());
-  const [summaryCache, setSummaryCache] = useState<Map<string, RatingSummary>>(new Map());
+  const [summaryCache, setSummaryCache] = useState<Map<string, RatingSummary>>(
+    new Map(),
+  );
 
   // Load my ratings from localStorage on mount
   useEffect(() => {
@@ -60,7 +56,11 @@ export function useRatings() {
 
   // Add or update rating (aggregated)
   const setRating = useCallback(
-    async (targetId: string, targetType: "exercise" | "session", rating: number) => {
+    async (
+      targetId: string,
+      targetType: "exercise" | "session",
+      rating: number,
+    ) => {
       const key = `${targetType}:${targetId}`;
       const docId = `${targetType}_${sanitizeId(targetId)}`;
       const ratingDocRef = doc(db, "ratings", docId);
@@ -116,7 +116,7 @@ export function useRatings() {
         throw error;
       }
     },
-    [myRatings]
+    [myRatings],
   );
 
   // Get my rating for specific item
@@ -125,12 +125,15 @@ export function useRatings() {
       const key = `${targetType}:${targetId}`;
       return myRatings.get(key) ?? null;
     },
-    [myRatings]
+    [myRatings],
   );
 
   // Get summary for specific item
   const getSummary = useCallback(
-    async (targetId: string, targetType: "exercise" | "session"): Promise<RatingSummary> => {
+    async (
+      targetId: string,
+      targetType: "exercise" | "session",
+    ): Promise<RatingSummary> => {
       const key = `${targetType}:${targetId}`;
 
       // Check cache
@@ -149,7 +152,8 @@ export function useRatings() {
 
         const data = docSnap.data() as RatingDoc;
         const summary: RatingSummary = {
-          averageRating: data.totalRatings > 0 ? data.sumRatings / data.totalRatings : 0,
+          averageRating:
+            data.totalRatings > 0 ? data.sumRatings / data.totalRatings : 0,
           totalRatings: data.totalRatings,
         };
 
@@ -160,7 +164,7 @@ export function useRatings() {
         return { averageRating: 0, totalRatings: 0 };
       }
     },
-    [summaryCache]
+    [summaryCache],
   );
 
   return {

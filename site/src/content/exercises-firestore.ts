@@ -6,9 +6,9 @@ import {
   query,
   where,
   orderBy,
-} from 'firebase/firestore';
-import { db } from '../firebase/config';
-import type { Exercise } from '../firebase/types';
+} from "firebase/firestore";
+import { db } from "../firebase/config";
+import type { Exercise } from "../firebase/types";
 
 export interface ExerciseSection {
   title: string;
@@ -31,7 +31,7 @@ export interface ExerciseMeta {
   contraindications?: string[];
 }
 
-const exercisesRef = collection(db, 'exercises');
+const exercisesRef = collection(db, "exercises");
 
 // Cache for performance
 let cachedExercises: ExerciseMeta[] | null = null;
@@ -76,9 +76,9 @@ export async function getAllExercises(): Promise<ExerciseMeta[]> {
     return cachedExercises;
   }
 
-  const q = query(exercisesRef, orderBy('title'));
+  const q = query(exercisesRef, orderBy("title"));
   const snapshot = await getDocs(q);
-  const exercises = snapshot.docs.map(doc => {
+  const exercises = snapshot.docs.map((doc) => {
     const data = doc.data() as Exercise;
     return toExerciseMeta({ ...data, id: doc.id });
   });
@@ -92,7 +92,9 @@ export async function getAllExercises(): Promise<ExerciseMeta[]> {
 /**
  * Get a specific exercise by slug
  */
-export async function getExercise(slug: string): Promise<ExerciseMeta | undefined> {
+export async function getExercise(
+  slug: string,
+): Promise<ExerciseMeta | undefined> {
   // First try direct document lookup
   const docSnap = await getDoc(doc(exercisesRef, slug));
 
@@ -102,7 +104,7 @@ export async function getExercise(slug: string): Promise<ExerciseMeta | undefine
   }
 
   // Fallback: query by slug field
-  const q = query(exercisesRef, where('slug', '==', slug));
+  const q = query(exercisesRef, where("slug", "==", slug));
   const snapshot = await getDocs(q);
 
   if (snapshot.empty) {
@@ -116,31 +118,37 @@ export async function getExercise(slug: string): Promise<ExerciseMeta | undefine
 /**
  * Find exercise slug by title (fuzzy matching)
  */
-export async function findExerciseSlugByTitle(title: string): Promise<string | undefined> {
+export async function findExerciseSlugByTitle(
+  title: string,
+): Promise<string | undefined> {
   const exercises = await getAllExercises();
   const normalizedTitle = normalizeKey(title);
 
-  const match = exercises.find(ex => normalizeKey(ex.title) === normalizedTitle);
+  const match = exercises.find(
+    (ex) => normalizeKey(ex.title) === normalizedTitle,
+  );
   return match?.slug;
 }
 
 function normalizeKey(value: string): string {
   return value
     .toLowerCase()
-    .normalize('NFD')
-    .replace(/\p{Diacritic}/gu, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 }
 
 /**
  * Get exercises by area
  */
-export async function getExercisesByArea(area: string): Promise<ExerciseMeta[]> {
-  const q = query(exercisesRef, where('area', '==', area), orderBy('title'));
+export async function getExercisesByArea(
+  area: string,
+): Promise<ExerciseMeta[]> {
+  const q = query(exercisesRef, where("area", "==", area), orderBy("title"));
   const snapshot = await getDocs(q);
 
-  return snapshot.docs.map(doc => {
+  return snapshot.docs.map((doc) => {
     const data = doc.data() as Exercise;
     return toExerciseMeta({ ...data, id: doc.id });
   });
@@ -150,10 +158,14 @@ export async function getExercisesByArea(area: string): Promise<ExerciseMeta[]> 
  * Get exercises by tag
  */
 export async function getExercisesByTag(tag: string): Promise<ExerciseMeta[]> {
-  const q = query(exercisesRef, where('tags', 'array-contains', tag), orderBy('title'));
+  const q = query(
+    exercisesRef,
+    where("tags", "array-contains", tag),
+    orderBy("title"),
+  );
   const snapshot = await getDocs(q);
 
-  return snapshot.docs.map(doc => {
+  return snapshot.docs.map((doc) => {
     const data = doc.data() as Exercise;
     return toExerciseMeta({ ...data, id: doc.id });
   });
@@ -162,14 +174,17 @@ export async function getExercisesByTag(tag: string): Promise<ExerciseMeta[]> {
 /**
  * Search exercises by text (title and summary)
  */
-export async function searchExercises(searchText: string): Promise<ExerciseMeta[]> {
+export async function searchExercises(
+  searchText: string,
+): Promise<ExerciseMeta[]> {
   const exercises = await getAllExercises();
   const normalizedSearch = searchText.toLowerCase();
 
-  return exercises.filter(ex =>
-    ex.title.toLowerCase().includes(normalizedSearch) ||
-    ex.summary?.toLowerCase().includes(normalizedSearch) ||
-    ex.tags.some(tag => tag.toLowerCase().includes(normalizedSearch))
+  return exercises.filter(
+    (ex) =>
+      ex.title.toLowerCase().includes(normalizedSearch) ||
+      ex.summary?.toLowerCase().includes(normalizedSearch) ||
+      ex.tags.some((tag) => tag.toLowerCase().includes(normalizedSearch)),
   );
 }
 

@@ -1,9 +1,16 @@
-import { useState, useEffect } from 'react';
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
-import { db } from '../../firebase/config';
-import { useAuth } from '../../contexts/AuthContext';
-import { useContent } from '../../contexts/ContentContext';
-import { seedCategoriesFromSessions } from '../../firebase/seed-categories';
+import { useState, useEffect } from "react";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
+import { db } from "../../firebase/config";
+import { useAuth } from "../../contexts/AuthContext";
+import { useContent } from "../../contexts/ContentContext";
+import { seedCategoriesFromSessions } from "../../firebase/seed-categories";
 
 interface Category {
   id: string;
@@ -20,10 +27,18 @@ export default function CategoriesPage(): JSX.Element {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [formData, setFormData] = useState({ title: '', description: '', slug: '' });
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    slug: "",
+  });
   const [saving, setSaving] = useState(false);
   const [seeding, setSeeding] = useState(false);
-  const [seedResult, setSeedResult] = useState<{ created: string[]; existing: string[]; errors: string[] } | null>(null);
+  const [seedResult, setSeedResult] = useState<{
+    created: string[];
+    existing: string[];
+    errors: string[];
+  } | null>(null);
 
   useEffect(() => {
     loadCategories();
@@ -31,15 +46,15 @@ export default function CategoriesPage(): JSX.Element {
 
   const loadCategories = async () => {
     try {
-      const snapshot = await getDocs(collection(db, 'categories'));
-      const cats = snapshot.docs.map(doc => ({
+      const snapshot = await getDocs(collection(db, "categories"));
+      const cats = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       })) as Category[];
       cats.sort((a, b) => (a.order || 0) - (b.order || 0));
       setCategories(cats);
     } catch (error) {
-      console.error('Failed to load categories:', error);
+      console.error("Failed to load categories:", error);
     } finally {
       setLoading(false);
     }
@@ -48,12 +63,12 @@ export default function CategoriesPage(): JSX.Element {
   const generateSlug = (title: string): string => {
     return title
       .toLowerCase()
-      .replace(/ä/g, 'ae')
-      .replace(/ö/g, 'oe')
-      .replace(/ü/g, 'ue')
-      .replace(/ß/g, 'ss')
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-|-$/g, '');
+      .replace(/ä/g, "ae")
+      .replace(/ö/g, "oe")
+      .replace(/ü/g, "ue")
+      .replace(/ß/g, "ss")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -65,14 +80,14 @@ export default function CategoriesPage(): JSX.Element {
       const slug = formData.slug || generateSlug(formData.title);
 
       if (editingId) {
-        await updateDoc(doc(db, 'categories', editingId), {
+        await updateDoc(doc(db, "categories", editingId), {
           title: formData.title,
           description: formData.description,
           slug,
           updatedAt: Date.now(),
         });
       } else {
-        await addDoc(collection(db, 'categories'), {
+        await addDoc(collection(db, "categories"), {
           title: formData.title,
           description: formData.description,
           slug,
@@ -81,13 +96,13 @@ export default function CategoriesPage(): JSX.Element {
         });
       }
 
-      setFormData({ title: '', description: '', slug: '' });
+      setFormData({ title: "", description: "", slug: "" });
       setEditingId(null);
       await loadCategories();
       await refresh();
     } catch (error) {
-      console.error('Failed to save category:', error);
-      alert('Fehler beim Speichern');
+      console.error("Failed to save category:", error);
+      alert("Fehler beim Speichern");
     } finally {
       setSaving(false);
     }
@@ -97,31 +112,40 @@ export default function CategoriesPage(): JSX.Element {
     setEditingId(category.id);
     setFormData({
       title: category.title,
-      description: category.description || '',
+      description: category.description || "",
       slug: category.slug,
     });
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Kategorie wirklich löschen? Zugehörige Stunden werden NICHT gelöscht.')) return;
+    if (
+      !confirm(
+        "Kategorie wirklich löschen? Zugehörige Stunden werden NICHT gelöscht.",
+      )
+    )
+      return;
 
     try {
-      await deleteDoc(doc(db, 'categories', id));
+      await deleteDoc(doc(db, "categories", id));
       await loadCategories();
       await refresh();
     } catch (error) {
-      console.error('Failed to delete category:', error);
-      alert('Fehler beim Löschen');
+      console.error("Failed to delete category:", error);
+      alert("Fehler beim Löschen");
     }
   };
 
   const handleCancel = () => {
     setEditingId(null);
-    setFormData({ title: '', description: '', slug: '' });
+    setFormData({ title: "", description: "", slug: "" });
   };
 
   const handleSeedFromSessions = async () => {
-    if (!confirm('Kategorien aus vorhandenen Stunden erstellen? Bestehende Kategorien werden nicht überschrieben.')) {
+    if (
+      !confirm(
+        "Kategorien aus vorhandenen Stunden erstellen? Bestehende Kategorien werden nicht überschrieben.",
+      )
+    ) {
       return;
     }
 
@@ -134,8 +158,8 @@ export default function CategoriesPage(): JSX.Element {
       await loadCategories();
       await refresh();
     } catch (error) {
-      console.error('Failed to seed categories:', error);
-      alert('Fehler beim Erstellen der Kategorien');
+      console.error("Failed to seed categories:", error);
+      alert("Fehler beim Erstellen der Kategorien");
     } finally {
       setSeeding(false);
     }
@@ -144,7 +168,9 @@ export default function CategoriesPage(): JSX.Element {
   if (!isAdmin) {
     return (
       <div className="text-center py-12">
-        <p className="text-sage-600">Nur Administratoren können Kategorien verwalten.</p>
+        <p className="text-sage-600">
+          Nur Administratoren können Kategorien verwalten.
+        </p>
       </div>
     );
   }
@@ -153,33 +179,39 @@ export default function CategoriesPage(): JSX.Element {
     <div className="space-y-8">
       <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-3xl font-display font-bold text-sage-900">Kategorien</h1>
-          <p className="mt-2 text-sage-600">Verwalte die Kategorien für Trainingsstunden</p>
+          <h1 className="text-3xl font-display font-bold text-sage-900">
+            Kategorien
+          </h1>
+          <p className="mt-2 text-sage-600">
+            Verwalte die Kategorien für Trainingsstunden
+          </p>
         </div>
         <button
           onClick={handleSeedFromSessions}
           disabled={seeding}
           className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white font-medium rounded-lg disabled:opacity-50 transition-colors"
         >
-          {seeding ? 'Erstelle...' : 'Aus Stunden generieren'}
+          {seeding ? "Erstelle..." : "Aus Stunden generieren"}
         </button>
       </div>
 
       {seedResult && (
-        <div className={`p-4 rounded-lg ${seedResult.errors.length > 0 ? 'bg-amber-50 border border-amber-200' : 'bg-green-50 border border-green-200'}`}>
+        <div
+          className={`p-4 rounded-lg ${seedResult.errors.length > 0 ? "bg-amber-50 border border-amber-200" : "bg-green-50 border border-green-200"}`}
+        >
           <p className="font-medium text-sage-800">
             {seedResult.created.length > 0
-              ? `${seedResult.created.length} Kategorien erstellt: ${seedResult.created.join(', ')}`
-              : 'Keine neuen Kategorien erstellt'}
+              ? `${seedResult.created.length} Kategorien erstellt: ${seedResult.created.join(", ")}`
+              : "Keine neuen Kategorien erstellt"}
           </p>
           {seedResult.existing.length > 0 && (
             <p className="text-sm text-sage-600 mt-1">
-              Bereits vorhanden: {seedResult.existing.join(', ')}
+              Bereits vorhanden: {seedResult.existing.join(", ")}
             </p>
           )}
           {seedResult.errors.length > 0 && (
             <p className="text-sm text-red-600 mt-1">
-              Fehler: {seedResult.errors.join(', ')}
+              Fehler: {seedResult.errors.join(", ")}
             </p>
           )}
         </div>
@@ -188,7 +220,7 @@ export default function CategoriesPage(): JSX.Element {
       {/* Add/Edit Form */}
       <div className="bg-white rounded-xl shadow-sm border border-sage-200 p-6">
         <h2 className="text-lg font-semibold text-sage-900 mb-4">
-          {editingId ? 'Kategorie bearbeiten' : 'Neue Kategorie'}
+          {editingId ? "Kategorie bearbeiten" : "Neue Kategorie"}
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -199,7 +231,9 @@ export default function CategoriesPage(): JSX.Element {
               <input
                 type="text"
                 value={formData.title}
-                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, title: e.target.value })
+                }
                 className="w-full px-3 py-2 border border-sage-300 rounded-lg focus:ring-2 focus:ring-sage-500 focus:border-sage-500"
                 required
               />
@@ -211,8 +245,14 @@ export default function CategoriesPage(): JSX.Element {
               <input
                 type="text"
                 value={formData.slug}
-                onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
-                placeholder={formData.title ? generateSlug(formData.title) : 'automatisch generiert'}
+                onChange={(e) =>
+                  setFormData({ ...formData, slug: e.target.value })
+                }
+                placeholder={
+                  formData.title
+                    ? generateSlug(formData.title)
+                    : "automatisch generiert"
+                }
                 className="w-full px-3 py-2 border border-sage-300 rounded-lg focus:ring-2 focus:ring-sage-500 focus:border-sage-500"
               />
             </div>
@@ -223,7 +263,9 @@ export default function CategoriesPage(): JSX.Element {
             </label>
             <textarea
               value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, description: e.target.value })
+              }
               rows={2}
               className="w-full px-3 py-2 border border-sage-300 rounded-lg focus:ring-2 focus:ring-sage-500 focus:border-sage-500"
             />
@@ -234,7 +276,11 @@ export default function CategoriesPage(): JSX.Element {
               disabled={saving || !formData.title}
               className="px-4 py-2 bg-sage-600 hover:bg-sage-700 text-white font-medium rounded-lg disabled:opacity-50 transition-colors"
             >
-              {saving ? 'Speichern...' : editingId ? 'Aktualisieren' : 'Hinzufügen'}
+              {saving
+                ? "Speichern..."
+                : editingId
+                  ? "Aktualisieren"
+                  : "Hinzufügen"}
             </button>
             {editingId && (
               <button
@@ -265,9 +311,14 @@ export default function CategoriesPage(): JSX.Element {
         ) : (
           <div className="divide-y divide-sage-100">
             {categories.map((category) => (
-              <div key={category.id} className="px-6 py-4 flex items-center justify-between hover:bg-sage-50">
+              <div
+                key={category.id}
+                className="px-6 py-4 flex items-center justify-between hover:bg-sage-50"
+              >
                 <div>
-                  <h3 className="font-medium text-sage-800">{category.title}</h3>
+                  <h3 className="font-medium text-sage-800">
+                    {category.title}
+                  </h3>
                   <p className="text-sm text-sage-500">
                     /{category.slug}
                     {category.description && ` • ${category.description}`}

@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import { signInWithGoogle } from '../firebase/auth';
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { signInWithGoogle } from "../firebase/auth";
 
 export default function LoginPage(): JSX.Element {
   const [error, setError] = useState<string | null>(null);
@@ -14,7 +14,7 @@ export default function LoginPage(): JSX.Element {
   // Redirect if already logged in
   useEffect(() => {
     if (isAuthenticated && !authLoading) {
-      const from = (location.state as { from?: string })?.from || '/admin';
+      const from = (location.state as { from?: string })?.from || "/admin";
       navigate(from, { replace: true });
     }
   }, [isAuthenticated, authLoading, navigate, location.state]);
@@ -26,22 +26,26 @@ export default function LoginPage(): JSX.Element {
     try {
       const user = await signInWithGoogle();
       if (user) {
-        const from = (location.state as { from?: string })?.from || '/admin';
+        const from = (location.state as { from?: string })?.from || "/admin";
         navigate(from, { replace: true });
       }
     } catch (err) {
       if (err instanceof Error) {
-        if (err.message.includes('popup-closed-by-user')) {
+        if (err.message.includes("popup-closed-by-user")) {
           // User closed popup, no error needed
-        } else if (err.message.includes('auth/unauthorized-domain')) {
-          setError('Diese Domain ist nicht autorisiert. Füge sie in der Firebase Console unter Authentication > Settings > Authorized domains hinzu.');
-        } else if (err.message.includes('auth/operation-not-allowed')) {
-          setError('Google-Anmeldung ist nicht aktiviert. Bitte aktiviere sie in der Firebase Console unter Authentication > Sign-in method > Google.');
+        } else if (err.message.includes("auth/unauthorized-domain")) {
+          setError(
+            "Diese Domain ist nicht autorisiert. Füge sie in der Firebase Console unter Authentication > Settings > Authorized domains hinzu.",
+          );
+        } else if (err.message.includes("auth/operation-not-allowed")) {
+          setError(
+            "Google-Anmeldung ist nicht aktiviert. Bitte aktiviere sie in der Firebase Console unter Authentication > Sign-in method > Google.",
+          );
         } else {
           setError(err.message);
         }
       } else {
-        setError('Google-Anmeldung fehlgeschlagen');
+        setError("Google-Anmeldung fehlgeschlagen");
       }
     } finally {
       setLoading(false);
@@ -81,9 +85,24 @@ export default function LoginPage(): JSX.Element {
             className="w-full flex items-center justify-center gap-3 py-3 px-4 bg-white border-2 border-sage-200 hover:border-sage-400 hover:bg-sage-50 text-sage-800 font-medium rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? (
-              <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24" fill="none">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+              <svg
+                className="animate-spin h-5 w-5"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                />
               </svg>
             ) : (
               <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -105,7 +124,7 @@ export default function LoginPage(): JSX.Element {
                 />
               </svg>
             )}
-            {loading ? 'Anmelden...' : 'Mit Google anmelden'}
+            {loading ? "Anmelden..." : "Mit Google anmelden"}
           </button>
 
           <div className="mt-8 text-center">

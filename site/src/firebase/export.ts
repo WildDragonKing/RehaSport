@@ -1,7 +1,7 @@
-import JSZip from 'jszip';
-import { saveAs } from 'file-saver';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from './config';
+import JSZip from "jszip";
+import { saveAs } from "file-saver";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "./config";
 
 export interface ExportResult {
   success: boolean;
@@ -17,13 +17,13 @@ export async function exportFirestoreData(): Promise<ExportResult> {
   const collections: { name: string; count: number }[] = [];
 
   const collectionNames = [
-    'sessions',
-    'exercises',
-    'groups',
-    'drafts',
-    'users',
-    'invitations',
-    'config',
+    "sessions",
+    "exercises",
+    "groups",
+    "drafts",
+    "users",
+    "invitations",
+    "config",
   ];
 
   try {
@@ -54,11 +54,11 @@ export async function exportFirestoreData(): Promise<ExportResult> {
       collections: collections,
       totalDocuments: collections.reduce((sum, c) => sum + c.count, 0),
     };
-    zip.file('_metadata.json', JSON.stringify(metadata, null, 2));
+    zip.file("_metadata.json", JSON.stringify(metadata, null, 2));
 
     // Generate and download
-    const content = await zip.generateAsync({ type: 'blob' });
-    const timestamp = new Date().toISOString().split('T')[0];
+    const content = await zip.generateAsync({ type: "blob" });
+    const timestamp = new Date().toISOString().split("T")[0];
     saveAs(content, `rehasport-backup-${timestamp}.zip`);
 
     return { success: true, collections };
@@ -66,7 +66,7 @@ export async function exportFirestoreData(): Promise<ExportResult> {
     return {
       success: false,
       collections,
-      error: error instanceof Error ? error.message : 'Unbekannter Fehler',
+      error: error instanceof Error ? error.message : "Unbekannter Fehler",
     };
   }
 }

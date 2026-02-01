@@ -1,7 +1,21 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { onAuthChange, signIn, signOut, signInWithGoogle, isAdmin, isTrainer, AuthUser } from '../firebase/auth';
-import { getUser } from '../firebase/firestore';
-import type { User } from '../firebase/types';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from "react";
+import {
+  onAuthChange,
+  signIn,
+  signOut,
+  signInWithGoogle,
+  isAdmin,
+  isTrainer,
+  AuthUser,
+} from "../firebase/auth";
+import { getUser } from "../firebase/firestore";
+import type { User } from "../firebase/types";
 
 interface AuthContextType {
   // Firebase auth user
@@ -33,17 +47,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   useEffect(() => {
     const unsubscribe = onAuthChange(async (firebaseUser) => {
-      console.log('Auth state changed:', firebaseUser?.email || 'logged out');
+      console.log("Auth state changed:", firebaseUser?.email || "logged out");
       setAuthUser(firebaseUser);
 
       if (firebaseUser) {
         try {
           // Fetch user document from Firestore
           const userData = await getUser(firebaseUser.uid);
-          console.log('User data loaded:', userData);
+          console.log("User data loaded:", userData);
           setUser(userData);
         } catch (error) {
-          console.error('Error loading user data:', error);
+          console.error("Error loading user data:", error);
           setUser(null);
         }
       } else {
@@ -104,7 +118,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 export function useAuth(): AuthContextType {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 }
@@ -112,7 +126,7 @@ export function useAuth(): AuthContextType {
 // HOC for protected routes
 export function withAuth<P extends object>(
   Component: React.ComponentType<P>,
-  requiredRoles?: ('admin' | 'trainer')[]
+  requiredRoles?: ("admin" | "trainer")[],
 ) {
   return function ProtectedComponent(props: P) {
     const { user, loading, isAdmin, isTrainer } = useAuth();
@@ -127,20 +141,22 @@ export function withAuth<P extends object>(
 
     if (!user) {
       // Redirect to login
-      window.location.href = '/login';
+      window.location.href = "/login";
       return null;
     }
 
     if (requiredRoles) {
       const hasRequiredRole =
-        (requiredRoles.includes('admin') && isAdmin) ||
-        (requiredRoles.includes('trainer') && isTrainer);
+        (requiredRoles.includes("admin") && isAdmin) ||
+        (requiredRoles.includes("trainer") && isTrainer);
 
       if (!hasRequiredRole) {
         return (
           <div className="flex items-center justify-center min-h-screen">
             <div className="text-center">
-              <h1 className="text-2xl font-bold text-red-600">Zugriff verweigert</h1>
+              <h1 className="text-2xl font-bold text-red-600">
+                Zugriff verweigert
+              </h1>
               <p className="mt-2 text-gray-600">
                 Du hast nicht die erforderlichen Berechtigungen für diese Seite.
               </p>

@@ -11,8 +11,8 @@ Object.defineProperty(window, "matchMedia", {
     removeListener: () => {},
     addEventListener: () => {},
     removeEventListener: () => {},
-    dispatchEvent: () => false
-  })
+    dispatchEvent: () => false,
+  }),
 });
 
 // Mock localStorage
@@ -22,6 +22,6 @@ const localStorageMock = {
   removeItem: () => {},
   clear: () => {},
   length: 0,
-  key: () => null
+  key: () => null,
 };
 Object.defineProperty(window, "localStorage", { value: localStorageMock });

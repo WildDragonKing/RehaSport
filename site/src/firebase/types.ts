@@ -1,4 +1,4 @@
-import { Timestamp } from 'firebase/firestore';
+import { Timestamp } from "firebase/firestore";
 
 // Basis-Typen
 export interface Media {
@@ -43,9 +43,9 @@ export interface Session {
   category: string;
   categorySlug: string;
   categoryTitle?: string;
-  status: 'draft' | 'published';
+  status: "draft" | "published";
   createdBy: string;
-  createdVia: 'ai' | 'manual' | 'migration';
+  createdVia: "ai" | "manual" | "migration";
   phases: SessionPhase[];
   media?: Media;
   createdAt: Timestamp;
@@ -83,7 +83,7 @@ export interface Exercise {
 export interface Group {
   id?: string;
   name: string;
-  restrictions: ('knee' | 'shoulder')[];
+  restrictions: ("knee" | "shoulder")[];
   description?: string;
   createdBy: string;
   createdAt: Timestamp;
@@ -99,7 +99,7 @@ export interface Draft {
   focus?: string;
   category: string;
   phases: SessionPhase[];
-  status: 'pending' | 'approved' | 'rejected';
+  status: "pending" | "approved" | "rejected";
   createdBy: string;
   approvedBy?: string;
   generatedPrompt: string;
@@ -108,7 +108,7 @@ export interface Draft {
 }
 
 // Benutzer
-export type UserRole = 'admin' | 'trainer';
+export type UserRole = "admin" | "trainer";
 
 export interface User {
   id?: string;

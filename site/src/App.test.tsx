@@ -13,7 +13,7 @@ describe("App", () => {
         <ThemeProvider>
           <App />
         </ThemeProvider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(html).toContain("RehaSport Reader");
@@ -27,7 +27,7 @@ describe("App", () => {
         <ThemeProvider>
           <App />
         </ThemeProvider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(html).toContain("Stabilität &amp; Mobilisation");
@@ -37,11 +37,13 @@ describe("App", () => {
 
   it("zeigt die Details einer Stunde mit Übungen", () => {
     const html = renderToString(
-      <MemoryRouter initialEntries={["/ordner/ruecken/stabilitaet-und-mobilisation"]}>
+      <MemoryRouter
+        initialEntries={["/ordner/ruecken/stabilitaet-und-mobilisation"]}
+      >
         <ThemeProvider>
           <App />
         </ThemeProvider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(html).toContain("exercise--active");
@@ -57,7 +59,7 @@ describe("App", () => {
         <ThemeProvider>
           <App />
         </ThemeProvider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(html).toContain("Übungen entdecken");
@@ -71,7 +73,7 @@ describe("App", () => {
         <ThemeProvider>
           <App />
         </ThemeProvider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(html).toContain("Übung");
@@ -85,11 +87,13 @@ describe("App", () => {
     expect(session?.exercises.length ?? 0).toBeGreaterThan(0);
 
     const html = renderToString(
-      <MemoryRouter initialEntries={["/ordner/ruecken/stabilitaet-und-mobilisation"]}>
+      <MemoryRouter
+        initialEntries={["/ordner/ruecken/stabilitaet-und-mobilisation"]}
+      >
         <ThemeProvider>
           <App />
         </ThemeProvider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(html).toContain("exercise-list");

@@ -19,7 +19,8 @@ export default defineConfig(({ mode }) => {
 
   const base = isDev
     ? "/"
-    : envBase ?? (hasCustomDomain ? "./" : repositoryName ? `/${repositoryName}/` : "./");
+    : (envBase ??
+      (hasCustomDomain ? "./" : repositoryName ? `/${repositoryName}/` : "./"));
 
   const projectRoot = fileURLToPath(new URL(".", import.meta.url));
   const stundenDir = fileURLToPath(new URL("../stunden", import.meta.url));
@@ -34,7 +35,8 @@ export default defineConfig(({ mode }) => {
         manifest: {
           name: "RehaSport Reader",
           short_name: "RehaSport",
-          description: "Strukturierte Trainingsstunden mit Alternativen für Knie- und Schulterprobleme",
+          description:
+            "Strukturierte Trainingsstunden mit Alternativen für Knie- und Schulterprobleme",
           theme_color: "#0066ff",
           background_color: "#fafafa",
           display: "standalone",
@@ -45,8 +47,13 @@ export default defineConfig(({ mode }) => {
           icons: [
             { src: "pwa-192x192.png", sizes: "192x192", type: "image/png" },
             { src: "pwa-512x512.png", sizes: "512x512", type: "image/png" },
-            { src: "pwa-512x512.png", sizes: "512x512", type: "image/png", purpose: "maskable" }
-          ]
+            {
+              src: "pwa-512x512.png",
+              sizes: "512x512",
+              type: "image/png",
+              purpose: "maskable",
+            },
+          ],
         },
         workbox: {
           globPatterns: ["**/*.{js,css,html,ico,png,svg,json,woff2}"],
@@ -56,31 +63,34 @@ export default defineConfig(({ mode }) => {
               handler: "CacheFirst",
               options: {
                 cacheName: "google-fonts-cache",
-                expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 }
-              }
-            }
-          ]
-        }
-      })
+                expiration: {
+                  maxEntries: 10,
+                  maxAgeSeconds: 60 * 60 * 24 * 365,
+                },
+              },
+            },
+          ],
+        },
+      }),
     ],
     base,
     resolve: {
       alias: {
         "@": resolve(projectRoot, "src"),
         "@stunden": stundenDir,
-        "@uebungen": uebungenDir
-      }
+        "@uebungen": uebungenDir,
+      },
     },
     server: {
       host: "0.0.0.0",
       fs: {
-        allow: [projectRoot, stundenDir, uebungenDir]
-      }
+        allow: [projectRoot, stundenDir, uebungenDir],
+      },
     },
     test: {
       globals: true,
       environment: "jsdom",
-      setupFiles: ["./src/test/setup.ts"]
-    }
+      setupFiles: ["./src/test/setup.ts"],
+    },
   };
 });

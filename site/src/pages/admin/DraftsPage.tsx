@@ -1,10 +1,10 @@
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from "../../contexts/AuthContext";
 
 interface Draft {
   id: string;
   title: string;
   category: string;
-  status: 'pending' | 'approved' | 'rejected';
+  status: "pending" | "approved" | "rejected";
   createdBy: string;
   createdAt: Date;
 }
@@ -23,8 +23,8 @@ export default function DraftsPage(): JSX.Element {
         </h1>
         <p className="mt-2 text-sage-600 dark:text-sage-300">
           {isAdmin
-            ? 'Prüfe und genehmige Stunden-Entwürfe von Trainern'
-            : 'Deine KI-generierten Stunden-Entwürfe'}
+            ? "Prüfe und genehmige Stunden-Entwürfe von Trainern"
+            : "Deine KI-generierten Stunden-Entwürfe"}
         </p>
       </div>
 
@@ -51,29 +51,32 @@ export default function DraftsPage(): JSX.Element {
             >
               <div className="flex items-start justify-between">
                 <div>
-                  <h3 className="text-lg font-semibold text-sage-800 dark:text-sage-100">{draft.title}</h3>
+                  <h3 className="text-lg font-semibold text-sage-800 dark:text-sage-100">
+                    {draft.title}
+                  </h3>
                   <p className="text-sm text-sage-500 dark:text-sage-400 mt-1">
-                    Kategorie: {draft.category} • Erstellt: {draft.createdAt.toLocaleDateString('de')}
+                    Kategorie: {draft.category} • Erstellt:{" "}
+                    {draft.createdAt.toLocaleDateString("de")}
                   </p>
                 </div>
                 <span
                   className={`px-3 py-1 text-sm rounded-full ${
-                    draft.status === 'pending'
-                      ? 'bg-amber-100 text-amber-700'
-                      : draft.status === 'approved'
-                      ? 'bg-green-100 text-green-700'
-                      : 'bg-red-100 text-red-700'
+                    draft.status === "pending"
+                      ? "bg-amber-100 text-amber-700"
+                      : draft.status === "approved"
+                        ? "bg-green-100 text-green-700"
+                        : "bg-red-100 text-red-700"
                   }`}
                 >
-                  {draft.status === 'pending'
-                    ? 'Ausstehend'
-                    : draft.status === 'approved'
-                    ? 'Genehmigt'
-                    : 'Abgelehnt'}
+                  {draft.status === "pending"
+                    ? "Ausstehend"
+                    : draft.status === "approved"
+                      ? "Genehmigt"
+                      : "Abgelehnt"}
                 </span>
               </div>
 
-              {draft.status === 'pending' && (
+              {draft.status === "pending" && (
                 <div className="mt-4 flex gap-3">
                   <button className="px-4 py-2 bg-sage-600 hover:bg-sage-700 text-white text-sm font-medium rounded-lg transition-colors">
                     Vorschau
@@ -95,9 +98,12 @@ export default function DraftsPage(): JSX.Element {
         </div>
       ) : (
         <div className="text-center py-12 bg-sage-50 dark:bg-gray-900 rounded-xl">
-          <p className="text-sage-600 dark:text-sage-300">Keine Entwürfe vorhanden.</p>
+          <p className="text-sage-600 dark:text-sage-300">
+            Keine Entwürfe vorhanden.
+          </p>
           <p className="mt-2 text-sm text-sage-500 dark:text-sage-400">
-            Entwürfe erscheinen hier, wenn du mit dem KI-Builder eine Stunde generierst.
+            Entwürfe erscheinen hier, wenn du mit dem KI-Builder eine Stunde
+            generierst.
           </p>
         </div>
       )}

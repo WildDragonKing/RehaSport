@@ -19,14 +19,14 @@ if ("serviceWorker" in navigator) {
     },
     onOfflineReady() {
       console.log("App bereit für Offline-Nutzung.");
-    }
+    },
   });
 }
 
 // Globale Error Handler für unbehandelte Fehler
 window.onerror = (message, source, lineno, colno, error) => {
   logError(error || new Error(String(message)), {
-    type: 'uncaught',
+    type: "uncaught",
     source,
     lineno,
     colno,
@@ -34,9 +34,14 @@ window.onerror = (message, source, lineno, colno, error) => {
 };
 
 window.onunhandledrejection = (event) => {
-  logError(event.reason instanceof Error ? event.reason : new Error(String(event.reason)), {
-    type: 'unhandledrejection',
-  });
+  logError(
+    event.reason instanceof Error
+      ? event.reason
+      : new Error(String(event.reason)),
+    {
+      type: "unhandledrejection",
+    },
+  );
 };
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
@@ -48,5 +53,5 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         </BrowserRouter>
       </ThemeProvider>
     </ErrorBoundary>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

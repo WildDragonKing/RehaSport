@@ -1,6 +1,10 @@
 import { renderHook, act } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { useExerciseSearch, PHASE_OPTIONS, DIFFICULTY_OPTIONS } from "./useSearch";
+import {
+  useExerciseSearch,
+  PHASE_OPTIONS,
+  DIFFICULTY_OPTIONS,
+} from "./useSearch";
 
 describe("useExerciseSearch", () => {
   it("gibt alle Übungen ohne Filter zurück", () => {
@@ -72,7 +76,12 @@ describe("useExerciseSearch", () => {
 describe("Konstanten", () => {
   it("PHASE_OPTIONS hat 4 Phasen", () => {
     expect(PHASE_OPTIONS).toHaveLength(4);
-    expect(PHASE_OPTIONS.map((p) => p.id)).toEqual(["aufwaermen", "hauptteil", "schwerpunkt", "ausklang"]);
+    expect(PHASE_OPTIONS.map((p) => p.id)).toEqual([
+      "aufwaermen",
+      "hauptteil",
+      "schwerpunkt",
+      "ausklang",
+    ]);
   });
 
   it("DIFFICULTY_OPTIONS hat 3 Schwierigkeitsgrade", () => {

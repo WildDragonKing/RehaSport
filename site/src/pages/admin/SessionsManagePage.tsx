@@ -1,14 +1,21 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { httpsCallable } from 'firebase/functions';
-import { doc, updateDoc, collection, getDocs, query, where } from 'firebase/firestore';
-import { useContent } from '../../contexts/ContentContext';
-import { useAuth } from '../../contexts/AuthContext';
-import { functions, db } from '../../firebase/config';
-import type { Session } from '../../firebase/types';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { httpsCallable } from "firebase/functions";
+import {
+  doc,
+  updateDoc,
+  collection,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
+import { useContent } from "../../contexts/ContentContext";
+import { useAuth } from "../../contexts/AuthContext";
+import { functions, db } from "../../firebase/config";
+import type { Session } from "../../firebase/types";
 
 interface AIEditRequest {
-  action: 'improve' | 'updateRules' | 'regenerate';
+  action: "improve" | "updateRules" | "regenerate";
   sessionId: string;
   instructions?: string;
 }
@@ -19,18 +26,23 @@ export default function SessionsManagePage(): JSX.Element {
 
   const [selectedSession, setSelectedSession] = useState<Session | null>(null);
   const [showAIModal, setShowAIModal] = useState(false);
-  const [aiAction, setAIAction] = useState<'improve' | 'updateRules' | 'regenerate'>('improve');
-  const [aiInstructions, setAIInstructions] = useState('');
+  const [aiAction, setAIAction] = useState<
+    "improve" | "updateRules" | "regenerate"
+  >("improve");
+  const [aiInstructions, setAIInstructions] = useState("");
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [usedModel, setUsedModel] = useState<string | null>(null);
   const [bulkUpdating, setBulkUpdating] = useState(false);
   const [bulkProgress, setBulkProgress] = useState({ current: 0, total: 0 });
 
-  const openAIEditor = (session: Session, action: 'improve' | 'updateRules' | 'regenerate') => {
+  const openAIEditor = (
+    session: Session,
+    action: "improve" | "updateRules" | "regenerate",
+  ) => {
     setSelectedSession(session);
     setAIAction(action);
-    setAIInstructions('');
+    setAIInstructions("");
     setError(null);
     setUsedModel(null);
     setShowAIModal(true);
@@ -43,23 +55,23 @@ export default function SessionsManagePage(): JSX.Element {
     setError(null);
 
     try {
-      const generateSession = httpsCallable(functions, 'generateSession');
+      const generateSession = httpsCallable(functions, "generateSession");
 
-      let prompt = '';
-      if (aiAction === 'improve') {
-        prompt = `Verbessere diese Stunde: ${selectedSession.title}. ${aiInstructions || 'Mache sie abwechslungsreicher und effektiver.'}`;
-      } else if (aiAction === 'updateRules') {
+      let prompt = "";
+      if (aiAction === "improve") {
+        prompt = `Verbessere diese Stunde: ${selectedSession.title}. ${aiInstructions || "Mache sie abwechslungsreicher und effektiver."}`;
+      } else if (aiAction === "updateRules") {
         prompt = `Aktualisiere die Stunde "${selectedSession.title}" auf die aktuellen Regeln. Behalte das Thema und den Fokus bei.`;
       } else {
-        prompt = `Erstelle eine komplett neue Stunde zum Thema: ${selectedSession.focus || selectedSession.title}. ${aiInstructions || ''}`;
+        prompt = `Erstelle eine komplett neue Stunde zum Thema: ${selectedSession.focus || selectedSession.title}. ${aiInstructions || ""}`;
       }
 
       const result = await generateSession({
         topic: selectedSession.focus || selectedSession.title,
         category: selectedSession.categorySlug,
-        difficulty: 'mittel',
+        difficulty: "mittel",
         additionalNotes: prompt,
-        exercises: exercises.map(e => ({
+        exercises: exercises.map((e) => ({
           title: e.title,
           area: e.area,
           focus: e.focus,
@@ -68,11 +80,15 @@ export default function SessionsManagePage(): JSX.Element {
         })),
       });
 
-      const data = result.data as { success: boolean; session: Session; model?: string };
+      const data = result.data as {
+        success: boolean;
+        session: Session;
+        model?: string;
+      };
 
       if (data.success && data.session) {
         // Update the session in Firestore
-        const sessionRef = doc(db, 'sessions', selectedSession.slug);
+        const sessionRef = doc(db, "sessions", selectedSession.slug);
         await updateDoc(sessionRef, {
           title: data.session.title,
           description: data.session.description,
@@ -80,7 +96,7 @@ export default function SessionsManagePage(): JSX.Element {
           focus: data.session.focus,
           updatedAt: Date.now(),
           updatedBy: user.id,
-          updatedVia: 'ai',
+          updatedVia: "ai",
         });
 
         setUsedModel(data.model || null);
@@ -92,10 +108,11 @@ export default function SessionsManagePage(): JSX.Element {
         }, 2000);
       }
     } catch (err: unknown) {
-      console.error('AI Edit error:', err);
-      const errorMessage = err instanceof Error ? err.message : 'Unbekannter Fehler';
-      if (errorMessage.includes('resource-exhausted')) {
-        setError('Rate-Limit erreicht. Bitte warte eine Stunde.');
+      console.error("AI Edit error:", err);
+      const errorMessage =
+        err instanceof Error ? err.message : "Unbekannter Fehler";
+      if (errorMessage.includes("resource-exhausted")) {
+        setError("Rate-Limit erreicht. Bitte warte eine Stunde.");
       } else {
         setError(`Fehler: ${errorMessage}`);
       }
@@ -105,7 +122,12 @@ export default function SessionsManagePage(): JSX.Element {
   };
 
   const handleBulkUpdateToRules = async () => {
-    if (!user || !confirm('Möchtest du wirklich ALLE Stunden auf die aktuellen Regeln aktualisieren? Dies kann nicht rückgängig gemacht werden.')) {
+    if (
+      !user ||
+      !confirm(
+        "Möchtest du wirklich ALLE Stunden auf die aktuellen Regeln aktualisieren? Dies kann nicht rückgängig gemacht werden.",
+      )
+    ) {
       return;
     }
 
@@ -113,7 +135,7 @@ export default function SessionsManagePage(): JSX.Element {
     setBulkProgress({ current: 0, total: sessions.length });
     setError(null);
 
-    const generateSession = httpsCallable(functions, 'generateSession');
+    const generateSession = httpsCallable(functions, "generateSession");
 
     for (let i = 0; i < sessions.length; i++) {
       const session = sessions[i];
@@ -123,9 +145,9 @@ export default function SessionsManagePage(): JSX.Element {
         const result = await generateSession({
           topic: session.focus || session.title,
           category: session.categorySlug,
-          difficulty: 'mittel',
+          difficulty: "mittel",
           additionalNotes: `Aktualisiere die Stunde "${session.title}" auf die aktuellen Regeln. Behalte Thema und Fokus bei.`,
-          exercises: exercises.map(e => ({
+          exercises: exercises.map((e) => ({
             title: e.title,
             area: e.area,
             focus: e.focus,
@@ -137,7 +159,7 @@ export default function SessionsManagePage(): JSX.Element {
         const data = result.data as { success: boolean; session: Session };
 
         if (data.success && data.session) {
-          const sessionRef = doc(db, 'sessions', session.slug);
+          const sessionRef = doc(db, "sessions", session.slug);
           await updateDoc(sessionRef, {
             title: data.session.title,
             description: data.session.description,
@@ -145,7 +167,7 @@ export default function SessionsManagePage(): JSX.Element {
             focus: data.session.focus,
             updatedAt: Date.now(),
             updatedBy: user.id,
-            updatedVia: 'ai-bulk-update',
+            updatedVia: "ai-bulk-update",
           });
         }
       } catch (err) {
@@ -154,7 +176,7 @@ export default function SessionsManagePage(): JSX.Element {
       }
 
       // Small delay to avoid rate limiting
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
     }
 
     setBulkUpdating(false);
@@ -168,22 +190,18 @@ export default function SessionsManagePage(): JSX.Element {
           <h1 className="text-3xl font-display font-bold text-sage-900">
             Meine Stunden
           </h1>
-          <p className="mt-2 text-sage-600">
-            Verwalte deine Trainingsstunden
-          </p>
+          <p className="mt-2 text-sage-600">Verwalte deine Trainingsstunden</p>
         </div>
         <div className="flex items-center gap-3">
-          {user?.role === 'admin' && (
+          {user?.role === "admin" && (
             <button
               onClick={handleBulkUpdateToRules}
               disabled={bulkUpdating || sessions.length === 0}
               className="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white font-medium rounded-lg transition-colors disabled:opacity-50"
             >
-              {bulkUpdating ? (
-                `Aktualisiere ${bulkProgress.current}/${bulkProgress.total}...`
-              ) : (
-                '🔄 Alle auf Regeln aktualisieren'
-              )}
+              {bulkUpdating
+                ? `Aktualisiere ${bulkProgress.current}/${bulkProgress.total}...`
+                : "🔄 Alle auf Regeln aktualisieren"}
             </button>
           )}
           <Link
@@ -197,14 +215,24 @@ export default function SessionsManagePage(): JSX.Element {
 
       {/* Sessions by Category */}
       {categories.map((category) => (
-        <div key={category.slug} className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 overflow-hidden">
+        <div
+          key={category.slug}
+          className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 overflow-hidden"
+        >
           <div className="px-6 py-4 bg-sage-50 dark:bg-gray-900 border-b border-sage-200 dark:border-gray-700">
-            <h2 className="text-lg font-semibold text-sage-800 dark:text-sage-100">{category.title}</h2>
-            <p className="text-sm text-sage-600 dark:text-sage-300">{category.sessions.length} Stunden</p>
+            <h2 className="text-lg font-semibold text-sage-800 dark:text-sage-100">
+              {category.title}
+            </h2>
+            <p className="text-sm text-sage-600 dark:text-sage-300">
+              {category.sessions.length} Stunden
+            </p>
           </div>
           <div className="divide-y divide-sage-100">
             {category.sessions.map((session) => (
-              <div key={session.slug} className="px-6 py-4 flex items-center justify-between hover:bg-sage-50 dark:hover:bg-gray-700">
+              <div
+                key={session.slug}
+                className="px-6 py-4 flex items-center justify-between hover:bg-sage-50 dark:hover:bg-gray-700"
+              >
                 <div>
                   <Link
                     to={`/ordner/${session.categorySlug}/${session.slug}`}
@@ -213,7 +241,8 @@ export default function SessionsManagePage(): JSX.Element {
                     {session.title}
                   </Link>
                   <p className="text-sm text-sage-500 dark:text-sage-400 mt-1">
-                    {session.duration} • {session.phases.length} Phasen • {session.exercises.length} Übungen
+                    {session.duration} • {session.phases.length} Phasen •{" "}
+                    {session.exercises.length} Übungen
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
@@ -228,19 +257,19 @@ export default function SessionsManagePage(): JSX.Element {
                     </button>
                     <div className="absolute right-0 mt-1 w-48 bg-white dark:bg-gray-800 border border-sage-200 dark:border-gray-700 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-10">
                       <button
-                        onClick={() => openAIEditor(session, 'improve')}
+                        onClick={() => openAIEditor(session, "improve")}
                         className="w-full px-4 py-2 text-left text-sm hover:bg-sage-50 dark:hover:bg-gray-700 flex items-center gap-2"
                       >
                         <span>💡</span> Mit KI verbessern
                       </button>
                       <button
-                        onClick={() => openAIEditor(session, 'updateRules')}
+                        onClick={() => openAIEditor(session, "updateRules")}
                         className="w-full px-4 py-2 text-left text-sm hover:bg-sage-50 dark:hover:bg-gray-700 flex items-center gap-2"
                       >
                         <span>🔄</span> Auf Regeln aktualisieren
                       </button>
                       <button
-                        onClick={() => openAIEditor(session, 'regenerate')}
+                        onClick={() => openAIEditor(session, "regenerate")}
                         className="w-full px-4 py-2 text-left text-sm hover:bg-sage-50 dark:hover:bg-gray-700 flex items-center gap-2"
                       >
                         <span>🔮</span> Komplett neu generieren
@@ -260,7 +289,9 @@ export default function SessionsManagePage(): JSX.Element {
 
       {sessions.length === 0 && (
         <div className="text-center py-12 bg-sage-50 dark:bg-gray-900 rounded-xl">
-          <p className="text-sage-600 dark:text-sage-300">Noch keine Stunden vorhanden.</p>
+          <p className="text-sage-600 dark:text-sage-300">
+            Noch keine Stunden vorhanden.
+          </p>
           <Link
             to="/admin/builder"
             className="mt-4 inline-block text-sage-700 hover:text-sage-900 font-medium"
@@ -276,9 +307,9 @@ export default function SessionsManagePage(): JSX.Element {
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-lg w-full p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-semibold text-sage-900">
-                {aiAction === 'improve' && '💡 Stunde verbessern'}
-                {aiAction === 'updateRules' && '🔄 Auf Regeln aktualisieren'}
-                {aiAction === 'regenerate' && '🔮 Neu generieren'}
+                {aiAction === "improve" && "💡 Stunde verbessern"}
+                {aiAction === "updateRules" && "🔄 Auf Regeln aktualisieren"}
+                {aiAction === "regenerate" && "🔮 Neu generieren"}
               </h2>
               <button
                 onClick={() => setShowAIModal(false)}
@@ -301,12 +332,15 @@ export default function SessionsManagePage(): JSX.Element {
             {usedModel && (
               <div className="bg-green-50 border border-green-200 rounded-lg p-3 mb-4">
                 <p className="text-green-700 text-sm">
-                  ✓ Erfolgreich aktualisiert mit {usedModel.includes('gemini-3') ? 'Gemini 3 Flash' : 'Gemini 2.5 Flash'}
+                  ✓ Erfolgreich aktualisiert mit{" "}
+                  {usedModel.includes("gemini-3")
+                    ? "Gemini 3 Flash"
+                    : "Gemini 2.5 Flash"}
                 </p>
               </div>
             )}
 
-            {aiAction !== 'updateRules' && (
+            {aiAction !== "updateRules" && (
               <div className="mb-4">
                 <label className="block text-sm font-medium text-sage-700 dark:text-sage-300 mb-2">
                   Anweisungen (optional)
@@ -317,9 +351,9 @@ export default function SessionsManagePage(): JSX.Element {
                   rows={3}
                   className="w-full px-3 py-2 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 focus:border-sage-500 dark:bg-gray-700 dark:text-sage-100"
                   placeholder={
-                    aiAction === 'improve'
-                      ? 'z.B. Mehr Übungen für den unteren Rücken, weniger Bodenübungen...'
-                      : 'z.B. Fokus auf Balance, Schwierigkeit erhöhen...'
+                    aiAction === "improve"
+                      ? "z.B. Mehr Übungen für den unteren Rücken, weniger Bodenübungen..."
+                      : "z.B. Fokus auf Balance, Schwierigkeit erhöhen..."
                   }
                 />
               </div>
@@ -339,15 +373,35 @@ export default function SessionsManagePage(): JSX.Element {
               >
                 {processing ? (
                   <>
-                    <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                    <svg
+                      className="animate-spin h-4 w-4"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                      />
                     </svg>
                     Generiere...
                   </>
                 ) : (
                   <>
-                    ✨ {aiAction === 'improve' ? 'Verbessern' : aiAction === 'updateRules' ? 'Aktualisieren' : 'Generieren'}
+                    ✨{" "}
+                    {aiAction === "improve"
+                      ? "Verbessern"
+                      : aiAction === "updateRules"
+                        ? "Aktualisieren"
+                        : "Generieren"}
                   </>
                 )}
               </button>

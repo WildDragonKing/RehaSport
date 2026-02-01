@@ -15,7 +15,10 @@
     />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="de_DE" />
-    <meta property="og:url" content="https://wilddragonking.github.io/RehaSport/" />
+    <meta
+      property="og:url"
+      content="https://wilddragonking.github.io/RehaSport/"
+    />
     <meta name="theme-color" content="#0f766e" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <script>
@@ -23,15 +26,24 @@
         const STORAGE_KEY = "reader-theme-mode";
         const doc = document.documentElement;
         const stored = localStorage.getItem(STORAGE_KEY);
-        const mode = stored === "light" || stored === "dark" || stored === "system" ? stored : "system";
-        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        const resolved = mode === "system" ? (prefersDark ? "dark" : "light") : mode;
+        const mode =
+          stored === "light" || stored === "dark" || stored === "system"
+            ? stored
+            : "system";
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)",
+        ).matches;
+        const resolved =
+          mode === "system" ? (prefersDark ? "dark" : "light") : mode;
         doc.dataset.colorMode = mode;
         doc.dataset.theme = resolved;
         doc.style.colorScheme = resolved;
         const themeMeta = document.querySelector('meta[name="theme-color"]');
         if (themeMeta) {
-          themeMeta.setAttribute("content", resolved === "dark" ? "#0b1220" : "#f4f7fb");
+          themeMeta.setAttribute(
+            "content",
+            resolved === "dark" ? "#0b1220" : "#f4f7fb",
+          );
         }
       })();
     </script>

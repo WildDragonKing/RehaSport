@@ -1,11 +1,5 @@
-import {
-  collection,
-  getDocs,
-  doc,
-  setDoc,
-  getDoc,
-} from 'firebase/firestore';
-import { db } from './config';
+import { collection, getDocs, doc, setDoc, getDoc } from "firebase/firestore";
+import { db } from "./config";
 
 interface SessionData {
   category: string;
@@ -36,11 +30,14 @@ export async function seedCategoriesFromSessions(): Promise<{
 
   try {
     // Get all sessions
-    const sessionsSnapshot = await getDocs(collection(db, 'sessions'));
-    const categoryMap = new Map<string, { title: string; focuses: Set<string> }>();
+    const sessionsSnapshot = await getDocs(collection(db, "sessions"));
+    const categoryMap = new Map<
+      string,
+      { title: string; focuses: Set<string> }
+    >();
 
     // Extract unique categories
-    sessionsSnapshot.docs.forEach(docSnap => {
+    sessionsSnapshot.docs.forEach((docSnap) => {
       const data = docSnap.data() as SessionData;
       if (!data.category) return;
 
@@ -53,7 +50,7 @@ export async function seedCategoriesFromSessions(): Promise<{
 
       // Collect focus tags
       if (data.focus) {
-        data.focus.split(',').forEach(f => {
+        data.focus.split(",").forEach((f) => {
           const trimmed = f.trim();
           if (trimmed) {
             categoryMap.get(slug)!.focuses.add(trimmed);
@@ -62,13 +59,15 @@ export async function seedCategoriesFromSessions(): Promise<{
       }
     });
 
-    console.log(`Found ${categoryMap.size} unique categories from ${sessionsSnapshot.docs.length} sessions`);
+    console.log(
+      `Found ${categoryMap.size} unique categories from ${sessionsSnapshot.docs.length} sessions`,
+    );
 
     // Create category documents
     let order = 0;
     for (const [slug, { title, focuses }] of categoryMap) {
       try {
-        const categoryRef = doc(db, 'categories', slug);
+        const categoryRef = doc(db, "categories", slug);
         const existingDoc = await getDoc(categoryRef);
 
         if (existingDoc.exists()) {
@@ -89,7 +88,8 @@ export async function seedCategoriesFromSessions(): Promise<{
         created.push(slug);
         console.log(`Created category: ${slug} (${title})`);
       } catch (error) {
-        const message = error instanceof Error ? error.message : 'Unknown error';
+        const message =
+          error instanceof Error ? error.message : "Unknown error";
         errors.push(`${slug}: ${message}`);
         console.error(`Failed to create category ${slug}:`, error);
       }
@@ -97,26 +97,26 @@ export async function seedCategoriesFromSessions(): Promise<{
 
     return { created, existing, errors };
   } catch (error) {
-    console.error('Failed to seed categories:', error);
+    console.error("Failed to seed categories:", error);
     throw error;
   }
 }
 
 function humanizeSlug(slug: string): string {
   const replacements: Record<string, string> = {
-    'ae': 'ä',
-    'oe': 'ö',
-    'ue': 'ü',
-    'ss': 'ß',
+    ae: "ä",
+    oe: "ö",
+    ue: "ü",
+    ss: "ß",
   };
 
   let result = slug;
   for (const [search, replacement] of Object.entries(replacements)) {
-    result = result.replace(new RegExp(search, 'gi'), replacement);
+    result = result.replace(new RegExp(search, "gi"), replacement);
   }
 
   return result
-    .split('-')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 }

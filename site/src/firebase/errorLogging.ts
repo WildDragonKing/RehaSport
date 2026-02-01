@@ -1,7 +1,7 @@
-import { functions } from './config';
-import { httpsCallable } from 'firebase/functions';
-import { logEvent } from 'firebase/analytics';
-import { analytics } from './config';
+import { functions } from "./config";
+import { httpsCallable } from "firebase/functions";
+import { logEvent } from "firebase/analytics";
+import { analytics } from "./config";
 
 interface ErrorContext {
   type?: string;
@@ -22,10 +22,16 @@ interface ErrorLogData {
 }
 
 // Cloud Function zum Loggen von Fehlern
-const logErrorToCloud = httpsCallable<ErrorLogData, { success: boolean }>(functions, 'logClientError');
+const logErrorToCloud = httpsCallable<ErrorLogData, { success: boolean }>(
+  functions,
+  "logClientError",
+);
 
 // Fehler an Google Cloud Logging senden
-export async function logError(error: Error, context: ErrorContext = {}): Promise<void> {
+export async function logError(
+  error: Error,
+  context: ErrorContext = {},
+): Promise<void> {
   const errorData: ErrorLogData = {
     message: error.message,
     stack: error.stack,
@@ -41,9 +47,9 @@ export async function logError(error: Error, context: ErrorContext = {}): Promis
   try {
     const analyticsInstance = await analytics;
     if (analyticsInstance) {
-      logEvent(analyticsInstance, 'exception', {
+      logEvent(analyticsInstance, "exception", {
         description: error.message,
-        fatal: context.type === 'uncaught',
+        fatal: context.type === "uncaught",
       });
     }
   } catch {
@@ -55,15 +61,18 @@ export async function logError(error: Error, context: ErrorContext = {}): Promis
     await logErrorToCloud(errorData);
   } catch (e) {
     // Fallback: Console logging wenn Cloud Function nicht erreichbar
-    console.error('[Error Logging] Failed to send to cloud:', e);
-    console.error('[Original Error]', error, context);
+    console.error("[Error Logging] Failed to send to cloud:", e);
+    console.error("[Original Error]", error, context);
   }
 }
 
 // Für React Error Boundary
-export function logComponentError(error: Error, errorInfo: { componentStack?: string }): void {
+export function logComponentError(
+  error: Error,
+  errorInfo: { componentStack?: string },
+): void {
   logError(error, {
-    type: 'react-error-boundary',
+    type: "react-error-boundary",
     componentStack: errorInfo.componentStack,
   });
 }
