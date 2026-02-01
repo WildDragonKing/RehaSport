@@ -37,7 +37,7 @@ export default defineConfig(({ mode }) => {
           short_name: "RehaSport",
           description:
             "Strukturierte Trainingsstunden mit Alternativen für Knie- und Schulterprobleme",
-          theme_color: "#0066ff",
+          theme_color: "#5f8266",
           background_color: "#fafafa",
           display: "standalone",
           orientation: "portrait",
