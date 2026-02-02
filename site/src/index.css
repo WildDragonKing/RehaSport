@@ -1218,47 +1218,8 @@ small {
 .hero {
   position: relative;
   padding: 4rem 0 5rem;
-  overflow: hidden;
-}
-
-.hero-background {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-}
-
-.hero-blob {
-  position: absolute;
-  border-radius: var(--radius-blob);
-  filter: blur(60px);
-  opacity: 0.4;
-  animation: var(--animate-blob);
-}
-
-.hero-blob-1 {
-  width: 400px;
-  height: 400px;
-  top: -100px;
-  right: -100px;
-  background: var(--color-primary);
-}
-
-.hero-blob-2 {
-  width: 300px;
-  height: 300px;
-  bottom: -50px;
-  left: -50px;
-  background: var(--color-phase-focus);
-  animation-delay: 2s;
-}
-
-.hero-blob-3 {
-  width: 200px;
-  height: 200px;
-  top: 50%;
-  left: 50%;
-  background: var(--color-phase-cooldown);
-  animation-delay: 4s;
+  /* Transparent - relies on global AmbientBackground */
+  background: transparent;
 }
 
 .hero-content {
@@ -1308,6 +1269,7 @@ small {
    =================================== */
 .section {
   padding: 4rem 0;
+  background: transparent;
 }
 
 .section-header {
@@ -3216,4 +3178,220 @@ small {
 .dark .shimmer {
   background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
   background-size: 200% 100%;
+}
+
+/* ===================================
+   AMBIENT BACKGROUND - Simple CSS Blur Blobs
+   =================================== */
+.ambient-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Blur blobs - random mit morphing, float und Farbwechsel */
+.ambient-blob {
+  position: absolute;
+  filter: blur(120px);
+  will-change: transform, border-radius, margin, background;
+  contain: layout style;
+  transition:
+    transform 0.3s ease-out,
+    background 2s ease-in-out,
+    opacity 1s ease-in-out,
+    filter 1s ease-in-out;
+  /* Kein mix-blend-mode - verhindert zu starkes Abdunkeln bei Überlappung */
+}
+
+/* Random blobs - dynamisch generiert */
+.ambient-blob-random {
+  animation:
+    blob-morph-wild 20s ease-in-out infinite,
+    blob-float-wild 35s ease-in-out infinite;
+}
+
+/* Aggressive Morph-Animation */
+@keyframes blob-morph-wild {
+  0% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+  14% {
+    border-radius: 40% 60% 70% 30% / 40% 70% 30% 60%;
+  }
+  28% {
+    border-radius: 70% 30% 50% 50% / 30% 50% 70% 50%;
+  }
+  42% {
+    border-radius: 30% 70% 40% 60% / 70% 40% 50% 50%;
+  }
+  57% {
+    border-radius: 50% 50% 60% 40% / 50% 60% 40% 60%;
+  }
+  71% {
+    border-radius: 45% 55% 35% 65% / 65% 35% 55% 45%;
+  }
+  85% {
+    border-radius: 55% 45% 65% 35% / 35% 65% 45% 55%;
+  }
+  100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+}
+
+/* Sanfte Float-Animation - langsame Drift */
+@keyframes blob-float-wild {
+  0% {
+    margin: 0;
+  }
+  10% {
+    margin: -20px 0 0 30px;
+  }
+  20% {
+    margin: 15px 0 0 -15px;
+  }
+  30% {
+    margin: -30px 0 0 -20px;
+  }
+  40% {
+    margin: 10px 0 0 35px;
+  }
+  50% {
+    margin: -15px 0 0 20px;
+  }
+  60% {
+    margin: 25px 0 0 -25px;
+  }
+  70% {
+    margin: -10px 0 0 -35px;
+  }
+  80% {
+    margin: 20px 0 0 15px;
+  }
+  90% {
+    margin: -15px 0 0 25px;
+  }
+  100% {
+    margin: 0;
+  }
+}
+
+/* Dark mode - hellere Blobs auf dunklem Hintergrund */
+[data-theme="dark"] .ambient-blob {
+  filter: blur(100px) saturate(1.2);
+}
+
+/* ===================================
+   SCROLL REVEAL ANIMATIONS
+   =================================== */
+
+/* Scroll reveal - initially visible, animate when scrolling */
+.scroll-reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-reveal-stagger > * {
+  opacity: 1;
+}
+
+/* Staggered children for scroll reveal */
+.scroll-reveal-stagger > .scroll-reveal:nth-child(1) {
+  transition-delay: 0ms;
+}
+.scroll-reveal-stagger > .scroll-reveal:nth-child(2) {
+  transition-delay: 100ms;
+}
+.scroll-reveal-stagger > .scroll-reveal:nth-child(3) {
+  transition-delay: 200ms;
+}
+.scroll-reveal-stagger > .scroll-reveal:nth-child(4) {
+  transition-delay: 300ms;
+}
+.scroll-reveal-stagger > .scroll-reveal:nth-child(5) {
+  transition-delay: 400ms;
+}
+.scroll-reveal-stagger > .scroll-reveal:nth-child(6) {
+  transition-delay: 500ms;
+}
+.scroll-reveal-stagger > .scroll-reveal:nth-child(7) {
+  transition-delay: 600ms;
+}
+.scroll-reveal-stagger > .scroll-reveal:nth-child(8) {
+  transition-delay: 700ms;
+}
+
+/* ===================================
+   ENHANCED CATEGORY CARD HOVER
+   =================================== */
+
+.category-card-enhanced {
+  transition:
+    transform 0.4s var(--ease-spring),
+    box-shadow 0.4s var(--ease-out-soft),
+    background-color 0.3s ease;
+}
+
+.category-card-enhanced:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow:
+    0 20px 40px rgba(124, 154, 130, 0.15),
+    0 0 0 1px rgba(124, 154, 130, 0.1);
+}
+
+.category-card-enhanced:hover .category-card-icon {
+  animation: float 2s ease-in-out infinite;
+}
+
+/* ===================================
+   PULSING STATS
+   =================================== */
+
+@keyframes count-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.stat-pulse {
+  animation: count-pulse 3s ease-in-out infinite;
+}
+
+.stat-pulse:nth-child(2) {
+  animation-delay: 1s;
+}
+
+.stat-pulse:nth-child(3) {
+  animation-delay: 2s;
+}
+
+/* ===================================
+   REDUCED MOTION - Accessibility
+   =================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-blob,
+  .scroll-reveal,
+  .stat-pulse,
+  .category-card-enhanced:hover .category-card-icon {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .scroll-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .ambient-blob {
+    /* Keep blobs visible but static */
+    border-radius: 50%;
+    transform: none;
+    margin: 0;
+  }
 }

@@ -84,6 +84,10 @@ Für Firebase-Operationen den MCP-Server verwenden:
 - **Dark Mode:** Tailwind `dark:` Varianten für alle Admin-Komponenten (z.B. `bg-white dark:bg-gray-800`)
 - **Farben:** Sage-Palette (Erdtöne) + Lime-Akzente für interaktive Elemente
 - **Animationen:** CSS-Klassen in index.css: `animate-fade-in`, `card-hover`, `btn-lime`
+- **AmbientBackground:** Dynamische Blur-Blobs in `src/components/AmbientBackground.tsx` - globaler Hintergrund
+- **Dark Mode Detection (React):** MutationObserver auf `document.documentElement` mit `attributeFilter: ["data-theme"]`
+- **CSS Blend-Modes:** `mix-blend-mode: multiply` vermeiden - verdunkelt zu stark bei Überlappung
+- **CSS Performance:** `will-change` für alle animierten Properties (transform, border-radius, margin, background)
 
 ### Offene Features
 - [x] KI-Stunden-Builder mit Google Gemini
@@ -102,6 +106,7 @@ Für Firebase-Operationen den MCP-Server verwenden:
 - **TypeScript Check:** tsc --noEmit nach .ts/.tsx Änderungen
 - **Test Runner:** Vitest für .test.ts/.test.tsx Dateien
 - **Gotcha:** `matcher` muss ein Regex-String sein, kein Objekt
+- **Gotcha:** Prettier formatiert CSS nach Edit - vor erneutem Edit immer Read ausführen
 
 ### Skills (.claude/skills/)
 - `/deploy` - Build + Firebase Deploy (site + functions)

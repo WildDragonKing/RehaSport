@@ -3,6 +3,7 @@ import { Suspense, lazy } from "react";
 
 import { AuthProvider } from "./contexts/AuthContext";
 import { ContentProvider } from "./contexts/ContentContext";
+import AmbientBackground from "./components/AmbientBackground";
 
 // Layouts
 import PageLayout from "./components/layout/PageLayout";
@@ -49,6 +50,8 @@ function App(): JSX.Element {
   return (
     <AuthProvider>
       <ContentProvider>
+        {/* Global ambient background with blur blobs */}
+        <AmbientBackground />
         <Suspense fallback={<LoadingSpinner />}>
           <Routes>
             {/* Public Routes */}

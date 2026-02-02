@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 
 import Button from "../components/ui/Button";
 import { useContent } from "../contexts/ContentContext";
+import { useScrollReveal } from "../hooks/useScrollReveal";
 
 // Icons
 function ArrowRightIcon(): JSX.Element {
@@ -37,6 +38,9 @@ function getCategoryIcon(slug: string): string {
 function HomePage(): JSX.Element {
   const { categories, exercises, loading } = useContent();
 
+  // Initialize scroll reveal animations
+  useScrollReveal();
+
   const totalSessions = categories.reduce(
     (acc, cat) => acc + cat.sessions.length,
     0,
@@ -59,15 +63,8 @@ function HomePage(): JSX.Element {
 
   return (
     <div className="stack-lg">
-      {/* Hero Section */}
+      {/* Hero Section - uses global AmbientBackground */}
       <section className="hero">
-        {/* Animated Background Blobs */}
-        <div className="hero-background" aria-hidden="true">
-          <div className="hero-blob hero-blob-1" />
-          <div className="hero-blob hero-blob-2" />
-          <div className="hero-blob hero-blob-3" />
-        </div>
-
         <div className="container">
           <div className="hero-content">
             <h1 className="hero-title animate-fade-up fill-backwards">
@@ -85,15 +82,15 @@ function HomePage(): JSX.Element {
 
             {/* Stats */}
             <div className="hero-stats animate-fade-up fill-backwards delay-300">
-              <div className="hero-stat">
+              <div className="hero-stat stat-pulse">
                 <div className="hero-stat-value">{totalSessions}</div>
                 <div className="hero-stat-label">Stunden</div>
               </div>
-              <div className="hero-stat">
+              <div className="hero-stat stat-pulse">
                 <div className="hero-stat-value">{totalExercises}</div>
                 <div className="hero-stat-label">Übungen</div>
               </div>
-              <div className="hero-stat">
+              <div className="hero-stat stat-pulse">
                 <div className="hero-stat-value">45</div>
                 <div className="hero-stat-label">Minuten</div>
               </div>
@@ -103,9 +100,9 @@ function HomePage(): JSX.Element {
       </section>
 
       {/* Categories Section */}
-      <section id="kategorien" className="section">
+      <section id="kategorien" className="section section-categories">
         <div className="container">
-          <header className="section-header">
+          <header className="section-header scroll-reveal">
             <h2 className="section-title">Wähle deinen Fokus</h2>
             <p className="section-subtitle">
               Jede Kategorie enthält strukturierte 45-Minuten-Einheiten mit
@@ -113,13 +110,12 @@ function HomePage(): JSX.Element {
             </p>
           </header>
 
-          <div className="grid-categories">
-            {categories.map((category, index) => (
+          <div className="grid-categories scroll-reveal-stagger">
+            {categories.map((category) => (
               <Link
                 key={category.slug}
                 to={`/ordner/${category.slug}`}
-                className="card card-hover category-card animate-fade-up fill-backwards"
-                style={{ animationDelay: `${index * 100}ms` }}
+                className="card card-hover category-card category-card-enhanced scroll-reveal"
               >
                 <div className="category-card-icon" aria-hidden="true">
                   {getCategoryIcon(category.slug)}
@@ -142,12 +138,9 @@ function HomePage(): JSX.Element {
       </section>
 
       {/* 45-Min Schema */}
-      <section
-        className="section"
-        style={{ backgroundColor: "var(--color-surface-muted)" }}
-      >
+      <section className="section section-schema">
         <div className="container">
-          <header className="section-header">
+          <header className="section-header scroll-reveal">
             <h2 className="section-title">Das 45-Minuten-Schema</h2>
             <p className="section-subtitle">
               Jede Stunde folgt einer bewährten Struktur für sicheres und
@@ -155,7 +148,7 @@ function HomePage(): JSX.Element {
             </p>
           </header>
 
-          <div className="time-infographic">
+          <div className="time-infographic scroll-reveal">
             <div className="time-bar-container">
               <div className="time-bar-segment warmup">10 min</div>
               <div className="time-bar-segment main">15 min</div>
@@ -193,10 +186,10 @@ function HomePage(): JSX.Element {
       </section>
 
       {/* Features Section */}
-      <section className="section">
+      <section className="section section-features">
         <div className="container">
-          <div className="grid-features">
-            <div className="card feature-card">
+          <div className="grid-features scroll-reveal-stagger">
+            <div className="card feature-card scroll-reveal">
               <div className="feature-card-icon">🦵</div>
               <div className="feature-card-content">
                 <h4>Knie-Alternativen</h4>
@@ -206,14 +199,14 @@ function HomePage(): JSX.Element {
                 </p>
               </div>
             </div>
-            <div className="card feature-card">
+            <div className="card feature-card scroll-reveal">
               <div className="feature-card-icon">💪</div>
               <div className="feature-card-content">
                 <h4>Schulter-Alternativen</h4>
                 <p>Modifikationen für eingeschränkte Schulterbeweglichkeit.</p>
               </div>
             </div>
-            <div className="card feature-card">
+            <div className="card feature-card scroll-reveal">
               <div className="feature-card-icon">📱</div>
               <div className="feature-card-content">
                 <h4>Mobile-optimiert</h4>
@@ -225,10 +218,10 @@ function HomePage(): JSX.Element {
       </section>
 
       {/* CTA Section */}
-      <section className="section">
+      <section className="section section-cta">
         <div className="container">
           <div
-            className="card card-body-lg text-center"
+            className="card card-body-lg text-center scroll-reveal"
             style={{ backgroundColor: "var(--color-primary-soft)" }}
           >
             <h2 style={{ marginBottom: "0.5rem" }}>Alle Übungen entdecken</h2>
