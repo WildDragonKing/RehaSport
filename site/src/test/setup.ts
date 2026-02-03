@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 
-// Mock IntersectionObserver für Tests (wird von useScrollReveal benötigt)
+// Mock IntersectionObserver für Tests
 class MockIntersectionObserver implements IntersectionObserver {
   readonly root: Element | Document | null = null;
   readonly rootMargin: string = "";

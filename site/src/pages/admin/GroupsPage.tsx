@@ -60,7 +60,7 @@ export default function GroupsPage(): JSX.Element {
 
       {/* Create Form */}
       {showForm && (
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 p-6">
+        <div className="bg-white dark:bg-sage-900 rounded-xl shadow-sm border border-sage-200 dark:border-sage-800 p-6">
           <h2 className="text-lg font-semibold text-sage-900 dark:text-sage-100 mb-4">
             Neue Gruppe erstellen
           </h2>
@@ -80,7 +80,7 @@ export default function GroupsPage(): JSX.Element {
                 onChange={(e) =>
                   setNewGroup({ ...newGroup, name: e.target.value })
                 }
-                className="w-full px-4 py-3 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-gray-700 dark:text-sage-100"
+                className="w-full px-4 py-3 border border-sage-300 dark:border-sage-700 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-sage-800 dark:text-sage-100"
                 placeholder="z.B. Montags-Gruppe, Senioren-Fit"
               />
             </div>
@@ -90,7 +90,7 @@ export default function GroupsPage(): JSX.Element {
                 Einschränkungen der Gruppe
               </label>
               <div className="flex flex-wrap gap-3">
-                <label className="flex items-center gap-2 px-4 py-2 border border-sage-200 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-sage-50 dark:hover:bg-gray-700 dark:text-sage-100">
+                <label className="flex items-center gap-2 px-4 py-2 border border-sage-200 dark:border-sage-700 rounded-lg cursor-pointer hover:bg-sage-50 dark:hover:bg-sage-800 dark:text-sage-100">
                   <input
                     type="checkbox"
                     checked={newGroup.restrictions.includes("knee")}
@@ -99,7 +99,7 @@ export default function GroupsPage(): JSX.Element {
                   />
                   <span>🦵 Knieprobleme</span>
                 </label>
-                <label className="flex items-center gap-2 px-4 py-2 border border-sage-200 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-sage-50 dark:hover:bg-gray-700 dark:text-sage-100">
+                <label className="flex items-center gap-2 px-4 py-2 border border-sage-200 dark:border-sage-700 rounded-lg cursor-pointer hover:bg-sage-50 dark:hover:bg-sage-800 dark:text-sage-100">
                   <input
                     type="checkbox"
                     checked={newGroup.restrictions.includes("shoulder")}
@@ -129,7 +129,7 @@ export default function GroupsPage(): JSX.Element {
                   setNewGroup({ ...newGroup, description: e.target.value })
                 }
                 rows={2}
-                className="w-full px-4 py-3 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-gray-700 dark:text-sage-100"
+                className="w-full px-4 py-3 border border-sage-300 dark:border-sage-700 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-sage-800 dark:text-sage-100"
                 placeholder="Notizen zur Gruppe..."
               />
             </div>
@@ -144,7 +144,7 @@ export default function GroupsPage(): JSX.Element {
               </button>
               <button
                 onClick={() => setShowForm(false)}
-                className="px-4 py-2 text-sage-600 dark:text-sage-300 hover:bg-sage-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                className="px-4 py-2 text-sage-600 dark:text-sage-300 hover:bg-sage-100 dark:hover:bg-sage-800 rounded-lg transition-colors"
               >
                 Abbrechen
               </button>
@@ -159,7 +159,7 @@ export default function GroupsPage(): JSX.Element {
           {groups.map((group) => (
             <div
               key={group.id}
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 p-6"
+              className="bg-white dark:bg-sage-900 rounded-xl shadow-sm border border-sage-200 dark:border-sage-800 p-6"
             >
               <h3 className="text-lg font-semibold text-sage-800 dark:text-sage-100">
                 {group.name}
@@ -198,7 +198,7 @@ export default function GroupsPage(): JSX.Element {
         </div>
       ) : (
         !showForm && (
-          <div className="text-center py-12 bg-sage-50 dark:bg-gray-900 rounded-xl">
+          <div className="text-center py-12 bg-sage-50 dark:bg-sage-950 rounded-xl">
             <p className="text-sage-600 dark:text-sage-300">
               Noch keine Gruppen angelegt.
             </p>

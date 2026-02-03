@@ -99,7 +99,7 @@ export default function TrainersPage(): JSX.Element {
       </div>
 
       {/* Invite Form */}
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 p-6">
+      <div className="bg-white dark:bg-sage-900 rounded-xl shadow-sm border border-sage-200 dark:border-sage-800 p-6">
         <h2 className="text-lg font-semibold text-sage-900 dark:text-sage-100 mb-4">
           Neuen Trainer einladen
         </h2>
@@ -110,7 +110,7 @@ export default function TrainersPage(): JSX.Element {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="trainer@beispiel.de"
-            className="flex-1 px-4 py-3 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-gray-700 dark:text-sage-100"
+            className="flex-1 px-4 py-3 border border-sage-300 dark:border-sage-700 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-sage-800 dark:text-sage-100"
           />
           <button
             onClick={handleInvite}
@@ -131,7 +131,7 @@ export default function TrainersPage(): JSX.Element {
 
         <p className="mt-4 text-sm text-sage-500 dark:text-sage-400">
           Der eingeladene Trainer kann sich dann unter{" "}
-          <code className="bg-sage-100 dark:bg-gray-700 px-1 rounded">
+          <code className="bg-sage-100 dark:bg-sage-800 px-1 rounded">
             /login
           </code>{" "}
           mit seinem Google-Konto anmelden.
@@ -140,7 +140,7 @@ export default function TrainersPage(): JSX.Element {
 
       {/* Pending Invitations */}
       {pendingInvitations.length > 0 && (
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 p-6">
+        <div className="bg-white dark:bg-sage-900 rounded-xl shadow-sm border border-sage-200 dark:border-sage-800 p-6">
           <h2 className="text-lg font-semibold text-sage-900 dark:text-sage-100 mb-4">
             Offene Einladungen
           </h2>
@@ -174,7 +174,7 @@ export default function TrainersPage(): JSX.Element {
       )}
 
       {/* Active Trainers */}
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 p-6">
+      <div className="bg-white dark:bg-sage-900 rounded-xl shadow-sm border border-sage-200 dark:border-sage-800 p-6">
         <h2 className="text-lg font-semibold text-sage-900 dark:text-sage-100 mb-4">
           Aktive Trainer
         </h2>
@@ -203,7 +203,7 @@ export default function TrainersPage(): JSX.Element {
                   className={`px-2 py-1 text-xs rounded ${
                     trainer.role === "admin"
                       ? "bg-purple-100 text-purple-700"
-                      : "bg-sage-100 dark:bg-gray-700 text-sage-700 dark:text-sage-300"
+                      : "bg-sage-100 dark:bg-sage-800 text-sage-700 dark:text-sage-300"
                   }`}
                 >
                   {trainer.role === "admin" ? "Admin" : "Trainer"}

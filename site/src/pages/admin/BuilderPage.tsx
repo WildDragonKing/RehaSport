@@ -205,7 +205,7 @@ export default function BuilderPage(): JSX.Element {
 
       {/* Rate Limit Display */}
       {rateLimit && (
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 p-4 flex items-center justify-between">
+        <div className="bg-white dark:bg-sage-900 rounded-xl shadow-sm border border-sage-200 dark:border-sage-800 p-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="text-2xl">⚡</div>
             <div>
@@ -243,7 +243,7 @@ export default function BuilderPage(): JSX.Element {
       )}
 
       {/* Mode Selection */}
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 p-6">
+      <div className="bg-white dark:bg-sage-900 rounded-xl shadow-sm border border-sage-200 dark:border-sage-800 p-6">
         <h2 className="text-lg font-semibold text-sage-900 mb-4">
           Was möchtest du erstellen?
         </h2>
@@ -252,8 +252,8 @@ export default function BuilderPage(): JSX.Element {
             onClick={() => setMode("full")}
             className={`p-6 rounded-xl border-2 text-left transition-colors ${
               mode === "full"
-                ? "border-sage-500 bg-sage-50 dark:bg-gray-900"
-                : "border-sage-200 dark:border-gray-700 hover:border-sage-300 dark:hover:border-gray-600"
+                ? "border-sage-500 bg-sage-50 dark:bg-sage-950"
+                : "border-sage-200 dark:border-sage-800 hover:border-sage-300 dark:hover:border-gray-600"
             }`}
           >
             <div className="text-2xl mb-2">📋</div>
@@ -269,8 +269,8 @@ export default function BuilderPage(): JSX.Element {
             onClick={() => setMode("suggest")}
             className={`p-6 rounded-xl border-2 text-left transition-colors ${
               mode === "suggest"
-                ? "border-sage-500 bg-sage-50 dark:bg-gray-900"
-                : "border-sage-200 dark:border-gray-700 hover:border-sage-300 dark:hover:border-gray-600"
+                ? "border-sage-500 bg-sage-50 dark:bg-sage-950"
+                : "border-sage-200 dark:border-sage-800 hover:border-sage-300 dark:hover:border-gray-600"
             }`}
           >
             <div className="text-2xl mb-2">🔍</div>
@@ -285,7 +285,7 @@ export default function BuilderPage(): JSX.Element {
       </div>
 
       {/* Form */}
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 p-6">
+      <div className="bg-white dark:bg-sage-900 rounded-xl shadow-sm border border-sage-200 dark:border-sage-800 p-6">
         <h2 className="text-lg font-semibold text-sage-900 mb-4">
           {mode === "full" ? "Stunde konfigurieren" : "Übungen suchen"}
         </h2>
@@ -303,7 +303,7 @@ export default function BuilderPage(): JSX.Element {
               id="topic"
               value={topic}
               onChange={(e) => setTopic(e.target.value)}
-              className="w-full px-4 py-3 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 focus:border-sage-500 dark:bg-gray-700 dark:text-sage-100"
+              className="w-full px-4 py-3 border border-sage-300 dark:border-sage-700 rounded-lg focus:ring-2 focus:ring-sage-500 focus:border-sage-500 dark:bg-sage-800 dark:text-sage-100"
             >
               <option value="">Thema wählen...</option>
               <option value="ruecken">Rückengesundheit</option>
@@ -329,7 +329,7 @@ export default function BuilderPage(): JSX.Element {
                 id="category"
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full px-4 py-3 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 focus:border-sage-500 dark:bg-gray-700 dark:text-sage-100"
+                className="w-full px-4 py-3 border border-sage-300 dark:border-sage-700 rounded-lg focus:ring-2 focus:ring-sage-500 focus:border-sage-500 dark:bg-sage-800 dark:text-sage-100"
               >
                 <option value="">Kategorie wählen...</option>
                 {categories.map((cat) => (
@@ -376,7 +376,7 @@ export default function BuilderPage(): JSX.Element {
               value={additionalNotes}
               onChange={(e) => setAdditionalNotes(e.target.value)}
               rows={3}
-              className="w-full px-4 py-3 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 focus:border-sage-500 dark:bg-gray-700 dark:text-sage-100"
+              className="w-full px-4 py-3 border border-sage-300 dark:border-sage-700 rounded-lg focus:ring-2 focus:ring-sage-500 focus:border-sage-500 dark:bg-sage-800 dark:text-sage-100"
               placeholder="z.B. Mit Theraband, Fokus auf Tiefenmuskulatur, Keine Bodenübungen..."
             />
           </div>
@@ -422,7 +422,7 @@ export default function BuilderPage(): JSX.Element {
 
       {/* Generated Session Result */}
       {generatedSession && (
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 p-6">
+        <div className="bg-white dark:bg-sage-900 rounded-xl shadow-sm border border-sage-200 dark:border-sage-800 p-6">
           <div className="flex items-start justify-between mb-4">
             <div>
               <h2 className="text-xl font-semibold text-sage-900">
@@ -464,9 +464,9 @@ export default function BuilderPage(): JSX.Element {
             {generatedSession.phases.map((phase, phaseIndex) => (
               <div
                 key={phaseIndex}
-                className="border border-sage-200 dark:border-gray-700 rounded-lg overflow-hidden"
+                className="border border-sage-200 dark:border-sage-800 rounded-lg overflow-hidden"
               >
-                <div className="bg-sage-50 dark:bg-gray-900 px-4 py-3 border-b border-sage-200 dark:border-gray-700">
+                <div className="bg-sage-50 dark:bg-sage-950 px-4 py-3 border-b border-sage-200 dark:border-sage-800">
                   <h3 className="font-semibold text-sage-800 dark:text-sage-100">
                     {phase.title}{" "}
                     <span className="font-normal text-sage-500 dark:text-sage-400">
@@ -516,7 +516,7 @@ export default function BuilderPage(): JSX.Element {
 
       {/* Suggestions Result */}
       {suggestions && (
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 p-6">
+        <div className="bg-white dark:bg-sage-900 rounded-xl shadow-sm border border-sage-200 dark:border-sage-800 p-6">
           <h2 className="text-xl font-semibold text-sage-900 mb-4">
             Empfohlene Übungen ({suggestions.length})
           </h2>
@@ -524,9 +524,9 @@ export default function BuilderPage(): JSX.Element {
             {suggestions.map((suggestion, index) => (
               <div
                 key={index}
-                className="flex items-start gap-4 p-4 bg-sage-50 dark:bg-gray-900 rounded-lg"
+                className="flex items-start gap-4 p-4 bg-sage-50 dark:bg-sage-950 rounded-lg"
               >
-                <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-sage-200 dark:bg-gray-700 rounded-lg text-sage-700 dark:text-sage-300 font-bold">
+                <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-sage-200 dark:bg-sage-800 rounded-lg text-sage-700 dark:text-sage-300 font-bold">
                   {suggestion.matchScore}%
                 </div>
                 <div>
@@ -544,7 +544,7 @@ export default function BuilderPage(): JSX.Element {
       )}
 
       {/* Info */}
-      <div className="bg-sage-50 dark:bg-gray-900 rounded-xl p-6">
+      <div className="bg-sage-50 dark:bg-sage-950 rounded-xl p-6">
         <h3 className="font-medium text-sage-800 dark:text-sage-100 mb-2">
           Wie funktioniert der Builder?
         </h3>

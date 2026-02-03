@@ -268,7 +268,7 @@ export default function ExercisesManagePage(): JSX.Element {
 
       {/* Add/Edit Form */}
       {showForm && (
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 p-6">
+        <div className="bg-white dark:bg-sage-900 rounded-xl shadow-sm border border-sage-200 dark:border-sage-800 p-6">
           <h2 className="text-lg font-semibold text-sage-900 dark:text-sage-100 mb-4">
             {editingId ? "Übung bearbeiten" : "Neue Übung erstellen"}
           </h2>
@@ -285,7 +285,7 @@ export default function ExercisesManagePage(): JSX.Element {
                   onChange={(e) =>
                     setFormData({ ...formData, title: e.target.value })
                   }
-                  className="w-full px-3 py-2 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-gray-700 dark:text-sage-100"
+                  className="w-full px-3 py-2 border border-sage-300 dark:border-sage-700 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-sage-800 dark:text-sage-100"
                   required
                 />
               </div>
@@ -304,7 +304,7 @@ export default function ExercisesManagePage(): JSX.Element {
                       ? generateSlug(formData.title)
                       : "automatisch"
                   }
-                  className="w-full px-3 py-2 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-gray-700 dark:text-sage-100"
+                  className="w-full px-3 py-2 border border-sage-300 dark:border-sage-700 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-sage-800 dark:text-sage-100"
                 />
               </div>
             </div>
@@ -319,7 +319,7 @@ export default function ExercisesManagePage(): JSX.Element {
                   setFormData({ ...formData, summary: e.target.value })
                 }
                 rows={2}
-                className="w-full px-3 py-2 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-gray-700 dark:text-sage-100"
+                className="w-full px-3 py-2 border border-sage-300 dark:border-sage-700 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-sage-800 dark:text-sage-100"
                 required
               />
             </div>
@@ -334,7 +334,7 @@ export default function ExercisesManagePage(): JSX.Element {
                   onChange={(e) =>
                     setFormData({ ...formData, area: e.target.value })
                   }
-                  className="w-full px-3 py-2 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-gray-700 dark:text-sage-100"
+                  className="w-full px-3 py-2 border border-sage-300 dark:border-sage-700 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-sage-800 dark:text-sage-100"
                 >
                   <option value="">Auswählen...</option>
                   {AREA_OPTIONS.map((a) => (
@@ -355,7 +355,7 @@ export default function ExercisesManagePage(): JSX.Element {
                     setFormData({ ...formData, focus: e.target.value })
                   }
                   placeholder="z.B. Kraft, Beweglichkeit"
-                  className="w-full px-3 py-2 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-gray-700 dark:text-sage-100"
+                  className="w-full px-3 py-2 border border-sage-300 dark:border-sage-700 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-sage-800 dark:text-sage-100"
                 />
               </div>
               <div>
@@ -367,7 +367,7 @@ export default function ExercisesManagePage(): JSX.Element {
                   onChange={(e) =>
                     setFormData({ ...formData, difficulty: e.target.value })
                   }
-                  className="w-full px-3 py-2 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-gray-700 dark:text-sage-100"
+                  className="w-full px-3 py-2 border border-sage-300 dark:border-sage-700 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-sage-800 dark:text-sage-100"
                 >
                   {DIFFICULTY_OPTIONS.map((d) => (
                     <option key={d} value={d}>
@@ -389,7 +389,7 @@ export default function ExercisesManagePage(): JSX.Element {
                 }
                 rows={4}
                 placeholder="Beschreibe die Ausführung der Übung..."
-                className="w-full px-3 py-2 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-gray-700 dark:text-sage-100"
+                className="w-full px-3 py-2 border border-sage-300 dark:border-sage-700 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-sage-800 dark:text-sage-100"
               />
             </div>
 
@@ -404,7 +404,7 @@ export default function ExercisesManagePage(): JSX.Element {
                 }
                 rows={2}
                 placeholder="Zusätzliche Tipps..."
-                className="w-full px-3 py-2 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-gray-700 dark:text-sage-100"
+                className="w-full px-3 py-2 border border-sage-300 dark:border-sage-700 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-sage-800 dark:text-sage-100"
               />
             </div>
 
@@ -422,12 +422,12 @@ export default function ExercisesManagePage(): JSX.Element {
                   })
                 }
                 placeholder="z.B. Knieprobleme, Bluthochdruck"
-                className="w-full px-3 py-2 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-gray-700 dark:text-sage-100"
+                className="w-full px-3 py-2 border border-sage-300 dark:border-sage-700 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-sage-800 dark:text-sage-100"
               />
             </div>
 
             {/* Alternatives */}
-            <div className="border-t border-sage-200 dark:border-gray-700 pt-4">
+            <div className="border-t border-sage-200 dark:border-sage-800 pt-4">
               <h3 className="font-medium text-sage-800 dark:text-sage-100 mb-3">
                 Alternativen bei Einschränkungen
               </h3>
@@ -498,7 +498,7 @@ export default function ExercisesManagePage(): JSX.Element {
                   setFormData({ ...formData, tags: e.target.value })
                 }
                 placeholder="z.B. Aufwärmen, Dehnung, Stuhl"
-                className="w-full px-3 py-2 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-gray-700 dark:text-sage-100"
+                className="w-full px-3 py-2 border border-sage-300 dark:border-sage-700 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-sage-800 dark:text-sage-100"
               />
             </div>
 
@@ -533,13 +533,13 @@ export default function ExercisesManagePage(): JSX.Element {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Übungen suchen..."
-          className="w-full md:w-96 px-4 py-2 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-gray-700 dark:text-sage-100"
+          className="w-full md:w-96 px-4 py-2 border border-sage-300 dark:border-sage-700 rounded-lg focus:ring-2 focus:ring-sage-500 dark:bg-sage-800 dark:text-sage-100"
         />
       </div>
 
       {/* Exercises List */}
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 overflow-hidden">
-        <div className="px-6 py-4 bg-sage-50 dark:bg-gray-900 border-b border-sage-200 dark:border-gray-700">
+      <div className="bg-white dark:bg-sage-900 rounded-xl shadow-sm border border-sage-200 dark:border-sage-800 overflow-hidden">
+        <div className="px-6 py-4 bg-sage-50 dark:bg-sage-950 border-b border-sage-200 dark:border-sage-800">
           <h2 className="text-lg font-semibold text-sage-800 dark:text-sage-100">
             Übungsbibliothek ({filteredExercises.length})
           </h2>
@@ -559,7 +559,7 @@ export default function ExercisesManagePage(): JSX.Element {
             {filteredExercises.map((exercise) => (
               <div
                 key={exercise.id}
-                className="px-6 py-4 flex items-center justify-between hover:bg-sage-50 dark:hover:bg-gray-700"
+                className="px-6 py-4 flex items-center justify-between hover:bg-sage-50 dark:hover:bg-sage-800"
               >
                 <div className="flex-1 min-w-0">
                   <h3 className="font-medium text-sage-800 dark:text-sage-100 truncate">

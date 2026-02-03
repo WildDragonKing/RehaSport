@@ -219,9 +219,9 @@ export default function SessionsManagePage(): JSX.Element {
       {categories.map((category) => (
         <div
           key={category.slug}
-          className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 overflow-hidden"
+          className="bg-white dark:bg-sage-900 rounded-xl shadow-sm border border-sage-200 dark:border-sage-800 overflow-hidden"
         >
-          <div className="px-6 py-4 bg-sage-50 dark:bg-gray-900 border-b border-sage-200 dark:border-gray-700">
+          <div className="px-6 py-4 bg-sage-50 dark:bg-sage-950 border-b border-sage-200 dark:border-sage-800">
             <h2 className="text-lg font-semibold text-sage-800 dark:text-sage-100">
               {category.title}
             </h2>
@@ -233,7 +233,7 @@ export default function SessionsManagePage(): JSX.Element {
             {category.sessions.map((session) => (
               <div
                 key={session.slug}
-                className="px-6 py-4 flex items-center justify-between hover:bg-sage-50 dark:hover:bg-gray-700"
+                className="px-6 py-4 flex items-center justify-between hover:bg-sage-50 dark:hover:bg-sage-800"
               >
                 <div>
                   <Link
@@ -257,22 +257,22 @@ export default function SessionsManagePage(): JSX.Element {
                     <button className="p-2 text-purple-500 hover:text-purple-700 hover:bg-purple-50 rounded transition-colors">
                       ✨
                     </button>
-                    <div className="absolute right-0 mt-1 w-48 bg-white dark:bg-gray-800 border border-sage-200 dark:border-gray-700 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-10">
+                    <div className="absolute right-0 mt-1 w-48 bg-white dark:bg-sage-900 border border-sage-200 dark:border-sage-800 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-10">
                       <button
                         onClick={() => openAIEditor(session, "improve")}
-                        className="w-full px-4 py-2 text-left text-sm hover:bg-sage-50 dark:hover:bg-gray-700 flex items-center gap-2"
+                        className="w-full px-4 py-2 text-left text-sm hover:bg-sage-50 dark:hover:bg-sage-800 flex items-center gap-2"
                       >
                         <span>💡</span> Mit KI verbessern
                       </button>
                       <button
                         onClick={() => openAIEditor(session, "updateRules")}
-                        className="w-full px-4 py-2 text-left text-sm hover:bg-sage-50 dark:hover:bg-gray-700 flex items-center gap-2"
+                        className="w-full px-4 py-2 text-left text-sm hover:bg-sage-50 dark:hover:bg-sage-800 flex items-center gap-2"
                       >
                         <span>🔄</span> Auf Regeln aktualisieren
                       </button>
                       <button
                         onClick={() => openAIEditor(session, "regenerate")}
-                        className="w-full px-4 py-2 text-left text-sm hover:bg-sage-50 dark:hover:bg-gray-700 flex items-center gap-2"
+                        className="w-full px-4 py-2 text-left text-sm hover:bg-sage-50 dark:hover:bg-sage-800 flex items-center gap-2"
                       >
                         <span>🔮</span> Komplett neu generieren
                       </button>
@@ -290,7 +290,7 @@ export default function SessionsManagePage(): JSX.Element {
       ))}
 
       {sessions.length === 0 && (
-        <div className="text-center py-12 bg-sage-50 dark:bg-gray-900 rounded-xl">
+        <div className="text-center py-12 bg-sage-50 dark:bg-sage-950 rounded-xl">
           <p className="text-sage-600 dark:text-sage-300">
             Noch keine Stunden vorhanden.
           </p>
@@ -306,7 +306,7 @@ export default function SessionsManagePage(): JSX.Element {
       {/* AI Editor Modal */}
       {showAIModal && selectedSession && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-xl max-w-lg w-full p-6">
+          <div className="bg-white dark:bg-sage-900 rounded-xl shadow-xl max-w-lg w-full p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-semibold text-sage-900">
                 {aiAction === "improve" && "💡 Stunde verbessern"}
@@ -351,7 +351,7 @@ export default function SessionsManagePage(): JSX.Element {
                   value={aiInstructions}
                   onChange={(e) => setAIInstructions(e.target.value)}
                   rows={3}
-                  className="w-full px-3 py-2 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-sage-500 focus:border-sage-500 dark:bg-gray-700 dark:text-sage-100"
+                  className="w-full px-3 py-2 border border-sage-300 dark:border-sage-700 rounded-lg focus:ring-2 focus:ring-sage-500 focus:border-sage-500 dark:bg-sage-800 dark:text-sage-100"
                   placeholder={
                     aiAction === "improve"
                       ? "z.B. Mehr Übungen für den unteren Rücken, weniger Bodenübungen..."
