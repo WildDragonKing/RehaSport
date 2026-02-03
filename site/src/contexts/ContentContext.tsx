@@ -6,8 +6,8 @@ import {
   ReactNode,
   useCallback,
 } from "react";
-import type { CategoryMeta, SessionMeta } from "../content/sessions";
-import type { ExerciseMeta } from "../content/exercises";
+import type { CategoryMeta, SessionMeta } from "../content/sessions-firestore";
+import type { ExerciseMeta } from "../content/exercises-firestore";
 
 // Firestore loaders
 import {

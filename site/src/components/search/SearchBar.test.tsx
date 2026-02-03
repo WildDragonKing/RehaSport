@@ -62,7 +62,7 @@ describe("SearchBar", () => {
   it("verwendet Standard-Placeholder", () => {
     render(<SearchBar value="" onChange={() => {}} />);
 
-    const input = screen.getByPlaceholderText("Übungen suchen...");
+    const input = screen.getByPlaceholderText("Übung suchen...");
     expect(input).toBeInTheDocument();
   });
 });

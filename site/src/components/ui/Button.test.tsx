@@ -9,7 +9,7 @@ describe("Button", () => {
 
     const button = screen.getByRole("button", { name: "Klick mich" });
     expect(button).toBeInTheDocument();
-    expect(button).toHaveClass("button", "button--primary");
+    expect(button).toHaveClass("btn", "btn-primary");
   });
 
   it("rendert als Link mit to-Prop", () => {
@@ -22,28 +22,28 @@ describe("Button", () => {
     const link = screen.getByRole("link", { name: "Zum Link" });
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute("href", "/test");
-    expect(link).toHaveClass("button", "button--primary");
+    expect(link).toHaveClass("btn", "btn-primary");
   });
 
   it("verwendet primary als Standard-Variant", () => {
     render(<Button>Standard</Button>);
 
     const button = screen.getByRole("button");
-    expect(button).toHaveClass("button--primary");
+    expect(button).toHaveClass("btn-primary");
   });
 
   it("wendet secondary-Variant korrekt an", () => {
     render(<Button variant="secondary">Sekundär</Button>);
 
     const button = screen.getByRole("button");
-    expect(button).toHaveClass("button--secondary");
+    expect(button).toHaveClass("btn-secondary");
   });
 
   it("fügt zusätzliche className hinzu", () => {
     render(<Button className="extra-class">Mit Klasse</Button>);
 
     const button = screen.getByRole("button");
-    expect(button).toHaveClass("button", "button--primary", "extra-class");
+    expect(button).toHaveClass("btn", "btn-primary", "extra-class");
   });
 
   it("setzt type='button' als Standard", () => {

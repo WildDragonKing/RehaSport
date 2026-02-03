@@ -12,7 +12,7 @@ import {
 import { useContent } from "../../contexts/ContentContext";
 import { useAuth } from "../../contexts/AuthContext";
 import { functions, db } from "../../firebase/config";
-import type { Session } from "../../firebase/types";
+import type { SessionMeta } from "../../content/sessions-firestore";
 
 interface AIEditRequest {
   action: "improve" | "updateRules" | "regenerate";
@@ -24,7 +24,9 @@ export default function SessionsManagePage(): JSX.Element {
   const { sessions, categories, exercises, refresh } = useContent();
   const { user } = useAuth();
 
-  const [selectedSession, setSelectedSession] = useState<Session | null>(null);
+  const [selectedSession, setSelectedSession] = useState<SessionMeta | null>(
+    null,
+  );
   const [showAIModal, setShowAIModal] = useState(false);
   const [aiAction, setAIAction] = useState<
     "improve" | "updateRules" | "regenerate"
@@ -37,7 +39,7 @@ export default function SessionsManagePage(): JSX.Element {
   const [bulkProgress, setBulkProgress] = useState({ current: 0, total: 0 });
 
   const openAIEditor = (
-    session: Session,
+    session: SessionMeta,
     action: "improve" | "updateRules" | "regenerate",
   ) => {
     setSelectedSession(session);
@@ -82,7 +84,7 @@ export default function SessionsManagePage(): JSX.Element {
 
       const data = result.data as {
         success: boolean;
-        session: Session;
+        session: SessionMeta;
         model?: string;
       };
 
@@ -156,7 +158,7 @@ export default function SessionsManagePage(): JSX.Element {
           })),
         });
 
-        const data = result.data as { success: boolean; session: Session };
+        const data = result.data as { success: boolean; session: SessionMeta };
 
         if (data.success && data.session) {
           const sessionRef = doc(db, "sessions", session.slug);

@@ -212,13 +212,23 @@ export async function approveDraft(
   const draft = await getDraft(draftId);
   if (!draft) throw new Error("Entwurf nicht gefunden");
 
+  // Generate slug from title
+  const slug = draft.title
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
   // Create session from draft
   const sessionData: Omit<Session, "id" | "createdAt" | "updatedAt"> = {
     title: draft.title,
+    slug,
     description: draft.description,
     duration: draft.duration,
     focus: draft.focus,
     category: draft.category,
+    categorySlug: draft.category,
     phases: draft.phases,
     status: "published",
     createdBy: draft.createdBy,

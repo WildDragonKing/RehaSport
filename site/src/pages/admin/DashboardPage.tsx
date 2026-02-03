@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { useContent } from "../../contexts/ContentContext";
-import { hasFirestoreData } from "../../firebase/migration";
 import { exportFirestoreData, type ExportResult } from "../../firebase/export";
 
 export default function DashboardPage(): JSX.Element {
@@ -10,20 +9,8 @@ export default function DashboardPage(): JSX.Element {
   const { categories, sessions, exercises, isFirestoreAvailable } =
     useContent();
 
-  const [firestoreStats, setFirestoreStats] = useState<{
-    sessions: number;
-    exercises: number;
-  } | null>(null);
   const [exporting, setExporting] = useState(false);
   const [exportResult, setExportResult] = useState<ExportResult | null>(null);
-
-  useEffect(() => {
-    const checkFirestore = async () => {
-      const stats = await hasFirestoreData();
-      setFirestoreStats(stats);
-    };
-    checkFirestore();
-  }, []);
 
   const handleExport = async () => {
     setExporting(true);
@@ -47,7 +34,7 @@ export default function DashboardPage(): JSX.Element {
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-display font-bold text-sage-900">
+        <h1 className="text-3xl font-display font-bold text-sage-900 dark:text-sage-50">
           Willkommen, {user?.displayName || user?.email?.split("@")[0]}!
         </h1>
         <p className="mt-2 text-sage-600 dark:text-sage-300">
@@ -81,7 +68,7 @@ export default function DashboardPage(): JSX.Element {
 
       {/* Quick Actions */}
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 p-6">
-        <h2 className="text-lg font-semibold text-sage-900 mb-4">
+        <h2 className="text-lg font-semibold text-sage-900 dark:text-sage-50 mb-4">
           Schnellaktionen
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -115,7 +102,7 @@ export default function DashboardPage(): JSX.Element {
       {/* Admin Tools */}
       {isAdmin && (
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 p-6">
-          <h2 className="text-lg font-semibold text-sage-900 mb-4">
+          <h2 className="text-lg font-semibold text-sage-900 dark:text-sage-50 mb-4">
             Admin-Tools
           </h2>
 
@@ -125,29 +112,20 @@ export default function DashboardPage(): JSX.Element {
               <h3 className="font-medium text-sage-800 dark:text-sage-100 mb-2">
                 Firestore-Datenbank
               </h3>
-              {firestoreStats ? (
-                <>
-                  <p className="text-sm text-sage-600 dark:text-sage-300">
-                    {firestoreStats.sessions} Stunden,{" "}
-                    {firestoreStats.exercises} Übungen
-                  </p>
-                  <p className="text-xs text-sage-500 dark:text-sage-400 mt-1">
-                    {isFirestoreAvailable ? "Verbunden" : "Nicht verfügbar"}
-                  </p>
-                </>
-              ) : (
-                <p className="text-sm text-sage-600 dark:text-sage-300">
-                  Lädt...
-                </p>
-              )}
+              <p className="text-sm text-sage-600 dark:text-sage-300">
+                {sessions.length} Stunden, {exercises.length} Übungen
+              </p>
+              <p className="text-xs text-sage-500 dark:text-sage-400 mt-1">
+                {isFirestoreAvailable ? "Verbunden" : "Nicht verfügbar"}
+              </p>
             </div>
 
             {/* Export */}
-            <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-              <h3 className="font-medium text-blue-800 mb-2">
+            <div className="p-4 bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg">
+              <h3 className="font-medium text-blue-800 dark:text-blue-200 mb-2">
                 Backup erstellen
               </h3>
-              <p className="text-sm text-blue-700 mb-3">
+              <p className="text-sm text-blue-700 dark:text-blue-300 mb-3">
                 Alle Daten als ZIP exportieren.
               </p>
               <button
@@ -163,21 +141,23 @@ export default function DashboardPage(): JSX.Element {
           {/* Export Result */}
           {exportResult && (
             <div
-              className={`mt-4 p-4 rounded-lg ${exportResult.success ? "bg-green-50 border border-green-200" : "bg-red-50 border border-red-200"}`}
+              className={`mt-4 p-4 rounded-lg ${exportResult.success ? "bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800" : "bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800"}`}
             >
               {exportResult.success ? (
                 <>
-                  <p className="font-medium text-green-800">
+                  <p className="font-medium text-green-800 dark:text-green-200">
                     Export erfolgreich!
                   </p>
-                  <p className="text-sm text-green-700 mt-1">
+                  <p className="text-sm text-green-700 dark:text-green-300 mt-1">
                     {exportResult.collections
                       .map((c) => `${c.count} ${c.name}`)
                       .join(", ")}
                   </p>
                 </>
               ) : (
-                <p className="text-red-800">Fehler: {exportResult.error}</p>
+                <p className="text-red-800 dark:text-red-200">
+                  Fehler: {exportResult.error}
+                </p>
               )}
             </div>
           )}
@@ -216,7 +196,9 @@ function StatCard({
       <p className="text-sm font-medium text-sage-500 dark:text-sage-400">
         {title}
       </p>
-      <p className="mt-2 text-3xl font-bold text-sage-900">{value}</p>
+      <p className="mt-2 text-3xl font-bold text-sage-900 dark:text-sage-50">
+        {value}
+      </p>
       <p className="mt-1 text-sm text-sage-600 dark:text-sage-300">
         {subtitle}
       </p>
@@ -248,7 +230,7 @@ function QuickAction({
       to={to}
       className="flex items-center gap-4 p-4 bg-sage-50 dark:bg-gray-900 rounded-lg hover:bg-sage-100 dark:hover:bg-gray-700 transition-colors group"
     >
-      <div className="w-10 h-10 flex items-center justify-center bg-sage-200 rounded-lg text-sage-700 font-bold group-hover:bg-sage-300 transition-colors">
+      <div className="w-10 h-10 flex items-center justify-center bg-sage-200 dark:bg-sage-700 rounded-lg text-sage-700 dark:text-sage-200 font-bold group-hover:bg-sage-300 dark:group-hover:bg-sage-600 transition-colors">
         {icon}
       </div>
       <div>

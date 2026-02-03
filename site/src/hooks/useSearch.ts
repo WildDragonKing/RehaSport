@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useContent } from "../contexts/ContentContext";
-import type { ExerciseMeta } from "../content/exercises";
+import type { ExerciseMeta } from "../content/exercises-firestore";
 
 export interface SearchFilters {
   query: string;

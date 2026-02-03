@@ -23,8 +23,6 @@ export default defineConfig(({ mode }) => {
       (hasCustomDomain ? "./" : repositoryName ? `/${repositoryName}/` : "./"));
 
   const projectRoot = fileURLToPath(new URL(".", import.meta.url));
-  const stundenDir = fileURLToPath(new URL("../stunden", import.meta.url));
-  const uebungenDir = fileURLToPath(new URL("../Übungen", import.meta.url));
 
   return {
     plugins: [
@@ -77,15 +75,10 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: {
         "@": resolve(projectRoot, "src"),
-        "@stunden": stundenDir,
-        "@uebungen": uebungenDir,
       },
     },
     server: {
       host: "0.0.0.0",
-      fs: {
-        allow: [projectRoot, stundenDir, uebungenDir],
-      },
     },
     test: {
       globals: true,

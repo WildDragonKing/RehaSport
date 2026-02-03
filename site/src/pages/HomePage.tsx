@@ -102,14 +102,6 @@ function HomePage(): JSX.Element {
       {/* Categories Section */}
       <section id="kategorien" className="section section-categories">
         <div className="container">
-          <header className="section-header scroll-reveal">
-            <h2 className="section-title">Wähle deinen Fokus</h2>
-            <p className="section-subtitle">
-              Jede Kategorie enthält strukturierte 45-Minuten-Einheiten mit
-              Aufwärmen, Hauptteil, Schwerpunkt und Ausklang.
-            </p>
-          </header>
-
           <div className="grid-categories scroll-reveal-stagger">
             {categories.map((category) => (
               <Link

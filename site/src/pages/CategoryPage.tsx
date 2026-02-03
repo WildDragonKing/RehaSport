@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom";
 
 import Button from "../components/ui/Button";
 import { useContent } from "../contexts/ContentContext";
-import type { SessionMeta } from "../content/sessions";
+import type { SessionMeta } from "../content/sessions-firestore";
 
 const CATEGORY_STYLES: Record<string, { icon: string; gradient: string }> = {
   ruecken: {

@@ -1,6 +1,5 @@
 import { Link, useParams } from "react-router-dom";
 
-import MarkdownContent from "../components/MarkdownContent";
 import Button from "../components/ui/Button";
 import StarRating from "../components/ui/StarRating";
 import { useContent } from "../contexts/ContentContext";
@@ -76,7 +75,7 @@ function ExerciseDetailPage(): JSX.Element {
     );
   }
 
-  // Find alternative sections
+  // Find alternative sections by title
   const kneeSection = exercise.sections.find((s) =>
     s.title.toLowerCase().includes("knie"),
   );
@@ -88,6 +87,15 @@ function ExerciseDetailPage(): JSX.Element {
       !s.title.toLowerCase().includes("knie") &&
       !s.title.toLowerCase().includes("schulter"),
   );
+
+  // Helper function to generate a stable key from title
+  const sectionKey = (title: string) =>
+    title
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/\p{Diacritic}/gu, "")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
 
   return (
     <div className="container stack">
@@ -154,39 +162,65 @@ function ExerciseDetailPage(): JSX.Element {
         )}
       </div>
 
-      {/* Alternatives Section (prominent) */}
-      {(kneeSection || shoulderSection) && (
+      {/* Alternatives Section (prominent) - from structured data or sections */}
+      {(exercise.kneeAlternative ||
+        exercise.shoulderAlternative ||
+        kneeSection ||
+        shoulderSection) && (
         <section className="stack-sm animate-fade-up fill-backwards delay-300">
           <h2 className="exercise-detail-section-title">
             Alternativen bei Beschwerden
           </h2>
           <div className="alternatives-grid">
-            {kneeSection && (
+            {(exercise.kneeAlternative || kneeSection) && (
               <div className="alternative-card alternative-card-knee">
                 <div className="alternative-card-header">
                   <span className="alternative-card-icon">🦵</span>
                   <span className="alternative-card-title">
-                    Bei Kniebeschwerden
+                    {exercise.kneeAlternative?.title || "Bei Kniebeschwerden"}
                   </span>
                 </div>
                 <div className="alternative-card-content">
-                  <MarkdownContent nodes={kneeSection.nodes} />
+                  <p>
+                    {exercise.kneeAlternative?.description ||
+                      kneeSection?.content}
+                  </p>
                 </div>
               </div>
             )}
-            {shoulderSection && (
+            {(exercise.shoulderAlternative || shoulderSection) && (
               <div className="alternative-card alternative-card-shoulder">
                 <div className="alternative-card-header">
                   <span className="alternative-card-icon">💪</span>
                   <span className="alternative-card-title">
-                    Bei Schulterbeschwerden
+                    {exercise.shoulderAlternative?.title ||
+                      "Bei Schulterbeschwerden"}
                   </span>
                 </div>
                 <div className="alternative-card-content">
-                  <MarkdownContent nodes={shoulderSection.nodes} />
+                  <p>
+                    {exercise.shoulderAlternative?.description ||
+                      shoulderSection?.content}
+                  </p>
                 </div>
               </div>
             )}
+          </div>
+        </section>
+      )}
+
+      {/* Contraindications */}
+      {exercise.contraindications && exercise.contraindications.length > 0 && (
+        <section className="stack-sm animate-fade-up fill-backwards delay-350">
+          <h2 className="exercise-detail-section-title">Kontraindikationen</h2>
+          <div className="card card-body">
+            <ul className="list-disc list-inside space-y-1">
+              {exercise.contraindications.map((item, index) => (
+                <li key={index} className="text-sage-700 dark:text-sage-300">
+                  {item}
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
       )}
@@ -196,13 +230,13 @@ function ExerciseDetailPage(): JSX.Element {
         <section className="stack animate-fade-up fill-backwards delay-400">
           {otherSections.map((section) => (
             <article
-              key={section.id}
-              id={section.id}
+              key={sectionKey(section.title)}
+              id={sectionKey(section.title)}
               className="exercise-detail-section"
             >
               <h2 className="exercise-detail-section-title">{section.title}</h2>
               <div className="exercise-detail-section-content">
-                <MarkdownContent nodes={section.nodes} />
+                <p>{section.content}</p>
               </div>
             </article>
           ))}
