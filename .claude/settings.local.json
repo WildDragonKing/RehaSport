@@ -76,12 +76,41 @@
       "Bash(npm audit:*)",
       "Bash(~/.bun/bin/bun:*)",
       "mcp__plugin_firebase_firebase__firestore_query_collection",
-      "mcp__plugin_firebase_firebase__firestore_list_collections"
+      "mcp__plugin_firebase_firebase__firestore_list_collections",
+      "mcp__plugin_playwright_playwright__browser_snapshot",
+      "mcp__plugin_playwright_playwright__browser_take_screenshot",
+      "mcp__plugin_playwright_playwright__browser_evaluate",
+      "mcp__plugin_playwright_playwright__browser_wait_for",
+      "mcp__plugin_playwright_playwright__browser_click",
+      "WebFetch(domain:www.pexels.com)",
+      "mcp__plugin_playwright_playwright__browser_close",
+      "Bash(pkill:*)",
+      "WebFetch(domain:codepen.io)",
+      "mcp__plugin_playwright_playwright__browser_press_key",
+      "Bash(lsof:*)",
+      "Bash(gh pr view:*)",
+      "Bash(gh run view:*)",
+      "Bash(gh run list:*)",
+      "Bash(gh pr checks:*)",
+      "Bash(gh run rerun:*)",
+      "Bash(gh release list:*)",
+      "Bash(npm show:*)",
+      "Bash(npm update:*)",
+      "Bash(git cherry-pick:*)",
+      "Bash(gh secret list:*)",
+      "Bash(gh secret set:*)"
     ],
     "deny": [],
     "ask": [],
     "additionalDirectories": [
       "d:\\Projects\\personal\\RehaSport"
     ]
-  }
+  },
+  "enabledMcpjsonServers": [
+    "context7",
+    "playwright"
+  ],
+  "disabledMcpjsonServers": [
+    "firebase"
+  ]
 }
