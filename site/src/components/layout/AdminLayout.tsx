@@ -1,6 +1,6 @@
 import { Outlet, NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 interface NavItem {
   to: string;
@@ -69,11 +69,27 @@ export default function AdminLayout(): JSX.Element {
   const navigate = useNavigate();
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const previousTheme = useRef<string | null>(null);
 
   const handleLogout = async () => {
     await logout();
     navigate("/");
   };
+
+  // Force dark mode in admin area
+  useEffect(() => {
+    const root = document.documentElement;
+    previousTheme.current = root.dataset.theme || null;
+    root.dataset.theme = "dark";
+    root.style.colorScheme = "dark";
+
+    return () => {
+      if (previousTheme.current) {
+        root.dataset.theme = previousTheme.current;
+        root.style.colorScheme = previousTheme.current;
+      }
+    };
+  }, []);
 
   // Close mobile menu on route change
   useEffect(() => {

@@ -54,27 +54,27 @@ export default function LoginPage(): JSX.Element {
 
   if (authLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-sage-50">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sage-600" />
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sage-600 dark:border-sage-400" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sage-50 to-sand-100 px-4">
+    <div className="min-h-screen flex items-center justify-center px-4">
       <div className="max-w-md w-full">
-        <div className="bg-white rounded-2xl shadow-xl p-8">
+        <div className="bg-white/90 dark:bg-sage-900/90 backdrop-blur-sm rounded-2xl shadow-xl p-8">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-display font-bold text-sage-800">
+            <h1 className="text-3xl font-display font-bold text-sage-800 dark:text-sage-100">
               Trainer-Login
             </h1>
-            <p className="mt-2 text-sage-600">
+            <p className="mt-2 text-sage-600 dark:text-sage-300">
               Melde dich mit deinem Google-Konto an
             </p>
           </div>
 
           {error && (
-            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+            <div className="mb-6 p-4 bg-red-50 dark:bg-red-950 border border-red-200 dark:border-red-800 rounded-lg text-red-700 dark:text-red-300 text-sm">
               {error}
             </div>
           )}
@@ -82,7 +82,7 @@ export default function LoginPage(): JSX.Element {
           <button
             onClick={handleGoogleLogin}
             disabled={loading}
-            className="w-full flex items-center justify-center gap-3 py-3 px-4 bg-white border-2 border-sage-200 hover:border-sage-400 hover:bg-sage-50 text-sage-800 font-medium rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full flex items-center justify-center gap-3 py-3 px-4 bg-white dark:bg-sage-800 border-2 border-sage-200 dark:border-sage-700 hover:border-sage-400 dark:hover:border-sage-500 hover:bg-sage-50 dark:hover:bg-sage-700 text-sage-800 dark:text-sage-100 font-medium rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? (
               <svg
@@ -130,14 +130,14 @@ export default function LoginPage(): JSX.Element {
           <div className="mt-8 text-center">
             <a
               href="/"
-              className="text-sm text-sage-600 hover:text-sage-800 transition-colors"
+              className="text-sm text-sage-600 dark:text-sage-400 hover:text-sage-800 dark:hover:text-sage-200 transition-colors"
             >
               Zurück zur Startseite
             </a>
           </div>
         </div>
 
-        <p className="mt-6 text-center text-sm text-sage-500">
+        <p className="mt-6 text-center text-sm text-sage-500 dark:text-sage-400">
           Der erste Nutzer wird automatisch Admin.
           <br />
           Weitere Trainer werden vom Admin eingeladen.
