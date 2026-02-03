@@ -74,6 +74,10 @@ Für Firebase-Operationen den MCP-Server verwenden:
 - `cd site && npm run build` - Vite Build für Frontend
 - `cd functions && npm run build` - TypeScript Build für Cloud Functions
 
+### Git Workflow
+- **Branch Protection:** Direct push zu `main` nicht möglich - immer PR erstellen
+- **Release:** PR von `develop` → `main`, dann Tag nach Merge erstellen
+
 ### Cloud Functions (functions/src/index.ts)
 - **Region:** `europe-west1` für alle Functions
 - **Gemini Modell:** `gemini-3-flash-preview` (Fallback: `gemini-2.5-flash`)
@@ -107,6 +111,11 @@ Für Firebase-Operationen den MCP-Server verwenden:
 - **Test Runner:** Vitest für .test.ts/.test.tsx Dateien
 - **Gotcha:** `matcher` muss ein Regex-String sein, kein Objekt
 - **Gotcha:** Prettier formatiert CSS nach Edit - vor erneutem Edit immer Read ausführen
+
+### Testing Patterns
+- **Vitest Hoisting:** Mock-Daten müssen INNERHALB der `vi.mock()` Factory definiert werden
+- **ContentProvider Tests:** `renderHook()` mit `wrapper: ContentProvider` für Context-Hooks
+- **IntersectionObserver:** Mock bereits in `test/setup.ts` für useScrollReveal
 
 ### Skills (.claude/skills/)
 - `/deploy` - Build + Firebase Deploy (site + functions)
