@@ -53,7 +53,14 @@ service cloud.firestore {
     match /drafts/{draftId} {
       allow read: if isAdmin() || (isTrainer() && resource.data.createdBy == request.auth.uid);
       allow create: if isTrainer();
-      allow update: if isAdmin() || (isTrainer() && resource.data.createdBy == request.auth.uid && resource.data.status == 'pending');
+      // Trainer können nur pending Drafts bearbeiten und dürfen status/approvedBy nicht ändern
+      allow update: if isAdmin() || (
+        isTrainer() &&
+        resource.data.createdBy == request.auth.uid &&
+        resource.data.status == 'pending' &&
+        request.resource.data.status == 'pending' &&
+        !('approvedBy' in request.resource.data)
+      );
       allow delete: if isAdmin() || (isTrainer() && resource.data.createdBy == request.auth.uid);
     }
 
@@ -91,9 +98,12 @@ service cloud.firestore {
     }
 
     match /invitations/{invitationId} {
-      allow read: if true;
+      // Nur einzelne Einladung abrufen (kein list), nur Admin kann alle sehen
+      allow get: if true;
+      allow list: if isAdmin();
       allow create: if isAdmin();
-      allow update: if isAuthenticated();
+      // Nur Admin oder der eingeladene User (nach Auth) kann aktualisieren
+      allow update: if isAdmin() || (isAuthenticated() && resource.data.email == request.auth.token.email);
       allow delete: if isAdmin();
     }
   }
