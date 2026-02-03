@@ -29,7 +29,7 @@ export default function DraftsPage(): JSX.Element {
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex gap-2 border-b border-sage-200 dark:border-gray-700">
+      <div className="flex gap-2 border-b border-sage-200 dark:border-sage-800">
         <button className="px-4 py-2 text-sage-800 dark:text-sage-100 border-b-2 border-sage-600 font-medium">
           Ausstehend
         </button>
@@ -47,7 +47,7 @@ export default function DraftsPage(): JSX.Element {
           {drafts.map((draft) => (
             <div
               key={draft.id}
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 p-6"
+              className="bg-white dark:bg-sage-900 rounded-xl shadow-sm border border-sage-200 dark:border-sage-800 p-6"
             >
               <div className="flex items-start justify-between">
                 <div>
@@ -97,7 +97,7 @@ export default function DraftsPage(): JSX.Element {
           ))}
         </div>
       ) : (
-        <div className="text-center py-12 bg-sage-50 dark:bg-gray-900 rounded-xl">
+        <div className="text-center py-12 bg-sage-50 dark:bg-sage-950 rounded-xl">
           <p className="text-sage-600 dark:text-sage-300">
             Keine Entwürfe vorhanden.
           </p>

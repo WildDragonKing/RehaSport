@@ -171,7 +171,7 @@ export default function BulkGeneratorPage(): JSX.Element {
       )}
 
       {/* Type Selection */}
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 p-6">
+      <div className="bg-white dark:bg-sage-900 rounded-xl shadow-sm border border-sage-200 dark:border-sage-800 p-6">
         <h2 className="text-lg font-semibold text-sage-900 dark:text-sage-100 mb-4">
           Was möchtest du generieren?
         </h2>
@@ -182,7 +182,7 @@ export default function BulkGeneratorPage(): JSX.Element {
             className={`p-4 rounded-xl border-2 text-left transition-colors disabled:opacity-50 ${
               type === "exercise"
                 ? "border-lime-500 bg-lime-50 dark:bg-lime-900/20"
-                : "border-sage-200 dark:border-gray-700 hover:border-sage-300 dark:hover:border-gray-600"
+                : "border-sage-200 dark:border-sage-800 hover:border-sage-300 dark:hover:border-gray-600"
             }`}
           >
             <div className="text-2xl mb-2">🏋️</div>
@@ -200,7 +200,7 @@ export default function BulkGeneratorPage(): JSX.Element {
             className={`p-4 rounded-xl border-2 text-left transition-colors disabled:opacity-50 ${
               type === "session"
                 ? "border-lime-500 bg-lime-50 dark:bg-lime-900/20"
-                : "border-sage-200 dark:border-gray-700 hover:border-sage-300 dark:hover:border-gray-600"
+                : "border-sage-200 dark:border-sage-800 hover:border-sage-300 dark:hover:border-gray-600"
             }`}
           >
             <div className="text-2xl mb-2">📋</div>
@@ -215,7 +215,7 @@ export default function BulkGeneratorPage(): JSX.Element {
       </div>
 
       {/* Idea Input */}
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 p-6">
+      <div className="bg-white dark:bg-sage-900 rounded-xl shadow-sm border border-sage-200 dark:border-sage-800 p-6">
         <h2 className="text-lg font-semibold text-sage-900 dark:text-sage-100 mb-4">
           Idee eingeben
         </h2>
@@ -235,7 +235,7 @@ export default function BulkGeneratorPage(): JSX.Element {
                   ? "z.B. Schulterübungen für Senioren mit eingeschränkter Beweglichkeit"
                   : "z.B. Rückenstunde mit Fokus auf Stabilisation und Kräftigung"
               }
-              className="w-full px-4 py-3 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-lime-500 dark:bg-gray-700 dark:text-sage-100 disabled:opacity-50"
+              className="w-full px-4 py-3 border border-sage-300 dark:border-sage-700 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-lime-500 dark:bg-sage-800 dark:text-sage-100 disabled:opacity-50"
             />
           </div>
 
@@ -248,7 +248,7 @@ export default function BulkGeneratorPage(): JSX.Element {
                 value={count}
                 onChange={(e) => setCount(Number(e.target.value))}
                 disabled={!!activeJob}
-                className="px-4 py-2 border border-sage-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-lime-500 dark:bg-gray-700 dark:text-sage-100 disabled:opacity-50"
+                className="px-4 py-2 border border-sage-300 dark:border-sage-700 rounded-lg focus:ring-2 focus:ring-lime-500 focus:border-lime-500 dark:bg-sage-800 dark:text-sage-100 disabled:opacity-50"
               >
                 {[3, 5, 7, 10].map((n) => (
                   <option key={n} value={n}>
@@ -284,7 +284,7 @@ export default function BulkGeneratorPage(): JSX.Element {
 
       {/* Generated Ideas */}
       {ideas.length > 0 && (
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 p-6">
+        <div className="bg-white dark:bg-sage-900 rounded-xl shadow-sm border border-sage-200 dark:border-sage-800 p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-sage-900 dark:text-sage-100">
               Generierte Ideen ({ideas.length})
@@ -301,7 +301,7 @@ export default function BulkGeneratorPage(): JSX.Element {
                 className={`flex items-start gap-4 p-4 rounded-lg cursor-pointer transition-colors ${
                   idea.selected
                     ? "bg-lime-50 dark:bg-lime-900/20 border border-lime-200 dark:border-lime-800"
-                    : "bg-sage-50 dark:bg-gray-900 border border-transparent hover:border-sage-200 dark:hover:border-gray-700"
+                    : "bg-sage-50 dark:bg-sage-950 border border-transparent hover:border-sage-200 dark:hover:border-gray-700"
                 }`}
               >
                 <input
@@ -320,17 +320,17 @@ export default function BulkGeneratorPage(): JSX.Element {
                   {type === "exercise" && (
                     <div className="flex gap-2 mt-2">
                       {idea.area && (
-                        <span className="text-xs px-2 py-1 bg-sage-200 dark:bg-gray-700 text-sage-700 dark:text-sage-300 rounded">
+                        <span className="text-xs px-2 py-1 bg-sage-200 dark:bg-sage-800 text-sage-700 dark:text-sage-300 rounded">
                           {idea.area}
                         </span>
                       )}
                       {idea.focus && (
-                        <span className="text-xs px-2 py-1 bg-sage-200 dark:bg-gray-700 text-sage-700 dark:text-sage-300 rounded">
+                        <span className="text-xs px-2 py-1 bg-sage-200 dark:bg-sage-800 text-sage-700 dark:text-sage-300 rounded">
                           {idea.focus}
                         </span>
                       )}
                       {idea.difficulty && (
-                        <span className="text-xs px-2 py-1 bg-sage-200 dark:bg-gray-700 text-sage-700 dark:text-sage-300 rounded">
+                        <span className="text-xs px-2 py-1 bg-sage-200 dark:bg-sage-800 text-sage-700 dark:text-sage-300 rounded">
                           {idea.difficulty}
                         </span>
                       )}
@@ -366,7 +366,7 @@ export default function BulkGeneratorPage(): JSX.Element {
 
       {/* Jobs */}
       {jobs.length > 0 && (
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 p-6">
+        <div className="bg-white dark:bg-sage-900 rounded-xl shadow-sm border border-sage-200 dark:border-sage-800 p-6">
           <h2 className="text-lg font-semibold text-sage-900 dark:text-sage-100 mb-4">
             Deine Jobs
           </h2>
@@ -382,7 +382,7 @@ export default function BulkGeneratorPage(): JSX.Element {
                       ? "border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/20"
                       : job.status === "failed"
                         ? "border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20"
-                        : "border-sage-200 dark:border-gray-700 bg-sage-50 dark:bg-gray-900"
+                        : "border-sage-200 dark:border-sage-800 bg-sage-50 dark:bg-sage-950"
                 }`}
               >
                 <div className="flex items-center justify-between mb-2">
@@ -424,7 +424,7 @@ export default function BulkGeneratorPage(): JSX.Element {
                       {Math.round((job.completedCount / job.totalCount) * 100)}%
                     </span>
                   </div>
-                  <div className="h-2 bg-sage-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                  <div className="h-2 bg-sage-200 dark:bg-sage-800 rounded-full overflow-hidden">
                     <div
                       className={`h-full transition-all duration-500 ${
                         job.status === "completed"
@@ -471,7 +471,7 @@ export default function BulkGeneratorPage(): JSX.Element {
       )}
 
       {/* Info */}
-      <div className="bg-sage-50 dark:bg-gray-900 rounded-xl p-6">
+      <div className="bg-sage-50 dark:bg-sage-950 rounded-xl p-6">
         <h3 className="font-medium text-sage-800 dark:text-sage-100 mb-2">
           Wie funktioniert der Bulk Generator?
         </h3>

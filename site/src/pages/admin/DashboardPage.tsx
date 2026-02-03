@@ -67,7 +67,7 @@ export default function DashboardPage(): JSX.Element {
       </div>
 
       {/* Quick Actions */}
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 p-6">
+      <div className="bg-white dark:bg-sage-900 rounded-xl shadow-sm border border-sage-200 dark:border-sage-800 p-6">
         <h2 className="text-lg font-semibold text-sage-900 dark:text-sage-50 mb-4">
           Schnellaktionen
         </h2>
@@ -101,14 +101,14 @@ export default function DashboardPage(): JSX.Element {
 
       {/* Admin Tools */}
       {isAdmin && (
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 p-6">
+        <div className="bg-white dark:bg-sage-900 rounded-xl shadow-sm border border-sage-200 dark:border-sage-800 p-6">
           <h2 className="text-lg font-semibold text-sage-900 dark:text-sage-50 mb-4">
             Admin-Tools
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Firestore Status */}
-            <div className="p-4 bg-sage-50 dark:bg-gray-900 rounded-lg">
+            <div className="p-4 bg-sage-50 dark:bg-sage-950 rounded-lg">
               <h3 className="font-medium text-sage-800 dark:text-sage-100 mb-2">
                 Firestore-Datenbank
               </h3>
@@ -183,10 +183,10 @@ function StatCard({
   color,
 }: StatCardProps): JSX.Element {
   const colorClasses = {
-    sage: "bg-sage-50 dark:bg-gray-900 border-sage-200 dark:border-gray-700",
-    sand: "bg-sand-50 dark:bg-gray-900 border-sand-200 dark:border-gray-700",
+    sage: "bg-sage-50 dark:bg-sage-950 border-sage-200 dark:border-sage-800",
+    sand: "bg-sand-50 dark:bg-sage-950 border-sand-200 dark:border-sage-800",
     terracotta:
-      "bg-terracotta-50 dark:bg-gray-900 border-terracotta-200 dark:border-gray-700",
+      "bg-terracotta-50 dark:bg-sage-950 border-terracotta-200 dark:border-sage-800",
   };
 
   const content = (
@@ -228,7 +228,7 @@ function QuickAction({
   return (
     <Link
       to={to}
-      className="flex items-center gap-4 p-4 bg-sage-50 dark:bg-gray-900 rounded-lg hover:bg-sage-100 dark:hover:bg-gray-700 transition-colors group"
+      className="flex items-center gap-4 p-4 bg-sage-50 dark:bg-sage-950 rounded-lg hover:bg-sage-100 dark:hover:bg-sage-800 transition-colors group"
     >
       <div className="w-10 h-10 flex items-center justify-center bg-sage-200 dark:bg-sage-700 rounded-lg text-sage-700 dark:text-sage-200 font-bold group-hover:bg-sage-300 dark:group-hover:bg-sage-600 transition-colors">
         {icon}
