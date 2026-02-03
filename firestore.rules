@@ -1,0 +1,100 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function getUserData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && getUserData().role == 'admin';
+    }
+
+    function isTrainer() {
+      return isAuthenticated() && getUserData().role in ['admin', 'trainer'];
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    match /sessions/{sessionId} {
+      allow read: if resource.data.status == 'published';
+      allow read: if isTrainer() && resource.data.createdBy == request.auth.uid;
+      allow read: if isAdmin();
+      allow create: if isTrainer();
+      allow update: if isAdmin() || (isTrainer() && resource.data.createdBy == request.auth.uid);
+      allow delete: if isAdmin() || (isTrainer() && resource.data.createdBy == request.auth.uid);
+    }
+
+    // Categories (Kategorien - nur Admin kann verwalten)
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /exercises/{exerciseId} {
+      allow read: if true;
+      allow create, update: if isTrainer();
+      allow delete: if isAdmin();
+    }
+
+    match /groups/{groupId} {
+      allow read: if isTrainer();
+      allow create: if isTrainer();
+      allow update, delete: if isAdmin() || (isTrainer() && resource.data.createdBy == request.auth.uid);
+    }
+
+    match /drafts/{draftId} {
+      allow read: if isAdmin() || (isTrainer() && resource.data.createdBy == request.auth.uid);
+      allow create: if isTrainer();
+      allow update: if isAdmin() || (isTrainer() && resource.data.createdBy == request.auth.uid && resource.data.status == 'pending');
+      allow delete: if isAdmin() || (isTrainer() && resource.data.createdBy == request.auth.uid);
+    }
+
+    match /users/{userId} {
+      allow read: if isOwner(userId);
+      allow read: if isAdmin();
+      allow create: if isOwner(userId);
+      allow update: if isAdmin() || isOwner(userId);
+      allow delete: if isAdmin();
+    }
+
+    match /config/{configId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated();
+      allow update, delete: if isAdmin();
+    }
+
+    match /ratings/{ratingId} {
+      allow read: if true;
+      allow create: if true;
+      allow update: if true;
+      allow delete: if isAdmin();
+    }
+
+    // Analytics (Nutzungsstatistiken)
+    match /analytics/{docId} {
+      allow read: if isAdmin();
+      allow create, update: if true;
+      allow delete: if isAdmin();
+    }
+
+    // Rate Limits (für KI-Anfragen)
+    match /rateLimits/{userId} {
+      allow read, write: if false; // Nur Server-Zugriff
+    }
+
+    match /invitations/{invitationId} {
+      allow read: if true;
+      allow create: if isAdmin();
+      allow update: if isAuthenticated();
+      allow delete: if isAdmin();
+    }
+  }
+}

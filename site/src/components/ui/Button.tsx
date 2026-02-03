@@ -52,10 +52,20 @@ function Button(props: ButtonProps): JSX.Element {
     sizeClasses[size],
     isIcon ? "btn-icon" : "",
     props.className,
-  ].filter(Boolean).join(" ");
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   if ("to" in props && props.to) {
-    const { to, variant: _v, size: _s, icon: _i, className: _c, children, ...rest } = props;
+    const {
+      to,
+      variant: _v,
+      size: _s,
+      icon: _i,
+      className: _c,
+      children,
+      ...rest
+    } = props;
     return (
       <Link to={to} className={classes} {...rest}>
         {children}
@@ -63,7 +73,15 @@ function Button(props: ButtonProps): JSX.Element {
     );
   }
 
-  const { variant: _v, size: _s, icon: _i, className: _c, children, type = "button", ...rest } = props as ButtonAsButton;
+  const {
+    variant: _v,
+    size: _s,
+    icon: _i,
+    className: _c,
+    children,
+    type = "button",
+    ...rest
+  } = props as ButtonAsButton;
   return (
     <button type={type} className={classes} {...rest}>
       {children}

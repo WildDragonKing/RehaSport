@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "firebase": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/firebase-mcp"],
+      "env": {
+        "FIREBASE_PROJECT_DIR": "."
+      }
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/playwright-mcp"]
+    }
+  }
+}

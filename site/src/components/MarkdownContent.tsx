@@ -7,12 +7,17 @@ import type {
   Paragraph,
   PhrasingContent,
   RootContent,
-  Text
+  Text,
 } from "mdast";
 
 import type { Content } from "mdast";
 
-type MarkdownNode = Content | RootContent | BlockContent | DefinitionContent | PhrasingContent;
+type MarkdownNode =
+  | Content
+  | RootContent
+  | BlockContent
+  | DefinitionContent
+  | PhrasingContent;
 
 interface MarkdownContentProps {
   nodes: Content[];
@@ -26,12 +31,17 @@ function isInlineCode(node: MarkdownNode): node is InlineCode {
   return node.type === "inlineCode";
 }
 
-function renderChildren(children: MarkdownNode[] | undefined, keyPrefix: string): JSX.Element[] {
+function renderChildren(
+  children: MarkdownNode[] | undefined,
+  keyPrefix: string,
+): JSX.Element[] {
   if (!children) {
     return [];
   }
 
-  return children.map((child, index) => renderNode(child, `${keyPrefix}-${index}`));
+  return children.map((child, index) =>
+    renderNode(child, `${keyPrefix}-${index}`),
+  );
 }
 
 function resolveLinkTarget(url: string): string {
@@ -52,7 +62,11 @@ function renderNode(node: MarkdownNode, key: string): JSX.Element {
     case "list": {
       const Tag = node.ordered ? "ol" : "ul";
       return (
-        <Tag key={key} start={node.start ?? undefined} className={node.spread ? "list--spread" : undefined}>
+        <Tag
+          key={key}
+          start={node.start ?? undefined}
+          className={node.spread ? "list--spread" : undefined}
+        >
           {renderChildren(node.children, key)}
         </Tag>
       );
@@ -60,9 +74,18 @@ function renderNode(node: MarkdownNode, key: string): JSX.Element {
     case "listItem": {
       const hasSingleParagraph =
         node.children.length === 1 && node.children[0]?.type === "paragraph";
-      const paragraph = hasSingleParagraph ? (node.children[0] as Paragraph) : undefined;
+      const paragraph = hasSingleParagraph
+        ? (node.children[0] as Paragraph)
+        : undefined;
       return (
-        <li key={key} className={node.checked !== null && node.checked !== undefined ? "list-item--task" : undefined}>
+        <li
+          key={key}
+          className={
+            node.checked !== null && node.checked !== undefined
+              ? "list-item--task"
+              : undefined
+          }
+        >
           {node.checked !== null && node.checked !== undefined ? (
             <span aria-hidden="true">{node.checked ? "☑" : "☐"}</span>
           ) : null}
@@ -82,8 +105,10 @@ function renderNode(node: MarkdownNode, key: string): JSX.Element {
       return <hr key={key} className="markdown-separator" />;
     case "heading": {
       const depth = Math.min(node.depth + 1, 6);
-      const HeadingTag = (`h${depth}` as unknown) as keyof JSX.IntrinsicElements;
-      return <HeadingTag key={key}>{renderChildren(node.children, key)}</HeadingTag>;
+      const HeadingTag = `h${depth}` as unknown as keyof JSX.IntrinsicElements;
+      return (
+        <HeadingTag key={key}>{renderChildren(node.children, key)}</HeadingTag>
+      );
     }
     case "link": {
       const target = resolveLinkTarget(node.url);
@@ -113,7 +138,9 @@ function renderNode(node: MarkdownNode, key: string): JSX.Element {
       );
     }
     case "blockquote":
-      return <blockquote key={key}>{renderChildren(node.children, key)}</blockquote>;
+      return (
+        <blockquote key={key}>{renderChildren(node.children, key)}</blockquote>
+      );
     case "table": {
       return (
         <div key={key} className="markdown-table-wrapper">
@@ -125,7 +152,10 @@ function renderNode(node: MarkdownNode, key: string): JSX.Element {
                     const CellTag = rowIndex === 0 ? "th" : "td";
                     return (
                       <CellTag key={`${key}-cell-${rowIndex}-${cellIndex}`}>
-                        {renderChildren(cell.children, `${key}-cell-${rowIndex}-${cellIndex}`)}
+                        {renderChildren(
+                          cell.children,
+                          `${key}-cell-${rowIndex}-${cellIndex}`,
+                        )}
                       </CellTag>
                     );
                   })}

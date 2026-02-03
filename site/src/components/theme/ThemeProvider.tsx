@@ -1,4 +1,11 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 export type ThemeMode = "light" | "dark" | "system";
 
@@ -16,7 +23,9 @@ function getSystemPreference(): "light" | "dark" {
   if (typeof window === "undefined") {
     return "light";
   }
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
 }
 
 function readStoredMode(): ThemeMode {
@@ -30,10 +39,14 @@ function readStoredMode(): ThemeMode {
   return "system";
 }
 
-function ThemeProvider({ children }: { children: React.ReactNode }): JSX.Element {
+function ThemeProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}): JSX.Element {
   const [mode, setModeState] = useState<ThemeMode>(() => readStoredMode());
   const [resolvedMode, setResolvedMode] = useState<"light" | "dark">(() =>
-    mode === "system" ? getSystemPreference() : mode
+    mode === "system" ? getSystemPreference() : mode,
   );
 
   useEffect(() => {
@@ -67,7 +80,8 @@ function ThemeProvider({ children }: { children: React.ReactNode }): JSX.Element
 
     if (typeof mediaQuery.addEventListener === "function") {
       mediaQuery.addEventListener("change", updateFromMediaQuery);
-      return () => mediaQuery.removeEventListener("change", updateFromMediaQuery);
+      return () =>
+        mediaQuery.removeEventListener("change", updateFromMediaQuery);
     }
 
     mediaQuery.addListener(updateFromMediaQuery);
@@ -88,7 +102,10 @@ function ThemeProvider({ children }: { children: React.ReactNode }): JSX.Element
     if (themeColor) {
       const styles = window.getComputedStyle(root);
       const background = styles.getPropertyValue("--color-background").trim();
-      themeColor.setAttribute("content", background || (resolvedMode === "dark" ? "#0b1220" : "#f4f7fb"));
+      themeColor.setAttribute(
+        "content",
+        background || (resolvedMode === "dark" ? "#0b1220" : "#f4f7fb"),
+      );
     }
   }, [mode, resolvedMode]);
 
@@ -100,18 +117,24 @@ function ThemeProvider({ children }: { children: React.ReactNode }): JSX.Element
     () => ({
       mode,
       resolvedMode,
-      setMode
+      setMode,
     }),
-    [mode, resolvedMode, setMode]
+    [mode, resolvedMode, setMode],
   );
 
-  return <ThemeContext.Provider value={contextValue}>{children}</ThemeContext.Provider>;
+  return (
+    <ThemeContext.Provider value={contextValue}>
+      {children}
+    </ThemeContext.Provider>
+  );
 }
 
 function useTheme(): ThemeContextValue {
   const context = useContext(ThemeContext);
   if (!context) {
-    throw new Error("useTheme muss innerhalb von ThemeProvider verwendet werden");
+    throw new Error(
+      "useTheme muss innerhalb von ThemeProvider verwendet werden",
+    );
   }
   return context;
 }

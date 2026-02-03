@@ -15,7 +15,7 @@ function FilterPanel({
   selectedDifficulty,
   onDifficultyChange,
   onClear,
-  hasActiveFilters
+  hasActiveFilters,
 }: FilterPanelProps): JSX.Element {
   const togglePhase = (phaseId: string) => {
     if (selectedPhases.includes(phaseId)) {
@@ -42,12 +42,19 @@ function FilterPanel({
                 onChange={() => togglePhase(phase.id)}
                 className="sr-only"
               />
-              <span className="phase-dot" style={{
-                backgroundColor: phase.id === "aufwärmen" ? "var(--color-phase-warmup)" :
-                  phase.id === "hauptteil" ? "var(--color-phase-main)" :
-                  phase.id === "schwerpunkt" ? "var(--color-phase-focus)" :
-                  "var(--color-phase-cooldown)"
-              }} />
+              <span
+                className="phase-dot"
+                style={{
+                  backgroundColor:
+                    phase.id === "aufwärmen"
+                      ? "var(--color-phase-warmup)"
+                      : phase.id === "hauptteil"
+                        ? "var(--color-phase-main)"
+                        : phase.id === "schwerpunkt"
+                          ? "var(--color-phase-focus)"
+                          : "var(--color-phase-cooldown)",
+                }}
+              />
               {phase.label}
             </label>
           ))}
@@ -55,7 +62,14 @@ function FilterPanel({
       </fieldset>
 
       {/* Difficulty & Clear */}
-      <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "0.75rem" }}>
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "center",
+          gap: "0.75rem",
+        }}
+      >
         <fieldset>
           <legend className="sr-only">Schwierigkeit</legend>
           <select

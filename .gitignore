@@ -3,6 +3,8 @@ node_modules/
 
 # Build output
 dist/
+functions/lib/
+.firebase/
 
 # IDE
 .idea/
@@ -14,3 +16,10 @@ Thumbs.db
 
 # Temporary files
 tmpclaude-*
+firebase-debug.log
+
+# Environment variables (API keys)
+.env
+.env.local
+.env.*.local
+!.env.example

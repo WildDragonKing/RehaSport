@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
   <head>
     <meta charset="utf-8" />
@@ -8,7 +8,13 @@
     <style>
       :root {
         color-scheme: light dark;
-        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-family:
+          "Inter",
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
         background: #f5f5f5;
         color: #1a1a1a;
       }
@@ -37,7 +43,9 @@
         padding: 1.25rem;
         border: 1px solid rgba(0, 0, 0, 0.08);
         background: rgba(255, 255, 255, 0.8);
-        transition: border-color 0.2s ease, transform 0.2s ease;
+        transition:
+          border-color 0.2s ease,
+          transform 0.2s ease;
       }
       .entry:hover {
         border-color: #0070f3;
@@ -72,75 +80,79 @@
     <header>
       <h1>RehaSport Dokumentationsindex</h1>
       <p>
-        Diese Übersicht wird täglich automatisch aktualisiert und bietet einen schnellen Einstieg
-        in die Dokumentation, Übungen und Stunden.
+        Diese Übersicht wird täglich automatisch aktualisiert und bietet einen
+        schnellen Einstieg in die Dokumentation, Übungen und Stunden.
       </p>
     </header>
     <main id="content">Lade Daten …</main>
     <footer>
       <p>
-        Individuelle Inhalte und vollständige Beschreibungen finden Sie direkt im Repository unter
-        <code>Anleitung/</code>, <code>Übungen/</code>, <code>Stunden/</code> und <code>Konzepte/</code>.
+        Individuelle Inhalte und vollständige Beschreibungen finden Sie direkt
+        im Repository unter
+        <code>Anleitung/</code>, <code>Übungen/</code>,
+        <code>Stunden/</code> und <code>Konzepte/</code>.
       </p>
     </footer>
     <script>
       async function loadIndex() {
         try {
-          const response = await fetch('data/content-index.json', { cache: 'no-cache' });
+          const response = await fetch("data/content-index.json", {
+            cache: "no-cache",
+          });
           if (!response.ok) {
             throw new Error(`Fehler beim Laden: ${response.status}`);
           }
           const data = await response.json();
           renderEntries(data);
         } catch (error) {
-          document.getElementById('content').textContent =
-            'Konnte den Inhaltsindex nicht laden. Bitte später erneut versuchen.';
+          document.getElementById("content").textContent =
+            "Konnte den Inhaltsindex nicht laden. Bitte später erneut versuchen.";
           console.error(error);
         }
       }
 
       function renderEntries(indexData) {
         const { entries = [], repository, branch } = indexData;
-        const container = document.getElementById('content');
+        const container = document.getElementById("content");
         if (!entries.length) {
-          container.textContent = 'Keine Inhalte gefunden.';
+          container.textContent = "Keine Inhalte gefunden.";
           return;
         }
-        container.innerHTML = '';
+        container.innerHTML = "";
         for (const entry of entries) {
-          const article = document.createElement('article');
-          article.className = 'entry';
+          const article = document.createElement("article");
+          article.className = "entry";
 
-          const title = document.createElement('h2');
+          const title = document.createElement("h2");
           title.textContent = entry.title;
           article.appendChild(title);
 
-          const category = document.createElement('p');
+          const category = document.createElement("p");
           category.innerHTML = `<strong>Kategorie:</strong> ${entry.category}`;
           article.appendChild(category);
 
           if (entry.summary) {
-            const summary = document.createElement('p');
+            const summary = document.createElement("p");
             summary.textContent = entry.summary;
             article.appendChild(summary);
           }
 
-          const link = document.createElement('p');
-          const linkEl = document.createElement('a');
+          const link = document.createElement("p");
+          const linkEl = document.createElement("a");
           const repo = entry.repository ?? repository;
           const ref = entry.branch ?? branch;
           linkEl.href = repo
             ? `https://github.com/${repo}/blob/${ref}/${entry.relativePath}`
             : `https://github.com/${entry.relativePath}`;
-          linkEl.textContent = 'Im Repository ansehen';
-          linkEl.rel = 'noreferrer noopener';
-          linkEl.target = '_blank';
+          linkEl.textContent = "Im Repository ansehen";
+          linkEl.rel = "noreferrer noopener";
+          linkEl.target = "_blank";
           link.appendChild(linkEl);
           article.appendChild(link);
 
-          const time = document.createElement('time');
+          const time = document.createElement("time");
           time.dateTime = entry.lastModified;
-          time.textContent = `Zuletzt aktualisiert: ${new Date(entry.lastModified).toLocaleDateString('de-DE')}`;
+          time.textContent = `Zuletzt aktualisiert: ${new Date(entry.lastModified).toLocaleDateString("de-DE")}`;
           article.appendChild(time);
 
           container.appendChild(article);

@@ -5,7 +5,16 @@ import { faqItems, infoSections } from "../content/info";
 // Chevron Icon
 function ChevronDownIcon(): JSX.Element {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <path d="m6 9 6 6 6-6" />
     </svg>
   );
@@ -21,11 +30,15 @@ function InfoPage(): JSX.Element {
   return (
     <div className="container stack-lg">
       {/* Page Header */}
-      <header className="stack-sm text-center" style={{ maxWidth: "640px", margin: "0 auto" }}>
+      <header
+        className="stack-sm text-center"
+        style={{ maxWidth: "640px", margin: "0 auto" }}
+      >
         <h1>Über RehaSport Reader</h1>
         <p className="text-muted" style={{ fontSize: "1.125rem" }}>
-          Strukturierte Trainingsstunden für Rehabilitation und Gesundheitssport.
-          Alle Übungen mit sicheren Alternativen bei Knie- und Schulterbeschwerden.
+          Strukturierte Trainingsstunden für Rehabilitation und
+          Gesundheitssport. Alle Übungen mit sicheren Alternativen bei Knie- und
+          Schulterbeschwerden.
         </p>
       </header>
 
@@ -34,7 +47,8 @@ function InfoPage(): JSX.Element {
         <div className="section-header">
           <h2 className="section-title">Das 45-Minuten-Schema</h2>
           <p className="section-subtitle">
-            Jede Trainingsstunde folgt einer bewährten Struktur für sicheres und effektives Training.
+            Jede Trainingsstunde folgt einer bewährten Struktur für sicheres und
+            effektives Training.
           </p>
         </div>
 
@@ -50,28 +64,48 @@ function InfoPage(): JSX.Element {
               <span className="phase-dot phase-dot-warmup" />
               <div>
                 <strong>Aufwärmen</strong>
-                <span className="text-muted" style={{ display: "block", fontSize: "0.8125rem" }}>Mobilisation, Kreislauf aktivieren</span>
+                <span
+                  className="text-muted"
+                  style={{ display: "block", fontSize: "0.8125rem" }}
+                >
+                  Mobilisation, Kreislauf aktivieren
+                </span>
               </div>
             </div>
             <div className="time-legend-item">
               <span className="phase-dot phase-dot-main" />
               <div>
                 <strong>Hauptteil</strong>
-                <span className="text-muted" style={{ display: "block", fontSize: "0.8125rem" }}>Kräftigung, funktionelle Übungen</span>
+                <span
+                  className="text-muted"
+                  style={{ display: "block", fontSize: "0.8125rem" }}
+                >
+                  Kräftigung, funktionelle Übungen
+                </span>
               </div>
             </div>
             <div className="time-legend-item">
               <span className="phase-dot phase-dot-focus" />
               <div>
                 <strong>Schwerpunkt</strong>
-                <span className="text-muted" style={{ display: "block", fontSize: "0.8125rem" }}>Vertiefung des Stundenthemas</span>
+                <span
+                  className="text-muted"
+                  style={{ display: "block", fontSize: "0.8125rem" }}
+                >
+                  Vertiefung des Stundenthemas
+                </span>
               </div>
             </div>
             <div className="time-legend-item">
               <span className="phase-dot phase-dot-cooldown" />
               <div>
                 <strong>Ausklang</strong>
-                <span className="text-muted" style={{ display: "block", fontSize: "0.8125rem" }}>Dehnung, Entspannung</span>
+                <span
+                  className="text-muted"
+                  style={{ display: "block", fontSize: "0.8125rem" }}
+                >
+                  Dehnung, Entspannung
+                </span>
               </div>
             </div>
           </div>
@@ -83,10 +117,19 @@ function InfoPage(): JSX.Element {
         <div className="grid-sessions">
           {infoSections.map((section) => (
             <article key={section.title} className="card card-body">
-              <h2 style={{ fontSize: "1.125rem", fontWeight: 600, marginBottom: "0.75rem" }}>
+              <h2
+                style={{
+                  fontSize: "1.125rem",
+                  fontWeight: 600,
+                  marginBottom: "0.75rem",
+                }}
+              >
                 {section.title}
               </h2>
-              <p className="text-muted" style={{ marginBottom: section.bullets ? "1rem" : 0 }}>
+              <p
+                className="text-muted"
+                style={{ marginBottom: section.bullets ? "1rem" : 0 }}
+              >
                 {section.body}
               </p>
               {section.bullets && (
@@ -95,9 +138,19 @@ function InfoPage(): JSX.Element {
                     <li
                       key={bullet}
                       className="text-muted"
-                      style={{ display: "flex", alignItems: "flex-start", gap: "0.5rem", marginBottom: "0.5rem" }}
+                      style={{
+                        display: "flex",
+                        alignItems: "flex-start",
+                        gap: "0.5rem",
+                        marginBottom: "0.5rem",
+                      }}
                     >
-                      <span className="text-primary" style={{ marginTop: "0.25rem" }}>•</span>
+                      <span
+                        className="text-primary"
+                        style={{ marginTop: "0.25rem" }}
+                      >
+                        •
+                      </span>
                       <span>{bullet}</span>
                     </li>
                   ))}
@@ -122,11 +175,16 @@ function InfoPage(): JSX.Element {
                 aria-expanded={openFaq === item.question}
               >
                 <span>{item.question}</span>
-                <span style={{
-                  transform: openFaq === item.question ? "rotate(180deg)" : "rotate(0)",
-                  transition: "transform 0.2s ease",
-                  color: "var(--color-text-light)"
-                }}>
+                <span
+                  style={{
+                    transform:
+                      openFaq === item.question
+                        ? "rotate(180deg)"
+                        : "rotate(0)",
+                    transition: "transform 0.2s ease",
+                    color: "var(--color-text-light)",
+                  }}
+                >
                   <ChevronDownIcon />
                 </span>
               </button>
@@ -141,10 +199,16 @@ function InfoPage(): JSX.Element {
       </section>
 
       {/* Footer Info */}
-      <section className="card card-body text-center" style={{ backgroundColor: "var(--color-surface-muted)" }}>
-        <h2 style={{ fontSize: "1.25rem", marginBottom: "0.5rem" }}>Open Source</h2>
+      <section
+        className="card card-body text-center"
+        style={{ backgroundColor: "var(--color-surface-muted)" }}
+      >
+        <h2 style={{ fontSize: "1.25rem", marginBottom: "0.5rem" }}>
+          Open Source
+        </h2>
         <p className="text-muted" style={{ marginBottom: "1rem" }}>
-          RehaSport Reader ist ein offenes Projekt. Feedback und Beiträge sind willkommen.
+          RehaSport Reader ist ein offenes Projekt. Feedback und Beiträge sind
+          willkommen.
         </p>
         <a
           href="https://github.com/WildDragonKing/RehaSport"

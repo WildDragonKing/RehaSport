@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
-import { exercises, type ExerciseMeta } from "../content/exercises";
+import { useContent } from "../contexts/ContentContext";
+import type { ExerciseMeta } from "../content/exercises-firestore";
 
 export interface SearchFilters {
   query: string;
@@ -17,12 +18,16 @@ export interface UseSearchResult {
   setSelectedDifficulty: (difficulty: string | null) => void;
   clearFilters: () => void;
   hasActiveFilters: boolean;
+  loading: boolean;
 }
 
 export function useExerciseSearch(): UseSearchResult {
+  const { exercises, loading } = useContent();
   const [query, setQuery] = useState("");
   const [selectedPhases, setSelectedPhases] = useState<string[]>([]);
-  const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
+  const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(
+    null,
+  );
 
   const filteredExercises = useMemo(() => {
     let results = [...exercises];
@@ -36,22 +41,27 @@ export function useExerciseSearch(): UseSearchResult {
           ex.summary?.toLowerCase().includes(q) ||
           ex.tags.some((tag) => tag.toLowerCase().includes(q)) ||
           ex.area?.toLowerCase().includes(q) ||
-          ex.focus?.toLowerCase().includes(q)
+          ex.focus?.toLowerCase().includes(q),
       );
     }
 
     // Phase-Filter (aus Tags ableiten)
     if (selectedPhases.length > 0) {
-      results = results.filter((ex) => selectedPhases.some((phase) => ex.tags.includes(phase)));
+      results = results.filter((ex) =>
+        selectedPhases.some((phase) => ex.tags.includes(phase)),
+      );
     }
 
     // Schwierigkeits-Filter
     if (selectedDifficulty) {
-      results = results.filter((ex) => ex.difficulty?.toLowerCase() === selectedDifficulty.toLowerCase());
+      results = results.filter(
+        (ex) =>
+          ex.difficulty?.toLowerCase() === selectedDifficulty.toLowerCase(),
+      );
     }
 
     return results;
-  }, [query, selectedPhases, selectedDifficulty]);
+  }, [exercises, query, selectedPhases, selectedDifficulty]);
 
   const clearFilters = () => {
     setQuery("");
@@ -59,7 +69,10 @@ export function useExerciseSearch(): UseSearchResult {
     setSelectedDifficulty(null);
   };
 
-  const hasActiveFilters = query.trim() !== "" || selectedPhases.length > 0 || selectedDifficulty !== null;
+  const hasActiveFilters =
+    query.trim() !== "" ||
+    selectedPhases.length > 0 ||
+    selectedDifficulty !== null;
 
   return {
     filteredExercises,
@@ -70,7 +83,8 @@ export function useExerciseSearch(): UseSearchResult {
     selectedDifficulty,
     setSelectedDifficulty,
     clearFilters,
-    hasActiveFilters
+    hasActiveFilters,
+    loading,
   };
 }
 
@@ -78,7 +92,7 @@ export const PHASE_OPTIONS = [
   { id: "aufwaermen", label: "Aufwärmen" },
   { id: "hauptteil", label: "Hauptteil" },
   { id: "schwerpunkt", label: "Schwerpunkt" },
-  { id: "ausklang", label: "Ausklang" }
+  { id: "ausklang", label: "Ausklang" },
 ];
 
 export const DIFFICULTY_OPTIONS = ["Leicht", "Mittel", "Fortgeschritten"];

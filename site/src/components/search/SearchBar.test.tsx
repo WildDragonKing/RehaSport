@@ -31,11 +31,15 @@ describe("SearchBar", () => {
   it("zeigt Löschen-Button nur bei Wert", () => {
     const { rerender } = render(<SearchBar value="" onChange={() => {}} />);
 
-    expect(screen.queryByRole("button", { name: "Suche löschen" })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Suche löschen" }),
+    ).not.toBeInTheDocument();
 
     rerender(<SearchBar value="Test" onChange={() => {}} />);
 
-    expect(screen.getByRole("button", { name: "Suche löschen" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Suche löschen" }),
+    ).toBeInTheDocument();
   });
 
   it("leert das Feld beim Klick auf Löschen", () => {
@@ -58,7 +62,7 @@ describe("SearchBar", () => {
   it("verwendet Standard-Placeholder", () => {
     render(<SearchBar value="" onChange={() => {}} />);
 
-    const input = screen.getByPlaceholderText("Übungen suchen...");
+    const input = screen.getByPlaceholderText("Übung suchen...");
     expect(input).toBeInTheDocument();
   });
 });

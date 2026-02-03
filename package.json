@@ -4,20 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "validate": "node scripts/validate-content.js",
-    "validate:exercises": "node scripts/validate-content.js --exercises",
-    "validate:sessions": "node scripts/validate-content.js --sessions",
     "prepare": "husky"
   },
   "devDependencies": {
+    "firebase-tools": "^15.5.1",
     "husky": "^9.0.0"
-  },
-  "lint-staged": {
-    "Übungen/*.md": [
-      "node scripts/validate-content.js"
-    ],
-    "stunden/**/*.md": [
-      "node scripts/validate-content.js"
-    ]
   }
 }
