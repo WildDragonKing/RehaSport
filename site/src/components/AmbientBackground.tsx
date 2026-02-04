@@ -55,11 +55,18 @@ const BLOBS: Blob[] = [
 function AmbientBackground(): JSX.Element {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     // Check for reduced motion preference
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     setPrefersReducedMotion(motionQuery.matches);
+
+    // Check for mobile viewport
+    const checkMobile = () => {
+      setIsMobile(window.matchMedia("(max-width: 639px)").matches);
+    };
+    checkMobile();
 
     // Check initial dark mode
     const checkDarkMode = () => {
@@ -74,12 +81,24 @@ function AmbientBackground(): JSX.Element {
       attributeFilter: ["data-theme"],
     });
 
-    return () => observer.disconnect();
+    // Watch for viewport changes
+    const mobileQuery = window.matchMedia("(max-width: 639px)");
+    const handleMobileChange = (e: MediaQueryListEvent) =>
+      setIsMobile(e.matches);
+    mobileQuery.addEventListener("change", handleMobileChange);
+
+    return () => {
+      observer.disconnect();
+      mobileQuery.removeEventListener("change", handleMobileChange);
+    };
   }, []);
+
+  // Only render 2 blobs on mobile for better performance
+  const displayBlobs = isMobile ? BLOBS.slice(0, 2) : BLOBS;
 
   return (
     <div className="ambient-background" aria-hidden="true">
-      {BLOBS.map((blob) => (
+      {displayBlobs.map((blob) => (
         <div
           key={blob.id}
           className={`ambient-blob ${prefersReducedMotion ? "" : "ambient-blob-drift"}`}

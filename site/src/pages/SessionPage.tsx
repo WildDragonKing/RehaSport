@@ -70,7 +70,11 @@ function SessionPage(): JSX.Element {
     new Set(),
   );
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
-  const exerciseRefs = useRef<Map<string, HTMLLIElement>>(new Map());
+  const [viewMode, setViewMode] = useState<"trainer" | "teilnehmer">("trainer");
+  const [isMobile, setIsMobile] = useState(false);
+  const exerciseRefs = useRef<Map<string, HTMLLIElement | HTMLElement>>(
+    new Map(),
+  );
   const { getRating, setRating, getSummary } = useRatings();
   const [ratingSummary, setRatingSummary] = useState<RatingSummary | null>(
     null,
@@ -86,6 +90,31 @@ function SessionPage(): JSX.Element {
       getSummary(sessionId, "session").then(setRatingSummary);
     }
   }, [sessionId, getSummary]);
+
+  // Load saved view mode from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem("sessionViewMode");
+    if (saved === "teilnehmer") {
+      setViewMode("teilnehmer");
+    }
+  }, []);
+
+  // Detect mobile viewport
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.matchMedia("(max-width: 639px)").matches);
+    };
+    checkMobile();
+
+    const mobileQuery = window.matchMedia("(max-width: 639px)");
+    mobileQuery.addEventListener("change", checkMobile);
+    return () => mobileQuery.removeEventListener("change", checkMobile);
+  }, []);
+
+  const handleViewModeChange = (mode: "trainer" | "teilnehmer") => {
+    setViewMode(mode);
+    localStorage.setItem("sessionViewMode", mode);
+  };
 
   const handleRate = async (rating: number) => {
     if (sessionId) {
@@ -216,7 +245,7 @@ function SessionPage(): JSX.Element {
     }
   }
 
-  function setExerciseRef(key: string, element: HTMLLIElement | null): void {
+  function setExerciseRef(key: string, element: HTMLElement | null): void {
     if (element) {
       exerciseRefs.current.set(key, element);
     } else {
@@ -247,7 +276,9 @@ function SessionPage(): JSX.Element {
     : 0;
 
   return (
-    <div className="container stack" style={{ paddingBottom: "100px" }}>
+    <div
+      className={`container stack session-page-content ${viewMode === "teilnehmer" ? "session-teilnehmer-mode" : ""}`}
+    >
       {/* Breadcrumb */}
       <nav className="breadcrumb" aria-label="Navigation">
         <Link to="/" className="breadcrumb-link">
@@ -330,143 +361,101 @@ function SessionPage(): JSX.Element {
         </div>
       )}
 
-      {/* Session Controls */}
+      {/* Session Controls + Mode Toggle */}
       {session.phases.length > 0 && allExerciseKeys.length > 0 && (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: "1rem",
-          }}
-        >
-          <Button variant="ghost" size="sm" onClick={toggleAll}>
-            {allExpanded ? "Alle zuklappen" : "Alle aufklappen"}
-          </Button>
-          <span
-            className="text-muted"
-            style={{ fontSize: "0.875rem", fontWeight: 500 }}
-          >
-            {currentExerciseIndex + 1} / {allExercises.length}
-          </span>
+        <div className="session-controls-wrapper">
+          <div className="session-controls-row">
+            <Button variant="ghost" size="sm" onClick={toggleAll}>
+              {allExpanded ? "Alle zuklappen" : "Alle aufklappen"}
+            </Button>
+            <span className="session-exercise-counter">
+              {currentExerciseIndex + 1} / {allExercises.length}
+            </span>
+          </div>
+
+          <div className="session-mode-toggle">
+            <button
+              type="button"
+              className={`mode-toggle-btn ${viewMode === "trainer" ? "active" : ""}`}
+              onClick={() => handleViewModeChange("trainer")}
+            >
+              Trainer
+            </button>
+            <button
+              type="button"
+              className={`mode-toggle-btn ${viewMode === "teilnehmer" ? "active" : ""}`}
+              onClick={() => handleViewModeChange("teilnehmer")}
+            >
+              Teilnehmer
+            </button>
+          </div>
         </div>
       )}
 
       {/* Session Phases */}
       {session.phases.length > 0 ? (
-        <div className="accordion">
-          {session.phases.map((phase, phaseIndex) => {
-            const phaseColorClass = getPhaseColorClass(phase.title);
-            return (
-              <section
-                key={phase.title}
-                className={`phase-indicator ${phaseColorClass}`}
-                style={{
-                  padding: 0,
-                  borderRadius: "var(--radius-xl)",
-                  overflow: "hidden",
-                }}
-              >
-                <div
-                  style={{
-                    padding: "1rem 1.25rem",
-                    borderBottom: "1px solid var(--color-border-light)",
-                  }}
-                >
-                  <h2
-                    style={{ fontSize: "1.125rem", fontWeight: 600, margin: 0 }}
-                  >
-                    {phase.title}
-                  </h2>
-                  {phase.description && (
-                    <p
-                      className="text-muted"
-                      style={{ fontSize: "0.875rem", marginTop: "0.25rem" }}
-                    >
-                      {phase.description}
-                    </p>
-                  )}
-                </div>
+        viewMode === "trainer" ? (
+          // Trainer Mode: Akkordeon-Layout
+          isMobile ? (
+            // Mobile: Flache Liste ohne Phase-Container
+            <div className="accordion trainer-mobile-flat">
+              {allExercises.map(
+                (
+                  { exercise, key, phaseTitle, phaseIndex, exerciseIndex },
+                  globalIndex,
+                ) => {
+                  const isExpanded = expandedExercises.has(key);
+                  const isActive = globalIndex === currentExerciseIndex;
+                  const foundExercise = findExerciseByTitle(exercise.title);
+                  const exerciseSlug = foundExercise?.slug;
+                  const primaryDetail = exercise.details.find(
+                    (d) => d.label === "Durchführung",
+                  );
+                  const otherDetails = exercise.details.filter(
+                    (d) => d.label !== "Durchführung",
+                  );
+                  const kneeDetail = otherDetails.find(
+                    (d) => d.label === "Knie-Alternative",
+                  );
+                  const shoulderDetail = otherDetails.find(
+                    (d) => d.label === "Schulter-Alternative",
+                  );
+                  const phaseColorClass = getPhaseColorClass(phaseTitle);
 
-                <ol style={{ listStyle: "none", padding: 0, margin: 0 }}>
-                  {phase.exercises.map((exercise, exerciseIndex) => {
-                    const exerciseKey = `${phaseIndex}-${exerciseIndex}`;
-                    const globalIndex = allExercises.findIndex(
-                      (e) => e.key === exerciseKey,
-                    );
-                    const isExpanded = expandedExercises.has(exerciseKey);
-                    const isActive = globalIndex === currentExerciseIndex;
-                    const foundExercise = findExerciseByTitle(exercise.title);
-                    const exerciseSlug = foundExercise?.slug;
-                    const primaryDetail = exercise.details.find(
-                      (d) => d.label === "Durchführung",
-                    );
-                    const otherDetails = exercise.details.filter(
-                      (d) => d.label !== "Durchführung",
-                    );
+                  // Show phase header before first exercise of each phase
+                  const isFirstInPhase =
+                    globalIndex === 0 ||
+                    allExercises[globalIndex - 1].phaseIndex !== phaseIndex;
 
-                    const kneeDetail = otherDetails.find(
-                      (d) => d.label === "Knie-Alternative",
-                    );
-                    const shoulderDetail = otherDetails.find(
-                      (d) => d.label === "Schulter-Alternative",
-                    );
-
-                    return (
-                      <li
-                        key={exerciseKey}
-                        ref={(el) => setExerciseRef(exerciseKey, el)}
-                        className={`accordion-item ${isExpanded ? "expanded" : ""}`}
-                        style={{
-                          border: "none",
-                          borderRadius: 0,
-                          borderTop:
-                            exerciseIndex > 0
-                              ? "1px solid var(--color-border-light)"
-                              : "none",
-                          backgroundColor: isActive
-                            ? "var(--color-primary-softer)"
-                            : "transparent",
-                        }}
+                  return (
+                    <div key={key}>
+                      {isFirstInPhase && (
+                        <div
+                          className={`trainer-mobile-phase-label ${phaseColorClass}`}
+                        >
+                          {phaseTitle}
+                        </div>
+                      )}
+                      <div
+                        ref={(el) => setExerciseRef(key, el)}
+                        className={`accordion-item ${isExpanded ? "expanded" : ""} ${isActive ? "active" : ""}`}
                       >
                         <button
                           type="button"
                           className="accordion-header"
-                          onClick={() =>
-                            toggleExercise(exerciseKey, globalIndex)
-                          }
+                          onClick={() => toggleExercise(key, globalIndex)}
                           aria-expanded={isExpanded}
                         >
                           <div className="accordion-header-content">
-                            <span
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                width: "28px",
-                                height: "28px",
-                                borderRadius: "50%",
-                                backgroundColor: "var(--color-surface-muted)",
-                                fontSize: "0.875rem",
-                                fontWeight: 600,
-                                flexShrink: 0,
-                              }}
-                            >
-                              {exerciseIndex + 1}
+                            <span className="accordion-exercise-number">
+                              {globalIndex + 1}
                             </span>
                             <div style={{ minWidth: 0 }}>
                               <span className="accordion-header-title">
                                 {exercise.title}
                               </span>
                               {primaryDetail && (
-                                <span
-                                  className="text-muted"
-                                  style={{
-                                    display: "block",
-                                    fontSize: "0.875rem",
-                                    marginTop: "0.125rem",
-                                  }}
-                                >
+                                <span className="accordion-header-subtitle">
                                   {primaryDetail.value}
                                 </span>
                               )}
@@ -502,7 +491,7 @@ function SessionPage(): JSX.Element {
                               <div className="stack-sm">
                                 {otherDetails.map((detail) => (
                                   <div
-                                    key={`${exerciseKey}-${detail.label}`}
+                                    key={`${key}-${detail.label}`}
                                     className={
                                       detail.label.includes("Alternative")
                                         ? "alternative-card"
@@ -545,14 +534,279 @@ function SessionPage(): JSX.Element {
                             )}
                           </div>
                         )}
-                      </li>
-                    );
-                  })}
-                </ol>
-              </section>
-            );
-          })}
-        </div>
+                      </div>
+                    </div>
+                  );
+                },
+              )}
+            </div>
+          ) : (
+            // Desktop: Verschachtelte Phase-Sections
+            <div className="accordion">
+              {session.phases.map((phase, phaseIndex) => {
+                const phaseColorClass = getPhaseColorClass(phase.title);
+                return (
+                  <section
+                    key={phase.title}
+                    className={`phase-indicator ${phaseColorClass}`}
+                    style={{
+                      padding: 0,
+                      borderRadius: "var(--radius-xl)",
+                      overflow: "hidden",
+                    }}
+                  >
+                    <div
+                      style={{
+                        padding: "1rem 1.25rem",
+                        borderBottom: "1px solid var(--color-border-light)",
+                      }}
+                    >
+                      <h2
+                        style={{
+                          fontSize: "1.125rem",
+                          fontWeight: 600,
+                          margin: 0,
+                        }}
+                      >
+                        {phase.title}
+                      </h2>
+                      {phase.description && (
+                        <p
+                          className="text-muted"
+                          style={{ fontSize: "0.875rem", marginTop: "0.25rem" }}
+                        >
+                          {phase.description}
+                        </p>
+                      )}
+                    </div>
+
+                    <ol style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                      {phase.exercises.map((exercise, exerciseIndex) => {
+                        const exerciseKey = `${phaseIndex}-${exerciseIndex}`;
+                        const globalIndex = allExercises.findIndex(
+                          (e) => e.key === exerciseKey,
+                        );
+                        const isExpanded = expandedExercises.has(exerciseKey);
+                        const isActive = globalIndex === currentExerciseIndex;
+                        const foundExercise = findExerciseByTitle(
+                          exercise.title,
+                        );
+                        const exerciseSlug = foundExercise?.slug;
+                        const primaryDetail = exercise.details.find(
+                          (d) => d.label === "Durchführung",
+                        );
+                        const otherDetails = exercise.details.filter(
+                          (d) => d.label !== "Durchführung",
+                        );
+
+                        const kneeDetail = otherDetails.find(
+                          (d) => d.label === "Knie-Alternative",
+                        );
+                        const shoulderDetail = otherDetails.find(
+                          (d) => d.label === "Schulter-Alternative",
+                        );
+
+                        return (
+                          <li
+                            key={exerciseKey}
+                            ref={(el) => setExerciseRef(exerciseKey, el)}
+                            className={`accordion-item ${isExpanded ? "expanded" : ""}`}
+                            style={{
+                              border: "none",
+                              borderRadius: 0,
+                              borderTop:
+                                exerciseIndex > 0
+                                  ? "1px solid var(--color-border-light)"
+                                  : "none",
+                              backgroundColor: isActive
+                                ? "var(--color-primary-softer)"
+                                : "transparent",
+                            }}
+                          >
+                            <button
+                              type="button"
+                              className="accordion-header"
+                              onClick={() =>
+                                toggleExercise(exerciseKey, globalIndex)
+                              }
+                              aria-expanded={isExpanded}
+                            >
+                              <div className="accordion-header-content">
+                                <span
+                                  style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    width: "28px",
+                                    height: "28px",
+                                    borderRadius: "50%",
+                                    backgroundColor:
+                                      "var(--color-surface-muted)",
+                                    fontSize: "0.875rem",
+                                    fontWeight: 600,
+                                    flexShrink: 0,
+                                  }}
+                                >
+                                  {exerciseIndex + 1}
+                                </span>
+                                <div style={{ minWidth: 0 }}>
+                                  <span className="accordion-header-title">
+                                    {exercise.title}
+                                  </span>
+                                  {primaryDetail && (
+                                    <span
+                                      className="text-muted"
+                                      style={{
+                                        display: "block",
+                                        fontSize: "0.875rem",
+                                        marginTop: "0.125rem",
+                                      }}
+                                    >
+                                      {primaryDetail.value}
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+
+                              <div className="accordion-header-meta">
+                                {kneeDetail && (
+                                  <span
+                                    className="badge badge-knee"
+                                    title="Knie-Alternative"
+                                  >
+                                    🦵
+                                  </span>
+                                )}
+                                {shoulderDetail && (
+                                  <span
+                                    className="badge badge-shoulder"
+                                    title="Schulter-Alternative"
+                                  >
+                                    💪
+                                  </span>
+                                )}
+                                <span className="accordion-chevron">
+                                  <ChevronDownIcon />
+                                </span>
+                              </div>
+                            </button>
+
+                            {isExpanded && (
+                              <div className="accordion-content">
+                                {otherDetails.length > 0 && (
+                                  <div className="stack-sm">
+                                    {otherDetails.map((detail) => (
+                                      <div
+                                        key={`${exerciseKey}-${detail.label}`}
+                                        className={
+                                          detail.label.includes("Alternative")
+                                            ? "alternative-card"
+                                            : "quick-info-card"
+                                        }
+                                        style={
+                                          detail.label.includes("Knie")
+                                            ? {
+                                                backgroundColor:
+                                                  "var(--color-secondary-soft)",
+                                              }
+                                            : detail.label.includes("Schulter")
+                                              ? {
+                                                  backgroundColor:
+                                                    "var(--color-phase-focus-bg)",
+                                                }
+                                              : {}
+                                        }
+                                      >
+                                        <div className="quick-info-card-title">
+                                          {detail.label}
+                                        </div>
+                                        <div className="quick-info-card-content">
+                                          {detail.value}
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                )}
+                                {exerciseSlug && (
+                                  <div style={{ marginTop: "1rem" }}>
+                                    <Button
+                                      to={`/uebungen/${exerciseSlug}`}
+                                      variant="ghost"
+                                      size="sm"
+                                    >
+                                      Zur vollständigen Übung →
+                                    </Button>
+                                  </div>
+                                )}
+                              </div>
+                            )}
+                          </li>
+                        );
+                      })}
+                    </ol>
+                  </section>
+                );
+              })}
+            </div>
+          )
+        ) : (
+          // Teilnehmer Mode: Karten-Layout
+          <div className="exercise-cards-teilnehmer">
+            {allExercises.map(({ exercise, key, phaseTitle }, globalIndex) => {
+              const isActive = globalIndex === currentExerciseIndex;
+              const foundExercise = findExerciseByTitle(exercise.title);
+
+              return (
+                <article
+                  key={key}
+                  ref={(el) => setExerciseRef(key, el)}
+                  className={`exercise-card-large ${isActive ? "active" : ""}`}
+                  onClick={() => setCurrentExerciseIndex(globalIndex)}
+                >
+                  <div className="exercise-card-large-header">
+                    <span className="exercise-card-large-number">
+                      {globalIndex + 1}
+                    </span>
+                    <div>
+                      <h3 className="exercise-card-large-title">
+                        {exercise.title}
+                      </h3>
+                      <p className="exercise-card-large-phase">{phaseTitle}</p>
+                    </div>
+                  </div>
+
+                  <div className="exercise-card-large-content">
+                    {exercise.details.map((detail) => (
+                      <div
+                        key={detail.label}
+                        className="exercise-card-large-detail"
+                      >
+                        <div className="exercise-card-large-detail-label">
+                          {detail.label}
+                        </div>
+                        <div className="exercise-card-large-detail-value">
+                          {detail.value}
+                        </div>
+                      </div>
+                    ))}
+
+                    {foundExercise && (
+                      <div style={{ marginTop: "1rem" }}>
+                        <Button
+                          to={`/uebungen/${foundExercise.slug}`}
+                          variant="ghost"
+                          size="sm"
+                        >
+                          Zur vollständigen Übung →
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        )
       ) : (
         <p className="text-muted">Keine Übungen in dieser Stunde gefunden.</p>
       )}
