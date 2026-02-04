@@ -182,7 +182,7 @@ export default function SessionRulesPage(): JSX.Element {
   if (!isAdmin) {
     return (
       <div className="text-center py-12">
-        <p className="text-sage-600">
+        <p className="text-sage-600 dark:text-sage-400">
           Nur Administratoren können die Stunden-Regeln verwalten.
         </p>
       </div>
@@ -192,7 +192,7 @@ export default function SessionRulesPage(): JSX.Element {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-sage-600" />
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-sage-600 dark:border-sage-400" />
       </div>
     );
   }
@@ -201,10 +201,10 @@ export default function SessionRulesPage(): JSX.Element {
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-display font-bold text-sage-900">
+          <h1 className="text-3xl font-display font-bold text-sage-900 dark:text-sage-50">
             Stunden-Regeln
           </h1>
-          <p className="mt-2 text-sage-600">
+          <p className="mt-2 text-sage-600 dark:text-sage-300">
             Konfiguriere das Schema für Trainingsstunden
           </p>
         </div>
@@ -219,20 +219,20 @@ export default function SessionRulesPage(): JSX.Element {
 
       {message && (
         <div
-          className={`p-4 rounded-lg ${message.type === "success" ? "bg-green-50 text-green-800 border border-green-200" : "bg-red-50 text-red-800 border border-red-200"}`}
+          className={`p-4 rounded-lg ${message.type === "success" ? "bg-green-50 dark:bg-green-950 text-green-800 dark:text-green-200 border border-green-200 dark:border-green-800" : "bg-red-50 dark:bg-red-950 text-red-800 dark:text-red-200 border border-red-200 dark:border-red-800"}`}
         >
           {message.text}
         </div>
       )}
 
       {/* Duration Overview */}
-      <div className="bg-white rounded-xl shadow-sm border border-sage-200 p-6">
-        <h2 className="text-lg font-semibold text-sage-900 mb-4">
+      <div className="bg-white dark:bg-sage-900 rounded-xl shadow-sm border border-sage-200 dark:border-sage-800 p-6">
+        <h2 className="text-lg font-semibold text-sage-900 dark:text-sage-50 mb-4">
           Gesamtdauer
         </h2>
         <div className="flex items-center gap-4">
           <div>
-            <label className="block text-sm font-medium text-sage-700 mb-1">
+            <label className="block text-sm font-medium text-sage-700 dark:text-sage-200 mb-1">
               Stundenlänge (Minuten)
             </label>
             <input
@@ -246,11 +246,11 @@ export default function SessionRulesPage(): JSX.Element {
               }
               min={15}
               max={120}
-              className="w-24 px-3 py-2 border border-sage-300 rounded-lg focus:ring-2 focus:ring-sage-500"
+              className="w-24 px-3 py-2 border border-sage-300 dark:border-sage-700 bg-white dark:bg-sage-800 text-sage-900 dark:text-sage-100 rounded-lg focus:ring-2 focus:ring-sage-500"
             />
           </div>
           <div
-            className={`px-4 py-2 rounded-lg ${totalPhaseDuration === config.totalDuration ? "bg-green-50 text-green-700" : "bg-amber-50 text-amber-700"}`}
+            className={`px-4 py-2 rounded-lg ${totalPhaseDuration === config.totalDuration ? "bg-green-50 dark:bg-green-950 text-green-700 dark:text-green-300" : "bg-amber-50 dark:bg-amber-950 text-amber-700 dark:text-amber-300"}`}
           >
             <span className="font-medium">
               Phasen-Summe: {totalPhaseDuration} Min
@@ -266,12 +266,14 @@ export default function SessionRulesPage(): JSX.Element {
       </div>
 
       {/* Phases */}
-      <div className="bg-white rounded-xl shadow-sm border border-sage-200 p-6">
+      <div className="bg-white dark:bg-sage-900 rounded-xl shadow-sm border border-sage-200 dark:border-sage-800 p-6">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-sage-900">Phasen</h2>
+          <h2 className="text-lg font-semibold text-sage-900 dark:text-sage-50">
+            Phasen
+          </h2>
           <button
             onClick={addPhase}
-            className="px-3 py-1.5 text-sm bg-sage-100 hover:bg-sage-200 text-sage-700 rounded-lg transition-colors"
+            className="px-3 py-1.5 text-sm bg-sage-100 dark:bg-sage-800 hover:bg-sage-200 dark:hover:bg-sage-700 text-sage-700 dark:text-sage-200 rounded-lg transition-colors"
           >
             + Phase hinzufügen
           </button>
@@ -281,25 +283,25 @@ export default function SessionRulesPage(): JSX.Element {
           {config.phases.map((phase, index) => (
             <div
               key={phase.id}
-              className="p-4 bg-sage-50 rounded-lg border border-sage-200"
+              className="p-4 bg-sage-50 dark:bg-sage-950 rounded-lg border border-sage-200 dark:border-sage-800"
             >
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <span className="w-6 h-6 flex items-center justify-center bg-sage-200 text-sage-700 text-sm font-medium rounded">
+                  <span className="w-6 h-6 flex items-center justify-center bg-sage-200 dark:bg-sage-700 text-sage-700 dark:text-sage-200 text-sm font-medium rounded">
                     {index + 1}
                   </span>
                   <input
                     type="text"
                     value={phase.name}
                     onChange={(e) => updatePhase(index, "name", e.target.value)}
-                    className="font-medium text-sage-800 bg-transparent border-b border-transparent hover:border-sage-300 focus:border-sage-500 focus:outline-none px-1"
+                    className="font-medium text-sage-800 dark:text-sage-100 bg-transparent border-b border-transparent hover:border-sage-300 dark:hover:border-sage-600 focus:border-sage-500 focus:outline-none px-1"
                   />
                 </div>
                 <div className="flex items-center gap-1">
                   <button
                     onClick={() => movePhase(index, "up")}
                     disabled={index === 0}
-                    className="p-1 text-sage-400 hover:text-sage-600 disabled:opacity-30"
+                    className="p-1 text-sage-400 hover:text-sage-600 dark:hover:text-sage-300 disabled:opacity-30"
                     title="Nach oben"
                   >
                     ↑
@@ -307,7 +309,7 @@ export default function SessionRulesPage(): JSX.Element {
                   <button
                     onClick={() => movePhase(index, "down")}
                     disabled={index === config.phases.length - 1}
-                    className="p-1 text-sage-400 hover:text-sage-600 disabled:opacity-30"
+                    className="p-1 text-sage-400 hover:text-sage-600 dark:hover:text-sage-300 disabled:opacity-30"
                     title="Nach unten"
                   >
                     ↓
@@ -325,7 +327,7 @@ export default function SessionRulesPage(): JSX.Element {
 
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div>
-                  <label className="block text-xs text-sage-600 mb-1">
+                  <label className="block text-xs text-sage-600 dark:text-sage-400 mb-1">
                     Dauer (Min)
                   </label>
                   <input
@@ -340,11 +342,11 @@ export default function SessionRulesPage(): JSX.Element {
                     }
                     min={1}
                     max={60}
-                    className="w-full px-2 py-1.5 text-sm border border-sage-300 rounded focus:ring-1 focus:ring-sage-500"
+                    className="w-full px-2 py-1.5 text-sm border border-sage-300 dark:border-sage-700 bg-white dark:bg-sage-800 text-sage-900 dark:text-sage-100 rounded focus:ring-1 focus:ring-sage-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-sage-600 mb-1">
+                  <label className="block text-xs text-sage-600 dark:text-sage-400 mb-1">
                     Min. Übungen
                   </label>
                   <input
@@ -359,11 +361,11 @@ export default function SessionRulesPage(): JSX.Element {
                     }
                     min={1}
                     max={20}
-                    className="w-full px-2 py-1.5 text-sm border border-sage-300 rounded focus:ring-1 focus:ring-sage-500"
+                    className="w-full px-2 py-1.5 text-sm border border-sage-300 dark:border-sage-700 bg-white dark:bg-sage-800 text-sage-900 dark:text-sage-100 rounded focus:ring-1 focus:ring-sage-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-sage-600 mb-1">
+                  <label className="block text-xs text-sage-600 dark:text-sage-400 mb-1">
                     Max. Übungen
                   </label>
                   <input
@@ -378,11 +380,11 @@ export default function SessionRulesPage(): JSX.Element {
                     }
                     min={1}
                     max={20}
-                    className="w-full px-2 py-1.5 text-sm border border-sage-300 rounded focus:ring-1 focus:ring-sage-500"
+                    className="w-full px-2 py-1.5 text-sm border border-sage-300 dark:border-sage-700 bg-white dark:bg-sage-800 text-sage-900 dark:text-sage-100 rounded focus:ring-1 focus:ring-sage-500"
                   />
                 </div>
                 <div className="md:col-span-1">
-                  <label className="block text-xs text-sage-600 mb-1">
+                  <label className="block text-xs text-sage-600 dark:text-sage-400 mb-1">
                     Beschreibung
                   </label>
                   <input
@@ -392,7 +394,7 @@ export default function SessionRulesPage(): JSX.Element {
                       updatePhase(index, "description", e.target.value)
                     }
                     placeholder="Kurze Beschreibung..."
-                    className="w-full px-2 py-1.5 text-sm border border-sage-300 rounded focus:ring-1 focus:ring-sage-500"
+                    className="w-full px-2 py-1.5 text-sm border border-sage-300 dark:border-sage-700 bg-white dark:bg-sage-800 text-sage-900 dark:text-sage-100 rounded focus:ring-1 focus:ring-sage-500"
                   />
                 </div>
               </div>
@@ -402,57 +404,59 @@ export default function SessionRulesPage(): JSX.Element {
       </div>
 
       {/* Guidelines */}
-      <div className="bg-white rounded-xl shadow-sm border border-sage-200 p-6">
-        <h2 className="text-lg font-semibold text-sage-900 mb-4">
+      <div className="bg-white dark:bg-sage-900 rounded-xl shadow-sm border border-sage-200 dark:border-sage-800 p-6">
+        <h2 className="text-lg font-semibold text-sage-900 dark:text-sage-50 mb-4">
           Richtlinien
         </h2>
-        <p className="text-sm text-sage-600 mb-3">Eine Richtlinie pro Zeile</p>
+        <p className="text-sm text-sage-600 dark:text-sage-400 mb-3">
+          Eine Richtlinie pro Zeile
+        </p>
         <textarea
           value={config.guidelines.join("\n")}
           onChange={(e) => updateGuidelines(e.target.value)}
           rows={6}
-          className="w-full px-3 py-2 border border-sage-300 rounded-lg focus:ring-2 focus:ring-sage-500"
+          className="w-full px-3 py-2 border border-sage-300 dark:border-sage-700 bg-white dark:bg-sage-800 text-sage-900 dark:text-sage-100 rounded-lg focus:ring-2 focus:ring-sage-500"
           placeholder="Richtlinien für die Stunden-Erstellung..."
         />
       </div>
 
       {/* Contraindications */}
-      <div className="bg-white rounded-xl shadow-sm border border-sage-200 p-6">
-        <h2 className="text-lg font-semibold text-sage-900 mb-4">
+      <div className="bg-white dark:bg-sage-900 rounded-xl shadow-sm border border-sage-200 dark:border-sage-800 p-6">
+        <h2 className="text-lg font-semibold text-sage-900 dark:text-sage-50 mb-4">
           Allgemeine Kontraindikationen
         </h2>
-        <p className="text-sm text-sage-600 mb-3">
+        <p className="text-sm text-sage-600 dark:text-sage-400 mb-3">
           Eine Kontraindikation pro Zeile
         </p>
         <textarea
           value={config.contraindications.join("\n")}
           onChange={(e) => updateContraindications(e.target.value)}
           rows={4}
-          className="w-full px-3 py-2 border border-sage-300 rounded-lg focus:ring-2 focus:ring-sage-500"
+          className="w-full px-3 py-2 border border-sage-300 dark:border-sage-700 bg-white dark:bg-sage-800 text-sage-900 dark:text-sage-100 rounded-lg focus:ring-2 focus:ring-sage-500"
           placeholder="Wann sollte nicht trainiert werden..."
         />
       </div>
 
       {/* Preview */}
-      <div className="bg-sage-50 rounded-xl border border-sage-200 p-6">
-        <h2 className="text-lg font-semibold text-sage-900 mb-4">
+      <div className="bg-sage-50 dark:bg-sage-950 rounded-xl border border-sage-200 dark:border-sage-800 p-6">
+        <h2 className="text-lg font-semibold text-sage-900 dark:text-sage-50 mb-4">
           Vorschau: Stunden-Schema
         </h2>
         <div className="flex gap-1 h-8 rounded-lg overflow-hidden">
           {config.phases.map((phase, index) => {
             const percentage = (phase.duration / config.totalDuration) * 100;
             const colors = [
-              "bg-sage-300",
-              "bg-sage-400",
-              "bg-sage-500",
-              "bg-sage-600",
-              "bg-sage-700",
+              "bg-sage-300 dark:bg-sage-600",
+              "bg-sage-400 dark:bg-sage-500",
+              "bg-sage-500 dark:bg-sage-400",
+              "bg-sage-600 dark:bg-sage-300",
+              "bg-sage-700 dark:bg-sage-200",
             ];
             return (
               <div
                 key={phase.id}
                 style={{ width: `${percentage}%` }}
-                className={`${colors[index % colors.length]} flex items-center justify-center text-xs text-white font-medium`}
+                className={`${colors[index % colors.length]} flex items-center justify-center text-xs text-white dark:text-sage-900 font-medium`}
                 title={`${phase.name}: ${phase.duration} Min`}
               >
                 {phase.duration}′
@@ -461,13 +465,13 @@ export default function SessionRulesPage(): JSX.Element {
           })}
         </div>
         <div className="flex gap-1 mt-2">
-          {config.phases.map((phase, index) => {
+          {config.phases.map((phase) => {
             const percentage = (phase.duration / config.totalDuration) * 100;
             return (
               <div
                 key={phase.id}
                 style={{ width: `${percentage}%` }}
-                className="text-xs text-sage-600 text-center truncate"
+                className="text-xs text-sage-600 dark:text-sage-400 text-center truncate"
               >
                 {phase.name}
               </div>

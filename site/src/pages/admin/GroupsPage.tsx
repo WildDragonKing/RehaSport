@@ -1,33 +1,94 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  deleteDoc,
+  doc,
+  Timestamp,
+} from "firebase/firestore";
+import { db } from "../../firebase/config";
+import { useAuth } from "../../contexts/AuthContext";
 
 interface Group {
   id: string;
   name: string;
   restrictions: string[];
   description?: string;
+  createdBy?: string;
+  createdAt?: Timestamp;
 }
 
 export default function GroupsPage(): JSX.Element {
+  const { authUser } = useAuth();
   const [groups, setGroups] = useState<Group[]>([]);
+  const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
+  const [saving, setSaving] = useState(false);
   const [newGroup, setNewGroup] = useState({
     name: "",
     restrictions: [] as string[],
     description: "",
   });
 
-  const handleCreateGroup = () => {
-    if (!newGroup.name.trim()) return;
+  useEffect(() => {
+    loadGroups();
+  }, []);
 
-    const group: Group = {
-      id: Date.now().toString(),
-      ...newGroup,
-    };
+  const loadGroups = async () => {
+    try {
+      const snapshot = await getDocs(collection(db, "groups"));
+      const loadedGroups = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as Group[];
+      setGroups(loadedGroups);
+    } catch (error) {
+      console.error("Failed to load groups:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    setGroups([...groups, group]);
-    setNewGroup({ name: "", restrictions: [], description: "" });
-    setShowForm(false);
-    // TODO: Save to Firestore
+  const handleCreateGroup = async () => {
+    if (!newGroup.name.trim() || !authUser?.uid) return;
+
+    setSaving(true);
+    try {
+      const docRef = await addDoc(collection(db, "groups"), {
+        name: newGroup.name,
+        restrictions: newGroup.restrictions,
+        description: newGroup.description || "",
+        createdBy: authUser.uid,
+        createdAt: Timestamp.now(),
+      });
+
+      const group: Group = {
+        id: docRef.id,
+        ...newGroup,
+      };
+
+      setGroups([...groups, group]);
+      setNewGroup({ name: "", restrictions: [], description: "" });
+      setShowForm(false);
+    } catch (error) {
+      console.error("Failed to create group:", error);
+      alert("Fehler beim Erstellen der Gruppe");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleDeleteGroup = async (id: string) => {
+    if (!confirm("Gruppe wirklich löschen?")) return;
+
+    try {
+      await deleteDoc(doc(db, "groups", id));
+      setGroups(groups.filter((g) => g.id !== id));
+    } catch (error) {
+      console.error("Failed to delete group:", error);
+      alert("Fehler beim Löschen");
+    }
   };
 
   const toggleRestriction = (restriction: string) => {
@@ -137,10 +198,10 @@ export default function GroupsPage(): JSX.Element {
             <div className="flex gap-3">
               <button
                 onClick={handleCreateGroup}
-                disabled={!newGroup.name.trim()}
+                disabled={!newGroup.name.trim() || saving}
                 className="px-4 py-2 bg-sage-600 hover:bg-sage-700 text-white font-medium rounded-lg disabled:opacity-50 transition-colors"
               >
-                Gruppe erstellen
+                {saving ? "Erstelle..." : "Gruppe erstellen"}
               </button>
               <button
                 onClick={() => setShowForm(false)}
@@ -154,7 +215,11 @@ export default function GroupsPage(): JSX.Element {
       )}
 
       {/* Groups List */}
-      {groups.length > 0 ? (
+      {loading ? (
+        <div className="flex items-center justify-center py-12">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-sage-600" />
+        </div>
+      ) : groups.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {groups.map((group) => (
             <div
@@ -186,10 +251,10 @@ export default function GroupsPage(): JSX.Element {
                 )}
               </div>
               <div className="mt-4 flex gap-2">
-                <button className="text-sm text-sage-600 dark:text-sage-300 hover:text-sage-800 dark:hover:text-sage-100">
-                  Bearbeiten
-                </button>
-                <button className="text-sm text-red-600 hover:text-red-800">
+                <button
+                  onClick={() => handleDeleteGroup(group.id)}
+                  className="text-sm text-red-600 hover:text-red-800"
+                >
                   Löschen
                 </button>
               </div>

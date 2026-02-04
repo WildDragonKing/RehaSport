@@ -168,7 +168,7 @@ export default function CategoriesPage(): JSX.Element {
   if (!isAdmin) {
     return (
       <div className="text-center py-12">
-        <p className="text-sage-600">
+        <p className="text-sage-600 dark:text-sage-400">
           Nur Administratoren können Kategorien verwalten.
         </p>
       </div>
@@ -179,10 +179,10 @@ export default function CategoriesPage(): JSX.Element {
     <div className="space-y-8">
       <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-3xl font-display font-bold text-sage-900">
+          <h1 className="text-3xl font-display font-bold text-sage-900 dark:text-sage-50">
             Kategorien
           </h1>
-          <p className="mt-2 text-sage-600">
+          <p className="mt-2 text-sage-600 dark:text-sage-300">
             Verwalte die Kategorien für Trainingsstunden
           </p>
         </div>
@@ -197,20 +197,20 @@ export default function CategoriesPage(): JSX.Element {
 
       {seedResult && (
         <div
-          className={`p-4 rounded-lg ${seedResult.errors.length > 0 ? "bg-amber-50 border border-amber-200" : "bg-green-50 border border-green-200"}`}
+          className={`p-4 rounded-lg ${seedResult.errors.length > 0 ? "bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800" : "bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800"}`}
         >
-          <p className="font-medium text-sage-800">
+          <p className="font-medium text-sage-800 dark:text-sage-100">
             {seedResult.created.length > 0
               ? `${seedResult.created.length} Kategorien erstellt: ${seedResult.created.join(", ")}`
               : "Keine neuen Kategorien erstellt"}
           </p>
           {seedResult.existing.length > 0 && (
-            <p className="text-sm text-sage-600 mt-1">
+            <p className="text-sm text-sage-600 dark:text-sage-300 mt-1">
               Bereits vorhanden: {seedResult.existing.join(", ")}
             </p>
           )}
           {seedResult.errors.length > 0 && (
-            <p className="text-sm text-red-600 mt-1">
+            <p className="text-sm text-red-600 dark:text-red-400 mt-1">
               Fehler: {seedResult.errors.join(", ")}
             </p>
           )}
@@ -218,14 +218,14 @@ export default function CategoriesPage(): JSX.Element {
       )}
 
       {/* Add/Edit Form */}
-      <div className="bg-white rounded-xl shadow-sm border border-sage-200 p-6">
-        <h2 className="text-lg font-semibold text-sage-900 mb-4">
+      <div className="bg-white dark:bg-sage-900 rounded-xl shadow-sm border border-sage-200 dark:border-sage-800 p-6">
+        <h2 className="text-lg font-semibold text-sage-900 dark:text-sage-50 mb-4">
           {editingId ? "Kategorie bearbeiten" : "Neue Kategorie"}
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-sage-700 mb-1">
+              <label className="block text-sm font-medium text-sage-700 dark:text-sage-200 mb-1">
                 Titel *
               </label>
               <input
@@ -234,12 +234,12 @@ export default function CategoriesPage(): JSX.Element {
                 onChange={(e) =>
                   setFormData({ ...formData, title: e.target.value })
                 }
-                className="w-full px-3 py-2 border border-sage-300 rounded-lg focus:ring-2 focus:ring-sage-500 focus:border-sage-500"
+                className="w-full px-3 py-2 border border-sage-300 dark:border-sage-700 bg-white dark:bg-sage-800 text-sage-900 dark:text-sage-100 rounded-lg focus:ring-2 focus:ring-sage-500 focus:border-sage-500"
                 required
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-sage-700 mb-1">
+              <label className="block text-sm font-medium text-sage-700 dark:text-sage-200 mb-1">
                 Slug (URL)
               </label>
               <input
@@ -253,12 +253,12 @@ export default function CategoriesPage(): JSX.Element {
                     ? generateSlug(formData.title)
                     : "automatisch generiert"
                 }
-                className="w-full px-3 py-2 border border-sage-300 rounded-lg focus:ring-2 focus:ring-sage-500 focus:border-sage-500"
+                className="w-full px-3 py-2 border border-sage-300 dark:border-sage-700 bg-white dark:bg-sage-800 text-sage-900 dark:text-sage-100 rounded-lg focus:ring-2 focus:ring-sage-500 focus:border-sage-500"
               />
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium text-sage-700 mb-1">
+            <label className="block text-sm font-medium text-sage-700 dark:text-sage-200 mb-1">
               Beschreibung
             </label>
             <textarea
@@ -267,7 +267,7 @@ export default function CategoriesPage(): JSX.Element {
                 setFormData({ ...formData, description: e.target.value })
               }
               rows={2}
-              className="w-full px-3 py-2 border border-sage-300 rounded-lg focus:ring-2 focus:ring-sage-500 focus:border-sage-500"
+              className="w-full px-3 py-2 border border-sage-300 dark:border-sage-700 bg-white dark:bg-sage-800 text-sage-900 dark:text-sage-100 rounded-lg focus:ring-2 focus:ring-sage-500 focus:border-sage-500"
             />
           </div>
           <div className="flex gap-2">
@@ -286,7 +286,7 @@ export default function CategoriesPage(): JSX.Element {
               <button
                 type="button"
                 onClick={handleCancel}
-                className="px-4 py-2 bg-sage-100 hover:bg-sage-200 text-sage-700 font-medium rounded-lg transition-colors"
+                className="px-4 py-2 bg-sage-100 dark:bg-sage-800 hover:bg-sage-200 dark:hover:bg-sage-700 text-sage-700 dark:text-sage-200 font-medium rounded-lg transition-colors"
               >
                 Abbrechen
               </button>
@@ -296,30 +296,32 @@ export default function CategoriesPage(): JSX.Element {
       </div>
 
       {/* Categories List */}
-      <div className="bg-white rounded-xl shadow-sm border border-sage-200 overflow-hidden">
-        <div className="px-6 py-4 bg-sage-50 border-b border-sage-200">
-          <h2 className="text-lg font-semibold text-sage-800">
+      <div className="bg-white dark:bg-sage-900 rounded-xl shadow-sm border border-sage-200 dark:border-sage-800 overflow-hidden">
+        <div className="px-6 py-4 bg-sage-50 dark:bg-sage-950 border-b border-sage-200 dark:border-sage-800">
+          <h2 className="text-lg font-semibold text-sage-800 dark:text-sage-100">
             Vorhandene Kategorien ({categories.length})
           </h2>
         </div>
         {loading ? (
-          <div className="p-6 text-center text-sage-500">Lädt...</div>
+          <div className="p-6 text-center text-sage-500 dark:text-sage-400">
+            Lädt...
+          </div>
         ) : categories.length === 0 ? (
-          <div className="p-6 text-center text-sage-500">
+          <div className="p-6 text-center text-sage-500 dark:text-sage-400">
             Noch keine Kategorien vorhanden.
           </div>
         ) : (
-          <div className="divide-y divide-sage-100">
+          <div className="divide-y divide-sage-100 dark:divide-sage-800">
             {categories.map((category) => (
               <div
                 key={category.id}
-                className="px-6 py-4 flex items-center justify-between hover:bg-sage-50"
+                className="px-6 py-4 flex items-center justify-between hover:bg-sage-50 dark:hover:bg-sage-800"
               >
                 <div>
-                  <h3 className="font-medium text-sage-800">
+                  <h3 className="font-medium text-sage-800 dark:text-sage-100">
                     {category.title}
                   </h3>
-                  <p className="text-sm text-sage-500">
+                  <p className="text-sm text-sage-500 dark:text-sage-400">
                     /{category.slug}
                     {category.description && ` • ${category.description}`}
                   </p>
@@ -327,7 +329,7 @@ export default function CategoriesPage(): JSX.Element {
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => handleEdit(category)}
-                    className="p-2 text-sage-500 hover:text-sage-700 transition-colors"
+                    className="p-2 text-sage-500 hover:text-sage-700 dark:text-sage-400 dark:hover:text-sage-200 transition-colors"
                     title="Bearbeiten"
                   >
                     ✏️

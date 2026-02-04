@@ -24,42 +24,49 @@ interface Blob {
   darkColor: string;
 }
 
-// 3 static blobs with fixed positions (Plan section 4)
+// 3 static blobs with fixed positions
 const BLOBS: Blob[] = [
   {
     id: 1,
     x: 10,
     y: 15,
     size: 500,
-    lightColor: "rgba(124, 154, 130, 0.12)", // sage
-    darkColor: "rgba(80, 180, 120, 0.10)",
+    lightColor: "rgba(80, 140, 90, 0.5)", // sage grün
+    darkColor: "rgba(80, 180, 120, 0.5)",
   },
   {
     id: 2,
     x: 75,
     y: 70,
     size: 600,
-    lightColor: "rgba(200, 180, 140, 0.10)", // sand
-    darkColor: "rgba(200, 100, 80, 0.08)",
+    lightColor: "rgba(210, 160, 100, 0.45)", // sand/gold
+    darkColor: "rgba(200, 120, 80, 0.45)",
   },
   {
     id: 3,
     x: 25,
     y: 55,
     size: 400,
-    lightColor: "rgba(137, 167, 177, 0.08)", // cooldown blue
-    darkColor: "rgba(60, 140, 180, 0.08)",
+    lightColor: "rgba(100, 150, 180, 0.4)", // blau
+    darkColor: "rgba(80, 160, 200, 0.4)",
   },
 ];
 
 function AmbientBackground(): JSX.Element {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     // Check for reduced motion preference
     const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     setPrefersReducedMotion(motionQuery.matches);
+
+    // Check for mobile viewport
+    const checkMobile = () => {
+      setIsMobile(window.matchMedia("(max-width: 639px)").matches);
+    };
+    checkMobile();
 
     // Check initial dark mode
     const checkDarkMode = () => {
@@ -74,12 +81,24 @@ function AmbientBackground(): JSX.Element {
       attributeFilter: ["data-theme"],
     });
 
-    return () => observer.disconnect();
+    // Watch for viewport changes
+    const mobileQuery = window.matchMedia("(max-width: 639px)");
+    const handleMobileChange = (e: MediaQueryListEvent) =>
+      setIsMobile(e.matches);
+    mobileQuery.addEventListener("change", handleMobileChange);
+
+    return () => {
+      observer.disconnect();
+      mobileQuery.removeEventListener("change", handleMobileChange);
+    };
   }, []);
+
+  // Only render 2 blobs on mobile for better performance
+  const displayBlobs = isMobile ? BLOBS.slice(0, 2) : BLOBS;
 
   return (
     <div className="ambient-background" aria-hidden="true">
-      {BLOBS.map((blob) => (
+      {displayBlobs.map((blob) => (
         <div
           key={blob.id}
           className={`ambient-blob ${prefersReducedMotion ? "" : "ambient-blob-drift"}`}
