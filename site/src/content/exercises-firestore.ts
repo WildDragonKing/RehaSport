@@ -29,6 +29,7 @@ export interface ExerciseMeta {
   kneeAlternative?: { title: string; description: string };
   shoulderAlternative?: { title: string; description: string };
   contraindications?: string[];
+  media?: { videoUrl?: string; audioUrl?: string; thumbnailUrl?: string };
 }
 
 const exercisesRef = collection(db, "exercises");
@@ -65,6 +66,7 @@ function toExerciseMeta(firestoreExercise: Exercise): ExerciseMeta {
     kneeAlternative: firestoreExercise.kneeAlternative,
     shoulderAlternative: firestoreExercise.shoulderAlternative,
     contraindications: firestoreExercise.contraindications,
+    media: firestoreExercise.media,
   };
 }
 

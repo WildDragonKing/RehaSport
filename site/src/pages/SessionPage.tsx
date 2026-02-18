@@ -6,24 +6,6 @@ import StarRating from "../components/ui/StarRating";
 import { useContent } from "../contexts/ContentContext";
 import { useRatings, type RatingSummary } from "../hooks/useRatings";
 
-// Icons
-function ChevronDownIcon(): JSX.Element {
-  return (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="m6 9 6 6 6-6" />
-    </svg>
-  );
-}
-
 function ChevronLeftIcon(): JSX.Element {
   return (
     <svg
@@ -58,6 +40,31 @@ function ChevronRightIcon(): JSX.Element {
   );
 }
 
+function getPhaseIndex(phaseTitle: string): number {
+  const title = phaseTitle.toLowerCase();
+  if (title.includes("aufwärmen") || title.includes("phase 1")) return 0;
+  if (title.includes("hauptteil") || title.includes("phase 2")) return 1;
+  if (title.includes("schwerpunkt") || title.includes("phase 3")) return 2;
+  if (title.includes("ausklang") || title.includes("phase 4")) return 3;
+  return -1;
+}
+
+function roleLabel(role?: "mandatory" | "optional_buffer" | "progression"): {
+  text: string;
+  className: string;
+} {
+  if (role === "mandatory") {
+    return { text: "Pflicht", className: "badge badge-knee" };
+  }
+  if (role === "optional_buffer") {
+    return { text: "Puffer", className: "badge badge-shoulder" };
+  }
+  if (role === "progression") {
+    return { text: "Steigerung", className: "badge" };
+  }
+  return { text: "Übung", className: "badge" };
+}
+
 function SessionPage(): JSX.Element {
   const { categorySlug, sessionSlug } = useParams();
   const { getSession, getCategory, findExerciseByTitle } = useContent();
@@ -66,15 +73,9 @@ function SessionPage(): JSX.Element {
       ? getSession(categorySlug, sessionSlug)
       : undefined;
   const category = categorySlug ? getCategory(categorySlug) : undefined;
-  const [expandedExercises, setExpandedExercises] = useState<Set<string>>(
-    new Set(),
-  );
+
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
-  const [viewMode, setViewMode] = useState<"trainer" | "teilnehmer">("trainer");
-  const [isMobile, setIsMobile] = useState(false);
-  const exerciseRefs = useRef<Map<string, HTMLLIElement | HTMLElement>>(
-    new Map(),
-  );
+  const exerciseRefs = useRef<Map<string, HTMLElement>>(new Map());
   const { getRating, setRating, getSummary } = useRatings();
   const [ratingSummary, setRatingSummary] = useState<RatingSummary | null>(
     null,
@@ -84,84 +85,38 @@ function SessionPage(): JSX.Element {
     categorySlug && sessionSlug ? `${categorySlug}/${sessionSlug}` : null;
   const currentRating = sessionId ? getRating(sessionId, "session") : null;
 
-  // Load rating summary
   useEffect(() => {
     if (sessionId) {
       getSummary(sessionId, "session").then(setRatingSummary);
     }
   }, [sessionId, getSummary]);
 
-  // Load saved view mode from localStorage
-  useEffect(() => {
-    const saved = localStorage.getItem("sessionViewMode");
-    if (saved === "teilnehmer") {
-      setViewMode("teilnehmer");
-    }
-  }, []);
-
-  // Detect mobile viewport
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.matchMedia("(max-width: 639px)").matches);
-    };
-    checkMobile();
-
-    const mobileQuery = window.matchMedia("(max-width: 639px)");
-    mobileQuery.addEventListener("change", checkMobile);
-    return () => mobileQuery.removeEventListener("change", checkMobile);
-  }, []);
-
-  const handleViewModeChange = (mode: "trainer" | "teilnehmer") => {
-    setViewMode(mode);
-    localStorage.setItem("sessionViewMode", mode);
-  };
-
   const handleRate = async (rating: number) => {
     if (sessionId) {
       await setRating(sessionId, "session", rating);
-      // Refresh summary after rating
       const summary = await getSummary(sessionId, "session");
       setRatingSummary(summary);
     }
   };
 
-  // Flatten exercises for navigation
   const allExercises =
     session?.phases.flatMap((phase, phaseIndex) =>
       phase.exercises.map((exercise, exerciseIndex) => ({
         exercise,
         key: `${phaseIndex}-${exerciseIndex}`,
         phaseTitle: phase.title,
-        phaseIndex,
-        exerciseIndex,
       })),
     ) ?? [];
 
-  const allExerciseKeys = allExercises.map((e) => e.key);
-  const allExpanded =
-    allExerciseKeys.length > 0 &&
-    allExerciseKeys.every((key) => expandedExercises.has(key));
-
-  // Navigate to specific exercise
   const goToExercise = useCallback(
     (index: number) => {
       if (index >= 0 && index < allExercises.length) {
         setCurrentExerciseIndex(index);
         const exerciseKey = allExercises[index].key;
-
-        setExpandedExercises((prev) => {
-          const next = new Set(prev);
-          next.add(exerciseKey);
-          return next;
-        });
-
-        setTimeout(() => {
-          const element = exerciseRefs.current.get(exerciseKey);
-          if (element) {
-            element.scrollIntoView({ behavior: "smooth", block: "start" });
-          }
-        }, 100);
-
+        const element = exerciseRefs.current.get(exerciseKey);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
         if ("vibrate" in navigator) {
           navigator.vibrate(10);
         }
@@ -170,7 +125,6 @@ function SessionPage(): JSX.Element {
     [allExercises],
   );
 
-  // Keyboard navigation
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent): void {
       if (e.key === "ArrowRight" || e.key === "ArrowDown") {
@@ -185,65 +139,6 @@ function SessionPage(): JSX.Element {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [currentExerciseIndex, goToExercise]);
-
-  function toggleAll(): void {
-    if (allExpanded) {
-      setExpandedExercises(new Set());
-    } else {
-      setExpandedExercises(new Set(allExerciseKeys));
-    }
-  }
-
-  function getPhaseColorClass(phaseTitle: string): string {
-    const title = phaseTitle.toLowerCase();
-    if (title.includes("aufwärmen") || title.includes("phase 1"))
-      return "phase-warmup";
-    if (title.includes("hauptteil") || title.includes("phase 2"))
-      return "phase-main";
-    if (title.includes("schwerpunkt") || title.includes("phase 3"))
-      return "phase-focus";
-    if (title.includes("ausklang") || title.includes("phase 4"))
-      return "phase-cooldown";
-    return "";
-  }
-
-  function getPhaseIndex(phaseTitle: string): number {
-    const title = phaseTitle.toLowerCase();
-    if (title.includes("aufwärmen") || title.includes("phase 1")) return 0;
-    if (title.includes("hauptteil") || title.includes("phase 2")) return 1;
-    if (title.includes("schwerpunkt") || title.includes("phase 3")) return 2;
-    if (title.includes("ausklang") || title.includes("phase 4")) return 3;
-    return -1;
-  }
-
-  function toggleExercise(exerciseKey: string, globalIndex: number): void {
-    const isCurrentlyExpanded = expandedExercises.has(exerciseKey);
-
-    if ("vibrate" in navigator && !isCurrentlyExpanded) {
-      navigator.vibrate(10);
-    }
-
-    setExpandedExercises((prev) => {
-      const next = new Set(prev);
-      if (next.has(exerciseKey)) {
-        next.delete(exerciseKey);
-      } else {
-        next.add(exerciseKey);
-      }
-      return next;
-    });
-
-    setCurrentExerciseIndex(globalIndex);
-
-    if (!isCurrentlyExpanded) {
-      setTimeout(() => {
-        const element = exerciseRefs.current.get(exerciseKey);
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-      }, 100);
-    }
-  }
 
   function setExerciseRef(key: string, element: HTMLElement | null): void {
     if (element) {
@@ -276,10 +171,7 @@ function SessionPage(): JSX.Element {
     : 0;
 
   return (
-    <div
-      className={`container stack session-page-content ${viewMode === "teilnehmer" ? "session-teilnehmer-mode" : ""}`}
-    >
-      {/* Breadcrumb */}
+    <div className="container stack session-page-content">
       <nav className="breadcrumb" aria-label="Navigation">
         <Link to="/" className="breadcrumb-link">
           Start
@@ -292,7 +184,6 @@ function SessionPage(): JSX.Element {
         <span className="breadcrumb-current">{session.title}</span>
       </nav>
 
-      {/* Page Header */}
       <header className="stack-sm">
         <h1>{session.title}</h1>
         {session.description && (
@@ -301,7 +192,6 @@ function SessionPage(): JSX.Element {
           </p>
         )}
 
-        {/* Meta */}
         <div
           style={{
             display: "flex",
@@ -343,7 +233,6 @@ function SessionPage(): JSX.Element {
         </div>
       </header>
 
-      {/* Phase Timeline */}
       {session.phases.length > 0 && (
         <div className="phase-timeline">
           <div
@@ -361,457 +250,84 @@ function SessionPage(): JSX.Element {
         </div>
       )}
 
-      {/* Session Controls + Mode Toggle */}
-      {session.phases.length > 0 && allExerciseKeys.length > 0 && (
+      {session.phases.length > 0 && allExercises.length > 0 && (
         <div className="session-controls-wrapper">
           <div className="session-controls-row">
-            <Button variant="ghost" size="sm" onClick={toggleAll}>
-              {allExpanded ? "Alle zuklappen" : "Alle aufklappen"}
-            </Button>
             <span className="session-exercise-counter">
               {currentExerciseIndex + 1} / {allExercises.length}
             </span>
           </div>
-
-          <div className="session-mode-toggle">
-            <button
-              type="button"
-              className={`mode-toggle-btn ${viewMode === "trainer" ? "active" : ""}`}
-              onClick={() => handleViewModeChange("trainer")}
-            >
-              Trainer
-            </button>
-            <button
-              type="button"
-              className={`mode-toggle-btn ${viewMode === "teilnehmer" ? "active" : ""}`}
-              onClick={() => handleViewModeChange("teilnehmer")}
-            >
-              Teilnehmer
-            </button>
-          </div>
         </div>
       )}
 
-      {/* Session Phases */}
       {session.phases.length > 0 ? (
-        viewMode === "trainer" ? (
-          // Trainer Mode: Akkordeon-Layout
-          isMobile ? (
-            // Mobile: Flache Liste ohne Phase-Container
-            <div className="accordion trainer-mobile-flat">
-              {allExercises.map(
-                (
-                  { exercise, key, phaseTitle, phaseIndex, exerciseIndex },
-                  globalIndex,
-                ) => {
-                  const isExpanded = expandedExercises.has(key);
-                  const isActive = globalIndex === currentExerciseIndex;
-                  const foundExercise = findExerciseByTitle(exercise.title);
-                  const exerciseSlug = foundExercise?.slug;
-                  const primaryDetail = exercise.details.find(
-                    (d) => d.label === "Durchführung",
-                  );
-                  const otherDetails = exercise.details.filter(
-                    (d) => d.label !== "Durchführung",
-                  );
-                  const kneeDetail = otherDetails.find(
-                    (d) => d.label === "Knie-Alternative",
-                  );
-                  const shoulderDetail = otherDetails.find(
-                    (d) => d.label === "Schulter-Alternative",
-                  );
-                  const phaseColorClass = getPhaseColorClass(phaseTitle);
+        <div className="exercise-cards-teilnehmer">
+          {allExercises.map(({ exercise, key, phaseTitle }, globalIndex) => {
+            const isActive = globalIndex === currentExerciseIndex;
+            const foundExercise = exercise.slug
+              ? { slug: exercise.slug }
+              : findExerciseByTitle(exercise.title);
+            const role = roleLabel(exercise.role);
 
-                  // Show phase header before first exercise of each phase
-                  const isFirstInPhase =
-                    globalIndex === 0 ||
-                    allExercises[globalIndex - 1].phaseIndex !== phaseIndex;
+            return (
+              <article
+                key={key}
+                ref={(el) => setExerciseRef(key, el)}
+                className={`exercise-card-large ${isActive ? "active" : ""}`}
+                onClick={() => setCurrentExerciseIndex(globalIndex)}
+              >
+                <div className="exercise-card-large-header">
+                  <span className="exercise-card-large-number">
+                    {globalIndex + 1}
+                  </span>
+                  <div>
+                    <h3 className="exercise-card-large-title">{exercise.title}</h3>
+                    <p className="exercise-card-large-phase">{phaseTitle}</p>
+                  </div>
+                </div>
 
-                  return (
-                    <div key={key}>
-                      {isFirstInPhase && (
-                        <div
-                          className={`trainer-mobile-phase-label ${phaseColorClass}`}
-                        >
-                          {phaseTitle}
-                        </div>
-                      )}
-                      <div
-                        ref={(el) => setExerciseRef(key, el)}
-                        className={`accordion-item ${isExpanded ? "expanded" : ""} ${isActive ? "active" : ""}`}
-                      >
-                        <button
-                          type="button"
-                          className="accordion-header"
-                          onClick={() => toggleExercise(key, globalIndex)}
-                          aria-expanded={isExpanded}
-                        >
-                          <div className="accordion-header-content">
-                            <span className="accordion-exercise-number">
-                              {globalIndex + 1}
-                            </span>
-                            <div style={{ minWidth: 0 }}>
-                              <span className="accordion-header-title">
-                                {exercise.title}
-                              </span>
-                              {primaryDetail && (
-                                <span className="accordion-header-subtitle">
-                                  {primaryDetail.value}
-                                </span>
-                              )}
-                            </div>
-                          </div>
+                <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.5rem" }}>
+                  <span className={role.className}>{role.text}</span>
+                  {exercise.estMinutes && (
+                    <span className="badge">{exercise.estMinutes} Min</span>
+                  )}
+                </div>
 
-                          <div className="accordion-header-meta">
-                            {kneeDetail && (
-                              <span
-                                className="badge badge-knee"
-                                title="Knie-Alternative"
-                              >
-                                🦵
-                              </span>
-                            )}
-                            {shoulderDetail && (
-                              <span
-                                className="badge badge-shoulder"
-                                title="Schulter-Alternative"
-                              >
-                                💪
-                              </span>
-                            )}
-                            <span className="accordion-chevron">
-                              <ChevronDownIcon />
-                            </span>
-                          </div>
-                        </button>
-
-                        {isExpanded && (
-                          <div className="accordion-content">
-                            {otherDetails.length > 0 && (
-                              <div className="stack-sm">
-                                {otherDetails.map((detail) => (
-                                  <div
-                                    key={`${key}-${detail.label}`}
-                                    className={
-                                      detail.label.includes("Alternative")
-                                        ? "alternative-card"
-                                        : "quick-info-card"
-                                    }
-                                    style={
-                                      detail.label.includes("Knie")
-                                        ? {
-                                            backgroundColor:
-                                              "var(--color-secondary-soft)",
-                                          }
-                                        : detail.label.includes("Schulter")
-                                          ? {
-                                              backgroundColor:
-                                                "var(--color-phase-focus-bg)",
-                                            }
-                                          : {}
-                                    }
-                                  >
-                                    <div className="quick-info-card-title">
-                                      {detail.label}
-                                    </div>
-                                    <div className="quick-info-card-content">
-                                      {detail.value}
-                                    </div>
-                                  </div>
-                                ))}
-                              </div>
-                            )}
-                            {exerciseSlug && (
-                              <div style={{ marginTop: "1rem" }}>
-                                <Button
-                                  to={`/uebungen/${exerciseSlug}`}
-                                  variant="ghost"
-                                  size="sm"
-                                >
-                                  Zur vollständigen Übung →
-                                </Button>
-                              </div>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  );
-                },
-              )}
-            </div>
-          ) : (
-            // Desktop: Verschachtelte Phase-Sections
-            <div className="accordion">
-              {session.phases.map((phase, phaseIndex) => {
-                const phaseColorClass = getPhaseColorClass(phase.title);
-                return (
-                  <section
-                    key={phase.title}
-                    className={`phase-indicator ${phaseColorClass}`}
-                    style={{
-                      padding: 0,
-                      borderRadius: "var(--radius-xl)",
-                      overflow: "hidden",
-                    }}
-                  >
+                <div className="exercise-card-large-content">
+                  {exercise.details.map((detail, index) => (
                     <div
-                      style={{
-                        padding: "1rem 1.25rem",
-                        borderBottom: "1px solid var(--color-border-light)",
-                      }}
+                      key={`${detail.label}-${index}`}
+                      className="exercise-card-large-detail"
                     >
-                      <h2
-                        style={{
-                          fontSize: "1.125rem",
-                          fontWeight: 600,
-                          margin: 0,
-                        }}
-                      >
-                        {phase.title}
-                      </h2>
-                      {phase.description && (
-                        <p
-                          className="text-muted"
-                          style={{ fontSize: "0.875rem", marginTop: "0.25rem" }}
-                        >
-                          {phase.description}
-                        </p>
-                      )}
-                    </div>
-
-                    <ol style={{ listStyle: "none", padding: 0, margin: 0 }}>
-                      {phase.exercises.map((exercise, exerciseIndex) => {
-                        const exerciseKey = `${phaseIndex}-${exerciseIndex}`;
-                        const globalIndex = allExercises.findIndex(
-                          (e) => e.key === exerciseKey,
-                        );
-                        const isExpanded = expandedExercises.has(exerciseKey);
-                        const isActive = globalIndex === currentExerciseIndex;
-                        const foundExercise = findExerciseByTitle(
-                          exercise.title,
-                        );
-                        const exerciseSlug = foundExercise?.slug;
-                        const primaryDetail = exercise.details.find(
-                          (d) => d.label === "Durchführung",
-                        );
-                        const otherDetails = exercise.details.filter(
-                          (d) => d.label !== "Durchführung",
-                        );
-
-                        const kneeDetail = otherDetails.find(
-                          (d) => d.label === "Knie-Alternative",
-                        );
-                        const shoulderDetail = otherDetails.find(
-                          (d) => d.label === "Schulter-Alternative",
-                        );
-
-                        return (
-                          <li
-                            key={exerciseKey}
-                            ref={(el) => setExerciseRef(exerciseKey, el)}
-                            className={`accordion-item ${isExpanded ? "expanded" : ""}`}
-                            style={{
-                              border: "none",
-                              borderRadius: 0,
-                              borderTop:
-                                exerciseIndex > 0
-                                  ? "1px solid var(--color-border-light)"
-                                  : "none",
-                              backgroundColor: isActive
-                                ? "var(--color-primary-softer)"
-                                : "transparent",
-                            }}
-                          >
-                            <button
-                              type="button"
-                              className="accordion-header"
-                              onClick={() =>
-                                toggleExercise(exerciseKey, globalIndex)
-                              }
-                              aria-expanded={isExpanded}
-                            >
-                              <div className="accordion-header-content">
-                                <span
-                                  style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    width: "28px",
-                                    height: "28px",
-                                    borderRadius: "50%",
-                                    backgroundColor:
-                                      "var(--color-surface-muted)",
-                                    fontSize: "0.875rem",
-                                    fontWeight: 600,
-                                    flexShrink: 0,
-                                  }}
-                                >
-                                  {exerciseIndex + 1}
-                                </span>
-                                <div style={{ minWidth: 0 }}>
-                                  <span className="accordion-header-title">
-                                    {exercise.title}
-                                  </span>
-                                  {primaryDetail && (
-                                    <span
-                                      className="text-muted"
-                                      style={{
-                                        display: "block",
-                                        fontSize: "0.875rem",
-                                        marginTop: "0.125rem",
-                                      }}
-                                    >
-                                      {primaryDetail.value}
-                                    </span>
-                                  )}
-                                </div>
-                              </div>
-
-                              <div className="accordion-header-meta">
-                                {kneeDetail && (
-                                  <span
-                                    className="badge badge-knee"
-                                    title="Knie-Alternative"
-                                  >
-                                    🦵
-                                  </span>
-                                )}
-                                {shoulderDetail && (
-                                  <span
-                                    className="badge badge-shoulder"
-                                    title="Schulter-Alternative"
-                                  >
-                                    💪
-                                  </span>
-                                )}
-                                <span className="accordion-chevron">
-                                  <ChevronDownIcon />
-                                </span>
-                              </div>
-                            </button>
-
-                            {isExpanded && (
-                              <div className="accordion-content">
-                                {otherDetails.length > 0 && (
-                                  <div className="stack-sm">
-                                    {otherDetails.map((detail) => (
-                                      <div
-                                        key={`${exerciseKey}-${detail.label}`}
-                                        className={
-                                          detail.label.includes("Alternative")
-                                            ? "alternative-card"
-                                            : "quick-info-card"
-                                        }
-                                        style={
-                                          detail.label.includes("Knie")
-                                            ? {
-                                                backgroundColor:
-                                                  "var(--color-secondary-soft)",
-                                              }
-                                            : detail.label.includes("Schulter")
-                                              ? {
-                                                  backgroundColor:
-                                                    "var(--color-phase-focus-bg)",
-                                                }
-                                              : {}
-                                        }
-                                      >
-                                        <div className="quick-info-card-title">
-                                          {detail.label}
-                                        </div>
-                                        <div className="quick-info-card-content">
-                                          {detail.value}
-                                        </div>
-                                      </div>
-                                    ))}
-                                  </div>
-                                )}
-                                {exerciseSlug && (
-                                  <div style={{ marginTop: "1rem" }}>
-                                    <Button
-                                      to={`/uebungen/${exerciseSlug}`}
-                                      variant="ghost"
-                                      size="sm"
-                                    >
-                                      Zur vollständigen Übung →
-                                    </Button>
-                                  </div>
-                                )}
-                              </div>
-                            )}
-                          </li>
-                        );
-                      })}
-                    </ol>
-                  </section>
-                );
-              })}
-            </div>
-          )
-        ) : (
-          // Teilnehmer Mode: Karten-Layout
-          <div className="exercise-cards-teilnehmer">
-            {allExercises.map(({ exercise, key, phaseTitle }, globalIndex) => {
-              const isActive = globalIndex === currentExerciseIndex;
-              const foundExercise = findExerciseByTitle(exercise.title);
-
-              return (
-                <article
-                  key={key}
-                  ref={(el) => setExerciseRef(key, el)}
-                  className={`exercise-card-large ${isActive ? "active" : ""}`}
-                  onClick={() => setCurrentExerciseIndex(globalIndex)}
-                >
-                  <div className="exercise-card-large-header">
-                    <span className="exercise-card-large-number">
-                      {globalIndex + 1}
-                    </span>
-                    <div>
-                      <h3 className="exercise-card-large-title">
-                        {exercise.title}
-                      </h3>
-                      <p className="exercise-card-large-phase">{phaseTitle}</p>
-                    </div>
-                  </div>
-
-                  <div className="exercise-card-large-content">
-                    {exercise.details.map((detail) => (
-                      <div
-                        key={detail.label}
-                        className="exercise-card-large-detail"
-                      >
-                        <div className="exercise-card-large-detail-label">
-                          {detail.label}
-                        </div>
-                        <div className="exercise-card-large-detail-value">
-                          {detail.value}
-                        </div>
+                      <div className="exercise-card-large-detail-label">
+                        {detail.label}
                       </div>
-                    ))}
-
-                    {foundExercise && (
-                      <div style={{ marginTop: "1rem" }}>
-                        <Button
-                          to={`/uebungen/${foundExercise.slug}`}
-                          variant="ghost"
-                          size="sm"
-                        >
-                          Zur vollständigen Übung →
-                        </Button>
+                      <div className="exercise-card-large-detail-value">
+                        {detail.value}
                       </div>
-                    )}
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-        )
+                    </div>
+                  ))}
+
+                  {foundExercise && (
+                    <div style={{ marginTop: "1rem" }}>
+                      <Button
+                        to={`/uebungen/${foundExercise.slug}`}
+                        variant="ghost"
+                        size="sm"
+                      >
+                        Zur vollständigen Übung →
+                      </Button>
+                    </div>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
       ) : (
         <p className="text-muted">Keine Übungen in dieser Stunde gefunden.</p>
       )}
 
-      {/* Rating Section */}
       <section className="rating-card">
         <div className="rating-card-header">
           <svg
@@ -846,7 +362,6 @@ function SessionPage(): JSX.Element {
         )}
       </section>
 
-      {/* Sticky Bottom Navigation */}
       {allExercises.length > 1 && (
         <div className="bottom-nav">
           <div className="bottom-nav-content">

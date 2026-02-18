@@ -22,6 +22,10 @@ export interface SessionExercise {
   title: string;
   slug?: string;
   details: SessionExerciseDetail[];
+  role?: "mandatory" | "optional_buffer" | "progression";
+  estMinutes?: number;
+  progressionFromTitle?: string;
+  skipPriority?: number;
 }
 
 // Phase einer Stunde
