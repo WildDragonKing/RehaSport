@@ -1,0 +1,12 @@
+Use case: ui-mockup
+Asset type: reusable character keyframe for rehab exercise videos
+Primary request: create a single clean keyframe showing one stylized 3D rehab avatar centered in a physiotherapy studio.
+Scene/background: minimalist rehab studio, soft gradient wall, subtle geometric depth, no equipment clutter.
+Subject: fixed character identity "SageGuide-01", neutral and approachable expression, short dark hair, no facial hair, no logos.
+Style/medium: stylized 3D, modern healthcare aesthetic, semi-realistic proportions, crisp edges, soft textures.
+Composition/framing: landscape, medium-wide front shot, full upper body and arms clearly visible, centered with balanced headroom.
+Lighting/mood: diffuse daylight from camera-left, soft fill, gentle rim light for silhouette clarity.
+Color palette: sage green (#7c9a82), sand (#f2ebe0), terracotta accent (#c4927a), lime accent (#84cc16) in tiny details only.
+Materials/textures: matte fabric on clothing, smooth wall gradient, lightly textured floor.
+Constraints: keep character neutral and reusable for all future rehab exercise clips; avoid realism of a real person.
+Avoid: dark cinematic look, neon lighting, busy background, dramatic contrast, text overlays, brand marks, medical devices in foreground.

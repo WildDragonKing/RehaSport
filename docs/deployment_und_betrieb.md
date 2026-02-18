@@ -1,6 +1,6 @@
 # Deployment und Betrieb
 
-Stand: 17.02.2026
+Stand: 18.02.2026
 
 ## Zielumgebung
 
@@ -11,7 +11,7 @@ Stand: 17.02.2026
 
 ## Lokale Entwicklung
 
-## Frontend
+### Frontend (Astro)
 
 ```bash
 cd site
@@ -19,38 +19,54 @@ npm ci
 npm run dev
 ```
 
-## Typecheck und Tests
+Standard-URL lokal: `http://localhost:4321/` (Port kann ueberschrieben werden).
+
+### Typecheck, Tests, Build
 
 ```bash
 cd site
 npm run typecheck
 npm test
-```
-
-## Functions
-
-```bash
-cd functions
-npm ci
 npm run build
 ```
 
+## Umgebungsvariablen
+
+Frontend erwartet (siehe `site/.env.example`):
+- `PUBLIC_FIREBASE_API_KEY`
+- `PUBLIC_FIREBASE_AUTH_DOMAIN`
+- `PUBLIC_FIREBASE_PROJECT_ID`
+- `PUBLIC_FIREBASE_STORAGE_BUCKET`
+- `PUBLIC_FIREBASE_MESSAGING_SENDER_ID`
+- `PUBLIC_FIREBASE_APP_ID`
+- optional `PUBLIC_FIREBASE_MEASUREMENT_ID`
+
+Hinweis: Aus Kompatibilitaetsgruenden akzeptiert der Code auch `VITE_*`-Namen als Fallback.
+
 ## Build und Deployment
 
-## Hosting Build
+### Hosting Build
 
 ```bash
 cd site
 npm run build
 ```
 
-## Manuelles Firebase Deploy
+### Manuelles Firebase Deploy
 
 ```bash
 npx firebase deploy
 ```
 
-Hinweis: Das Projekt nutzt `npx firebase`, da die CLI nicht global vorausgesetzt wird.
+## Firebase Hosting Routing
+
+`firebase.json` verwendet gezielte rewrites fuer dynamische Public-Unterpfade:
+- `/stunden` und `/stunden/**` -> `/stunden/index.html`
+- `/uebungen` und `/uebungen/**` -> `/uebungen/index.html`
+
+Damit funktionieren clientseitige Detailpfade ohne Catch-all-SPA-Rewrite.
+
+Statische Rechtsseiten (`/impressum`, `/datenschutz`) werden ohne zusaetzliche rewrites direkt aus `site/dist` bedient.
 
 ## CI/CD Workflow
 
@@ -63,46 +79,14 @@ Pipeline:
 1. Checkout
 2. Node Setup
 3. `npm ci` in `site`
-4. Tests in `site`
+4. `npm test` in `site`
 5. Firebase CLI Setup
 6. Firebase Web SDK Config aus Projekt ziehen
-7. Frontend Build
+7. Frontend Build mit `PUBLIC_FIREBASE_*`-Variablen
 8. Deploy zu Firebase Hosting (`channelId: live`)
 9. Auto-Versionstag und GitHub Release
 
-## Konfigurationswerte und Secrets
+## Monitoring und Betriebshinweise
 
-Frontend erwartet (siehe `site/.env.example`):
-- `VITE_FIREBASE_API_KEY`
-- `VITE_FIREBASE_AUTH_DOMAIN`
-- `VITE_FIREBASE_PROJECT_ID`
-- `VITE_FIREBASE_STORAGE_BUCKET`
-- `VITE_FIREBASE_MESSAGING_SENDER_ID`
-- `VITE_FIREBASE_APP_ID`
-- `VITE_FIREBASE_MEASUREMENT_ID`
-- optional `VITE_RECAPTCHA_V3_SITE_KEY`
-
-Cloud Functions:
-- Secret `GEMINI_API_KEY`
-
-## Monitoring und Fehlerbehandlung
-
-- Clientfehler gehen ueber Callable `logClientError` in Google Cloud Logging.
-- Frontend setzt globale Handler fuer:
-  - `window.onerror`
-  - `window.onunhandledrejection`
-- Analytics:
-  - Firebase Analytics (Client)
-  - zusaetzliche Nutzungsmetriken in Firestore (`analytics` Collection)
-
-## Betriebsnahe Admin-Funktionen
-
-- Export aller zentralen Collections als ZIP (`site/src/firebase/export.ts`)
-- Bulk-Generierung ueber Hintergrundjobs (`generationJobs`)
-- Session-Regeln konfigurierbar ueber `config/sessionRules`
-
-## Sicherheitsrelevante Betriebsregeln
-
-- Firestore Rules sind verpflichtend und Teil des Deployments.
-- AI-Endpoints erzwingen App Check und Auth.
-- Rollen und Berechtigungen werden nicht nur im UI, sondern in Rules kontrolliert.
+- Der aktuelle Public-Frontend-Stand hat keine PWA-/Service-Worker-Logik.
+- Firestore Rules und Cloud Functions bleiben Teil der Gesamtplattform und werden weiterhin ueber das Root-Projekt verwaltet.

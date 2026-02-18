@@ -1,0 +1,43 @@
+{
+  "generatedAt": "2026-02-18T16:44:11.758Z",
+  "operator": "wilddragonking@googlemail.com",
+  "sessionId": "schulter_schulter-mobility",
+  "shoulderRatio": 1,
+  "beforeCore": [
+    "Fußkreisen",
+    "Hüftkreisen",
+    "Knie zur Brust",
+    "Schulterkreisen",
+    "Kniebeuge mit Stuhl",
+    "Ausfallschritt zurück",
+    "Wandliegestütze",
+    "Beckenlift",
+    "Atemwelle mit Armbewegung",
+    "Einbeinstand",
+    "Vogel-Hund",
+    "Schulterbrücke einbeinig",
+    "Wadenheben einbeinig",
+    "Brücke mit Beckenboden-Spannung",
+    "Dehnung Hüftbeuger",
+    "Brustdehnung an der Wand",
+    "Katze-Kuh",
+    "Atemübung mit Armen"
+  ],
+  "afterCore": [
+    "Schulterkreisen",
+    "Armkreisen",
+    "Nackenrollen",
+    "Stab-Schultermobilisation",
+    "Theraband Außenrotation",
+    "Sitzgymnastik Schulterblätter zusammenziehen",
+    "Wandliegestütze",
+    "Theraband Rudern",
+    "Myofasziale Dehnung Schulter-Nacken",
+    "Armheben mit Widerstand",
+    "Brustdehnung an der Wand",
+    "Atemübung mit Armen"
+  ],
+  "backupFile": "/Users/lbuettge/Projects/personal/RehaSport/backups/firestore/schulter-mobility-before-2026-02-18T16-44-11-758Z.json",
+  "reviewFile": "/Users/lbuettge/Projects/personal/RehaSport/backups/sora/schulter-mobility/video-review.json",
+  "promptFile": "/Users/lbuettge/Projects/personal/RehaSport/backups/sora/schulter-mobility/prompts.jsonl"
+}

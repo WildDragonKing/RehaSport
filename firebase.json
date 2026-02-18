@@ -27,8 +27,20 @@
     ],
     "rewrites": [
       {
-        "source": "**",
-        "destination": "/index.html"
+        "source": "/stunden",
+        "destination": "/stunden/index.html"
+      },
+      {
+        "source": "/stunden/**",
+        "destination": "/stunden/index.html"
+      },
+      {
+        "source": "/uebungen",
+        "destination": "/uebungen/index.html"
+      },
+      {
+        "source": "/uebungen/**",
+        "destination": "/uebungen/index.html"
       }
     ]
   }

@@ -1,0 +1,146 @@
+{
+  "deletedAt": "2026-02-18T20:06:55.402Z",
+  "count": 10,
+  "docs": [
+    {
+      "id": "atemtherapie",
+      "createdAt": 1770158161421,
+      "focusTags": [
+        "Atmung",
+        "Entspannung",
+        "Stressabbau",
+        "Achtsamkeit"
+      ],
+      "description": "Atemtechniken, Stressabbau und mentale Gesundheit. Übungen zur Förderung der Atemfunktion, Entspannung und des allgemeinen Wohlbefindens.",
+      "title": "Atemtherapie & Entspannung",
+      "slug": "atemtherapie",
+      "order": 100
+    },
+    {
+      "id": "ausdauer",
+      "description": "Übungen zur Verbesserung der kardiovaskulären Fitness und Ausdauer.",
+      "order": 4,
+      "createdAt": 1770159181598,
+      "title": "Herz-Kreislauf",
+      "focusTags": [
+        "Ausdauer",
+        "Herz-Kreislauf",
+        "Kondition",
+        "Bewegung"
+      ],
+      "slug": "ausdauer"
+    },
+    {
+      "id": "beckenboden",
+      "title": "Beckenbodentraining",
+      "createdAt": 1770158161878,
+      "description": "Core-Stabilität, Kontinenz und Rumpfkraft. Übungen zur Stärkung der Beckenbodenmuskulatur und Verbesserung der Körpermitte.",
+      "focusTags": [
+        "Beckenboden",
+        "Core",
+        "Stabilität",
+        "Rumpfkraft"
+      ],
+      "slug": "beckenboden",
+      "order": 103
+    },
+    {
+      "id": "beweglichkeit",
+      "order": 5,
+      "description": "Dehnübungen und Mobilisation für mehr Flexibilität und Bewegungsfreiheit.",
+      "createdAt": 1770159181711,
+      "focusTags": [
+        "Dehnung",
+        "Flexibilität",
+        "Beweglichkeit",
+        "Mobilisation"
+      ],
+      "title": "Beweglichkeit & Dehnung",
+      "slug": "beweglichkeit"
+    },
+    {
+      "id": "faszientraining",
+      "focusTags": [
+        "Faszien",
+        "Mobilität",
+        "Beweglichkeit",
+        "Bindegewebe"
+      ],
+      "createdAt": 1770158161623,
+      "title": "Faszientraining",
+      "slug": "faszientraining",
+      "description": "Mobilität, Verklebungen lösen und Beweglichkeit verbessern. Übungen zur Pflege des Bindegewebes und zur Erhaltung der körperlichen Geschmeidigkeit.",
+      "order": 101
+    },
+    {
+      "id": "koordination",
+      "order": 2,
+      "title": "Koordination & Balance",
+      "description": "Übungen zur Verbesserung von Gleichgewicht, Koordination und Körperwahrnehmung.",
+      "slug": "koordination",
+      "createdAt": 1770159181316,
+      "focusTags": [
+        "Balance",
+        "Koordination",
+        "Sturzprophylaxe",
+        "Körpergefühl"
+      ]
+    },
+    {
+      "id": "kraft",
+      "createdAt": 1770159181456,
+      "focusTags": [
+        "Kraft",
+        "Muskelaufbau",
+        "Stabilität",
+        "Funktionell"
+      ],
+      "slug": "kraft",
+      "description": "Kräftigungsübungen für den gesamten Körper mit Fokus auf funktionelle Bewegungen.",
+      "title": "Kraft & Stabilität",
+      "order": 3
+    },
+    {
+      "id": "osteoporose",
+      "createdAt": 1770158161746,
+      "description": "Knochendichte erhalten und sanfte Belastungsübungen. Speziell entwickelte Übungen zur Stärkung der Knochen und Verbesserung der Haltung.",
+      "focusTags": [
+        "Knochengesundheit",
+        "Kraft",
+        "Balance",
+        "Haltung"
+      ],
+      "slug": "osteoporose",
+      "order": 102,
+      "title": "Osteoporose-Prävention"
+    },
+    {
+      "id": "ruecken",
+      "slug": "ruecken",
+      "createdAt": 1770159180964,
+      "title": "Rücken & Wirbelsäule",
+      "description": "Übungen zur Stärkung und Mobilisierung der Wirbelsäule und Rückenmuskulatur.",
+      "order": 0,
+      "focusTags": [
+        "Rücken",
+        "Wirbelsäule",
+        "Haltung",
+        "Mobilität"
+      ]
+    },
+    {
+      "id": "schulter",
+      "order": 1,
+      "title": "Schulter & Nacken",
+      "description": "Übungen für Schultergelenk, Nacken und obere Rückenmuskulatur.",
+      "createdAt": 1770159181181,
+      "focusTags": [
+        "Schulter",
+        "Nacken",
+        "Beweglichkeit",
+        "Verspannungen"
+      ],
+      "slug": "schulter"
+    }
+  ]
+}

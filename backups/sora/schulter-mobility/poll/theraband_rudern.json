@@ -1,0 +1,15 @@
+{
+  "completed_at": 1771433239,
+  "created_at": 1771433135,
+  "error": null,
+  "expires_at": 1771436839,
+  "id": "video_6995ecafd7948191ab325e47b621b9aa0a2e2c232aeaa224",
+  "model": "sora-2",
+  "object": "video",
+  "progress": 100,
+  "prompt": "Use case: RehaSport Trainingsanleitung f\u00fcr Schulter-Mobility\nPrimary request: neutrales Demo-Avatar zeigt die \u00dcbung \"Theraband Rudern\" pr\u00e4zise und ruhig\nScene/background: heller, neutraler Trainingsraum ohne Branding\nSubject: anonymer generischer Trainings-Avatar (keine reale Person)\nAction: langsame, saubere Ausf\u00fchrung mit klar erkennbarer Start- und Endposition\nCamera: statische Halbtotalen-Perspektive, keine hektischen Fahrten\nLighting/mood: gleichm\u00e4\u00dfig, klinisch klar, fokus auf Bewegung\nStyle/format: instruktives RehaSport-Demo-Video\nConstraints: keine Logos, keine Marken, keine urheberrechtlich gesch\u00fctzten Figuren, keine reale Person\nAvoid: schnelle Schnitte, Motion Blur, unklare Gelenkstellungen",
+  "remixed_from_video_id": null,
+  "seconds": "8",
+  "size": "1280x720",
+  "status": "completed"
+}

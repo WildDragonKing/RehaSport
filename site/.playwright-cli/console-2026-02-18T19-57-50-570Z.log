@@ -1,0 +1,3 @@
+[     468ms] [ERROR] Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep) @ http://127.0.0.1:4321/node_modules/.vite/deps/firebase_firestore.js?v=611e1511:0
+[     484ms] [ERROR] [astro-island] Error hydrating /src/components/react/CategoriesExplorer.tsx TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:4321/src/components/react/CategoriesExplorer.tsx @ http://127.0.0.1:4321/:387
+[     573ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://127.0.0.1:4321/favicon.ico:0

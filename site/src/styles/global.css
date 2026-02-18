@@ -131,6 +131,12 @@ main {
   color: var(--text);
 }
 
+.footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
 .hero {
   padding: var(--space-16) 0 var(--space-12);
   border-bottom: 1px solid var(--border);
@@ -348,6 +354,32 @@ main {
 
 .muted {
   color: var(--text-muted);
+}
+
+.legal-page .card {
+  max-width: 78ch;
+}
+
+.legal-content h2 {
+  font-size: 1.12rem;
+}
+
+.legal-content p {
+  margin: 0;
+}
+
+.legal-content a {
+  color: var(--text);
+}
+
+@media (max-width: 720px) {
+  .footer-nav {
+    gap: var(--space-2);
+  }
+
+  .footer-nav a {
+    padding: 6px 0;
+  }
 }
 
 @media (max-width: 720px) {

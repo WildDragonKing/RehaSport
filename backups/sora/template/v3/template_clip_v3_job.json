@@ -1,0 +1,32 @@
+{
+  "create": {
+    "completed_at": null,
+    "created_at": 1771444777,
+    "error": null,
+    "expires_at": null,
+    "id": "video_69961a296dc48190b25dc338328c2041055a5411da486446",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 0,
+    "prompt": "Use case: RehaSport exercise-template clip aligned with minimal Astro site design\nPrimary request: create one reusable template clip for the exercise \"Schulterkreisen\" with strict visual consistency.\nScene/background: same white and light-gray studio from the reference image, clean and minimal with thin divider lines.\nSubject: same stylized 3D avatar \"SageGuide-01\" from reference, same outfit and identity.\nAction: slow controlled shoulder circles only, one clear forward cycle and one clear backward cycle.\nCamera: locked medium-wide, eye-level, centered, no cuts, no camera motion.\nLighting/mood: soft uniform clinical daylight, calm and neutral.\nColor palette: white (#ffffff), light gray (#f6f7f8), border gray (#d5dce1), charcoal (#0f1113), small accent green (#06c24a).\nStyle/format: modern clean product-style rehab demo, high readability, minimal aesthetic.\nTiming/beats: 8s total; 0-1s neutral start, 1-4s forward circles, 4-7s backward circles, 7-8s neutral end.\nAudio: none.\nConstraints: keep character identity, framing, and environment stable for use as the master template for future clips.\nAvoid: extra body movement, gesture clutter, flicker, jitter, motion blur, changing colors, changing outfit, warm rustic look.",
+    "remixed_from_video_id": null,
+    "seconds": "8",
+    "size": "1280x720",
+    "status": "queued"
+  },
+  "final": {
+    "completed_at": 1771444881,
+    "created_at": 1771444777,
+    "error": null,
+    "expires_at": 1771448481,
+    "id": "video_69961a296dc48190b25dc338328c2041055a5411da486446",
+    "model": "sora-2",
+    "object": "video",
+    "progress": 100,
+    "prompt": "Use case: RehaSport exercise-template clip aligned with minimal Astro site design\nPrimary request: create one reusable template clip for the exercise \"Schulterkreisen\" with strict visual consistency.\nScene/background: same white and light-gray studio from the reference image, clean and minimal with thin divider lines.\nSubject: same stylized 3D avatar \"SageGuide-01\" from reference, same outfit and identity.\nAction: slow controlled shoulder circles only, one clear forward cycle and one clear backward cycle.\nCamera: locked medium-wide, eye-level, centered, no cuts, no camera motion.\nLighting/mood: soft uniform clinical daylight, calm and neutral.\nColor palette: white (#ffffff), light gray (#f6f7f8), border gray (#d5dce1), charcoal (#0f1113), small accent green (#06c24a).\nStyle/format: modern clean product-style rehab demo, high readability, minimal aesthetic.\nTiming/beats: 8s total; 0-1s neutral start, 1-4s forward circles, 4-7s backward circles, 7-8s neutral end.\nAudio: none.\nConstraints: keep character identity, framing, and environment stable for use as the master template for future clips.\nAvoid: extra body movement, gesture clutter, flicker, jitter, motion blur, changing colors, changing outfit, warm rustic look.",
+    "remixed_from_video_id": null,
+    "seconds": "8",
+    "size": "1280x720",
+    "status": "completed"
+  }
+}

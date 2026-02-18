@@ -1,75 +1,59 @@
 # Entwicklungsrichtlinien
 
-Stand: 17.02.2026
+Stand: 18.02.2026
 
-Diese Datei fasst konkrete Arbeitsregeln fuer die Weiterentwicklung zusammen.
+Diese Datei fasst die aktuellen Arbeitsregeln fuer die Weiterentwicklung zusammen.
 
-## Inhaltliche Leitplanken (RehaSport)
+## Produkt- und Inhaltsregeln
 
-- Sprache: Deutsch fuer Inhalte und Nutzertexte
-- Sessions folgen dem 45-Minuten-Schema:
-  - 10 Min Aufwaermen
-  - 15 Min Hauptteil
-  - 15 Min Schwerpunkt
-  - 5 Min Ausklang
-- Jede Uebung braucht:
-  - Alternative bei Kniebeschwerden (`kneeAlternative`)
-  - Alternative bei Schulterbeschwerden (`shoulderAlternative`)
-  - Kontraindikationen
+- Sprache fuer Nutzertexte: Deutsch
+- Fokus des Frontends: schneller Kernflow (finden -> oeffnen -> lesen)
+- Inhalte bleiben an der RehaSport-Logik orientiert (45-Minuten-Schema, sichere Alternativen)
+- Rechtliche Mindestseiten (`/impressum`, `/datenschutz`) muessen im Public-Frontend verfuegbar und im Footer verlinkt sein
 
 ## Architekturregeln
 
-- Firestore ist die primaere Datenquelle.
-- Oeffentliche Session-Ansicht zeigt nur `status == published`.
-- Admin/Trainer-Features nur fuer authentifizierte Nutzer mit Rolle.
-- Neue Cloud Functions immer in `europe-west1`.
-
-## Firebase und Sicherheit
-
-- Firestore Rules sind Teil der Feature-Definition, nicht nachtraeglich.
-- Sensitive Funktionalitaet nur serverseitig (Callable Functions).
-- App Check bei missbrauchsrelevanten Endpunkten aktivieren.
-- Keine Secrets in den Clientcode eintragen.
+- Frontend-Stack Public: Astro + React-Inseln
+- Firestore ist primaere Datenquelle fuer Public-Inhalte
+- Datenzugriff zentral in `site/src/lib/content.ts`
+- Typen zentral in `site/src/lib/types.ts`
 
 ## Frontend-Standards
 
-- Neue Seiten in Routing und Navigation konsistent einhaengen.
-- Theme-Kompatibilitaet sicherstellen (light/dark/system).
-- Design-Tokens aus `index.css` verwenden statt Hardcoding.
-- Accessibility mitdenken:
-  - semantische Struktur
-  - Tastaturbedienung
-  - klare Fokus-/Statusanzeige
+- mobile-first entwickeln
+- interaktive Logik in React-Inseln halten, nicht in Astro-Seiten verteilen
+- Designtoken in `site/src/styles/global.css` nutzen
+- nur einen Akzentton verwenden (Signal-Gruen)
+- keine dekorativen Animationen, kein visueller Ballast
 
-## Datenmodell und Typen
+## Firestore- und Env-Regeln
 
-- Firestore-Dokumente ueber zentrale Typen in `site/src/firebase/types.ts` modellieren.
-- Bei neuen Feldern:
-  - Typ erweitern
-  - Loader und Admin-Formulare anpassen
-  - Firestore Rules pruefen
+- neue Firestore-Felder nur mit Typanpassung in `types.ts`
+- Normalisierung/Mapping in `content.ts` aktualisieren
+- noetige Client-Variablen als `PUBLIC_*` bereitstellen
+- keine Secrets in den Clientcode
 
 ## Tests und lokale Checks
 
-- Frontend:
-  - `npm run typecheck`
-  - `npm test`
-- Functions:
-  - `npm run build`
-- Vor Release sicherstellen, dass zentrale Flows laufen:
-  - Login
-  - Session/Uebungsanzeige
-  - Admin-Navigation
-  - KI-Builder (inkl. Rate-Limit-Feedback)
+Vor PR/Release im Frontend immer ausfuehren:
+
+```bash
+cd site
+npm run typecheck
+npm test
+npm run build
+```
 
 ## Deployment-Disziplin
 
-- `main` bleibt Release-Zweig (auto Deploy per Workflow).
-- Aenderungen in kleinen, reviewbaren PRs liefern.
-- Bei schema-/regelrelevanten Aenderungen: Rules und App-Code gemeinsam deploybar halten.
+- `main` ist Release-Zweig (auto deploy ueber Workflow)
+- kleine, reviewbare PRs
+- bei Routingaenderungen immer `firebase.json` mitziehen
 
 ## Doku-Disziplin
 
-- Technische Entscheidungen in `docs/entscheidungen_adr.md` nachziehen.
-- Architekturveraenderungen in `docs/architektur.md` aktualisieren.
-- Designaenderungen in `docs/design_system.md` dokumentieren.
+Bei Architektur-/UI-Aenderungen aktualisieren:
+- `docs/architektur.md`
+- `docs/design_system.md`
+- `docs/entscheidungen_adr.md`
+- `docs/deployment_und_betrieb.md`

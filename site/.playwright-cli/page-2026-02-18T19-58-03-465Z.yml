@@ -1,0 +1,56 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "RehaSport" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - navigation "Hauptnavigation" [ref=e5]:
+        - link "Kategorien" [ref=e6] [cursor=pointer]:
+          - /url: /kategorien
+        - link "Stunden" [ref=e7] [cursor=pointer]:
+          - /url: /stunden
+        - link "Übungen" [ref=e8] [cursor=pointer]:
+          - /url: /uebungen
+        - link "Wissen" [ref=e9] [cursor=pointer]:
+          - /url: /wissen
+  - main [ref=e10]:
+    - generic [ref=e12]:
+      - heading "Trainiere klar. Ohne Ablenkung." [level=1] [ref=e13]
+      - paragraph [ref=e14]: Finde in wenigen Schritten die passende Stunde oder Übung. Die Oberfläche ist bewusst reduziert, damit du direkt im Training bleibst.
+      - generic [ref=e15]:
+        - link "Stunden öffnen" [ref=e16] [cursor=pointer]:
+          - /url: /stunden
+        - link "Übungen durchsuchen" [ref=e17] [cursor=pointer]:
+          - /url: /uebungen
+      - generic "Kennzahlen" [ref=e18]:
+        - generic [ref=e19]:
+          - strong [ref=e20]: Live
+          - text: Stunden aus Firestore
+        - generic [ref=e21]:
+          - strong [ref=e22]: Live
+          - text: Übungen aus Firestore
+        - generic [ref=e23]:
+          - strong [ref=e24]: Klar
+          - text: Fokus auf Kernflow
+    - generic [ref=e25]:
+      - generic [ref=e26]:
+        - heading "Kategorien direkt im Blick" [level=2] [ref=e27]
+        - paragraph [ref=e28]: Wähle deinen Schwerpunkt und öffne die passenden Inhalte sofort.
+      - generic [ref=e31]: Lade Kategorien …
+  - contentinfo [ref=e32]:
+    - generic [ref=e33]:
+      - generic [ref=e34]: RehaSport Reader · fokussiert trainieren
+      - link "Trainerzugang" [ref=e35] [cursor=pointer]:
+        - /url: /trainer
+  - generic [ref=e38]:
+    - button "Menu" [ref=e39]:
+      - img [ref=e41]
+      - generic: Menu
+    - button "Inspect" [ref=e45]:
+      - img [ref=e47]
+      - generic: Inspect
+    - button "Audit" [ref=e49]:
+      - img [ref=e51]
+      - generic: Audit
+    - button "Settings" [ref=e54]:
+      - img [ref=e56]
+      - generic: Settings
