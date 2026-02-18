@@ -49,6 +49,8 @@ flowchart LR
 - `/stunden/:kategorieSlug/:stundenSlug`, `/uebungen/:uebungSlug`
 - Firebase Hosting rewrites leiten dynamische Unterpfade auf die jeweilige Index-Seite.
 - Die jeweilige Insel liest den Pfad und zeigt den passenden Detailinhalt an.
+- Fuer `Stunden` bleibt die Query-Variante (`/stunden?cat=...&slug=...`) aus Kompatibilitaetsgruenden zulaessig.
+- Mobile Darstellung in `Stunden`-Details nutzt ein Phasen-Accordion (erste Phase offen, weitere geschlossen).
 
 ### Statische Rechtsseiten
 - `/impressum`, `/datenschutz`

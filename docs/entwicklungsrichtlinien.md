@@ -21,10 +21,12 @@ Diese Datei fasst die aktuellen Arbeitsregeln fuer die Weiterentwicklung zusamme
 ## Frontend-Standards
 
 - mobile-first entwickeln
+- mobile Lesbarkeit immer mindestens auf `320px` Breite pruefen
 - interaktive Logik in React-Inseln halten, nicht in Astro-Seiten verteilen
 - Designtoken in `site/src/styles/global.css` nutzen
 - nur einen Akzentton verwenden (Signal-Gruen)
 - keine dekorativen Animationen, kein visueller Ballast
+- lange Listen/Detailinhalte auf Mobile mit progressiver Offenlegung umsetzen (Accordion-Muster)
 
 ## Firestore- und Env-Regeln
 

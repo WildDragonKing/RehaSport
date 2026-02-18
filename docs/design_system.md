@@ -40,9 +40,11 @@ Die zentrale Umsetzung liegt in `site/src/styles/global.css`.
 
 - mobile-first Basis
 - Erweiterung ueber `min-width`-Breakpoints
+- kleine Viewports (`320px`) sind Pflicht-Referenz fuer Lesbarkeit
 - Komponenten:
   - `tool-bar` startet einspaltig auf Mobile
   - Grids starten mit 1 Spalte und erweitern sich erst auf groesseren Screens
+  - Listenkarten in `Stunden` bleiben auf Mobile kompakt (gekappte Beschreibung, klare Meta-Zeile)
 
 ## Komponentenprinzipien
 
@@ -50,6 +52,7 @@ Die zentrale Umsetzung liegt in `site/src/styles/global.css`.
 - React nur als Inseln fuer Interaktion
 - konsistente Klassen in `global.css`
 - keine verstreuten pro-Seite Sonderstile ohne Not
+- lange Detailinhalte auf Mobile progressiv offenlegen (Accordion statt voll ausgeklappter Textwand)
 
 ## Accessibility und UX
 

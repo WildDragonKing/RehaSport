@@ -112,10 +112,10 @@ export default function SessionsExplorer(): ReactElement {
     if (!session) {
       return (
         <div className="container section stack">
-          <div className="breadcrumb">
-            <a href="/stunden">Stunden</a>
-            <span>/</span>
-            <span>Unbekannt</span>
+          <div className="breadcrumb breadcrumb-session">
+            <a className="breadcrumb-back" href="/stunden">Zurück zu Stunden</a>
+            <span className="breadcrumb-separator">/</span>
+            <span className="breadcrumb-current">Unbekannt</span>
           </div>
           <div className="error">Diese Stunde wurde nicht gefunden.</div>
         </div>
@@ -124,51 +124,56 @@ export default function SessionsExplorer(): ReactElement {
 
     return (
       <section className="container section stack">
-        <div className="breadcrumb">
-          <a href="/stunden">Stunden</a>
-          <span>/</span>
-          <span>{session.categoryTitle}</span>
-          <span>/</span> 
-          <span>{session.title}</span>
+        <div className="breadcrumb breadcrumb-session">
+          <a className="breadcrumb-back" href="/stunden">Zurück zu Stunden</a>
+          <span className="breadcrumb-separator breadcrumb-optional">/</span>
+          <span className="breadcrumb-segment breadcrumb-optional">{session.categoryTitle}</span>
+          <span className="breadcrumb-separator">/</span>
+          <span className="breadcrumb-current">{session.title}</span>
         </div>
 
         <header className="stack">
           <h1 className="section-title">{session.title}</h1>
           <p className="muted">{session.description || "Keine Beschreibung verfügbar."}</p>
-          <div className="meta">
+          <div className="meta session-detail-meta">
             <span>{session.duration || "45 Min"}</span>
             <span>{session.exerciseCount} Übungen</span>
             {session.focus ? <span>{session.focus}</span> : null}
           </div>
         </header>
 
-        <div className="stack">
+        <div className="stack session-phases">
           {session.phases.map((phase, phaseIndex) => (
-            <article className="card stack" key={`${phase.title}-${phaseIndex}`}>
-              <h2>{phase.title}</h2>
-              {phase.description ? <p>{phase.description}</p> : null}
-              {phase.exercises.length > 0 ? (
-                <ol className="stack" style={{ margin: 0, paddingLeft: "1.25rem" }}>
-                  {phase.exercises.map((exercise, index) => (
-                    <li key={`${exercise.title}-${index}`}>
-                      <strong>{exercise.title}</strong>
-                      {exercise.details.length > 0 ? (
-                        <ul className="stack" style={{ marginTop: "8px", paddingLeft: "1rem" }}>
-                          {exercise.details.map((detail, detailIndex) => (
-                            <li key={`${detail.label}-${detailIndex}`}>
-                              <span className="muted">{detail.label}: </span>
-                              <span>{detail.value}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      ) : null}
-                    </li>
-                  ))}
-                </ol>
-              ) : (
-                <p className="muted">Für diese Phase sind keine Übungen hinterlegt.</p>
-              )}
-            </article>
+            <details className="card phase" key={`${phase.title}-${phaseIndex}`} open={phaseIndex === 0}>
+              <summary className="phase-summary">
+                <span className="phase-summary-title">{phase.title}</span>
+                <span className="badge phase-summary-count">{phase.exercises.length} Übungen</span>
+              </summary>
+              <div className="phase-body stack">
+                {phase.description ? <p>{phase.description}</p> : null}
+                {phase.exercises.length > 0 ? (
+                  <ol className="phase-exercise-list stack">
+                    {phase.exercises.map((exercise, index) => (
+                      <li className="phase-exercise-item" key={`${exercise.title}-${index}`}>
+                        <strong>{exercise.title}</strong>
+                        {exercise.details.length > 0 ? (
+                          <ul className="phase-detail-list stack">
+                            {exercise.details.map((detail, detailIndex) => (
+                              <li className="phase-detail-item" key={`${detail.label}-${detailIndex}`}>
+                                <span className="muted phase-detail-label">{detail.label}</span>
+                                <span className="phase-detail-value">{detail.value}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : null}
+                      </li>
+                    ))}
+                  </ol>
+                ) : (
+                  <p className="muted">Für diese Phase sind keine Übungen hinterlegt.</p>
+                )}
+              </div>
+            </details>
           ))}
         </div>
       </section>
@@ -210,16 +215,16 @@ export default function SessionsExplorer(): ReactElement {
         <ul className="list">
           {filteredSessions.map((session) => (
             <li key={`${session.categorySlug}-${session.slug}`}>
-              <article className="card stack">
-                <h2>{session.title}</h2>
-                <p>{session.description || "Ohne Kurzbeschreibung."}</p>
-                <div className="meta">
+              <article className="card stack session-card">
+                <h2 className="session-card-title">{session.title}</h2>
+                <p className="session-card-description">{session.description || "Ohne Kurzbeschreibung."}</p>
+                <div className="meta session-meta">
                   <span>{session.categoryTitle}</span>
                   <span>{session.duration || "45 Min"}</span>
                   <span>{session.exerciseCount} Übungen</span>
                 </div>
                 <a
-                  className="btn btn-primary"
+                  className="btn btn-primary session-open-btn"
                   href={`/stunden?cat=${encodeURIComponent(session.categorySlug)}&slug=${encodeURIComponent(session.slug)}`}
                 >
                   Stunde öffnen
