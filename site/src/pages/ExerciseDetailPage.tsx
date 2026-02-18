@@ -162,6 +162,33 @@ function ExerciseDetailPage(): JSX.Element {
         )}
       </div>
 
+      {exercise.media?.videoUrl && (
+        <section className="stack-sm animate-fade-up fill-backwards delay-250">
+          <h2 className="exercise-detail-section-title">Übungsvideo</h2>
+          <div className="card card-body">
+            <video
+              controls
+              preload="metadata"
+              style={{ width: "100%", borderRadius: "var(--radius-lg)" }}
+              poster={exercise.media.thumbnailUrl}
+            >
+              <source src={exercise.media.videoUrl} />
+              Ihr Browser unterstützt dieses Videoformat nicht.
+            </video>
+            <div style={{ marginTop: "0.75rem" }}>
+              <a
+                className="btn btn-ghost btn-sm"
+                href={exercise.media.videoUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Video in neuem Tab öffnen
+              </a>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Alternatives Section (prominent) - from structured data or sections */}
       {(exercise.kneeAlternative ||
         exercise.shoulderAlternative ||
