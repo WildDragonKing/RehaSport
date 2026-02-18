@@ -1,0 +1,4 @@
+selected=6C_astro-minimal
+selected_at=2026-02-18
+source_image=/Users/lbuettge/Projects/personal/RehaSport/backups/sora/template/image-iterations/v3_pick6/6C_astro-minimal.png
+source_prompt=/Users/lbuettge/Projects/personal/RehaSport/backups/sora/template/image-iterations/v3_pick6/prompt_6C_astro-minimal.txt

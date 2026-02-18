@@ -1,0 +1,10 @@
+Use case: ui-mockup
+Asset type: rehab avatar template keyframe
+Primary request: refine this exact character into a soft vibey modern look without losing cleanliness.
+Scene/background: same framing, subtle desaturated teal-charcoal gradient background with soft falloff.
+Subject: keep exact same male character identity from the input image (same face, hair, age, proportions, expression).
+Style/medium: stylized 3D with smooth shading, modern and tasteful.
+Lighting/mood: gentle warm front light plus cool ambient fill, cozy-modern balance.
+Color palette: deep muted teal, charcoal-blue, sage fabric, warm skin highlights.
+Constraints: preserve identity/composition; change only atmosphere and color mood.
+Avoid: photoreal skin texture, dark dramatic noir, clutter, text overlays.

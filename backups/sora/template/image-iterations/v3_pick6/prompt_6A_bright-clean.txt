@@ -1,0 +1,10 @@
+Use case: ui-mockup
+Asset type: rehab avatar template keyframe
+Primary request: refine this exact character into a brighter, cleaner version for daytime use.
+Scene/background: same centered composition and same studio framing, but brighter light-gray background with subtle gradient only.
+Subject: keep exact same male character identity from the input image (same face, hair, age, proportions, expression).
+Style/medium: stylized 3D, modern, premium, not photoreal.
+Lighting/mood: soft daylight, smooth and natural, low contrast, friendly.
+Color palette: light gray, cool sage, muted charcoal, subtle warm skin tones.
+Constraints: preserve character identity and framing exactly; adjust only atmosphere and polish.
+Avoid: photoreal drift, heavy shadows, clutter, props, text overlays.

@@ -1,0 +1,10 @@
+Use case: ui-mockup
+Asset type: rehab avatar template keyframe
+Primary request: refine this exact character into a warm cozy variant with soft evening vibe.
+Scene/background: same framing and minimal studio, with subtle warm amber-to-cream gradient and gentle depth.
+Subject: keep exact same male character identity from the input image (same face, hair, age, proportions, expression).
+Style/medium: stylized 3D, clean and calm.
+Lighting/mood: warm key light with soft ambient fill, inviting and relaxed.
+Color palette: muted amber, warm beige, dusty sage, deep muted green shirt.
+Constraints: same identity and composition; only mood and palette shift.
+Avoid: dramatic cinema look, very dark scene, strong rim lights, props, text.

@@ -1,0 +1,10 @@
+Use case: ui-mockup
+Asset type: rehab avatar template keyframe
+Primary request: refine this exact character for strict Astro-style minimal design.
+Scene/background: white and very light gray panel background, no props, crisp clean lines.
+Subject: keep exact same male character identity from the input image (same face, hair, age, proportions, expression).
+Style/medium: stylized 3D, minimalist product-aesthetic.
+Lighting/mood: neutral soft studio light, balanced and readable.
+Color palette: white, light gray, charcoal details, restrained sage-green shirt.
+Constraints: preserve identity and framing exactly; maximize clarity and minimalism.
+Avoid: cozy furniture, heavy gradients, cinematic shadows, clutter, text.
