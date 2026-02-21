@@ -1,89 +1,81 @@
 # Architektur
 
-Stand: 17.02.2026
+Stand: 21.02.2026
 
 ## Systemkontext
 
 ```mermaid
 flowchart LR
-  U["Teilnehmer / Trainer / Admin"] --> W["Web-App (React, Vite, PWA)"]
+  U["Teilnehmer"] --> W["Public Web-App (Astro + React-Inseln)"]
   W --> H["Firebase Hosting"]
-  W --> A["Firebase Auth (Google SSO)"]
   W --> F["Firestore"]
-  W --> C["Cloud Functions (Callable, europe-west1)"]
+  T["Trainer/Admin"] --> C["Cloud Functions"]
   C --> G["Gemini API"]
-  W --> GA["Firebase Analytics"]
-  C --> L["Google Cloud Logging"]
+  C --> F
 ```
 
 ## Schichtenmodell
 
-### 1) Presentation Layer (`site/src`)
-- React Router mit oeffentlichen Routen und Admin-Routen
-- globale Layouts (`PageLayout`, `AdminLayout`)
-- Designsystem in `site/src/index.css`
-- Theme-Umschaltung per `ThemeProvider`
+### 1) Presentation Layer (`site/src/pages`, `site/src/layouts`)
+- Astro-Seiten als statische Shells
+- Navigations- und Basislayout in `site/src/layouts/BaseLayout.astro`
+- Public-Routen sind deutschsprachig und sprechend
+- Rechtliche Pflichtseiten sind statisch als Astro-Seiten umgesetzt (`/impressum`, `/datenschutz`)
 
-### 2) Application Layer (`site/src/contexts`, `site/src/hooks`)
-- `AuthContext`: Auth-Status, Rollen, Login/Logout
-- `ContentContext`: Laden von Kategorien, Sessions, Exercises aus Firestore
-- Hooks fuer Suche, Ratings, Analytics
+### 2) Interactive Islands (`site/src/components/react`)
+- `SessionsExplorer.tsx` - Stunden-Liste mit Suche + Phasen-Accordion im Detail
+- `ExercisesExplorer.tsx` - Uebungs-Liste mit Suche + Detailansicht
+- Aufgabe: Such-/Filterlogik und Detaildarstellung auf Basis des URL-Pfads
 
-### 3) Data Access Layer (`site/src/firebase`, `site/src/content`)
-- typisierte Firestore-Operationen (`site/src/firebase/firestore.ts`)
-- Loader mit Caching (`site/src/content/*-firestore.ts`, 5 Minuten TTL)
-- Auth-Hilfen inkl. Einladungssystem (`site/src/firebase/auth.ts`)
+### 3) Data Layer (`site/src/lib`)
+- `firebase.ts`: Firebase-App/Firestore-Initialisierung
+- `content.ts`: Laden und Normalisieren von Stunden und Uebungen
+- In-Memory-Cache mit TTL von 5 Minuten
+- Typvertrag in `types.ts`
 
 ### 4) Backend Layer (`functions/src/index.ts`)
-- Firebase Callable Functions mit:
-  - App Check Enforcement
-  - Auth-Pruefung
-  - Rate Limiting in Firestore (Transaktionen)
-- KI-Features (Stunden- und Uebungsgenerierung) via Gemini
-- Fehler-Logging fuer Clientfehler
+- Cloud Functions v2 (Node 20, Region `europe-west1`)
+- KI-Integration: Google Gemini fuer Stunden-/Uebungs-Generierung
+- Rollen-Checks via `requireTrainerRole()` fuer alle KI-Endpoints
+- Input-Sanitization via `sanitizeTextInput()` mit Laengenlimits
+- Fail-Closed Rate Limiting mit Firestore Transactions
+
+### 5) Security Layer
+- **Firestore Rules** (`firestore.rules`):
+  - `exists()` Guard vor `get()` verhindert Fehler bei fehlenden User-Dokumenten
+  - `affectedKeys()` verhindert Privilege Escalation (User kann eigene Rolle nicht aendern)
+  - Schema-Validierung bei Ratings und Analytics (`keys().hasOnly()`, Typ-Checks)
+  - Server-only Collections (`rateLimits`, `generationJobs`) mit `allow read, write: if false`
+- **HTTP Security Headers** (`firebase.json`):
+  - CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy
 
 ## Kernprozesse
 
 ### Oeffentliche Inhalte laden
-1. App startet, `ContentProvider` laedt Kategorien, Sessions, Exercises aus Firestore.
-2. Nur `published` Sessions werden oeffentlich angezeigt.
-3. Ergebnisse werden clientseitig gecacht.
+1. Astro rendert die statische Seitenhuelle.
+2. React-Insel laedt Daten aus Firestore (`sessions`, `exercises`).
+3. Daten werden normalisiert und 5 Minuten gecacht.
+4. Suche/Filter laufen clientseitig auf dem geladenen Datensatz.
 
-### Trainer/Admin Login
-1. Login ueber Google Popup.
-2. Wenn erster User: automatische Admin-Rolle und `config/admin`.
-3. Sonst nur Registrierung mit gueltiger Einladung.
-4. Rollen aus `users/{uid}` steuern den Zugriff im UI und in Firestore Rules.
+### Detailseiten
+- `/stunden/:kategorieSlug/:stundenSlug`, `/uebungen/:uebungSlug`
+- Firebase Hosting rewrites leiten dynamische Unterpfade auf die jeweilige Index-Seite.
+- Die jeweilige Insel liest den Pfad und zeigt den passenden Detailinhalt an.
+- Fuer `Stunden` bleibt die Query-Variante (`/stunden?cat=...&slug=...`) aus Kompatibilitaetsgruenden zulaessig.
+- Mobile Darstellung in `Stunden`-Details nutzt ein Phasen-Accordion (erste Phase offen, weitere geschlossen).
 
-### KI-Builder und Entwuerfe
-1. Admin/Trainer ruft Callable Function (`generateSession` oder `suggestExercises`) auf.
-2. Function prueft App Check + Auth + Rate Limit.
-3. Gemini liefert JSON, Frontend speichert Ergebnis als Draft.
-4. Admin kann Draft freigeben; daraus wird eine publizierte Session.
+### Statische Rechtsseiten
+- `/impressum`, `/datenschutz`
+- Werden ohne Client-Logik direkt als statische Astro-Seiten ausgeliefert.
 
-### Bewertungen
-1. Nutzer gibt Sternebewertung fuer Session/Uebung.
-2. Aggregat wird in `ratings/{targetType_targetId}` gespeichert.
-3. Eigene Bewertung liegt in `localStorage`, damit Aenderungen konsistent bleiben.
+## Datenmodell (genutzt im Public-Frontend)
 
-## Datenmodell (Firestore)
-
-- `sessions`: Trainingsstunden (`status: draft|published`)
+- `sessions`: veroeffentlichte Stunden (`status == published`)
 - `exercises`: Uebungsbibliothek
-- `categories`: Kategorien mit Metadaten
-- `drafts`: KI- und manuelle Entwuerfe
-- `groups`: Trainergruppen mit Einschraenkungen
-- `users`: Rollen und Profildaten
-- `invitations`: Einladung fuer Trainer/Admin-Onboarding
-- `ratings`: aggregierte Sternebewertungen
-- `analytics`: Seitenaufrufe und Kennzahlen
-- `config`: globale Konfiguration (z. B. Session-Regeln)
-- `rateLimits`: Server-seitige KI-Request-Historie
-- `generationJobs`: Bulk-Generierung mit Jobstatus
 
-## Sicherheit
+## Nicht mehr Teil der aktuellen Frontend-Architektur
 
-- Firestore Rules mit rollenbasierten Guards (`admin`, `trainer`, owner)
-- Cloud Functions mit `enforceAppCheck: true` bei sicherheitsrelevanten Endpunkten
-- KI-Endpunkte nur authentifiziert nutzbar
-- Admin-Bereiche sowohl im UI als auch serverseitig abgesichert
+- React Router SPA fuer Public
+- PWA/Service Worker im Public-Frontend
+- Theme-Switch und Ratings im Public-Frontend
+- Admin-Frontend (entfernt, muss in Folgephase neu aufgebaut werden)

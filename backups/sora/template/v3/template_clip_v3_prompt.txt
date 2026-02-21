@@ -1,0 +1,13 @@
+Use case: RehaSport exercise-template clip aligned with minimal Astro site design
+Primary request: create one reusable template clip for the exercise "Schulterkreisen" with strict visual consistency.
+Scene/background: same white and light-gray studio from the reference image, clean and minimal with thin divider lines.
+Subject: same stylized 3D avatar "SageGuide-01" from reference, same outfit and identity.
+Action: slow controlled shoulder circles only, one clear forward cycle and one clear backward cycle.
+Camera: locked medium-wide, eye-level, centered, no cuts, no camera motion.
+Lighting/mood: soft uniform clinical daylight, calm and neutral.
+Color palette: white (#ffffff), light gray (#f6f7f8), border gray (#d5dce1), charcoal (#0f1113), small accent green (#06c24a).
+Style/format: modern clean product-style rehab demo, high readability, minimal aesthetic.
+Timing/beats: 8s total; 0-1s neutral start, 1-4s forward circles, 4-7s backward circles, 7-8s neutral end.
+Audio: none.
+Constraints: keep character identity, framing, and environment stable for use as the master template for future clips.
+Avoid: extra body movement, gesture clutter, flicker, jitter, motion blur, changing colors, changing outfit, warm rustic look.

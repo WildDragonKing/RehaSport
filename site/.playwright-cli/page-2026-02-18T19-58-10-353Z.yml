@@ -1,0 +1,34 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "RehaSport" [ref=e4] [cursor=pointer]:
+        - /url: /
+      - navigation "Hauptnavigation" [ref=e5]:
+        - link "Kategorien" [ref=e6] [cursor=pointer]:
+          - /url: /kategorien
+        - link "Stunden" [ref=e7] [cursor=pointer]:
+          - /url: /stunden
+        - link "Übungen" [ref=e8] [cursor=pointer]:
+          - /url: /uebungen
+        - link "Wissen" [ref=e9] [cursor=pointer]:
+          - /url: /wissen
+  - main [ref=e10]:
+    - generic [ref=e13]: Lade Stunden …
+  - contentinfo [ref=e14]:
+    - generic [ref=e15]:
+      - generic [ref=e16]: RehaSport Reader · fokussiert trainieren
+      - link "Trainerzugang" [ref=e17] [cursor=pointer]:
+        - /url: /trainer
+  - generic [ref=e20]:
+    - button "Menu" [ref=e21]:
+      - img [ref=e23]
+      - generic: Menu
+    - button "Inspect" [ref=e27]:
+      - img [ref=e29]
+      - generic: Inspect
+    - button "Audit" [ref=e31]:
+      - img [ref=e33]
+      - generic: Audit
+    - button "Settings" [ref=e36]:
+      - img [ref=e38]
+      - generic: Settings

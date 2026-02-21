@@ -1,0 +1,651 @@
+{
+  "sessionId": "schulter_schulter-mobility",
+  "data": {
+    "conceptVersion": "v2",
+    "optimizedVia": "ai-session-optimizer",
+    "categoryTitle": "Schulter",
+    "optimizedBy": "wilddragonking@googlemail.com",
+    "qualityScore": 100,
+    "updatedAt": "2026-02-18T16:27:04.002Z",
+    "createdAt": "2026-01-31T12:08:32.968Z",
+    "qualityBreakdown": {
+      "variety": 100,
+      "progression": 100,
+      "safety": 100,
+      "pacing": 100
+    },
+    "optimizedAt": "2026-02-18T16:27:04.002Z",
+    "focus": "Schulter, Brustwirbelsäule, Haltung",
+    "createdBy": "bRt0uHjEviWiGZ791Kul2zuG90Y2",
+    "phases": [
+      {
+        "title": "Phase 1: Aufwärmen (10 Minuten)",
+        "description": "Gelenke sequentiell mobilisieren und Bewegungsumfang vorbereiten.",
+        "progressionEnabled": false,
+        "mandatoryMinutes": 7,
+        "targetMinutes": 10,
+        "exercises": [
+          {
+            "role": "mandatory",
+            "title": "Fußkreisen",
+            "skipPriority": 1,
+            "details": [
+              {
+                "value": "2 x 30 Sekunden pro Seite, abwechselnd innen/außen.",
+                "label": "Durchführung"
+              },
+              {
+                "value": "Knie leicht gebeugt, Core aktiv.",
+                "label": "Coaching"
+              },
+              {
+                "value": "Im Sitzen durchführen.",
+                "label": "Knie-Alternative"
+              },
+              {
+                "label": "Schulter-Alternative",
+                "value": "Hände auf Oberschenkel, kein Armhub nötig."
+              }
+            ],
+            "estMinutes": 1
+          },
+          {
+            "role": "mandatory",
+            "title": "Hüftkreisen",
+            "skipPriority": 1,
+            "details": [
+              {
+                "label": "Durchführung",
+                "value": "3 Runden à 10 Wiederholungen pro Richtung."
+              },
+              {
+                "value": "Hüfte locker, Oberkörper stabil.",
+                "label": "Coaching"
+              },
+              {
+                "value": "Stand enger, Kreise kleiner.",
+                "label": "Knie-Alternative"
+              },
+              {
+                "label": "Schulter-Alternative",
+                "value": "Hände auf Hüfte, Schultern entspannt."
+              }
+            ],
+            "estMinutes": 2
+          },
+          {
+            "skipPriority": 1,
+            "details": [
+              {
+                "label": "Durchführung",
+                "value": "Rückenlage, 2 Sätze à 10 Wiederholungen pro Seite."
+              },
+              {
+                "label": "Coaching",
+                "value": "Lendenwirbelsäule am Boden, Atmung fließen lassen."
+              },
+              {
+                "value": "Knie nur bis Wohlfühlposition, ggf. im Sitz.",
+                "label": "Knie-Alternative"
+              },
+              {
+                "value": "Arme locker um Schienbein, kein Ziehen.",
+                "label": "Schulter-Alternative"
+              }
+            ],
+            "estMinutes": 2,
+            "title": "Knie zur Brust",
+            "role": "mandatory"
+          },
+          {
+            "role": "mandatory",
+            "title": "Schulterkreisen",
+            "details": [
+              {
+                "label": "Durchführung",
+                "value": "2 x 12 Wiederholungen vorwärts/rückwärts, anschließend diagonale Varianten."
+              },
+              {
+                "label": "Coaching",
+                "value": "Schulterblätter gleiten lassen, Brustkorb öffnen."
+              },
+              {
+                "label": "Knie-Alternative",
+                "value": "Im Sitzen ausführen."
+              },
+              {
+                "label": "Schulter-Alternative",
+                "value": "Bewegungsumfang reduzieren, Arme angewinkelt."
+              }
+            ],
+            "estMinutes": 2,
+            "skipPriority": 1
+          },
+          {
+            "estMinutes": 2,
+            "details": [
+              {
+                "label": "Durchführung",
+                "value": "Armkreisen mobilisiert die Schultergelenke und aktiviert die gesamte Schulter-Arm-Muskulatur. Diese Übung bereitet den Oberkörper optimal auf Belastung vor, fördert die Durchblutung und löst Verspannungen im Schulter-Nacken-Bereich. Ideal als sanfte Aufwärmübung zu Beginn jeder Trainingseinheit. (ca. 2 Minuten)"
+              },
+              {
+                "value": "Ruhige, präzise Wiederholungen mit gleichmäßiger Atmung.",
+                "label": "Coaching"
+              },
+              {
+                "label": "Knie-Alternative",
+                "value": "Bei Knieproblemen: Alternative Übung: Übung im Sitzen auf stabilem Stuhl ausführenAnpassung: Gleiche Bewegung, nur sitzend - entlastet Knie und Beine vollständigHinweis: Aufrechte Sitzposition beibehalten, Füße flach auf dem Boden\nBei Schulterproblemen\nAlternative Übung: Kleinere Kreise auf reduziertem BewegungsradiusAnpassung: Arme nur bis 90° (Schulterhöhe) anheben, Kreise im schmerzfreien BereichHinweis: Nur so weit kreisen wie ohne Schmerzen möglich, bei Bedarf nur eine Schulter bewegen\nWeitere Anpassungen\nVereinfachung (Anfänger): Nur halbe Kreise (Pendelbewegung), abwechselnd linker und rechter ArmSteigerung (Fortgeschrittene): Mit leichten Gewichten (0,5-1 kg Hanteln), größere Kreise, langsameres Tempo für mehr MuskelaktivierungFür Senioren: Im Sitzen ausführen, kleinere Bewegungsamplitude, mehr Pausen zwischen den Durchgängen"
+              },
+              {
+                "label": "Schulter-Alternative",
+                "value": "Bei Schulterproblemen: Alternative Übung: Kleinere Kreise auf reduziertem BewegungsradiusAnpassung: Arme nur bis 90° (Schulterhöhe) anheben, Kreise im schmerzfreien BereichHinweis: Nur so weit kreisen wie ohne Schmerzen möglich, bei Bedarf nur eine Schulter bewegen\nWeitere Anpassungen\nVereinfachung (Anfänger): Nur halbe Kreise (Pendelbewegung), abwechselnd linker und rechter ArmSteigerung (Fortgeschrittene): Mit leichten Gewichten (0,5-1 kg Hanteln), größere Kreise, langsameres Tempo für mehr MuskelaktivierungFür Senioren: Im Sitzen ausführen, kleinere Bewegungsamplitude, mehr Pausen zwischen den Durchgängen"
+              }
+            ],
+            "skipPriority": 3,
+            "role": "optional_buffer",
+            "title": "Armkreisen"
+          }
+        ],
+        "duration": "10 Minuten",
+        "bufferMinutes": 2
+      },
+      {
+        "exercises": [
+          {
+            "role": "mandatory",
+            "title": "Kniebeuge mit Stuhl",
+            "estMinutes": 2,
+            "details": [
+              {
+                "value": "3 Sätze à 12 Wiederholungen.",
+                "label": "Durchführung"
+              },
+              {
+                "label": "Coaching",
+                "value": "Gewicht auf Fersen, Knie folgen Zehen."
+              },
+              {
+                "label": "Knie-Alternative",
+                "value": "Höherer Stuhl, halbe Kniebeuge."
+              },
+              {
+                "label": "Schulter-Alternative",
+                "value": "Hände an Hüfte statt Armvorhalte."
+              }
+            ],
+            "skipPriority": 1
+          },
+          {
+            "role": "mandatory",
+            "title": "Ausfallschritt zurück",
+            "estMinutes": 2,
+            "details": [
+              {
+                "value": "2 Sätze à 10 Wiederholungen pro Seite.",
+                "label": "Durchführung"
+              },
+              {
+                "value": "Rumpf stabil, Schritt kontrolliert.",
+                "label": "Coaching"
+              },
+              {
+                "label": "Knie-Alternative",
+                "value": "Schritt kleiner oder Gewichtsverlagerung im Stand."
+              },
+              {
+                "value": "Hände auf Hüfte, kein Zusatzgewicht.",
+                "label": "Schulter-Alternative"
+              }
+            ],
+            "skipPriority": 1
+          },
+          {
+            "title": "Wandliegestütze",
+            "role": "mandatory",
+            "details": [
+              {
+                "label": "Durchführung",
+                "value": "3 Sätze à 15 Wiederholungen."
+              },
+              {
+                "label": "Coaching",
+                "value": "Körper als Linie, Ellbogen diagonal."
+              },
+              {
+                "value": "Füße näher an Wand, Druck reduzieren.",
+                "label": "Knie-Alternative"
+              },
+              {
+                "label": "Schulter-Alternative",
+                "value": "Hände tiefer platzieren, Bewegungsradius verkleinern."
+              }
+            ],
+            "estMinutes": 2,
+            "skipPriority": 1
+          },
+          {
+            "role": "mandatory",
+            "title": "Beckenlift",
+            "details": [
+              {
+                "label": "Durchführung",
+                "value": "3 Sätze à 15 Wiederholungen, oben 2 Sekunden halten."
+              },
+              {
+                "label": "Coaching",
+                "value": "Wirbel für Wirbel abrollen, Hüfte strecken."
+              },
+              {
+                "value": "Füße weiter vom Gesäß, kleinere Bewegung.",
+                "label": "Knie-Alternative"
+              },
+              {
+                "label": "Schulter-Alternative",
+                "value": "Arme seitlich ablegen, Schultern locker."
+              }
+            ],
+            "estMinutes": 1,
+            "skipPriority": 1
+          },
+          {
+            "role": "progression",
+            "title": "Atemwelle mit Armbewegung",
+            "details": [
+              {
+                "label": "Durchführung",
+                "value": "Kombination aus bewusster Atmung und fließender Armbewegung. Verbindet Bewegung mit Atem, fördert Koordination und vertieft die Atemwahrnehmung. (ca. 2 Minuten)"
+              },
+              {
+                "label": "Coaching",
+                "value": "Steigerung nur wenn stabil und schmerzfrei möglich."
+              },
+              {
+                "label": "Knie-Alternative",
+                "value": "Bei Knieproblemen: Übung im Sitzen auf stabilem Stuhl durchführen. Füße flach am Boden."
+              },
+              {
+                "label": "Schulter-Alternative",
+                "value": "Bei Schulterproblemen: Arme nur bis Schulterhöhe oder 90° heben. Bewegungsradius im schmerzfreien Bereich halten."
+              }
+            ],
+            "estMinutes": 2,
+            "progressionFromTitle": "Beckenlift",
+            "skipPriority": 2
+          },
+          {
+            "estMinutes": 2,
+            "details": [
+              {
+                "label": "Durchführung",
+                "value": "Eine einfache und effektive Übung zur Kräftigung der Schulter- und Armmuskulatur mit leichtem Widerstand (z.B. Wasserflaschen, Theraband). Diese Übung verbessert die Kraft für Alltagsbewegungen wie Greifen nach oben, Tragen oder Heben. Die Intensität kann durch das Gewicht individuell angepasst werden. (ca. 2 Minuten)"
+              },
+              {
+                "value": "Ruhige, präzise Wiederholungen mit gleichmäßiger Atmung.",
+                "label": "Coaching"
+              },
+              {
+                "value": "Bei Knieproblemen: Alternative Übung: Übung im Sitzen auf einem stabilen Stuhl durchführenAnpassung: Auf Stuhl setzen, Füße flach am Boden, Übung wie beschrieben ausführenHinweis: Im Sitzen ist die Übung sogar stabiler und genauso effektiv für die Schultern\nBei Schulterproblemen\nAlternative Übung: Arme nur bis 45° oder maximal 90° heben statt bis Schulterhöhe oder darüberAnpassung: Sehr leichtes Gewicht (0,5 Liter Flasche oder nur ohne Gewicht), kleinere Bewegungsamplitude, nur eine RichtungHinweis: Auch kleinere Bewegungen ohne Gewicht trainieren die Schulter, bei Schmerzen Übung weglassen\nWeitere Anpassungen\nVereinfachung (Anfänger): Ohne Gewicht oder sehr leicht (0,5 Liter), nur 5-8 Wiederholungen, längere Pausen, nur nach vorne ODER zur SeiteSteigerung (Fortgeschrittene): Schwerere Gewichte (1-2 kg), langsames Tempo (4-6 Sekunden), abwechselnd rechts-links statt gleichzeitigFür Senioren: Im Sitzen, sehr leichtes Gewicht oder ohne, nur nach vorne, kürzere Sätze",
+                "label": "Knie-Alternative"
+              },
+              {
+                "value": "Alternative Übung: Übung im Sitzen auf einem stabilen Stuhl durchführenAnpassung: Auf Stuhl setzen, Füße flach am Boden, Übung wie beschrieben ausführenHinweis: Im Sitzen ist die Übung sogar stabiler und genauso effektiv für die Schultern: Bei Schulterproblemen\nAlternative Übung: Arme nur bis 45° oder maximal 90° heben statt bis Schulterhöhe oder darüberAnpassung: Sehr leichtes Gewicht (0,5 Liter Flasche oder nur ohne Gewicht), kleinere Bewegungsamplitude, nur eine RichtungHinweis: Auch kleinere Bewegungen ohne Gewicht trainieren die Schulter, bei Schmerzen Übung weglassen\nWeitere Anpassungen\nVereinfachung (Anfänger): Ohne Gewicht oder sehr leicht (0,5 Liter), nur 5-8 Wiederholungen, längere Pausen, nur nach vorne ODER zur SeiteSteigerung (Fortgeschrittene): Schwerere Gewichte (1-2 kg), langsames Tempo (4-6 Sekunden), abwechselnd rechts-links statt gleichzeitigFür Senioren: Im Sitzen, sehr leichtes Gewicht oder ohne, nur nach vorne, kürzere Sätze",
+                "label": "Schulter-Alternative"
+              }
+            ],
+            "skipPriority": 3,
+            "role": "optional_buffer",
+            "title": "Armheben mit Widerstand"
+          },
+          {
+            "role": "optional_buffer",
+            "title": "Beinpendel seitlich",
+            "details": [
+              {
+                "label": "Durchführung",
+                "value": "Eine mobilisierende und kräftigende Übung für die seitliche Hüft- und Gesäßmuskulatur. Das seitliche Beinpendeln verbessert die Hüftbeweglichkeit, kräftigt die Abduktoren und fördert das Gleichgewicht. Diese Übung ist besonders wichtig für die Gangstabilität und kann Hüftproblemen vorbeugen. (ca. 2 Minuten)"
+              },
+              {
+                "label": "Coaching",
+                "value": "Ruhige, präzise Wiederholungen mit gleichmäßiger Atmung."
+              },
+              {
+                "label": "Knie-Alternative",
+                "value": "Bei Knieproblemen: Alternative Übung: Übung wie beschrieben - Knie werden nicht belastet, da Bein gestreckt bleibtAnpassung: Standbein nur minimal beugen oder ganz gestreckt lassenHinweis: Diese Übung ist kniefreundlich, da keine Beugung erforderlich ist\nBei Schulterproblemen\nAlternative Übung: Mit der schmerzfreien Hand abstützen oder mit Unterarm auf Stuhllehne abstützenAnpassung: Unterarm statt Hand zum Abstützen nutzen, weniger Gewicht auf den Arm gebenHinweis: Die Hand dient nur der Balance, minimale Abstützung ist ausreichend\nWeitere Anpassungen\nVereinfachung (Anfänger): Mit beiden Händen abstützen, kleinere Pendelbewegung, Bein nicht über Mittellinie kreuzen, langsameres TempoSteigerung (Fortgeschrittene): Freihändig, mit Gewichtsmanschette am Knöchel, größere Amplitude, auf instabilem UntergrundFür Senioren: Immer gut festhalten, sehr kleine Bewegungen, nur zur Seite ohne Kreuzen, kürzere Sätze (5-8 Wiederholungen)"
+              },
+              {
+                "value": "Bei Schulterproblemen: Alternative Übung: Mit der schmerzfreien Hand abstützen oder mit Unterarm auf Stuhllehne abstützenAnpassung: Unterarm statt Hand zum Abstützen nutzen, weniger Gewicht auf den Arm gebenHinweis: Die Hand dient nur der Balance, minimale Abstützung ist ausreichend\nWeitere Anpassungen\nVereinfachung (Anfänger): Mit beiden Händen abstützen, kleinere Pendelbewegung, Bein nicht über Mittellinie kreuzen, langsameres TempoSteigerung (Fortgeschrittene): Freihändig, mit Gewichtsmanschette am Knöchel, größere Amplitude, auf instabilem UntergrundFür Senioren: Immer gut festhalten, sehr kleine Bewegungen, nur zur Seite ohne Kreuzen, kürzere Sätze (5-8 Wiederholungen)",
+                "label": "Schulter-Alternative"
+              }
+            ],
+            "estMinutes": 2,
+            "skipPriority": 3
+          }
+        ],
+        "duration": "15 Minuten",
+        "bufferMinutes": 4,
+        "targetMinutes": 15,
+        "mandatoryMinutes": 9,
+        "progressionEnabled": true,
+        "description": "Gelenkstabilisierende Muskulatur aktivieren und funktionell kräftigen.",
+        "title": "Phase 2: Hauptteil (15 Minuten)"
+      },
+      {
+        "description": "Propriozeption und Schulter-/Core-Stabilität gezielt ausbauen.",
+        "progressionEnabled": true,
+        "title": "Phase 3: Schwerpunkt (15 Minuten)",
+        "targetMinutes": 15,
+        "exercises": [
+          {
+            "skipPriority": 1,
+            "details": [
+              {
+                "label": "Durchführung",
+                "value": "3 x 30 Sekunden pro Seite mit Variationen (Augen schließen/Armbewegung)."
+              },
+              {
+                "label": "Coaching",
+                "value": "Fixpunkt wählen, Knie weich."
+              },
+              {
+                "value": "Zehenspitzenkontakt oder Stuhllehne nutzen.",
+                "label": "Knie-Alternative"
+              },
+              {
+                "label": "Schulter-Alternative",
+                "value": "Arme locker seitlich oder auf Hüfte."
+              }
+            ],
+            "estMinutes": 2,
+            "title": "Einbeinstand",
+            "role": "mandatory"
+          },
+          {
+            "skipPriority": 1,
+            "details": [
+              {
+                "label": "Durchführung",
+                "value": "3 Sätze à 10 Wiederholungen pro Seite."
+              },
+              {
+                "value": "Hüfte parallel, Schultern stabil.",
+                "label": "Coaching"
+              },
+              {
+                "value": "Kissen unter Knie oder Variante im Stand.",
+                "label": "Knie-Alternative"
+              },
+              {
+                "label": "Schulter-Alternative",
+                "value": "Nur Beinbewegung oder Unterarmstütz."
+              }
+            ],
+            "estMinutes": 2,
+            "title": "Vogel-Hund",
+            "role": "mandatory"
+          },
+          {
+            "skipPriority": 1,
+            "details": [
+              {
+                "value": "2 Sätze à 8 Wiederholungen pro Seite.",
+                "label": "Durchführung"
+              },
+              {
+                "value": "Hüften parallel halten, Core aktiv.",
+                "label": "Coaching"
+              },
+              {
+                "value": "Beidbeinige Brücke oder Fuß auf Stuhl.",
+                "label": "Knie-Alternative"
+              },
+              {
+                "value": "Arme am Boden, Schultern entspannt.",
+                "label": "Schulter-Alternative"
+              }
+            ],
+            "estMinutes": 2,
+            "role": "mandatory",
+            "title": "Schulterbrücke einbeinig"
+          },
+          {
+            "role": "mandatory",
+            "title": "Wadenheben einbeinig",
+            "skipPriority": 1,
+            "estMinutes": 2,
+            "details": [
+              {
+                "label": "Durchführung",
+                "value": "3 x 30 Sekunden pro Seite."
+              },
+              {
+                "label": "Coaching",
+                "value": "Langsames Absenken, Gleichgewicht halten."
+              },
+              {
+                "value": "Beidbeinig ausführen oder Weg verkürzen.",
+                "label": "Knie-Alternative"
+              },
+              {
+                "label": "Schulter-Alternative",
+                "value": "Haltehand am Stuhl, Schultern tief."
+              }
+            ]
+          },
+          {
+            "skipPriority": 2,
+            "estMinutes": 2,
+            "progressionFromTitle": "Wadenheben einbeinig",
+            "details": [
+              {
+                "value": "Klassische Brückenübung mit bewusster Beckenboden-Integration. Kräftigt Gesäß, Rücken und Beckenboden gleichzeitig für eine stabile Körpermitte. (ca. 2 Minuten)",
+                "label": "Durchführung"
+              },
+              {
+                "value": "Steigerung nur wenn stabil und schmerzfrei möglich.",
+                "label": "Coaching"
+              },
+              {
+                "value": "Bei Knieproblemen: Füße weiter vom Gesäß entfernt aufstellen (flacherer Winkel). Bewegungsradius reduzieren. Bei Schmerzen Übung auslassen.",
+                "label": "Knie-Alternative"
+              },
+              {
+                "label": "Schulter-Alternative",
+                "value": "Bei Schulterproblemen: Arme entspannt neben dem Körper ablegen, nicht abstützen. Schultern am Boden lassen."
+              }
+            ],
+            "title": "Brücke mit Beckenboden-Spannung",
+            "role": "progression"
+          },
+          {
+            "details": [
+              {
+                "value": "Eine schonende Variante der klassischen Planke zur Ganzkörperstabilisation. Durch die aufrechte Position an der Wand wird die Belastung deutlich reduziert, während dennoch die gesamte Rumpfmuskulatur aktiviert wird. Ideal für Einsteiger oder Menschen mit eingeschränkter Kraft, die an der Rumpfstabilität arbeiten möchten. (ca. 2 Minuten)",
+                "label": "Durchführung"
+              },
+              {
+                "label": "Coaching",
+                "value": "Ruhige, präzise Wiederholungen mit gleichmäßiger Atmung."
+              },
+              {
+                "value": "Bei Knieproblemen: Alternative Übung: Übung wie beschrieben - Knie werden nicht belastetAnpassung: Keine Anpassung nötig, die Übung ist kniefreundlichHinweis: Diese Wandvariante ist ideal bei Knieproblemen, da aufrecht im Stand\nBei Schulterproblemen\nAlternative Übung: Näher an die Wand stellen für steileren Winkel und weniger SchulterbelastungAnpassung: Nur 30-40 cm von der Wand entfernt stehen, dadurch steilerer Winkel und deutlich weniger BelastungHinweis: Je näher an der Wand, desto geringer die Schulterbelastung - auch sehr kurze Haltezeiten (5-10 Sekunden) sind effektiv\nWeitere Anpassungen\nVereinfachung (Anfänger): Näher an der Wand, kürzere Haltezeit (10-15 Sekunden), mehr Pausen, auf Händen statt Unterarmen abstützenSteigerung (Fortgeschrittene): Weiter von der Wand weg, längere Haltezeit (45-60 Sekunden), ein Bein anhebenFür Senioren: Sehr nah an der Wand, nur 5-10 Sekunden halten, mehr Wiederholungen statt länger halten",
+                "label": "Knie-Alternative"
+              },
+              {
+                "value": "Bei Schulterproblemen: Alternative Übung: Näher an die Wand stellen für steileren Winkel und weniger SchulterbelastungAnpassung: Nur 30-40 cm von der Wand entfernt stehen, dadurch steilerer Winkel und deutlich weniger BelastungHinweis: Je näher an der Wand, desto geringer die Schulterbelastung - auch sehr kurze Haltezeiten (5-10 Sekunden) sind effektiv\nWeitere Anpassungen\nVereinfachung (Anfänger): Näher an der Wand, kürzere Haltezeit (10-15 Sekunden), mehr Pausen, auf Händen statt Unterarmen abstützenSteigerung (Fortgeschrittene): Weiter von der Wand weg, längere Haltezeit (45-60 Sekunden), ein Bein anhebenFür Senioren: Sehr nah an der Wand, nur 5-10 Sekunden halten, mehr Wiederholungen statt länger halten",
+                "label": "Schulter-Alternative"
+              }
+            ],
+            "estMinutes": 2,
+            "skipPriority": 3,
+            "role": "optional_buffer",
+            "title": "Planke an der Wand"
+          },
+          {
+            "title": "Kreuzheben mit Wasserflasche",
+            "role": "optional_buffer",
+            "skipPriority": 3,
+            "details": [
+              {
+                "label": "Durchführung",
+                "value": "Eine funktionelle Ganzkörperübung zur Kräftigung der hinteren Kette (Rücken, Gesäß, Oberschenkelrückseite) mit leichtem Gewicht. Diese Übung trainiert die korrekte Hebebewegung, die für viele Alltagssituationen wichtig ist. Mit Wasserflaschen ist die Belastung kontrollierbar und sicher. (ca. 2 Minuten)"
+              },
+              {
+                "label": "Coaching",
+                "value": "Ruhige, präzise Wiederholungen mit gleichmäßiger Atmung."
+              },
+              {
+                "label": "Knie-Alternative",
+                "value": "Bei Knieproblemen: Alternative Übung: Knie noch weniger beugen, mehr aus der Hüfte neigen (Stiff-Leg Deadlift)Anpassung: Beine fast gestreckt lassen, Bewegung kommt hauptsächlich aus der HüftbeugungHinweis: Mit gestreckteren Beinen wird mehr Oberschenkelrückseite gedehnt, Knie werden weniger belastet\nBei Schulterproblemen\nAlternative Übung: Nur eine leichte Flasche verwenden oder ganz ohne GewichtAnpassung: Sehr leichtes Gewicht (0,5 Liter) oder nur die Bewegung ohne Gewicht ausführen, Arme locker hängen lassenHinweis: Die Hauptarbeit leisten Beine und Rücken, Arme halten nur das Gewicht - auch ohne Gewicht effektiv\nWeitere Anpassungen\nVereinfachung (Anfänger): Ohne Gewicht oder nur eine Flasche, kleinere Bewegungsamplitude (nicht so tief), mit Stuhl vor sich zum AbstützenSteigerung (Fortgeschrittene): Schwerere Flaschen (1,5 Liter), langsames Tempo (4-6 Sekunden), auf einem Bein (einbeiniges Kreuzheben)Für Senioren: Ohne Gewicht oder sehr leicht (0,5 Liter), nur halbe Bewegung, mit Stuhl in Reichweite"
+              },
+              {
+                "value": "Bei Schulterproblemen: Alternative Übung: Nur eine leichte Flasche verwenden oder ganz ohne GewichtAnpassung: Sehr leichtes Gewicht (0,5 Liter) oder nur die Bewegung ohne Gewicht ausführen, Arme locker hängen lassenHinweis: Die Hauptarbeit leisten Beine und Rücken, Arme halten nur das Gewicht - auch ohne Gewicht effektiv\nWeitere Anpassungen\nVereinfachung (Anfänger): Ohne Gewicht oder nur eine Flasche, kleinere Bewegungsamplitude (nicht so tief), mit Stuhl vor sich zum AbstützenSteigerung (Fortgeschrittene): Schwerere Flaschen (1,5 Liter), langsames Tempo (4-6 Sekunden), auf einem Bein (einbeiniges Kreuzheben)Für Senioren: Ohne Gewicht oder sehr leicht (0,5 Liter), nur halbe Bewegung, mit Stuhl in Reichweite",
+                "label": "Schulter-Alternative"
+              }
+            ],
+            "estMinutes": 2
+          }
+        ],
+        "bufferMinutes": 4,
+        "duration": "15 Minuten",
+        "mandatoryMinutes": 10
+      },
+      {
+        "progressionEnabled": false,
+        "description": "Beweglichkeit wiederherstellen, Atmung beruhigen, Schultern entlasten.",
+        "title": "Phase 4: Ausklang (5 Minuten)",
+        "duration": "5 Minuten",
+        "bufferMinutes": 2,
+        "exercises": [
+          {
+            "skipPriority": 1,
+            "details": [
+              {
+                "label": "Durchführung",
+                "value": "2 x 30 Sekunden pro Seite."
+              },
+              {
+                "value": "Stehende Variante mit kleinem Ausfallschritt.",
+                "label": "Knie-Alternative"
+              },
+              {
+                "label": "Schulter-Alternative",
+                "value": "Arm nur bis Schulterhöhe heben."
+              },
+              {
+                "value": "Ruhig atmen und sauber in der Ausführung bleiben.",
+                "label": "Coaching"
+              }
+            ],
+            "estMinutes": 1,
+            "role": "mandatory",
+            "title": "Dehnung Hüftbeuger"
+          },
+          {
+            "role": "mandatory",
+            "title": "Brustdehnung an der Wand",
+            "skipPriority": 1,
+            "estMinutes": 1,
+            "details": [
+              {
+                "value": "2 x 30 Sekunden pro Seite.",
+                "label": "Durchführung"
+              },
+              {
+                "value": "Schrittstellung anpassen, Gewicht mittig.",
+                "label": "Knie-Alternative"
+              },
+              {
+                "value": "Ellbogen auf Schulterhöhe, Dehnung sanft.",
+                "label": "Schulter-Alternative"
+              },
+              {
+                "value": "Ruhig atmen und sauber in der Ausführung bleiben.",
+                "label": "Coaching"
+              }
+            ]
+          },
+          {
+            "role": "mandatory",
+            "title": "Katze-Kuh",
+            "details": [
+              {
+                "value": "1 Minute im Vierfüßler, 1 Minute im Sitz.",
+                "label": "Durchführung"
+              },
+              {
+                "label": "Knie-Alternative",
+                "value": "Sitzende Version auf Stuhl."
+              },
+              {
+                "value": "Hände weiter vor oder auf Unterarmen.",
+                "label": "Schulter-Alternative"
+              },
+              {
+                "label": "Coaching",
+                "value": "Ruhig atmen und sauber in der Ausführung bleiben."
+              }
+            ],
+            "estMinutes": 1,
+            "skipPriority": 1
+          },
+          {
+            "role": "mandatory",
+            "title": "Atemübung mit Armen",
+            "estMinutes": 2,
+            "details": [
+              {
+                "value": "5 ruhige Atemzüge mit synchroner Armführung.",
+                "label": "Durchführung"
+              },
+              {
+                "label": "Knie-Alternative",
+                "value": "Im Sitzen mit Rückenstütze."
+              },
+              {
+                "value": "Arme nur bis Brusthöhe, Fokus auf Ausatmung.",
+                "label": "Schulter-Alternative"
+              },
+              {
+                "value": "Ruhig atmen und sauber in der Ausführung bleiben.",
+                "label": "Coaching"
+              }
+            ],
+            "skipPriority": 1
+          },
+          {
+            "details": [
+              {
+                "value": "Eine bewährte Atemtechnik zur Aktivierung des Parasympathikus und Förderung tiefer Entspannung. Die spezifischen Zeitintervalle (4-7-8) verlangsamen den Atem, senken den Herzschlag und beruhigen das Nervensystem. Besonders wirksam zum Stressabbau und als Einschlafhilfe. (ca. 2 Minuten)",
+                "label": "Durchführung"
+              },
+              {
+                "label": "Coaching",
+                "value": "Ruhige, präzise Wiederholungen mit gleichmäßiger Atmung."
+              },
+              {
+                "value": "Bei Knieproblemen: Alternative Übung: Keine Anpassung nötig - Übung belastet Körper nichtAnpassung: Jede Position möglich (Sitzen, Liegen)Hinweis: Die Übung ist körperlich nicht belastend\nBei Schulterproblemen\nAlternative Übung: Keine Anpassung nötigAnpassung: Arme bequem ablegenHinweis: Die Übung ist schulterfreundlich\nWeitere Anpassungen\nVereinfachung (Anfänger): 3-5-6 Rhythmus statt 4-7-8, weniger ZyklenSteigerung (Fortgeschrittene): 6-10-12 Rhythmus, mehr Zyklen, tiefere BauchatmungFür Senioren: Kürzere Intervalle (3-5-6), nur 2-3 Zyklen, im Sitzen",
+                "label": "Knie-Alternative"
+              },
+              {
+                "value": "Bei Schulterproblemen: Alternative Übung: Keine Anpassung nötigAnpassung: Arme bequem ablegenHinweis: Die Übung ist schulterfreundlich\nWeitere Anpassungen\nVereinfachung (Anfänger): 3-5-6 Rhythmus statt 4-7-8, weniger ZyklenSteigerung (Fortgeschrittene): 6-10-12 Rhythmus, mehr Zyklen, tiefere BauchatmungFür Senioren: Kürzere Intervalle (3-5-6), nur 2-3 Zyklen, im Sitzen",
+                "label": "Schulter-Alternative"
+              }
+            ],
+            "estMinutes": 2,
+            "skipPriority": 3,
+            "title": "Atemübung 4-7-8",
+            "role": "optional_buffer"
+          }
+        ],
+        "targetMinutes": 5,
+        "mandatoryMinutes": 5
+      }
+    ],
+    "duration": "45 Minuten",
+    "status": "published",
+    "category": "schulter",
+    "title": "Schulter-Mobility",
+    "description": "Gelenkschonende Schulter- und Ganzkörper-Mobilisation mit Stabilitätsanteil.",
+    "createdVia": "migration"
+  }
+}

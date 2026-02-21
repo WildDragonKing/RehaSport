@@ -1,0 +1,59 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "RehaSport",
+  description = "Strukturiertes RehaSport-Training ohne Umwege.",
+} = Astro.props;
+
+const pathname = Astro.url.pathname;
+const nav = [
+  { href: "/stunden", label: "Stunden" },
+  { href: "/uebungen", label: "Übungen" },
+  { href: "/wissen", label: "Wissen" },
+];
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a class="brand" href="/">RehaSport</a>
+        <nav class="site-nav" aria-label="Hauptnavigation">
+          {nav.map((item) => {
+            const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
+            return (
+              <a href={item.href} data-active={active ? "true" : "false"}>
+                {item.label}
+              </a>
+            );
+          })}
+        </nav>
+      </div>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="container site-footer-row">
+        <span>RehaSport Reader · fokussiert trainieren</span>
+        <nav class="footer-nav" aria-label="Rechtliche Seiten">
+          <a href="/impressum">Impressum</a>
+          <a href="/datenschutz">Datenschutz</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>

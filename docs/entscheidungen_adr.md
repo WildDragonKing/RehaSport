@@ -1,84 +1,95 @@
 # Architekturentscheidungen (ADR)
 
-Stand: 17.02.2026
+Stand: 21.02.2026
 
 ## ADR-001: Firestore als zentrale Datenquelle
 
 - Status: akzeptiert
-- Kontext: Das Projekt lief historisch mit Markdown-Inhalten, benoetigt jetzt Mehrbenutzerbetrieb, Rollen und Live-Updates.
-- Entscheidung: Sessions, Exercises, Drafts und Admin-Daten liegen in Firestore.
+- Kontext: Public-Inhalte sollen live und zentral gepflegt werden.
+- Entscheidung: Stunden und Uebungen werden aus Firestore geladen.
 - Konsequenzen:
-  - + zentrale, abfragbare Datenbasis
-  - + gute Integration mit Firebase Rules/Auth
-  - - Datenmigration und Typkonsistenz (Timestamp vs Number) muessen sauber gepflegt werden
+  - + zentrale Datenhaltung
+  - + kein statischer Content-Rebuild fuer jede inhaltliche Aenderung
+  - - Frontend braucht robustes Fehler- und Ladeverhalten
 
-## ADR-002: Einladungspflicht fuer neue Trainer/Admins
+## ADR-002: Astro als Public-Frontend
 
 - Status: akzeptiert
-- Kontext: Adminbereich darf nicht oeffentlich registrierbar sein.
+- Kontext: Redesign sollte minimalistischer, strukturierter und performanter werden.
+- Entscheidung: Public-Frontend auf Astro mit React-Inseln migriert.
+- Konsequenzen:
+  - + klare Trennung zwischen statischer Struktur und interaktiven Teilen
+  - + geringere Komplexitaet als komplette SPA
+  - - Detailrouten brauchen passgenaue Hosting-Rewrites
+
+## ADR-003: Mobile-first und reduzierte UI
+
+- Status: akzeptiert
+- Kontext: Hauptnutzung ist unterwegs/waehrend Training.
 - Entscheidung:
-  - erster User wird automatisch Admin
-  - danach nur Registrierung ueber Einladung
+  - mobile-first Layout
+  - monochromes Design mit einem Akzentton
+  - keine dekorativen Effekte
 - Konsequenzen:
-  - + kontrolliertes Onboarding
-  - + weniger Angriffsflaeche
-  - - Admin-Prozess fuer Einladungen ist zwingend erforderlich
+  - + fokussierter Kernflow
+  - + bessere Bedienbarkeit auf kleinen Screens
+  - - weniger visuelle Differenzierung ueber Farben/Themes
 
-## ADR-003: KI-Funktionen als Firebase Callable Functions
+## ADR-004: Kein PWA-/Service-Worker in Public V1
 
 - Status: akzeptiert
-- Kontext: KI-Calls muessen API-Keys schuetzen und Missbrauch begrenzen.
+- Kontext: V1 sollte auf Klarheit und stabile Kernfunktion reduziert werden.
+- Entscheidung: keine PWA-Registrierung und keine Offline-Strategie im Public-Frontend.
+- Konsequenzen:
+  - + weniger Laufzeitkomplexitaet
+  - + einfacheres Debugging
+  - - keine Offline-Nutzung
+
+## ADR-005: Alte Frontend-Generation entfernt
+
+- Status: akzeptiert
+- Kontext: Nach Relaunch wurde kein Parallelbetrieb der alten Seite mehr gewuenscht.
+- Entscheidung: alte React/Vite-Struktur inkl. Admin-UI aus `site` entfernt.
+- Konsequenzen:
+  - + klare Codebasis ohne doppelte Pfade
+  - + weniger Wartungslast
+  - - Trainer/Admin-Frontend muss in eigener Folgephase neu aufgebaut werden
+
+## ADR-006: CI Build mit `PUBLIC_FIREBASE_*`
+
+- Status: akzeptiert
+- Kontext: Astro nutzt `PUBLIC_*`-Umgebungsvariablen fuer Client-exponierte Werte.
+- Entscheidung: Workflow uebergibt beim Build `PUBLIC_FIREBASE_*`-Variablen.
+- Konsequenzen:
+  - + konsistente Env-Konvention fuer Astro
+  - + sauberer Build in CI
+  - - bei Secret-Umbenennungen ist CI-Anpassung noetig
+
+## ADR-007: Rechtliche Mindestseiten im Public-Frontend
+
+- Status: akzeptiert
+- Kontext: Die oeffentliche Seite braucht eine klare, dauerhaft erreichbare rechtliche Basis.
 - Entscheidung:
-  - Gemini-Aufrufe laufen nur serverseitig in Cloud Functions
-  - Endpunkte nutzen App Check + Auth + Rate Limit
+  - statische Seiten fuer `Impressum` und `Datenschutz` im Astro-Public-Frontend
+  - direkte Verlinkung im Footer jeder Seite
 - Konsequenzen:
-  - + Geheimnisse bleiben im Backend
-  - + Missbrauchsschutz
-  - - mehr Betriebslogik im Backend (Monitoring, Limits, Fehlerhandling)
+  - + Pflichtinhalte sind fuer Nutzer und Aufsicht direkt erreichbar
+  - + kein Einfluss auf den interaktiven Kernflow
+  - - Betreiberdaten und Rechtstexte muessen inhaltlich gepflegt und juristisch geprueft werden
 
-## ADR-004: Modell-Fallback fuer KI-Verfuegbarkeit
+## ADR-008: Security Hardening (Firestore Rules, Cloud Functions, HTTP Headers)
 
 - Status: akzeptiert
-- Kontext: Quota/429-Fehler duerfen den Workflow nicht blockieren.
-- Entscheidung: Primaermodell `gemini-3-flash-preview`, Fallback `gemini-2.5-flash`.
+- Kontext: Security-Review deckte 13 Findings auf (3 Critical, 5 High, 3 Medium, 2 Low).
+- Entscheidung: Umfassende Haertung in drei Bereichen:
+  1. **Firestore Rules:** exists()-Guard vor get(), affectedKeys() gegen Privilege Escalation,
+     Schema-Validierung bei Ratings/Analytics, Fail-Closed fuer Server-only Collections
+  2. **Cloud Functions:** Zentraler requireTrainerRole() Guard, sanitizeTextInput() mit
+     Laengenlimits, Fail-Closed Rate Limiting, Input-Validierung in logClientError
+  3. **HTTP Headers:** CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy,
+     Permissions-Policy in firebase.json
 - Konsequenzen:
-  - + hoehere Verfuegbarkeit bei Lastspitzen
-  - + transparenter Rueckfall (verwendetes Modell wird zurueckgegeben)
-  - - Ergebnisqualitaet kann je Modell variieren
-
-## ADR-005: Aggregierte Ratings statt Einzelratings in Firestore
-
-- Status: akzeptiert
-- Kontext: Oeffentliche Bewertungen sollen ohne Account nutzbar sein.
-- Entscheidung:
-  - Firestore speichert nur Summen/Aggregate
-  - Nutzer-spezifische Bewertung wird lokal im Browser gehalten
-- Konsequenzen:
-  - + einfache, guenstige Speicherung
-  - + kein Login fuer Bewertungen noetig
-  - - kein serverseitig verifizierbares User-Voting
-
-## ADR-006: Einheitliche Designsprache mit Theme-Tokens
-
-- Status: akzeptiert
-- Kontext: Das Produkt braucht konsistente Therapie-UI fuer Public- und Adminbereich.
-- Entscheidung:
-  - zentrales Token-basiertes Designsystem in `index.css`
-  - Light/Dark/System-Themes ueber `data-theme` und `ThemeProvider`
-  - Adminbereich wird visuell auf Dark-Theme forciert
-- Konsequenzen:
-  - + hoher Wiedererkennungswert, klare Wartbarkeit
-  - + konsistente Komponenten ueber Seiten hinweg
-  - - striktes Festhalten an Tokens noetig, um Designdrift zu vermeiden
-
-## ADR-007: Hosting-Deploy ueber GitHub Release Workflow
-
-- Status: akzeptiert
-- Kontext: Deployments sollen reproduzierbar und releasebasiert laufen.
-- Entscheidung:
-  - Push auf `main` triggert Test, Build, Hosting-Deploy und Tag-Release
-  - Deploymentziel: Firebase Hosting (`rehasport-trainer`, channel `live`)
-- Konsequenzen:
-  - + automatisierter Releaseprozess
-  - + klare Kette von Commit zu Live-Version
-  - - Hotfixes brauchen disziplinierten Branch/PR-Prozess
+  - + systematischer Schutz gegen bekannte Angriffsvektoren
+  - + Principle of Least Privilege durchgesetzt
+  - - Trainer muessen authentifiziert sein fuer alle KI-Features (kein anonymer Zugriff)
+  - - Rate-Limit-Fehler blockieren Zugriff (Fail-Closed statt Fail-Open)

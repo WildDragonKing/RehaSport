@@ -1,0 +1,11 @@
+Use case: RehaSport template refinement
+Primary request: keep the exact same visual style and exact same avatar identity from the source clip, but make shoulder-circle motion smoother and more natural.
+Scene/background: exactly unchanged.
+Subject: exact same stylized 3D avatar face, hair, body shape, clothing, color, and proportions as source.
+Action: same shoulder-circle exercise with fluid arcs, gentle ease-in/ease-out speed profile, no abrupt phase transitions.
+Camera: exactly unchanged locked shot.
+Lighting/mood: exactly unchanged.
+Style/format: exact same minimal stylized product-rehab aesthetic; do not shift toward photorealism.
+Timing/beats: keep 8s and same sequence (start neutral, forward circles, backward circles, end neutral), with smoother transitions only.
+Constraints: change only motion dynamics; preserve character design and scene one-to-one.
+Avoid: photoreal look, character redesign, face changes, hair changes, outfit changes, camera change, jitter, robotic timing.

@@ -1,0 +1,12 @@
+Use case: ui-mockup
+Asset type: reusable character keyframe for rehab exercise videos aligned to a minimal Astro website design
+Primary request: create a single clean keyframe with one stylized rehab avatar centered in a minimal studio that matches a modern white-and-gray web UI.
+Scene/background: bright white studio with subtle light-gray planes and thin separator lines, no clutter, no equipment, no decorative props.
+Subject: fixed avatar identity "SageGuide-01", neutral face, short dark hair, no logos, non-real person.
+Style/medium: modern stylized 3D, crisp and clean, low visual noise, editorial-tech healthcare aesthetic.
+Composition/framing: landscape frame, medium-wide front shot, torso and arms clearly visible, centered and balanced.
+Lighting/mood: soft even daylight, very clean contrast, no dramatic shadows.
+Color palette: white (#ffffff), light gray (#f6f7f8), border gray (#d5dce1), text-dark charcoal (#0f1113), single accent green (#06c24a).
+Materials/textures: matte shirt, subtle smooth background gradients, restrained texture detail.
+Constraints: must feel like it belongs inside a minimal product UI with clear typography and simple cards.
+Avoid: warm earthy tones, cinematic drama, neon, busy background, depth-heavy bokeh, text overlays, brand marks.

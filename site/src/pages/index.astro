@@ -1,0 +1,57 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="RehaSport · Klar trainieren"
+  description="Minimalistischer Zugang zu RehaSport-Stunden und Übungen."
+>
+  <section class="hero">
+    <div class="container">
+      <h1>Trainiere klar. Ohne Ablenkung.</h1>
+      <p>
+        Finde in wenigen Schritten die passende Stunde oder Übung. Die Oberfläche ist bewusst reduziert,
+        damit du direkt im Training bleibst.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="/stunden">Stunden öffnen</a>
+        <a class="btn btn-secondary" href="/uebungen">Übungen durchsuchen</a>
+      </div>
+      <div class="kpi-row" aria-label="Kennzahlen">
+        <div class="kpi">
+          <strong>Live</strong>
+          <span>Stunden aus Firestore</span>
+        </div>
+        <div class="kpi">
+          <strong>Live</strong>
+          <span>Übungen aus Firestore</span>
+        </div>
+        <div class="kpi">
+          <strong>Klar</strong>
+          <span>Fokus auf Kernflow</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container stack">
+      <h2 class="section-title">Direkt zum Kernflow</h2>
+      <p class="section-subtitle">
+        Keine Kategorien mehr. Du arbeitest direkt über Stunden- und Übungslisten mit Suche und Filtern.
+      </p>
+      <div class="grid grid-2">
+        <article class="card stack">
+          <h3>Stunden</h3>
+          <p>Finde passende Einheiten über Suchbegriff und öffne direkt die Detailansicht.</p>
+          <a class="btn btn-primary" href="/stunden">Stunden ansehen</a>
+        </article>
+        <article class="card stack">
+          <h3>Übungen</h3>
+          <p>Nutze Filter und Suche, um einzelne Übungen schnell zu finden.</p>
+          <a class="btn btn-secondary" href="/uebungen">Übungen ansehen</a>
+        </article>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

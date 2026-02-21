@@ -1,66 +1,71 @@
 # Design-System
 
-Stand: 17.02.2026
+Stand: 21.02.2026
 
 ## Leitidee
 
-Das visuelle System folgt dem Stil "Sanfte Heilung": organisch, ruhig, klar, gut lesbar. Die Umsetzung liegt zentral in `site/src/index.css`.
+Das aktuelle System folgt einem minimalistischen, zielorientierten Stil:
+- klar
+- eckig
+- modern
+- ohne dekorativen Ballast
+
+Die zentrale Umsetzung liegt in `site/src/styles/global.css`.
 
 ## Typografie
 
-- Display/Headlines: `Fraunces`
-- Body/UI-Text: `Source Sans 3`
-- Ziel: hohe Lesbarkeit bei gleichzeitig medizinisch-ruhigem Charakter
+- Headlines: `Space Grotesk`
+- Body/UI: `IBM Plex Sans`
+- Ziel: klare Hierarchie und schnelle Erfassbarkeit auf Mobilgeraeten
 
 ## Farbstrategie
 
-- Primaerpalette: Sage (Gruentoene)
-- Sekundaerpalette: Sand und Terracotta
-- Akzentpalette: Lime fuer interaktive Hervorhebungen
-- Phasenfarben:
-  - Aufwaermen
-  - Hauptteil
-  - Schwerpunkt
-  - Ausklang
+- Basis: Schwarz/Grau/Weiss
+- Einziger Akzent: Signal-Gruen (`--accent`)
+- Keine zweite Akzentpalette
 
-Die Phasenfarben werden in Session- und Filterdarstellungen aktiv verwendet.
+## Formensprache
 
-## Theming
+- Radius minimal (`2px` bis `4px`)
+- klare Kanten, sichtbare Borders
+- keine organischen Formen
 
-- Unterstuetzte Modi: `light`, `dark`, `system`
-- Steuerung durch `ThemeProvider` (`site/src/components/theme/ThemeProvider.tsx`)
-- Persistenz in `localStorage` (`reader-theme-mode`)
-- Root-Attribute:
-  - `data-color-mode` (user choice)
-  - `data-theme` (resolved light/dark)
-- Adminbereich setzt Dark-Theme bewusst als Arbeitsmodus.
+## Motion
 
-## Bewegung und Hintergrund
+- nur funktionale Micro-Transitions (ca. 120ms)
+- keine dekorativen Animationen
+- kein ambient Hintergrund
 
-- Definierte Animations-Tokens (fade, slide, scale, blob, float)
-- Globaler Ambient-Hintergrund (`AmbientBackground`) mit:
-  - 3 statischen Blur-Blobs
-  - reduziert auf 2 Blobs auf Mobile
-  - Beruecksichtigung von `prefers-reduced-motion`
+## Layout-Prinzipien
+
+- mobile-first Basis
+- Erweiterung ueber `min-width`-Breakpoints (Hauptbreakpoint: `720px`)
+- kleine Viewports (`320px`) sind Pflicht-Referenz fuer Lesbarkeit
+- Komponenten:
+  - `tool-bar` startet einspaltig auf Mobile
+  - Grids starten mit 1 Spalte und erweitern sich erst auf groesseren Screens
+  - Listenkarten in `Stunden` bleiben auf Mobile kompakt (gekappte Beschreibung, klare Meta-Zeile)
 
 ## Komponentenprinzipien
 
-- Wiederverwendbare UI-Bausteine in `site/src/components/ui`
-- Trennung von:
-  - Layout-Komponenten (`components/layout`)
-  - fachlichen Komponenten (`components/search`, Seitenkomponenten)
-- Utility-/Token-basierte Styles statt per-Page Einzellogik
+- Astro fuer statische Struktur
+- React nur als Inseln fuer Interaktion
+- konsistente Klassen in `global.css`
+- keine verstreuten pro-Seite Sonderstile ohne Not
+- lange Detailinhalte auf Mobile progressiv offenlegen (Accordion statt voll ausgeklappter Textwand)
 
 ## Accessibility und UX
 
-- Skip-Link im Hauptlayout
 - semantische Landmarken (`header`, `main`, `footer`, `nav`)
-- mobile Navigation mit Escape-/Backdrop-Handling
-- Service Worker Update-Hinweise und Offline-Ready-Status
+- klare Fokusstile auf Inputs
+- hohe Lesbarkeit und klarer Kontrast
+- rechtliche Pflichtseiten sind im Footer direkt erreichbar (ohne versteckte Navigation)
+- `aria-label` auf Accordion-Summaries (`<summary>`) mit Phasentitel und Uebungsanzahl
+- native `<details>`/`<summary>` Elemente fuer Accordions (kein JavaScript-Toggle)
 
 ## Designregeln fuer neue Features
 
-- Neue Farben nur als Tokens in `index.css` einfuehren
-- keine direkten Hex-Farben in Komponenten, wenn Token verfuegbar
-- Animationen dezent halten, nicht als Selbstzweck
-- mobile-first denken (Touchflaechen, Menue, Scroll-Verhalten)
+- neue Farben nur als CSS-Variablen im Token-Bereich einfuehren
+- auf mobile-first Verhalten pruefen
+- keine visuellen Effekte aufnehmen, die den Kernflow verlangsamen oder ablenken
+- Accessibility: alle interaktiven Elemente brauchen aria-labels oder sichtbare Labels

@@ -1,0 +1,15 @@
+{
+  "completed_at": null,
+  "created_at": 1771445105,
+  "error": null,
+  "expires_at": null,
+  "id": "video_69961b71aaa48190b7048f6f7e0b2083048e211cc5d42035",
+  "model": "sora-2",
+  "object": "video",
+  "progress": 0,
+  "prompt": "Use case: RehaSport template refinement\nPrimary request: same shot and same design as source clip, but make movement smoother and more natural.\nScene/background: unchanged from source.\nSubject: unchanged avatar identity, same outfit, same scale.\nAction: shoulder circles with natural biomechanics; continuous circular path, soft acceleration/deceleration, no abrupt stops.\nCamera: unchanged locked camera.\nLighting/mood: unchanged.\nStyle/format: unchanged minimal product-style rehab demo.\nTiming/beats: keep 8s structure and direction order (forward then backward), but transitions between phases should be fluid.\nConstraints: keep everything visually the same; change only motion quality.\nAvoid: robotic timing, sharp speed jumps, stiff shoulders, jerky elbows, frame jitter, extra body gestures.",
+  "remixed_from_video_id": "video_69961a296dc48190b25dc338328c2041055a5411da486446",
+  "seconds": "8",
+  "size": "1280x720",
+  "status": "queued"
+}

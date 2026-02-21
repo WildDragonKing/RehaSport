@@ -1,0 +1,11 @@
+Use case: ui-mockup
+Asset type: reusable rehab avatar keyframe for website-integrated video template
+Primary request: restyle this exact avatar frame to feel a bit more vibey and cozy while keeping it modern and clean.
+Scene/background: same minimal studio geometry and framing, but add subtle cozy atmosphere through soft layered gradients.
+Subject: keep same avatar identity, same face, same hair, same proportions, same centered composition.
+Style/medium: stylized 3D, polished, calm, premium, not photoreal.
+Lighting/mood: soft warm-diffuse key light with gentle ambient fill; friendly evening-studio vibe; smooth shadows.
+Color palette: warm off-white, muted sage, soft charcoal, subtle warm beige accents; keep green shirt readable but not neon.
+Materials/textures: matte fabric, smooth wall planes, very subtle depth and glow.
+Constraints: preserve character identity and overall composition exactly; change mood and color atmosphere only.
+Avoid: hard contrast, dark dramatic cinema, neon glow, clutter, text overlays, brand marks.

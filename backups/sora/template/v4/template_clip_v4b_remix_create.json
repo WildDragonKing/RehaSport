@@ -1,0 +1,15 @@
+{
+  "completed_at": null,
+  "created_at": 1771445278,
+  "error": null,
+  "expires_at": null,
+  "id": "video_69961c1e5eb481919afafd9aac02c3760b24b22014edd959",
+  "model": "sora-2",
+  "object": "video",
+  "progress": 0,
+  "prompt": "Use case: RehaSport template refinement\nPrimary request: keep the exact same visual style and exact same avatar identity from the source clip, but make shoulder-circle motion smoother and more natural.\nScene/background: exactly unchanged.\nSubject: exact same stylized 3D avatar face, hair, body shape, clothing, color, and proportions as source.\nAction: same shoulder-circle exercise with fluid arcs, gentle ease-in/ease-out speed profile, no abrupt phase transitions.\nCamera: exactly unchanged locked shot.\nLighting/mood: exactly unchanged.\nStyle/format: exact same minimal stylized product-rehab aesthetic; do not shift toward photorealism.\nTiming/beats: keep 8s and same sequence (start neutral, forward circles, backward circles, end neutral), with smoother transitions only.\nConstraints: change only motion dynamics; preserve character design and scene one-to-one.\nAvoid: photoreal look, character redesign, face changes, hair changes, outfit changes, camera change, jitter, robotic timing.",
+  "remixed_from_video_id": "video_69961a296dc48190b25dc338328c2041055a5411da486446",
+  "seconds": "8",
+  "size": "1280x720",
+  "status": "queued"
+}

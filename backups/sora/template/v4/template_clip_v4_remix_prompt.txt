@@ -1,0 +1,11 @@
+Use case: RehaSport template refinement
+Primary request: same shot and same design as source clip, but make movement smoother and more natural.
+Scene/background: unchanged from source.
+Subject: unchanged avatar identity, same outfit, same scale.
+Action: shoulder circles with natural biomechanics; continuous circular path, soft acceleration/deceleration, no abrupt stops.
+Camera: unchanged locked camera.
+Lighting/mood: unchanged.
+Style/format: unchanged minimal product-style rehab demo.
+Timing/beats: keep 8s structure and direction order (forward then backward), but transitions between phases should be fluid.
+Constraints: keep everything visually the same; change only motion quality.
+Avoid: robotic timing, sharp speed jumps, stiff shoulders, jerky elbows, frame jitter, extra body gestures.

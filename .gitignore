@@ -3,6 +3,7 @@ node_modules/
 
 # Build output
 dist/
+.astro/
 functions/lib/
 .firebase/
 
@@ -17,6 +18,9 @@ Thumbs.db
 # Temporary files
 tmpclaude-*
 firebase-debug.log
+.playwright-cli/
+site/.playwright-cli/
+backups/
 
 # Environment variables (API keys)
 .env

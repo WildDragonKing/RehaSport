@@ -1,0 +1,13 @@
+Use case: RehaSport session-template clip for consistent shoulder exercise videos
+Primary request: create one reusable template clip for the exercise "Schulterkreisen" using the same avatar identity and environment as the reference image.
+Scene/background: same modern physiotherapy studio and palette as input reference.
+Subject: same stylized 3D avatar "SageGuide-01"; identical outfit and proportions.
+Action: controlled shoulder circles only; one clear forward cycle and one clear backward cycle with visible start and end posture.
+Camera: locked-off medium-wide shot, eye-level, centered framing, no cuts, no zoom, no camera motion.
+Lighting/mood: soft diffuse clinical daylight, clean and calm.
+Color palette: sage (#7c9a82), sand (#f2ebe0), terracotta accent (#c4927a), subtle lime accent (#84cc16).
+Style/format: modern clean rehabilitation demo; movement readability prioritized over cinematic effects.
+Timing/beats: total 8s; 0-1s neutral start, 1-4s forward circles, 4-7s backward circles, 7-8s neutral end.
+Audio: no voiceover, no music, no text overlays.
+Constraints: keep character identity, outfit, body scale, background style, and framing consistent for use as master template.
+Avoid: extra gestures, full-body travel, jitter, motion blur, flicker, changing background, changing character face, dramatic lighting.

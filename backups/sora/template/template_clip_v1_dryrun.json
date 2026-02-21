@@ -1,0 +1,15 @@
+{
+  "download": {
+    "out": "/Users/lbuettge/Projects/personal/RehaSport/backups/sora/template/template_clip_v1.mp4",
+    "variant": "video"
+  },
+  "dry_run": true,
+  "poll": true,
+  "request": {
+    "endpoint": "/v1/videos",
+    "model": "sora-2",
+    "prompt": "Use case: RehaSport session-template clip for consistent exercise videos\nPrimary request: Create a single reusable visual template clip for the exercise \"Schulterkreisen\".\nScene/background: clean physiotherapy studio, minimalist backdrop, soft gradient wall in sage and sand tones.\nSubject: one fixed stylized 3D rehab avatar named \"SageGuide-01\" (non-real person, neutral face, short dark hair, light sage training shirt, sand pants, no logos).\nAction: avatar performs slow, precise shoulder circles with clear start/end posture and one visible repetition cycle for forward and backward direction.\nCamera: static medium-wide shot, eye-level, centered composition, no zoom, no cuts.\nLighting/mood: soft diffuse daylight, calm clinical atmosphere, high readability of shoulder movement.\nColor palette: sage green (#7c9a82), sand (#f2ebe0), terracotta accent (#c4927a), lime accent (#84cc16) only as tiny details.\nStyle/format: clean modern rehab instruction aesthetic matching a calm healthcare web UI; minimal visual noise.\nTiming/beats: 8 seconds total; 1s neutral start posture, 3s forward circles, 3s backward circles, 1s neutral end posture.\nAudio: no music, no voiceover, no text overlays.\nConstraints: same character identity and outfit should be reusable as master template for future clips.\nAvoid: real-person realism, shaky camera, jump cuts, fast motion, clutter, dark dramatic lighting, branded items.",
+    "seconds": "8",
+    "size": "1280x720"
+  }
+}

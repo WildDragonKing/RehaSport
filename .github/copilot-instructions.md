@@ -1,196 +1,118 @@
-# Copilot-Anweisungen für das RehaSport-Projekt
+# Copilot-Anweisungen fuer das RehaSport-Projekt
 
-## Projektübersicht
+## Projektuebersicht
 
-Dies ist ein deutschsprachiges Dokumentationssystem für Rehabilitationssport (RehaSport) zum Erstellen und Verwalten von Übungssammlungen und 45-minütigen Trainingsstunden. Das Projekt folgt strengen Qualitätsstandards für medizinische Sicherheit und Barrierefreiheit.
+RehaSport ist ein Public-Frontend fuer Rehabilitationssport-Stunden und Uebungen. Die Inhalte werden live aus Firestore geladen und ueber Firebase Hosting ausgeliefert.
 
 **Projektsprache**: Deutsch (alle Inhalte, Dateinamen und Dokumentation)
 
-**Synchronisationspflicht**: Änderungen an diesen Copilot-Anweisungen, an `AGENTS.md` oder an `claude.md` müssen immer miteinander abgestimmt und im selben Commit vorgenommen werden. Halte die Dokumentation konsolidiert, entferne Redundanzen und verzichte auf unnötige zusätzliche Markdown-Dateien.
+**Synchronisationspflicht**: Aenderungen an diesen Copilot-Anweisungen, an `AGENTS.md` oder an `CLAUDE.md` muessen immer miteinander abgestimmt und im selben Commit vorgenommen werden.
 
-## Architektur & Struktur
+## Architektur & Stack
 
-### Kernkomponenten
+### Frontend (site/)
+- **Framework:** Astro mit React-Inseln
+- **Datenquelle:** Firestore (Client-seitig, live)
+- **Styling:** CSS Design-Tokens in `site/src/styles/global.css`
+- **Build:** `cd site && npm run build` (Output: `site/dist`)
 
-- **`Übungen/`** - Übungsdatenbank mit detaillierten medizinischen Informationen
-- **`stunden/`** - 45-minütige Trainingsstunden nach dem 10-15-15-5-Minuten-Schema
-- **`Anleitung/`** - Systemdokumentation und Erstellungshilfen
-- **`Konzepte/`** - Thematische Konzepte, die Übungen verbinden
-- **Templates** - `Übungen/_template_übung.md` und `stunden/_template_stunde.md` (MÜSSEN verwendet werden, niemals ändern)
+### Backend (functions/)
+- **Cloud Functions v2** (Node 20, Region `europe-west1`)
+- **KI-Integration:** Google Gemini fuer Stunden-/Uebungs-Generierung
+- **Security:** Rollen-Checks, Input-Sanitization, Rate Limiting
 
-### Die 45-Minuten-Struktur
+### Infrastruktur
+- **Hosting:** Firebase Hosting
+- **Datenbank:** Firestore
+- **Auth:** Firebase Auth mit Google SSO
+- **Projekt-ID:** `rehasport-trainer`
 
-ALLE Trainingsstunden MÜSSEN exakt dieser Zeitaufteilung folgen:
+## Verzeichnisstruktur
+
+```
+/
+├── firebase.json              - Hosting, Functions, Firestore Config
+├── firestore.rules            - Firestore Security Rules
+├── functions/src/index.ts     - Cloud Functions
+├── site/src/
+│   ├── components/react/      - SessionsExplorer, ExercisesExplorer
+│   ├── layouts/               - BaseLayout.astro
+│   ├── lib/                   - content.ts, firebase.ts, types.ts
+│   ├── pages/                 - Astro-Seiten
+│   └── styles/                - global.css
+├── docs/                      - Projektdokumentation
+└── .github/workflows/         - CI/CD (release.yml)
+```
+
+## Public-Routen
+
+- `/` - Startseite
+- `/stunden` - Stundenliste mit Suche
+- `/stunden/:kategorieSlug/:stundenSlug` - Stundendetail
+- `/uebungen` - Uebungsliste mit Suche
+- `/uebungen/:uebungSlug` - Uebungsdetail
+- `/wissen` - Wissensseite
+- `/impressum`, `/datenschutz` - Rechtliche Pflichtseiten
+
+## Medizinische Anforderungen
+
+### 45-Minuten-Schema (verbindlich)
 
 | Phase | Dauer | Zweck |
 |-------|-------|-------|
-| Aufwärmen | 10 Min | Aktivierung, Mobilisation |
+| Aufwaermen | 10 Min | Aktivierung, Mobilisation |
 | Hauptteil | 15 Min | Kraft, Ausdauer |
 | Schwerpunkt | 15 Min | Themenspezifische Vertiefung |
 | Ausklang | 5 Min | Cool-down, Dehnung |
 
-## Kritische medizinische Anforderungen
+### Pflicht-Alternativen
+- Jede Uebung muss Alternativen fuer Knieprobleme und Schulterprobleme bieten
+- Kontraindikationen sind Pflicht und duerfen nie leer bleiben
+- "Im Zweifel konservativ" - Sicherheit vor Intensitaet
 
-### Pflicht-Alternativen (KEINE AUSNAHMEN)
+## Design-Regeln
 
-Jede Übung MUSS Alternativen bieten für:
-1. **Knieprobleme** (`🦵`) - ~40-50% der Teilnehmer haben Kniebeschwerden
-2. **Schulterprobleme** (`💪`) - ~30-40% haben Schulterbeschwerden
+- mobile-first (Pflicht-Referenz: 320px Breite)
+- minimalistischer, eckiger Stil
+- monochrome Basis + Signal-Gruen als einziger Akzent
+- keine dekorativen Animationen
+- Accessibility: aria-labels auf interaktive Elemente
 
-**Beispiele**:
-- Tiefe Kniebeuge → Flache Kniebeuge (<45°) oder mit Stuhlunterstützung
-- Arme über Kopf → Arme nur bis Schulterhöhe
-- Planke auf Händen → Wandplanke oder Knie-Planke
+## Entwicklungs-Commands
 
-### Kontraindikationen sind PFLICHT
+```bash
+# Frontend
+cd site
+npm run typecheck    # TypeScript-Pruefung
+npm test             # Vitest Tests
+npm run build        # Astro Produktions-Build
+npm run dev          # Dev-Server (Port 4321)
 
-Jede Übung muss dokumentieren:
-- Akute Verletzungen, die zu vermeiden sind
-- Zustände, die besondere Vorsicht erfordern
-- Absolute Ausschlusskriterien
+# Cloud Functions
+cd functions
+npm run build        # TypeScript Build
+```
 
-**Niemals leer lassen** - recherchieren oder medizinische Quellen konsultieren bei Unsicherheit.
+## Deployment
 
-## Dateinamen & Organisation
+- CI-Workflow `.github/workflows/release.yml` deployed bei Push auf `main`
+- CI deployed nur Hosting + erstellt Git-Tag/GitHub-Release
+- Cloud Functions: `npx firebase deploy --only functions`
+- Firestore Rules: `npx firebase deploy --only firestore:rules`
 
-### Übungen
-- Format: `kleinbuchstaben_mit_unterstrichen.md`
-- ✅ Gut: `schulterkreisen.md`, `kniebeuge_wandstütze.md`
-- ❌ Schlecht: `Übung1.md`, `Schulterkreisen.md` (Großbuchstabe), `schulter kreisen.md` (Leerzeichen)
+## Security-Patterns
 
-### Trainingsstunden
-- Format: `stunde_[Nr]_[kurzbeschreibung].md`
-- ✅ Gut: `stunde_01_rückenfit.md`, `stunde_02_balance.md`
-- ❌ Schlecht: `Stunde1.md`, `rückenfit.md` (keine Nummer)
+- Firestore Rules: exists()-Guard vor get(), affectedKeys() fuer Privilege Escalation
+- Cloud Functions: requireTrainerRole(), sanitizeTextInput(), Fail-Closed Rate Limiting
+- HTTP Headers: CSP, X-Frame-Options, X-Content-Type-Options in firebase.json
 
-## Workflow-Muster
+## Env-Konvention
 
-### Neue Übung erstellen
-
-1. `Übungen/_template_übung.md` kopieren
-2. ALLE Pflichtfelder ausfüllen (Checklisten in CONTRIBUTING.md beachten)
-3. Knie- UND Schulteralternativen dokumentieren (konkret, nicht "Übung auslassen")
-4. Beschreibenden Dateinamen in kleinbuchstaben_mit_unterstrichen verwenden
-5. **WICHTIG**: `Übungen/ÜBUNGSINDEX.md` aktualisieren:
-   - Übung in die richtige Phase-Tabelle eintragen (Aufwärmen/Hauptteil/Schwerpunkt/Ausklang)
-   - In "Nach Schwerpunkt"-Sektion hinzufügen (Kraft/Beweglichkeit/etc.)
-   - Zu "Neueste Übungen" hinzufügen
-   - "Anzahl Übungen gesamt" erhöhen
-   - "Stand"-Datum aktualisieren
-
-### Neue Trainingsstunde erstellen
-
-1. Konzept/Thema wählen (muss durch alle Übungen kohärent sein)
-2. `stunden/_template_stunde.md` kopieren
-3. 8-12 Übungen aus Datenbank auswählen (2-3 pro Phase)
-4. Timing prüfen - muss exakt 45 Minuten ergeben
-5. Sicherstellen, dass JEDE Übung Knie- UND Schulteralternativen hat
-6. Zu Übungen verlinken: `[Name](../Übungen/dateiname.md)`
-
-### Dokumentations-Querverweise
-
-Beim Bearbeiten von Übungen aktualisieren:
-- "Wird verwendet in"-Sektion in der Übungsdatei, wenn in neuer Stunde verwendet
-- "Verwendung in Stunden"-Sektion im `ÜBUNGSINDEX.md` entsprechend ergänzen
-- Verwandte Übungen für ähnliche Bewegungen
-
-Beim Löschen von Übungen:
-- Übung aus allen Tabellen im `ÜBUNGSINDEX.md` entfernen
-- "Anzahl Übungen gesamt" reduzieren
-- Alle Stunden prüfen, die diese Übung verwenden
-
-## Pflichtlektüre vor dem Erstellen von Inhalten
-
-**Vor Übungen**: In dieser Reihenfolge lesen:
-1. `Anleitung/system_übersicht.md`
-2. `Anleitung/übungen_erstellen.md`  
-3. `Anleitung/alternative_übungen.md`
-
-**Vor Stunden**: Lesen:
-1. `Anleitung/system_übersicht.md`
-2. `Anleitung/stunden_planen.md`
-3. `Anleitung/alternative_übungen.md`
-
-## Tag-System (Pflicht)
-
-### Für Übungen (mind. 3 Tags)
-- **Bereich**: `#aufwärmen` `#hauptteil` `#schwerpunkt` `#ausklang`
-- **Schwerpunkt**: `#kraft` `#ausdauer` `#beweglichkeit` `#koordination` `#balance`
-- **Anpassung**: `#knie-freundlich` `#schulter-freundlich` `#anfänger` `#fortgeschritten`
-
-### Für Stunden (mind. 3 Tags)
-- **Konzept**: `#rückengesundheit` `#balance` `#ganzkörper`
-- **Zielgruppe**: `#orthopädie` `#herz-kreislauf` `#neurologie` `#allgemein`
-- **Niveau**: `#anfänger` `#mittel` `#fortgeschritten`
-
-## Qualitätsstandards
-
-### Nicht verhandelbare Anforderungen
-- ✅ ALLE Template-Felder müssen ausgefüllt sein (kein "TBD" oder leere Abschnitte)
-- ✅ Beschreibungen müssen für Übungsleiter ohne Vorkenntnisse verständlich sein
-- ✅ Knie- UND Schulteralternativen sind konkret und sicher (niemals "Übung auslassen")
-- ✅ Kontraindikationen sind medizinisch korrekt und vollständig
-- ✅ Stundenkonzept ist kohärent (alle Übungen dienen demselben Thema)
-- ✅ Zeitangaben sind realistisch und ergeben 45 Minuten
-
-### Häufige Fehler vermeiden
-- ❌ Vage Alternativen wie "Bei Problemen anpassen"
-- ❌ Fehlende Kontraindikationen (medizinisches Sicherheitsrisiko!)
-- ❌ Zufällige Übungssammlung ohne kohärentes Konzept
-- ❌ Falsche Zeitverteilung (muss 10-15-15-5 sein, nicht 20-20-5-0)
-- ❌ Templates verwenden ohne erforderliche Dokumentation zu lesen
-
-## Entwicklungs-Kommandos
-
-Kein Build-System - dies ist ein reines Dokumentationsprojekt mit Markdown-Dateien.
-
-## Wichtige Referenzdateien
-
-Beim Erstellen von Inhalten diese Beispiele studieren:
-- **Übungsbeispiel**: `Übungen/schulterkreisen.md`
-- **Stundenbeispiel**: `stunden/ruecken/stabilitaet-und-mobilisation.md`
-- **Anpassungsleitfaden**: `Anleitung/alternative_übungen.md`
-- **Qualitätscheckliste**: `CONTRIBUTING.md` (Abschnitt "Checkliste vor dem Veröffentlichen")
-
-## Medizinische Sicherheitsphilosophie
-
-**"Im Zweifel konservativ"** - Bei Unsicherheit über Kontraindikationen oder Alternativen:
-- MEHR Kontraindikationen dokumentieren statt weniger
-- SICHERERE Alternativen anbieten statt risikoreichere
-- Sicherheit über Intensität betonen
-- Dies ist medizinische Rehabilitation, nicht Leistungssport
-
-## Richtlinien für KI-Assistenten
-
-1. **Immer Templates verwenden** - Niemals Übungen/Stunden von Grund auf neu erstellen
-2. **Dokumentation zuerst lesen** - system_übersicht.md prüfen vor Änderungsvorschlägen
-3. **Medizinische Genauigkeit ist wichtig** - Bei Unsicherheit über Kontraindikationen zur Überprüfung kennzeichnen
-4. **Kohärenz über Quantität** - Eine Stunde mit 8 gut abgestimmten Übungen schlägt 15 zufällige
-5. **Durchgängig Deutsch** - Alle Inhalte, Dateinamen, Dokumentation auf Deutsch
-6. **Alternativen sind nicht optional** - Jede Übung braucht Knie + Schulter-Alternativen, keine Ausnahmen
-
-## Umbau: Firebase-Migration (Stand: Januar 2026)
-
-### Architektur-Änderungen
-- **Hosting:** Firebase Hosting (statt GitHub Pages)
-- **Datenbank:** Firestore (statt lokale Markdown-Dateien als Quelle)
-- **Auth:** Firebase Auth mit Rollen (Admin, Trainer)
-- **KI-Backend:** Google Gemini via Cloud Functions
-- **Projekt-ID:** `rehasport-trainer`
-
-### Benutzerrollen
-- **Admin:** Vollzugriff, kann Trainer einladen und Entwürfe freigeben
-- **Trainer:** KI-Builder nutzen, eigene Stunden/Gruppen verwalten (Entwürfe brauchen Admin-Freigabe)
-- **Teilnehmer:** Öffentlicher Zugang ohne Login
-
-### Neue Verzeichnisstruktur
-- `site/src/firebase/` - Firebase-Konfiguration und -Services
-- `site/src/contexts/` - React Contexts (Auth)
-- `site/src/pages/admin/` - Admin-Bereich
-- `functions/` - Cloud Functions (Gemini-Integration)
-
-### Datenformat
-- Stunden und Übungen werden in Firestore als JSON-Dokumente gespeichert
-- Das 45-Minuten-Schema bleibt erhalten (4 Phasen)
-- Alternativen (🦵 Knie, 💪 Schulter) werden als strukturierte Objekte gespeichert
-- Markdown-Dateien bleiben als Backup, sind aber nicht mehr die primäre Datenquelle
+- `PUBLIC_FIREBASE_API_KEY`
+- `PUBLIC_FIREBASE_AUTH_DOMAIN`
+- `PUBLIC_FIREBASE_PROJECT_ID`
+- `PUBLIC_FIREBASE_STORAGE_BUCKET`
+- `PUBLIC_FIREBASE_MESSAGING_SENDER_ID`
+- `PUBLIC_FIREBASE_APP_ID`
+- optional `PUBLIC_FIREBASE_MEASUREMENT_ID`
+- Fallback: `VITE_*` Variablen werden im Code akzeptiert

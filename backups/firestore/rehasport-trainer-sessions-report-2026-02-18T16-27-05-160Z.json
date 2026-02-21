@@ -1,0 +1,242 @@
+{
+  "executedAt": "2026-02-18T16:27:04.002Z",
+  "executedBy": "wilddragonking@googlemail.com",
+  "project": "rehasport-trainer",
+  "total": 18,
+  "sessions": [
+    {
+      "id": "atemtherapie_stunde-06-atemtherapie",
+      "title": "Atemtherapie - Ruhe & Regeneration",
+      "qualityScore": 100,
+      "qualityBreakdown": {
+        "variety": 100,
+        "progression": 100,
+        "pacing": 100,
+        "safety": 100
+      },
+      "totalExercises": 22,
+      "totalBufferMinutes": 12
+    },
+    {
+      "id": "balance_koordinationstraining",
+      "title": "Koordinationstraining",
+      "qualityScore": 100,
+      "qualityBreakdown": {
+        "variety": 100,
+        "progression": 100,
+        "pacing": 100,
+        "safety": 100
+      },
+      "totalExercises": 23,
+      "totalBufferMinutes": 12
+    },
+    {
+      "id": "balance_sturzprophylaxe",
+      "title": "Balance & Sturzprophylaxe",
+      "qualityScore": 100,
+      "qualityBreakdown": {
+        "variety": 100,
+        "progression": 100,
+        "pacing": 100,
+        "safety": 100
+      },
+      "totalExercises": 22,
+      "totalBufferMinutes": 12
+    },
+    {
+      "id": "beckenboden_stunde-09-beckenboden-power",
+      "title": "Beckenboden-Power",
+      "qualityScore": 100,
+      "qualityBreakdown": {
+        "variety": 100,
+        "progression": 100,
+        "pacing": 100,
+        "safety": 100
+      },
+      "totalExercises": 26,
+      "totalBufferMinutes": 12
+    },
+    {
+      "id": "faszientraining_stunde-07-faszienfit",
+      "title": "Faszienfit - Mobilität & Geschmeidigkeit",
+      "qualityScore": 100,
+      "qualityBreakdown": {
+        "variety": 100,
+        "progression": 100,
+        "pacing": 100,
+        "safety": 100
+      },
+      "totalExercises": 25,
+      "totalBufferMinutes": 12
+    },
+    {
+      "id": "faszientraining_stunde-10-faszien-entspannung",
+      "title": "Faszien & Entspannung",
+      "qualityScore": 100,
+      "qualityBreakdown": {
+        "variety": 100,
+        "progression": 100,
+        "pacing": 100,
+        "safety": 100
+      },
+      "totalExercises": 24,
+      "totalBufferMinutes": 12
+    },
+    {
+      "id": "ganzkoerper_kraft-und-balance",
+      "title": "Ganzkörper Kraft & Balance",
+      "qualityScore": 100,
+      "qualityBreakdown": {
+        "variety": 100,
+        "progression": 100,
+        "pacing": 100,
+        "safety": 100
+      },
+      "totalExercises": 23,
+      "totalBufferMinutes": 12
+    },
+    {
+      "id": "ganzkoerper_pezziball_stunde",
+      "title": "Pezziball-Stunde",
+      "qualityScore": 100,
+      "qualityBreakdown": {
+        "variety": 100,
+        "progression": 100,
+        "pacing": 100,
+        "safety": 100
+      },
+      "totalExercises": 22,
+      "totalBufferMinutes": 12
+    },
+    {
+      "id": "ganzkoerper_theraband_komplett",
+      "title": "Theraband Komplett",
+      "qualityScore": 100,
+      "qualityBreakdown": {
+        "variety": 100,
+        "progression": 100,
+        "pacing": 100,
+        "safety": 100
+      },
+      "totalExercises": 22,
+      "totalBufferMinutes": 12
+    },
+    {
+      "id": "herz-kreislauf_ausdauer-aktivierung",
+      "title": "Ausdauer-Aktivierung",
+      "qualityScore": 100,
+      "qualityBreakdown": {
+        "variety": 100,
+        "progression": 100,
+        "pacing": 100,
+        "safety": 100
+      },
+      "totalExercises": 22,
+      "totalBufferMinutes": 12
+    },
+    {
+      "id": "knie-huefte_knie_hueft_schule",
+      "title": "Knie-Hüft-Schule",
+      "qualityScore": 100,
+      "qualityBreakdown": {
+        "variety": 100,
+        "progression": 100,
+        "pacing": 100,
+        "safety": 100
+      },
+      "totalExercises": 23,
+      "totalBufferMinutes": 12
+    },
+    {
+      "id": "osteoporose_stunde-08-starke-knochen",
+      "title": "Starke Knochen - Osteoporose-Prävention",
+      "qualityScore": 100,
+      "qualityBreakdown": {
+        "variety": 100,
+        "progression": 100,
+        "pacing": 100,
+        "safety": 100
+      },
+      "totalExercises": 26,
+      "totalBufferMinutes": 12
+    },
+    {
+      "id": "osteoporose_stunde-11-kraft-stabilitaet-osteoporose",
+      "title": "Kraft & Stabilität bei Osteoporose",
+      "qualityScore": 100,
+      "qualityBreakdown": {
+        "variety": 100,
+        "progression": 100,
+        "pacing": 100,
+        "safety": 100
+      },
+      "totalExercises": 26,
+      "totalBufferMinutes": 12
+    },
+    {
+      "id": "ruecken_gymnastikstab",
+      "title": "Gymnastikstab",
+      "qualityScore": 100,
+      "qualityBreakdown": {
+        "variety": 100,
+        "progression": 100,
+        "pacing": 100,
+        "safety": 100
+      },
+      "totalExercises": 23,
+      "totalBufferMinutes": 12
+    },
+    {
+      "id": "ruecken_redondo_ball",
+      "title": "Redondo-Ball",
+      "qualityScore": 100,
+      "qualityBreakdown": {
+        "variety": 100,
+        "progression": 100,
+        "pacing": 100,
+        "safety": 100
+      },
+      "totalExercises": 23,
+      "totalBufferMinutes": 12
+    },
+    {
+      "id": "ruecken_stabilitaet-und-mobilisation",
+      "title": "Stabilität & Mobilisation",
+      "qualityScore": 100,
+      "qualityBreakdown": {
+        "variety": 100,
+        "progression": 100,
+        "pacing": 100,
+        "safety": 100
+      },
+      "totalExercises": 23,
+      "totalBufferMinutes": 12
+    },
+    {
+      "id": "schulter_schulter-mobility",
+      "title": "Schulter-Mobility",
+      "qualityScore": 100,
+      "qualityBreakdown": {
+        "variety": 100,
+        "progression": 100,
+        "pacing": 100,
+        "safety": 100
+      },
+      "totalExercises": 24,
+      "totalBufferMinutes": 12
+    },
+    {
+      "id": "sitzgymnastik_sitzgymnastik_komplett",
+      "title": "Sitzgymnastik Komplett",
+      "qualityScore": 100,
+      "qualityBreakdown": {
+        "variety": 100,
+        "progression": 100,
+        "pacing": 100,
+        "safety": 100
+      },
+      "totalExercises": 23,
+      "totalBufferMinutes": 12
+    }
+  ]
+}

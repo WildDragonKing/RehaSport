@@ -17,6 +17,28 @@ function validateAppCheck(request: { app?: { appId?: string } }): void {
 
 const db = admin.firestore();
 
+// Input-Sanitierung: Laenge begrenzen und nur erlaubte Zeichen
+const MAX_TOPIC_LENGTH = 200;
+const MAX_NOTES_LENGTH = 500;
+const MAX_PROMPT_LENGTH = 500;
+
+function sanitizeTextInput(input: unknown, maxLength: number): string {
+  if (typeof input !== "string") return "";
+  return input.slice(0, maxLength).trim();
+}
+
+// Rollen-Check: Nur Trainer/Admin duerfen KI-Functions aufrufen
+async function requireTrainerRole(userId: string): Promise<void> {
+  const userDoc = await db.collection("users").doc(userId).get();
+  const role = userDoc.data()?.role;
+  if (!role || !["admin", "trainer"].includes(role)) {
+    throw new HttpsError(
+      "permission-denied",
+      "Nur Trainer und Admins koennen diese Funktion nutzen."
+    );
+  }
+}
+
 // Rate limiting: max 10 requests per user per hour
 const RATE_LIMIT_REQUESTS = 10;
 const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // 1 hour
@@ -114,8 +136,8 @@ async function checkRateLimit(userId: string): Promise<boolean> {
     });
   } catch (error) {
     console.error("Rate limit check failed:", error);
-    // On error, allow request but log it
-    return true;
+    // Finding 9: Fail-Closed - bei Fehler Request ablehnen (schuetzt KI-Budget)
+    return false;
   }
 }
 
@@ -138,6 +160,9 @@ export const generateSession = onCall(
 
     const userId = request.auth.uid;
 
+    // Finding 1: Rollen-Check - nur Trainer/Admin
+    await requireTrainerRole(userId);
+
     // Rate limit check
     const allowed = await checkRateLimit(userId);
     if (!allowed) {
@@ -147,8 +172,12 @@ export const generateSession = onCall(
       );
     }
 
-    const { topic, category, difficulty, additionalNotes, exercises } =
-      request.data;
+    const { category, exercises } = request.data;
+
+    // Finding 7: Input-Sanitierung gegen Prompt Injection
+    const topic = sanitizeTextInput(request.data.topic, MAX_TOPIC_LENGTH);
+    const difficulty = sanitizeTextInput(request.data.difficulty, 50);
+    const additionalNotes = sanitizeTextInput(request.data.additionalNotes, MAX_NOTES_LENGTH);
 
     if (!topic) {
       throw new HttpsError("invalid-argument", "Thema ist erforderlich");
@@ -287,6 +316,9 @@ export const suggestExercises = onCall(
 
     const userId = request.auth.uid;
 
+    // Finding 1: Rollen-Check
+    await requireTrainerRole(userId);
+
     const allowed = await checkRateLimit(userId);
     if (!allowed) {
       throw new HttpsError(
@@ -295,7 +327,12 @@ export const suggestExercises = onCall(
       );
     }
 
-    const { topic, difficulty, additionalNotes, exercises } = request.data;
+    const { exercises } = request.data;
+
+    // Finding 7: Input-Sanitierung
+    const topic = sanitizeTextInput(request.data.topic, MAX_TOPIC_LENGTH);
+    const difficulty = sanitizeTextInput(request.data.difficulty, 50);
+    const additionalNotes = sanitizeTextInput(request.data.additionalNotes, MAX_NOTES_LENGTH);
 
     if (!topic || !exercises || exercises.length === 0) {
       throw new HttpsError(
@@ -435,19 +472,28 @@ export const logClientError = onCall(
     enforceAppCheck: true,
   },
   async (request) => {
+    // Finding 6: Input-Validierung und Laengenbegrenzung
     const errorData = request.data as ErrorLogData;
 
-    // Strukturiertes Logging für Google Cloud Logging
-    // Diese Logs erscheinen in Firebase Console > Functions > Logs
-    // und in Google Cloud Console > Logging
+    if (!errorData.message || typeof errorData.message !== "string") {
+      throw new HttpsError("invalid-argument", "Fehlermeldung erforderlich");
+    }
+
+    const safeMessage = errorData.message.slice(0, 500);
+    const safeStack = typeof errorData.stack === "string" ? errorData.stack.slice(0, 2000) : undefined;
+    const safeUrl = typeof errorData.context?.url === "string"
+      ? (errorData.context.url as string).slice(0, 500) : "unknown";
+    const safeUserAgent = typeof errorData.context?.userAgent === "string"
+      ? (errorData.context.userAgent as string).slice(0, 300) : "unknown";
+
+    // Strukturiertes Logging fuer Google Cloud Logging
     console.error(JSON.stringify({
       severity: "ERROR",
-      message: `Client Error: ${errorData.message}`,
-      errorMessage: errorData.message,
-      errorStack: errorData.stack,
-      errorContext: errorData.context,
-      clientUrl: errorData.context?.url || "unknown",
-      userAgent: errorData.context?.userAgent || "unknown",
+      message: `Client Error: ${safeMessage}`,
+      errorMessage: safeMessage,
+      errorStack: safeStack,
+      clientUrl: safeUrl,
+      userAgent: safeUserAgent,
       timestamp: errorData.timestamp,
       userId: request.auth?.uid || "anonymous",
       labels: {
@@ -502,7 +548,14 @@ export const generateIdeas = onCall(
       throw new HttpsError("unauthenticated", "Anmeldung erforderlich");
     }
 
-    const { prompt, type, count = 5 } = request.data;
+    // Finding 1: Rollen-Check
+    await requireTrainerRole(request.auth.uid);
+
+    const { type } = request.data;
+    const count = Math.min(Number(request.data.count) || 5, 20);
+
+    // Finding 7: Input-Sanitierung
+    const prompt = sanitizeTextInput(request.data.prompt, MAX_PROMPT_LENGTH);
 
     if (!prompt || !type) {
       throw new HttpsError("invalid-argument", "Prompt und Typ erforderlich");
@@ -583,6 +636,10 @@ export const startBulkGeneration = onCall(
     }
 
     const userId = request.auth.uid;
+
+    // Finding 1: Rollen-Check
+    await requireTrainerRole(userId);
+
     const { ideas, type, userPrompt } = request.data;
 
     if (!ideas || !Array.isArray(ideas) || ideas.length === 0) {
