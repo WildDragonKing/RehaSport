@@ -1,6 +1,6 @@
 # Design-System
 
-Stand: 18.02.2026
+Stand: 21.02.2026
 
 ## Leitidee
 
@@ -39,7 +39,7 @@ Die zentrale Umsetzung liegt in `site/src/styles/global.css`.
 ## Layout-Prinzipien
 
 - mobile-first Basis
-- Erweiterung ueber `min-width`-Breakpoints
+- Erweiterung ueber `min-width`-Breakpoints (Hauptbreakpoint: `720px`)
 - kleine Viewports (`320px`) sind Pflicht-Referenz fuer Lesbarkeit
 - Komponenten:
   - `tool-bar` startet einspaltig auf Mobile
@@ -60,9 +60,12 @@ Die zentrale Umsetzung liegt in `site/src/styles/global.css`.
 - klare Fokusstile auf Inputs
 - hohe Lesbarkeit und klarer Kontrast
 - rechtliche Pflichtseiten sind im Footer direkt erreichbar (ohne versteckte Navigation)
+- `aria-label` auf Accordion-Summaries (`<summary>`) mit Phasentitel und Uebungsanzahl
+- native `<details>`/`<summary>` Elemente fuer Accordions (kein JavaScript-Toggle)
 
 ## Designregeln fuer neue Features
 
 - neue Farben nur als CSS-Variablen im Token-Bereich einfuehren
 - auf mobile-first Verhalten pruefen
 - keine visuellen Effekte aufnehmen, die den Kernflow verlangsamen oder ablenken
+- Accessibility: alle interaktiven Elemente brauchen aria-labels oder sichtbare Labels

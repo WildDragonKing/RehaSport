@@ -14,10 +14,20 @@
   - `/stunden` und `/stunden/:kategorieSlug/:stundenSlug`
   - `/uebungen` und `/uebungen/:uebungSlug`
   - `/wissen`
+  - `/impressum`, `/datenschutz`
 - Statische Struktur: Astro-Seiten in `site/src/pages`
 - Interaktive Teile: React-Inseln in `site/src/components/react`
+  - `SessionsExplorer.tsx` - Stunden-Liste und Detail
+  - `ExercisesExplorer.tsx` - Uebungs-Liste und Detail
 - Datenlayer: `site/src/lib/content.ts`
 - Firebase-Init: `site/src/lib/firebase.ts`
+- Cloud Functions: `functions/src/index.ts` (Gemini, Rate Limiting, Input-Sanitization)
+
+## Security
+
+- Firestore Rules (`firestore.rules`): exists()-Guard, affectedKeys(), Schema-Validierung, Fail-Closed
+- Cloud Functions: requireTrainerRole(), sanitizeTextInput(), Fail-Closed Rate Limiting
+- HTTP Headers (`firebase.json`): CSP, X-Frame-Options, X-Content-Type-Options
 
 ## Design- und UX-Regeln
 
@@ -26,6 +36,7 @@
 - monochrome Basis + ein Akzentton (Signal-Gruen)
 - keine dekorativen Animationen
 - keine Theme-Umschaltung im Public-Frontend
+- Accessibility: aria-labels auf interaktive Elemente (Accordions, Buttons)
 
 ## Build, Tests, Checks
 
@@ -34,6 +45,13 @@ Immer im Ordner `site/` ausfuehren:
 ```bash
 npm run typecheck
 npm test
+npm run build
+```
+
+Cloud Functions Build:
+
+```bash
+cd functions
 npm run build
 ```
 
@@ -54,7 +72,10 @@ Hinweis: `VITE_*` wird aktuell im Code als Fallback akzeptiert.
 
 - Hosting-Ziel bleibt `site/dist`.
 - Rewrites fuer Detailpfade liegen in `firebase.json`.
-- CI-Workflow: `.github/workflows/release.yml`.
+- CI-Workflow: `.github/workflows/release.yml` (deployed nur Hosting + erstellt Tag).
+- Cloud Functions und Firestore Rules muessen manuell deployed werden:
+  - `npx firebase deploy --only functions`
+  - `npx firebase deploy --only firestore:rules`
 
 ## Dokumentation pflegen
 

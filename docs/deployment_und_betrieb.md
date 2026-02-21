@@ -1,6 +1,6 @@
 # Deployment und Betrieb
 
-Stand: 18.02.2026
+Stand: 21.02.2026
 
 ## Zielumgebung
 
@@ -30,6 +30,14 @@ npm test
 npm run build
 ```
 
+### Cloud Functions
+
+```bash
+cd functions
+npm ci
+npm run build
+```
+
 ## Umgebungsvariablen
 
 Frontend erwartet (siehe `site/.env.example`):
@@ -55,7 +63,13 @@ npm run build
 ### Manuelles Firebase Deploy
 
 ```bash
+# Alles deployen
 npx firebase deploy
+
+# Nur einzelne Komponenten
+npx firebase deploy --only hosting
+npx firebase deploy --only functions
+npx firebase deploy --only firestore:rules
 ```
 
 ## Firebase Hosting Routing
@@ -67,6 +81,15 @@ npx firebase deploy
 Damit funktionieren clientseitige Detailpfade ohne Catch-all-SPA-Rewrite.
 
 Statische Rechtsseiten (`/impressum`, `/datenschutz`) werden ohne zusaetzliche rewrites direkt aus `site/dist` bedient.
+
+## HTTP Security Headers
+
+In `firebase.json` sind folgende Headers fuer alle Routen konfiguriert:
+- `X-Frame-Options: DENY` - Clickjacking-Schutz
+- `X-Content-Type-Options: nosniff` - MIME-Sniffing verhindern
+- `Referrer-Policy: strict-origin-when-cross-origin`
+- `Permissions-Policy: camera=(), microphone=(), geolocation=()`
+- `Content-Security-Policy` mit Whitelist fuer Firebase/Google APIs
 
 ## CI/CD Workflow
 
@@ -86,7 +109,15 @@ Pipeline:
 8. Deploy zu Firebase Hosting (`channelId: live`)
 9. Auto-Versionstag und GitHub Release
 
+**Wichtig:** Der CI-Workflow deployed nur Firebase Hosting. Cloud Functions und Firestore Rules muessen nach einem Release manuell deployed werden:
+
+```bash
+npx firebase deploy --only functions
+npx firebase deploy --only firestore:rules
+```
+
 ## Monitoring und Betriebshinweise
 
 - Der aktuelle Public-Frontend-Stand hat keine PWA-/Service-Worker-Logik.
-- Firestore Rules und Cloud Functions bleiben Teil der Gesamtplattform und werden weiterhin ueber das Root-Projekt verwaltet.
+- Firestore Rules und Cloud Functions bleiben Teil der Gesamtplattform und werden ueber das Root-Projekt verwaltet.
+- Cloud Functions nutzen Fail-Closed Rate Limiting - bei Fehlern wird Zugriff verweigert.

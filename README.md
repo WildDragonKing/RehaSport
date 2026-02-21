@@ -4,23 +4,25 @@ RehaSport ist ein Public-Frontend fuer Rehasport-Stunden und Uebungen.
 Die Inhalte werden live aus Firestore geladen.
 
 ## Projektstatus
-- Frontend unter `site/` ist Astro-basiert.
-- Der fruehere React/Vite-Stand wurde entfernt.
+- Frontend unter `site/` ist Astro-basiert (React-Inseln fuer Interaktion).
+- Cloud Functions unter `functions/` (Gemini KI-Integration, Rate Limiting).
 - Es gibt aktuell kein produktives Admin-Frontend im Repository.
 
 ## Public-Routen
-- `/`
+- `/` - Startseite
 - `/stunden` und `/stunden/:kategorieSlug/:stundenSlug`
 - `/uebungen` und `/uebungen/:uebungSlug`
 - `/wissen`
-- `/impressum`
-- `/datenschutz`
+- `/impressum`, `/datenschutz`
 
 ## Technischer Rahmen
 - Astro-Seiten: `site/src/pages`
 - React-Inseln: `site/src/components/react`
 - Datenlayer: `site/src/lib/content.ts`
 - Firebase-Init: `site/src/lib/firebase.ts`
+- Cloud Functions: `functions/src/index.ts`
+- Security Rules: `firestore.rules`
+- Hosting Config: `firebase.json` (inkl. Security Headers)
 
 ## Entwicklung
 ```bash
@@ -30,16 +32,23 @@ npm run dev
 ```
 
 ## Verbindliche Checks
-Immer in `site/` ausfuehren:
-
+Frontend (in `site/`):
 ```bash
 npm run typecheck
 npm test
 npm run build
 ```
 
+Cloud Functions (in `functions/`):
+```bash
+npm run build
+```
+
+## Deployment
+- CI-Workflow: `.github/workflows/release.yml` (Push auf `main` = auto-deploy Hosting + Tag)
+- Manuell nach Release: `npx firebase deploy --only functions,firestore:rules`
+
 ## Env-Konvention
-Primaere Variablen:
 - `PUBLIC_FIREBASE_API_KEY`
 - `PUBLIC_FIREBASE_AUTH_DOMAIN`
 - `PUBLIC_FIREBASE_PROJECT_ID`
@@ -50,13 +59,9 @@ Primaere Variablen:
 
 Hinweis: `VITE_*` wird im Code weiterhin als Fallback akzeptiert.
 
-## Deployment
-- Hosting-Ziel: `site/dist`
-- Rewrites fuer Detailpfade: `firebase.json`
-- CI-Workflow: `.github/workflows/release.yml`
-
 ## Dokumentation
-- Einstieg: `docs/readme.md`
 - Architektur: `docs/architektur.md`
 - Design-System: `docs/design_system.md`
 - Betrieb: `docs/deployment_und_betrieb.md`
+- Entscheidungen: `docs/entscheidungen_adr.md`
+- Richtlinien: `docs/entwicklungsrichtlinien.md`

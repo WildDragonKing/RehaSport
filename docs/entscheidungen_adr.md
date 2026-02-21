@@ -1,6 +1,6 @@
 # Architekturentscheidungen (ADR)
 
-Stand: 18.02.2026
+Stand: 21.02.2026
 
 ## ADR-001: Firestore als zentrale Datenquelle
 
@@ -76,3 +76,20 @@ Stand: 18.02.2026
   - + Pflichtinhalte sind fuer Nutzer und Aufsicht direkt erreichbar
   - + kein Einfluss auf den interaktiven Kernflow
   - - Betreiberdaten und Rechtstexte muessen inhaltlich gepflegt und juristisch geprueft werden
+
+## ADR-008: Security Hardening (Firestore Rules, Cloud Functions, HTTP Headers)
+
+- Status: akzeptiert
+- Kontext: Security-Review deckte 13 Findings auf (3 Critical, 5 High, 3 Medium, 2 Low).
+- Entscheidung: Umfassende Haertung in drei Bereichen:
+  1. **Firestore Rules:** exists()-Guard vor get(), affectedKeys() gegen Privilege Escalation,
+     Schema-Validierung bei Ratings/Analytics, Fail-Closed fuer Server-only Collections
+  2. **Cloud Functions:** Zentraler requireTrainerRole() Guard, sanitizeTextInput() mit
+     Laengenlimits, Fail-Closed Rate Limiting, Input-Validierung in logClientError
+  3. **HTTP Headers:** CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy,
+     Permissions-Policy in firebase.json
+- Konsequenzen:
+  - + systematischer Schutz gegen bekannte Angriffsvektoren
+  - + Principle of Least Privilege durchgesetzt
+  - - Trainer muessen authentifiziert sein fuer alle KI-Features (kein anonymer Zugriff)
+  - - Rate-Limit-Fehler blockieren Zugriff (Fail-Closed statt Fail-Open)

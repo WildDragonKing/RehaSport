@@ -1,6 +1,6 @@
 # Entwicklungsrichtlinien
 
-Stand: 18.02.2026
+Stand: 21.02.2026
 
 Diese Datei fasst die aktuellen Arbeitsregeln fuer die Weiterentwicklung zusammen.
 
@@ -28,6 +28,14 @@ Diese Datei fasst die aktuellen Arbeitsregeln fuer die Weiterentwicklung zusamme
 - keine dekorativen Animationen, kein visueller Ballast
 - lange Listen/Detailinhalte auf Mobile mit progressiver Offenlegung umsetzen (Accordion-Muster)
 
+## Security-Standards
+
+- Firestore Rules: `exists()` Guard vor `get()`, Schema-Validierung bei write-Operationen
+- Cloud Functions: Rollen-Check via `requireTrainerRole()` fuer alle KI-Endpoints
+- Input-Sanitization: `sanitizeTextInput()` mit Laengenlimits fuer alle User-Eingaben
+- Rate Limiting: Fail-Closed Pattern (bei Fehler wird Zugriff verweigert)
+- HTTP Headers: Security Headers in `firebase.json` pflegen (CSP, X-Frame-Options)
+
 ## Firestore- und Env-Regeln
 
 - neue Firestore-Felder nur mit Typanpassung in `types.ts`
@@ -46,11 +54,18 @@ npm test
 npm run build
 ```
 
+## Accessibility-Standards
+
+- `aria-label` auf alle interaktiven Elemente (Accordions, Buttons)
+- native HTML-Elemente bevorzugen (`<details>`/`<summary>` statt JS-Toggle)
+- semantische Landmarken verwenden (`header`, `main`, `footer`, `nav`)
+
 ## Deployment-Disziplin
 
 - `main` ist Release-Zweig (auto deploy ueber Workflow)
 - kleine, reviewbare PRs
 - bei Routingaenderungen immer `firebase.json` mitziehen
+- CI deployed nur Hosting - Functions und Rules manuell deployen nach Merge
 
 ## Doku-Disziplin
 
