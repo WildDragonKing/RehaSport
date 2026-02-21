@@ -48,7 +48,60 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     </article>
 
     <article class="card stack legal-content">
-      <h2>4. Kontaktaufnahme</h2>
+      <h2>4. Authentifizierung (Trainer-Bereich)</h2>
+      <p>
+        Fuer den Trainer-Bereich wird Firebase Authentication mit Google Single Sign-On (SSO) eingesetzt.
+        Bei der Anmeldung werden folgende Daten verarbeitet: E-Mail-Adresse, Anzeigename und ein
+        eindeutiger Benutzer-Identifier (UID). Diese Daten werden in der Firestore-Datenbank als
+        Benutzerprofil gespeichert, um die Rollenverwaltung (Admin/Trainer) zu ermoeglichen.
+      </p>
+      <p>
+        Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Vertragsdurchfuehrung) fuer eingeladene
+        Trainer sowie Art. 6 Abs. 1 lit. a DSGVO (Einwilligung) fuer die Google-SSO-Anmeldung.
+      </p>
+    </article>
+
+    <article class="card stack legal-content">
+      <h2>5. KI-gestuetzte Inhaltserstellung</h2>
+      <p>
+        Trainer koennen mithilfe von Google Gemini (KI-Modell) Trainingsstunden und Uebungen generieren
+        lassen. Dabei werden ausschliesslich die vom Trainer eingegebenen Themen, Schwierigkeitsgrade
+        und Anmerkungen an die Google Gemini API uebermittelt. Es werden keine personenbezogenen Daten
+        der Teilnehmer an das KI-Modell weitergegeben.
+      </p>
+      <p>
+        Zur Begrenzung der Nutzung wird ein Rate-Limiting eingesetzt, bei dem die Anzahl der Anfragen
+        pro Benutzer und Stunde technisch erfasst wird. Diese Daten werden ausschliesslich zur
+        Missbrauchsverhinderung genutzt.
+      </p>
+      <p>
+        Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Vertragsdurchfuehrung) bzw.
+        Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Ressourcenbegrenzung).
+      </p>
+    </article>
+
+    <article class="card stack legal-content">
+      <h2>6. Bewertungen und Nutzungsanalyse</h2>
+      <p>
+        Teilnehmer koennen Trainingsstunden bewerten. Dabei werden aggregierte Bewertungsdaten
+        (Gesamtanzahl, Summe der Bewertungen) ohne Personenbezug gespeichert. Es sind keine
+        individuellen Rueckschluesse auf einzelne Teilnehmer moeglich.
+      </p>
+      <p>
+        Fuer angemeldete Benutzer werden pseudonymisierte Nutzungsereignisse (z. B. Seitenaufrufe,
+        genutzte Funktionen) in einer Analytics-Collection erfasst. Die Daten sind mit einer
+        Benutzer-ID verknuepft, lassen jedoch ohne zusaetzliche Informationen keinen direkten
+        Rueckschluss auf die Identitaet zu. Diese Daten dienen ausschliesslich der Verbesserung
+        des Angebots und werden keinen Dritten zugaenglich gemacht.
+      </p>
+      <p>
+        Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Verbesserung
+        des Dienstes).
+      </p>
+    </article>
+
+    <article class="card stack legal-content">
+      <h2>7. Kontaktaufnahme</h2>
       <p>
         Wenn du uns per E-Mail kontaktierst, verarbeiten wir deine Angaben zur Bearbeitung der Anfrage und fuer
         moegliche Rueckfragen.
@@ -60,7 +113,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     </article>
 
     <article class="card stack legal-content">
-      <h2>5. Empfaenger und Drittlandbezug</h2>
+      <h2>8. Empfaenger und Drittlandbezug</h2>
       <p>
         Im Rahmen des Betriebs koennen Daten an technische Dienstleister (insbesondere Google/Firebase)
         uebermittelt werden. Eine Verarbeitung ausserhalb der EU kann nicht ausgeschlossen werden.
@@ -72,7 +125,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     </article>
 
     <article class="card stack legal-content">
-      <h2>6. Speicherdauer</h2>
+      <h2>9. Speicherdauer</h2>
       <p>
         Wir speichern personenbezogene Daten nur so lange, wie es fuer die genannten Zwecke erforderlich ist
         oder gesetzliche Aufbewahrungspflichten bestehen.
@@ -80,7 +133,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     </article>
 
     <article class="card stack legal-content">
-      <h2>7. Deine Rechte</h2>
+      <h2>10. Deine Rechte</h2>
       <p>
         Du hast das Recht auf Auskunft, Berichtigung, Loeschung, Einschraenkung der Verarbeitung,
         Datenuebertragbarkeit sowie Widerspruch gegen bestimmte Verarbeitungen. Ausserdem hast du das Recht,
@@ -89,7 +142,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     </article>
 
     <article class="card stack legal-content">
-      <h2>8. Pflicht zur Bereitstellung</h2>
+      <h2>11. Pflicht zur Bereitstellung</h2>
       <p>
         Die Bereitstellung personenbezogener Daten ist grundsaetzlich nicht vorgeschrieben. Ohne bestimmte
         Daten kann eine Bearbeitung von Kontaktanfragen jedoch ggf. nicht erfolgen.
@@ -97,8 +150,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     </article>
 
     <article class="card stack legal-content">
-      <h2>9. Stand und Aenderungen</h2>
-      <p>Stand dieser Datenschutzerklaerung: 18.02.2026. Wir passen die Hinweise bei Bedarf an.</p>
+      <h2>12. Stand und Aenderungen</h2>
+      <p>Stand dieser Datenschutzerklaerung: 21.02.2026. Wir passen die Hinweise bei Bedarf an.</p>
     </article>
   </section>
 </BaseLayout>

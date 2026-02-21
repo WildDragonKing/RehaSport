@@ -26,7 +26,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "if [[ \"$CLAUDE_FILE_PATH\" == *.ts || \"$CLAUDE_FILE_PATH\" == *.tsx ]]; then cd \"$CLAUDE_PROJECT_DIR/site\" && npx tsc --noEmit 2>&1 | head -10 || true; fi"
+            "command": "if [[ \"$CLAUDE_FILE_PATH\" == */functions/src/* && (\"$CLAUDE_FILE_PATH\" == *.ts) ]]; then cd \"$CLAUDE_PROJECT_DIR/functions\" && npx tsc --noEmit 2>&1 | head -10 || true; elif [[ \"$CLAUDE_FILE_PATH\" == *.ts || \"$CLAUDE_FILE_PATH\" == *.tsx ]]; then cd \"$CLAUDE_PROJECT_DIR/site\" && npx tsc --noEmit 2>&1 | head -10 || true; fi"
           }
         ]
       },

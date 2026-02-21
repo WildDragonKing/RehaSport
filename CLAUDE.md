@@ -34,6 +34,7 @@
 ```
 firestore/
 ├── sessions/{sessionId}       - Trainingsstunden (status: draft|published)
+│   └── versions/{versionId}   - Aenderungs-Historie (Snapshots, nur Trainer)
 ├── exercises/{exerciseId}     - Uebungsbibliothek
 ├── groups/{groupId}           - Trainingsgruppen mit Einschraenkungen
 ├── drafts/{draftId}           - KI-generierte Entwuerfe
@@ -51,16 +52,19 @@ firestore/
 /                              - Projekt-Root
 ├── firebase.json              - Firebase Hosting/Functions/Firestore Config
 ├── firestore.rules            - Firestore Security Rules
+├── research/                   - Rehasport-Methodik, Spiele, Konkurrenz
 ├── functions/
-│   └── src/index.ts           - Cloud Functions (Gemini, Rate Limiting)
+│   ├── src/index.ts           - Cloud Functions (Gemini, Rate Limiting)
+│   └── improve-sessions.js   - Lokales Script: Sessions in Firestore verbessern
 ├── site/
 │   └── src/
 │       ├── components/react/  - React-Inseln (SessionsExplorer, ExercisesExplorer)
 │       ├── layouts/           - Astro Base-Layout
-│       ├── lib/               - content.ts, firebase.ts, types.ts
+│       ├── lib/               - content.ts, firebase.ts, types.ts, use-auth.ts, session-service.ts
 │       ├── pages/             - Astro-Seiten (Public-Routen)
 │       └── styles/            - global.css (Design-Tokens)
-├── docs/                      - Projektdokumentation
+├── docs/
+│   └── improve-scores.json    - Audit-Score-Tracking (/improve Skill)
 └── .claude/                   - Claude Code Automationen
 ```
 
@@ -96,10 +100,14 @@ firestore/
 - `npx firebase deploy --only hosting` - Nur Hosting
 - `npx firebase deploy --only functions` - Nur Cloud Functions
 - `npx firebase deploy --only firestore:rules` - Nur Firestore Rules
+- `cd functions && node improve-sessions.js` - Sessions in Firestore verbessern (Slugs, Alternativen, Difficulty)
+- `cd functions && node improve-sessions.js --dry-run` - Nur analysieren ohne zu schreiben
 
 ### Git Workflow
 - **Branch Protection:** Direct push zu `main` nicht moeglich - immer PR erstellen
 - **Release:** Feature-Branch -> PR -> Merge zu `main` (CI deployed alles + erstellt Tag)
+- **CI Quality Gates:** npm audit (continue-on-error) + TypeScript Check fuer Functions in Pipeline
+- **Binaries:** `backups/sora/` enthaelt Video-/Bildmaterial - nicht committen, `.gitignore` beachten
 
 ### Cloud Functions (functions/src/index.ts)
 - **Region:** `europe-west1` fuer alle Functions
@@ -121,8 +129,11 @@ firestore/
 - [x] Astro-Migration (Public-Frontend)
 - [x] Security Hardening (Firestore Rules, Cloud Functions, HTTP Headers)
 - [x] Claude Code Automationen (Hooks, Skills, Agents)
+- [x] Improvement Loop (`/improve` Skill mit Score-Tracking)
+- [x] Session-Verbesserungen (Slug-Verknuepfung, Alternativen, Restriction-Bar, Spiele, Historie)
 - [ ] Teilnehmer-Modus (Timer, Swipe-Navigation)
 - [ ] Domain rehasport.buettgen.app (manuell in Firebase Console)
+- [ ] Sora Video-Workflow (Uebungsvideos generieren, `feature/astro-migration` enthaelt Vorarbeit)
 
 ## Claude Code Automationen (.claude/)
 
@@ -143,11 +154,13 @@ firestore/
 
 ### Skills (.claude/skills/)
 - `/deploy` - Build + Firebase Deploy (site + functions)
+- `/improve` - Projekt-Audit: Security, Content, Performance, Code Quality parallel pruefen und scoren. Optionen: `--create-issues`, `--dimension=<name>`, `--quick`
 - `/new-admin-page` - Admin-Seite mit Dark Mode Template
 
 ### Agents (.claude/agents/)
 - `security-reviewer` - Sicherheitsanalyse fuer Firebase Rules und Auth
-- `content-reviewer` - Therapeutische Vollstaendigkeit (Alternativen, Kontraindikationen)
+- `content-reviewer` - Therapeutische Vollstaendigkeit (Types, Prompts, Rules, UI-Anzeige)
+- `performance-analyzer` - Astro Islands, Firebase SDK, React Performance, Bundle Size
 
 ### MCP Server (.mcp.json)
 - Firebase MCP fuer Team-Sharing (wird automatisch geladen)

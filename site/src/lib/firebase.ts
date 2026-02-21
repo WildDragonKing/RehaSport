@@ -10,9 +10,11 @@ import {
   initializeFirestore,
   type Firestore,
 } from "firebase/firestore";
+import { getAuth as firebaseGetAuth, type Auth } from "firebase/auth";
 
 let appInstance: FirebaseApp | null = null;
 let dbInstance: Firestore | null = null;
+let authInstance: Auth | null = null;
 
 type EnvMap = Record<string, string | undefined>;
 
@@ -99,7 +101,15 @@ export function getDb(): Firestore {
   return dbInstance;
 }
 
+export function getAuth(): Auth {
+  if (!authInstance) {
+    authInstance = firebaseGetAuth(getFirebaseApp());
+  }
+  return authInstance;
+}
+
 export function resetFirebaseForTests(): void {
   appInstance = null;
   dbInstance = null;
+  authInstance = null;
 }

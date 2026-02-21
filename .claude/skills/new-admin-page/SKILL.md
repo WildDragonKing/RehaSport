@@ -1,71 +1,85 @@
 ---
 name: new-admin-page
-description: Erstellt neue Admin-Seite mit Dark Mode und Standard-Layout
+description: Erstellt neue Astro-Seite mit BaseLayout und Design-Token-konformem Styling
 arguments:
   - name: pageName
-    description: Name der neuen Seite (z.B. ReportsPage)
-  - name: navLabel
-    description: Label für die Navigation (z.B. Berichte)
-  - name: route
-    description: URL-Pfad ohne /admin/ (z.B. berichte)
+    description: Dateiname der Seite ohne Extension (z.B. berichte)
+  - name: title
+    description: Seitentitel fuer Browser-Tab (z.B. Berichte)
 disable-model-invocation: true
 ---
 
-# Neue Admin-Seite erstellen
+# Neue Seite erstellen
 
-Erstelle eine neue Admin-Seite mit folgendem Pattern:
+Erstelle eine neue Astro-Seite nach dem bestehenden Pattern.
 
-## 1. Neue Seite erstellen
+## 1. Seite erstellen
 
-Erstelle `site/src/pages/admin/{pageName}.tsx`:
+Erstelle `site/src/pages/{pageName}.astro`:
 
-```tsx
-import { useState } from 'react';
-import { useAuth } from '../../contexts/AuthContext';
-import { useContent } from '../../contexts/ContentContext';
+```astro
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
 
-export default function {pageName}(): JSX.Element {
-  const { user } = useAuth();
-  const { refresh } = useContent();
+<BaseLayout title="{title} · RehaSport" description="Beschreibung der Seite.">
+  <section class="container section stack">
+    <h1 class="section-title">{title}</h1>
+    <p class="section-subtitle">
+      Beschreibung hier einfuegen.
+    </p>
 
-  return (
-    <div className="space-y-8">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-display font-bold text-sage-900 dark:text-sage-100">
-            {navLabel}
-          </h1>
-          <p className="mt-2 text-sage-600 dark:text-sage-400">
-            Beschreibung der Seite
-          </p>
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-sage-200 dark:border-gray-700 p-6">
-        <p className="text-sage-600 dark:text-sage-400">Inhalt hier...</p>
-      </div>
-    </div>
-  );
-}
+    <article class="card stack">
+      <h2>Ueberschrift</h2>
+      <p>Inhalt hier...</p>
+    </article>
+  </section>
+</BaseLayout>
 ```
 
-## 2. Route hinzufügen
+## 2. Falls React-Island noetig
 
-In `site/src/App.tsx`:
-- Lazy Import hinzufügen: `const {pageName} = lazy(() => import("./pages/admin/{pageName}"));`
-- Route hinzufügen: `<Route path="{route}" element={<{pageName} />} />`
+Wenn die Seite interaktive Komponenten braucht:
 
-## 3. Navigation hinzufügen
+```astro
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import MeineKomponente from "../components/react/MeineKomponente.tsx";
+---
 
-In `site/src/components/layout/AdminLayout.tsx`:
-- In `navItems` Array hinzufügen: `{ to: '/admin/{route}', label: '{navLabel}' }`
+<BaseLayout title="{title} · RehaSport" description="Beschreibung.">
+  <section class="container section stack">
+    <h1 class="section-title">{title}</h1>
+    <MeineKomponente client:visible />
+  </section>
+</BaseLayout>
+```
 
-## Dark Mode Pattern
+Hydration-Direktiven:
+- `client:visible` - Standard fuer die meisten Komponenten (laedt erst beim Scrollen)
+- `client:load` - Nur wenn sofort interaktiv sein muss
+- `client:idle` - Laedt nach dem initialen Page Load
 
-Alle Farben müssen Dark Mode Varianten haben:
-- `bg-white dark:bg-gray-800`
-- `bg-sage-50 dark:bg-gray-900`
-- `text-sage-900 dark:text-sage-100`
-- `text-sage-600 dark:text-sage-400`
-- `border-sage-200 dark:border-gray-700`
+## Design-Tokens
+
+Nutze ausschliesslich CSS Custom Properties aus `site/src/styles/global.css`:
+- **Hintergrund:** `var(--bg)`, `var(--surface)`, `var(--surface-strong)`
+- **Text:** `var(--text)`, `var(--text-muted)`
+- **Rahmen:** `var(--border)`
+- **Akzent:** `var(--accent)`, `var(--accent-strong)`
+- **Abstaende:** `var(--space-1)` bis `var(--space-16)`
+- **Ecken:** `var(--radius)`, `var(--radius-soft)`
+
+## CSS-Klassen (bereits vorhanden)
+
+- `.container` - Zentrierter Content mit max-width
+- `.section` - Vertikaler Abstand
+- `.stack` - Vertikales Spacing zwischen Kindern
+- `.card` - Karte mit Rahmen und Hintergrund
+- `.section-title` - Grosse Ueberschrift
+- `.section-subtitle` - Untertitel in gedaempfter Farbe
+
+## Schriften
+
+- **Headlines:** `font-family: "Space Grotesk"` (automatisch via h1-h4)
+- **Body:** `font-family: "IBM Plex Sans"` (automatisch via body)

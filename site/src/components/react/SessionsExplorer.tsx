@@ -1,7 +1,14 @@
 import { useEffect, useMemo, useState, type ReactElement } from "react";
 
 import { getDataset } from "../../lib/content";
-import type { SessionDetail } from "../../lib/types";
+import type {
+  ExerciseDetail,
+  SessionDetail,
+  SessionExercise,
+} from "../../lib/types";
+import SessionVersionHistory from "./SessionVersionHistory";
+
+type Restriction = "knee" | "shoulder";
 
 type ViewState =
   | { type: "loading" }
@@ -9,6 +16,7 @@ type ViewState =
   | {
       type: "ready";
       sessions: SessionDetail[];
+      exerciseMap: Map<string, ExerciseDetail>;
     };
 
 function parsePath(
@@ -36,14 +44,197 @@ function parsePath(
   return { kind: "list" };
 }
 
+// Aufklappbare Uebungsdetails mit Bibliotheks-Verknuepfung
+function ExerciseInlineDetail({
+  exercise,
+  exerciseMap,
+  activeRestrictions,
+}: {
+  exercise: SessionExercise;
+  exerciseMap: Map<string, ExerciseDetail>;
+  activeRestrictions: Set<Restriction>;
+}): ReactElement {
+  const linked = exercise.slug ? exerciseMap.get(exercise.slug) : undefined;
+
+  // Inline-Alternativen aus der Session oder aus der Bibliothek
+  const kneeAlt =
+    exercise.kneeAlternative || linked?.kneeAlternative?.description;
+  const shoulderAlt =
+    exercise.shoulderAlternative || linked?.shoulderAlternative?.description;
+  const hasAlternatives = Boolean(kneeAlt || shoulderAlt);
+
+  // Hervorgehobene Alternativen bei aktiver Restriction
+  const kneeHighlighted = activeRestrictions.has("knee") && kneeAlt;
+  const shoulderHighlighted = activeRestrictions.has("shoulder") && shoulderAlt;
+
+  if (!linked) {
+    // Fallback: keine Bibliotheks-Verknuepfung, bisherige Darstellung
+    return (
+      <li className="phase-exercise-item">
+        <strong>
+          {exercise.title}
+          {exercise.isGame ? (
+            <span className="badge game-badge">Spiel</span>
+          ) : null}
+        </strong>
+        {exercise.details.length > 0 ? (
+          <ul className="phase-detail-list stack">
+            {exercise.details.map((detail, i) => (
+              <li className="phase-detail-item" key={`${detail.label}-${i}`}>
+                <span className="muted phase-detail-label">{detail.label}</span>
+                <span className="phase-detail-value">{detail.value}</span>
+              </li>
+            ))}
+          </ul>
+        ) : null}
+        {/* Inline-Alternativen auch ohne Bibliothek anzeigen */}
+        {(kneeHighlighted || shoulderHighlighted) && (
+          <div className="exercise-alternatives">
+            {kneeHighlighted ? (
+              <div className="exercise-alt exercise-alt-knee exercise-alt-highlighted">
+                <strong>Knie-Alternative:</strong> {kneeAlt}
+              </div>
+            ) : null}
+            {shoulderHighlighted ? (
+              <div className="exercise-alt exercise-alt-shoulder exercise-alt-highlighted">
+                <strong>Schulter-Alternative:</strong> {shoulderAlt}
+              </div>
+            ) : null}
+          </div>
+        )}
+      </li>
+    );
+  }
+
+  // Verknuepfte Uebung: aufklappbare Details
+  const difficulty = exercise.difficulty || linked.difficulty;
+  const meta = exercise.details
+    .map((d) => `${d.label}: ${d.value}`)
+    .join(" · ");
+
+  return (
+    <li className="phase-exercise-item">
+      <details className="exercise-expandable">
+        <summary className="exercise-expandable-summary">
+          <strong>
+            {exercise.title}
+            {exercise.isGame ? (
+              <>
+                {" "}
+                <span className="badge game-badge">Spiel</span>
+              </>
+            ) : null}
+          </strong>
+          {difficulty ? (
+            <span className={`badge difficulty-${difficulty.toLowerCase()}`}>
+              {difficulty}
+            </span>
+          ) : null}
+          {meta ? <span className="exercise-inline-meta">{meta}</span> : null}
+          <span className="exercise-expand-icon" aria-hidden="true">
+            +
+          </span>
+        </summary>
+        <div className="exercise-expandable-body">
+          {/* Tags */}
+          {linked.tags.length > 0 ? (
+            <div className="meta">
+              {linked.tags.slice(0, 4).map((tag) => (
+                <span key={tag} className="badge">
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          ) : null}
+
+          {/* Sections (Ausfuehrung, Tipps etc.) */}
+          {linked.sections.length > 0 ? (
+            <div className="exercise-sections">
+              {linked.sections.map((section) => (
+                <div key={section.title}>
+                  <div className="exercise-section-title">{section.title}</div>
+                  <p className="exercise-section-content">{section.content}</p>
+                </div>
+              ))}
+            </div>
+          ) : null}
+
+          {/* Alternativen */}
+          {hasAlternatives ? (
+            <div className="exercise-alternatives">
+              {kneeAlt ? (
+                <div
+                  className={`exercise-alt exercise-alt-knee${kneeHighlighted ? " exercise-alt-highlighted" : ""}`}
+                >
+                  <strong>
+                    {linked.kneeAlternative?.title || "Knie-Alternative"}:
+                  </strong>{" "}
+                  {kneeAlt}
+                </div>
+              ) : null}
+              {shoulderAlt ? (
+                <div
+                  className={`exercise-alt exercise-alt-shoulder${shoulderHighlighted ? " exercise-alt-highlighted" : ""}`}
+                >
+                  <strong>
+                    {linked.shoulderAlternative?.title ||
+                      "Schulter-Alternative"}
+                    :
+                  </strong>{" "}
+                  {shoulderAlt}
+                </div>
+              ) : null}
+            </div>
+          ) : null}
+
+          {/* Kontraindikationen */}
+          {linked.contraindications && linked.contraindications.length > 0 ? (
+            <div className="exercise-contraindications">
+              <strong>Hinweise:</strong>
+              <ul>
+                {linked.contraindications.map((c) => (
+                  <li key={c}>{c}</li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+
+          {/* Link zur vollen Uebungsseite */}
+          <a
+            className="btn btn-secondary"
+            href={`/uebungen?slug=${encodeURIComponent(linked.slug)}`}
+          >
+            Volle Details anzeigen
+          </a>
+        </div>
+      </details>
+    </li>
+  );
+}
+
 export default function SessionsExplorer(): ReactElement {
   const [state, setState] = useState<ViewState>({ type: "loading" });
   const [query, setQuery] = useState("");
+  const [activeRestrictions, setActiveRestrictions] = useState<
+    Set<Restriction>
+  >(new Set());
   const [pathState] = useState(() =>
     typeof window === "undefined"
       ? { kind: "list" as const }
       : parsePath(window.location.pathname),
   );
+
+  function toggleRestriction(restriction: Restriction): void {
+    setActiveRestrictions((prev) => {
+      const next = new Set(prev);
+      if (next.has(restriction)) {
+        next.delete(restriction);
+      } else {
+        next.add(restriction);
+      }
+      return next;
+    });
+  }
 
   useEffect(() => {
     let cancelled = false;
@@ -57,6 +248,7 @@ export default function SessionsExplorer(): ReactElement {
         setState({
           type: "ready",
           sessions: dataset.sessions,
+          exerciseMap: dataset.exerciseMap,
         });
       })
       .catch((error) => {
@@ -159,6 +351,31 @@ export default function SessionsExplorer(): ReactElement {
           </div>
         </header>
 
+        {/* Restriction-Bar: Einschraenkungen der Gruppe markieren */}
+        <div
+          className="restriction-bar"
+          role="toolbar"
+          aria-label="Einschränkungen"
+        >
+          <span className="restriction-bar-label">Einschränkungen:</span>
+          <button
+            className={`btn badge restriction-toggle${activeRestrictions.has("knee") ? " restriction-active" : ""}`}
+            onClick={() => toggleRestriction("knee")}
+            aria-pressed={activeRestrictions.has("knee")}
+            type="button"
+          >
+            Knie
+          </button>
+          <button
+            className={`btn badge restriction-toggle${activeRestrictions.has("shoulder") ? " restriction-active" : ""}`}
+            onClick={() => toggleRestriction("shoulder")}
+            aria-pressed={activeRestrictions.has("shoulder")}
+            type="button"
+          >
+            Schulter
+          </button>
+        </div>
+
         <div className="stack session-phases">
           {session.phases.map((phase, phaseIndex) => (
             <details
@@ -180,29 +397,12 @@ export default function SessionsExplorer(): ReactElement {
                 {phase.exercises.length > 0 ? (
                   <ol className="phase-exercise-list stack">
                     {phase.exercises.map((exercise, index) => (
-                      <li
-                        className="phase-exercise-item"
+                      <ExerciseInlineDetail
                         key={`${exercise.title}-${index}`}
-                      >
-                        <strong>{exercise.title}</strong>
-                        {exercise.details.length > 0 ? (
-                          <ul className="phase-detail-list stack">
-                            {exercise.details.map((detail, detailIndex) => (
-                              <li
-                                className="phase-detail-item"
-                                key={`${detail.label}-${detailIndex}`}
-                              >
-                                <span className="muted phase-detail-label">
-                                  {detail.label}
-                                </span>
-                                <span className="phase-detail-value">
-                                  {detail.value}
-                                </span>
-                              </li>
-                            ))}
-                          </ul>
-                        ) : null}
-                      </li>
+                        exercise={exercise}
+                        exerciseMap={state.exerciseMap}
+                        activeRestrictions={activeRestrictions}
+                      />
                     ))}
                   </ol>
                 ) : (
@@ -214,6 +414,11 @@ export default function SessionsExplorer(): ReactElement {
             </details>
           ))}
         </div>
+
+        {/* Aenderungs-Historie (nur fuer eingeloggte Trainer sichtbar) */}
+        {session.firestoreId ? (
+          <SessionVersionHistory sessionFirestoreId={session.firestoreId} />
+        ) : null}
       </section>
     );
   }

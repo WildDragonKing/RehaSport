@@ -35,6 +35,14 @@ service cloud.firestore {
       allow create: if isTrainer();
       allow update: if isAdmin() || (isTrainer() && resource.data.createdBy == request.auth.uid);
       allow delete: if isAdmin() || (isTrainer() && resource.data.createdBy == request.auth.uid);
+
+      // Aenderungs-Historie: Snapshots frueherer Versionen
+      match /versions/{versionId} {
+        allow read: if isAdmin() || (isTrainer() && get(/databases/$(database)/documents/sessions/$(sessionId)).data.createdBy == request.auth.uid);
+        allow read: if get(/databases/$(database)/documents/sessions/$(sessionId)).data.status == 'published';
+        allow create: if isAdmin() || (isTrainer() && get(/databases/$(database)/documents/sessions/$(sessionId)).data.createdBy == request.auth.uid);
+        allow update, delete: if false;
+      }
     }
 
     // Categories (Kategorien - nur Admin kann verwalten)

@@ -29,6 +29,7 @@ function parsePath(
 export default function ExercisesExplorer(): ReactElement {
   const [state, setState] = useState<ViewState>({ type: "loading" });
   const [query, setQuery] = useState("");
+  const [typeFilter, setTypeFilter] = useState("alle");
   const [areaFilter, setAreaFilter] = useState("alle");
   const [difficultyFilter, setDifficultyFilter] = useState("alle");
   const [pathState] = useState(() =>
@@ -97,6 +98,13 @@ export default function ExercisesExplorer(): ReactElement {
     }
 
     return state.exercises.filter((exercise) => {
+      if (typeFilter === "spiel" && !exercise.tags.includes("spiel")) {
+        return false;
+      }
+      if (typeFilter === "uebung" && exercise.tags.includes("spiel")) {
+        return false;
+      }
+
       if (areaFilter !== "alle" && exercise.area !== areaFilter) {
         return false;
       }
@@ -120,7 +128,7 @@ export default function ExercisesExplorer(): ReactElement {
         exercise.tags.some((tag) => tag.toLowerCase().includes(term))
       );
     });
-  }, [state, areaFilter, difficultyFilter, query]);
+  }, [state, typeFilter, areaFilter, difficultyFilter, query]);
 
   if (state.type === "loading") {
     return (
@@ -249,6 +257,19 @@ export default function ExercisesExplorer(): ReactElement {
         </label>
 
         <label>
+          <span className="muted">Typ</span>
+          <select
+            className="select"
+            value={typeFilter}
+            onChange={(event) => setTypeFilter(event.target.value)}
+          >
+            <option value="alle">Alle</option>
+            <option value="uebung">Übungen</option>
+            <option value="spiel">Spiele</option>
+          </select>
+        </label>
+
+        <label>
           <span className="muted">Bereich</span>
           <select
             className="select"
@@ -286,7 +307,15 @@ export default function ExercisesExplorer(): ReactElement {
           {filteredExercises.map((exercise) => (
             <li key={exercise.slug}>
               <article className="card stack">
-                <h2>{exercise.title}</h2>
+                <h2>
+                  {exercise.title}
+                  {exercise.tags.includes("spiel") ? (
+                    <>
+                      {" "}
+                      <span className="badge game-badge">Spiel</span>
+                    </>
+                  ) : null}
+                </h2>
                 <p>{exercise.summary || "Ohne Kurzbeschreibung."}</p>
                 <div className="meta">
                   {exercise.area ? <span>{exercise.area}</span> : null}

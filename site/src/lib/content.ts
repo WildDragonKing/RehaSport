@@ -66,6 +66,10 @@ function toPhase(input: unknown): SessionPhase {
             title?: unknown;
             slug?: unknown;
             details?: unknown;
+            kneeAlternative?: unknown;
+            shoulderAlternative?: unknown;
+            difficulty?: unknown;
+            isGame?: unknown;
           };
           return {
             title:
@@ -73,6 +77,20 @@ function toPhase(input: unknown): SessionPhase {
                 ? typed.title
                 : "Unbenannte Übung",
             slug: typeof typed.slug === "string" ? typed.slug : undefined,
+            kneeAlternative:
+              typeof typed.kneeAlternative === "string"
+                ? typed.kneeAlternative
+                : undefined,
+            shoulderAlternative:
+              typeof typed.shoulderAlternative === "string"
+                ? typed.shoulderAlternative
+                : undefined,
+            difficulty:
+              typeof typed.difficulty === "string"
+                ? typed.difficulty
+                : undefined,
+            isGame:
+              typeof typed.isGame === "boolean" ? typed.isGame : undefined,
             details: Array.isArray(typed.details)
               ? typed.details
                   .filter((detail) => detail && typeof detail === "object")
@@ -175,6 +193,7 @@ async function fetchDataset(): Promise<ContentDataset> {
     }
 
     return {
+      firestoreId: sessionDoc.id,
       slug: toSessionSlug(sessionDoc.id, data),
       title: typeof data.title === "string" ? data.title : "Unbenannte Stunde",
       description:
@@ -283,10 +302,13 @@ async function fetchDataset(): Promise<ContentDataset> {
     a.title.localeCompare(b.title, "de"),
   );
 
+  const exerciseMap = new Map(exercises.map((e) => [e.slug, e]));
+
   return {
     categories,
     sessions: sessions.sort((a, b) => a.title.localeCompare(b.title, "de")),
     exercises: exercises.sort((a, b) => a.title.localeCompare(b.title, "de")),
+    exerciseMap,
   };
 }
 
