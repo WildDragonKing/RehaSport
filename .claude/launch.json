@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "astro-dev",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "cd site && npx astro dev"],
+      "port": 4321
+    },
+    {
+      "name": "firebase-emulator",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["firebase", "emulators:start"],
+      "port": 4000
+    }
+  ]
+}

@@ -98,7 +98,8 @@
       "Bash(npm update:*)",
       "Bash(git cherry-pick:*)",
       "Bash(gh secret list:*)",
-      "Bash(gh secret set:*)"
+      "Bash(gh secret set:*)",
+      "mcp__Claude_Preview__preview_start"
     ],
     "deny": [],
     "ask": [],
