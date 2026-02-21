@@ -99,8 +99,7 @@ firestore/
 
 ### Git Workflow
 - **Branch Protection:** Direct push zu `main` nicht moeglich - immer PR erstellen
-- **Release:** Feature-Branch -> PR -> Merge zu `main` (CI deployed automatisch Site + erstellt Tag)
-- **Manuell nach Release:** `npx firebase deploy --only functions,firestore:rules` (CI deployed nur Hosting)
+- **Release:** Feature-Branch -> PR -> Merge zu `main` (CI deployed alles + erstellt Tag)
 
 ### Cloud Functions (functions/src/index.ts)
 - **Region:** `europe-west1` fuer alle Functions

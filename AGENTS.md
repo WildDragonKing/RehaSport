@@ -72,10 +72,7 @@ Hinweis: `VITE_*` wird aktuell im Code als Fallback akzeptiert.
 
 - Hosting-Ziel bleibt `site/dist`.
 - Rewrites fuer Detailpfade liegen in `firebase.json`.
-- CI-Workflow: `.github/workflows/release.yml` (deployed nur Hosting + erstellt Tag).
-- Cloud Functions und Firestore Rules muessen manuell deployed werden:
-  - `npx firebase deploy --only functions`
-  - `npx firebase deploy --only firestore:rules`
+- CI-Workflow: `.github/workflows/release.yml` (deployed Hosting + Functions + Rules + erstellt Tag).
 
 ## Dokumentation pflegen
 
