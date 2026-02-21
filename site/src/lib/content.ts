@@ -1,4 +1,11 @@
-import { collection, getDocs, orderBy, query, where, type DocumentData } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  orderBy,
+  query,
+  where,
+  type DocumentData,
+} from "firebase/firestore";
 
 import { getDb } from "./firebase";
 import type {
@@ -62,20 +69,27 @@ function toPhase(input: unknown): SessionPhase {
           };
           return {
             title:
-              typeof typed.title === "string" ? typed.title : "Unbenannte Übung",
+              typeof typed.title === "string"
+                ? typed.title
+                : "Unbenannte Übung",
             slug: typeof typed.slug === "string" ? typed.slug : undefined,
             details: Array.isArray(typed.details)
               ? typed.details
                   .filter((detail) => detail && typeof detail === "object")
                   .map((detail) => {
-                    const typedDetail = detail as { label?: unknown; value?: unknown };
+                    const typedDetail = detail as {
+                      label?: unknown;
+                      value?: unknown;
+                    };
                     return {
                       label:
                         typeof typedDetail.label === "string"
                           ? typedDetail.label
                           : "Hinweis",
                       value:
-                        typeof typedDetail.value === "string" ? typedDetail.value : "",
+                        typeof typedDetail.value === "string"
+                          ? typedDetail.value
+                          : "",
                     };
                   })
               : [],
@@ -85,7 +99,8 @@ function toPhase(input: unknown): SessionPhase {
 
   return {
     title: typeof raw.title === "string" ? raw.title : "Phase",
-    description: typeof raw.description === "string" ? raw.description : undefined,
+    description:
+      typeof raw.description === "string" ? raw.description : undefined,
     exercises,
   };
 }
@@ -162,14 +177,16 @@ async function fetchDataset(): Promise<ContentDataset> {
     return {
       slug: toSessionSlug(sessionDoc.id, data),
       title: typeof data.title === "string" ? data.title : "Unbenannte Stunde",
-      description: typeof data.description === "string" ? data.description : undefined,
+      description:
+        typeof data.description === "string" ? data.description : undefined,
       duration: typeof data.duration === "string" ? data.duration : undefined,
       focus: typeof data.focus === "string" ? data.focus : undefined,
       categorySlug,
       categoryTitle:
         typeof data.categoryTitle === "string"
           ? data.categoryTitle
-          : categoryMap.get(categorySlug)?.title ?? humanizeSlug(categorySlug),
+          : (categoryMap.get(categorySlug)?.title ??
+            humanizeSlug(categorySlug)),
       exerciseCount: exercises.length,
       phases,
       exercises,
@@ -195,7 +212,9 @@ async function fetchDataset(): Promise<ContentDataset> {
         ? data.tags.filter((tag): tag is string => typeof tag === "string")
         : [],
       related: Array.isArray(data.related)
-        ? data.related.filter((item): item is string => typeof item === "string")
+        ? data.related.filter(
+            (item): item is string => typeof item === "string",
+          )
         : [],
       sections: Array.isArray(data.sections)
         ? data.sections
@@ -203,7 +222,8 @@ async function fetchDataset(): Promise<ContentDataset> {
             .map((section) => {
               const typed = section as { title?: unknown; content?: unknown };
               return {
-                title: typeof typed.title === "string" ? typed.title : "Abschnitt",
+                title:
+                  typeof typed.title === "string" ? typed.title : "Abschnitt",
                 content: typeof typed.content === "string" ? typed.content : "",
               };
             })
@@ -235,15 +255,25 @@ async function fetchDataset(): Promise<ContentDataset> {
             }
           : undefined,
       contraindications: Array.isArray(data.contraindications)
-        ? data.contraindications.filter((item): item is string => typeof item === "string")
+        ? data.contraindications.filter(
+            (item): item is string => typeof item === "string",
+          )
         : [],
       media:
         data.media && typeof data.media === "object"
           ? {
-              videoUrl: typeof data.media.videoUrl === "string" ? data.media.videoUrl : undefined,
-              audioUrl: typeof data.media.audioUrl === "string" ? data.media.audioUrl : undefined,
+              videoUrl:
+                typeof data.media.videoUrl === "string"
+                  ? data.media.videoUrl
+                  : undefined,
+              audioUrl:
+                typeof data.media.audioUrl === "string"
+                  ? data.media.audioUrl
+                  : undefined,
               thumbnailUrl:
-                typeof data.media.thumbnailUrl === "string" ? data.media.thumbnailUrl : undefined,
+                typeof data.media.thumbnailUrl === "string"
+                  ? data.media.thumbnailUrl
+                  : undefined,
             }
           : undefined,
     };
@@ -260,7 +290,9 @@ async function fetchDataset(): Promise<ContentDataset> {
   };
 }
 
-export async function getDataset(forceRefresh = false): Promise<ContentDataset> {
+export async function getDataset(
+  forceRefresh = false,
+): Promise<ContentDataset> {
   const isValid = Date.now() - cachedAt < CACHE_TTL;
 
   if (!forceRefresh && cachedDataset && isValid) {
@@ -289,10 +321,14 @@ export async function getSessions() {
   return sessions;
 }
 
-export async function getSessionBySlugs(categorySlug: string, sessionSlug: string) {
+export async function getSessionBySlugs(
+  categorySlug: string,
+  sessionSlug: string,
+) {
   const { sessions } = await getDataset();
   return sessions.find(
-    (session) => session.categorySlug === categorySlug && session.slug === sessionSlug,
+    (session) =>
+      session.categorySlug === categorySlug && session.slug === sessionSlug,
   );
 }
 

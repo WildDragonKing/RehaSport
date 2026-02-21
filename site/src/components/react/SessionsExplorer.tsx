@@ -11,7 +11,9 @@ type ViewState =
       sessions: SessionDetail[];
     };
 
-function parsePath(pathname: string):
+function parsePath(
+  pathname: string,
+):
   | { kind: "list" }
   | { kind: "detail"; categorySlug: string; sessionSlug: string } {
   if (typeof window !== "undefined") {
@@ -38,7 +40,9 @@ export default function SessionsExplorer(): ReactElement {
   const [state, setState] = useState<ViewState>({ type: "loading" });
   const [query, setQuery] = useState("");
   const [pathState] = useState(() =>
-    typeof window === "undefined" ? { kind: "list" as const } : parsePath(window.location.pathname),
+    typeof window === "undefined"
+      ? { kind: "list" as const }
+      : parsePath(window.location.pathname),
   );
 
   useEffect(() => {
@@ -63,7 +67,9 @@ export default function SessionsExplorer(): ReactElement {
         setState({
           type: "error",
           message:
-            error instanceof Error ? error.message : "Stunden konnten nicht geladen werden.",
+            error instanceof Error
+              ? error.message
+              : "Stunden konnten nicht geladen werden.",
         });
       });
 
@@ -92,7 +98,11 @@ export default function SessionsExplorer(): ReactElement {
   }, [state, query]);
 
   if (state.type === "loading") {
-    return <div className="container section"><div className="empty">Lade Stunden …</div></div>;
+    return (
+      <div className="container section">
+        <div className="empty">Lade Stunden …</div>
+      </div>
+    );
   }
 
   if (state.type === "error") {
@@ -106,14 +116,17 @@ export default function SessionsExplorer(): ReactElement {
   if (pathState.kind === "detail") {
     const session = state.sessions.find(
       (item) =>
-        item.categorySlug === pathState.categorySlug && item.slug === pathState.sessionSlug,
+        item.categorySlug === pathState.categorySlug &&
+        item.slug === pathState.sessionSlug,
     );
 
     if (!session) {
       return (
         <div className="container section stack">
           <div className="breadcrumb breadcrumb-session">
-            <a className="breadcrumb-back" href="/stunden">Zurück zu Stunden</a>
+            <a className="breadcrumb-back" href="/stunden">
+              Zurück zu Stunden
+            </a>
             <span className="breadcrumb-separator">/</span>
             <span className="breadcrumb-current">Unbekannt</span>
           </div>
@@ -125,16 +138,20 @@ export default function SessionsExplorer(): ReactElement {
     return (
       <section className="container section stack">
         <div className="breadcrumb breadcrumb-session">
-          <a className="breadcrumb-back" href="/stunden">Zurück zu Stunden</a>
+          <a className="breadcrumb-back" href="/stunden">
+            Zurück zu Stunden
+          </a>
           <span className="breadcrumb-separator breadcrumb-optional">/</span>
-          <span className="breadcrumb-segment breadcrumb-optional">{session.categoryTitle}</span>
+          <span className="breadcrumb-optional">{session.categoryTitle}</span>
           <span className="breadcrumb-separator">/</span>
           <span className="breadcrumb-current">{session.title}</span>
         </div>
 
         <header className="stack">
           <h1 className="section-title">{session.title}</h1>
-          <p className="muted">{session.description || "Keine Beschreibung verfügbar."}</p>
+          <p className="muted">
+            {session.description || "Keine Beschreibung verfügbar."}
+          </p>
           <div className="meta session-detail-meta">
             <span>{session.duration || "45 Min"}</span>
             <span>{session.exerciseCount} Übungen</span>
@@ -144,24 +161,43 @@ export default function SessionsExplorer(): ReactElement {
 
         <div className="stack session-phases">
           {session.phases.map((phase, phaseIndex) => (
-            <details className="card phase" key={`${phase.title}-${phaseIndex}`} open={phaseIndex === 0}>
-              <summary className="phase-summary">
+            <details
+              className="card phase"
+              key={`${phase.title}-${phaseIndex}`}
+              open={phaseIndex === 0}
+            >
+              <summary
+                className="phase-summary"
+                aria-label={`${phase.title} – ${phase.exercises.length} Übungen`}
+              >
                 <span className="phase-summary-title">{phase.title}</span>
-                <span className="badge phase-summary-count">{phase.exercises.length} Übungen</span>
+                <span className="badge phase-summary-count">
+                  {phase.exercises.length} Übungen
+                </span>
               </summary>
               <div className="phase-body stack">
                 {phase.description ? <p>{phase.description}</p> : null}
                 {phase.exercises.length > 0 ? (
                   <ol className="phase-exercise-list stack">
                     {phase.exercises.map((exercise, index) => (
-                      <li className="phase-exercise-item" key={`${exercise.title}-${index}`}>
+                      <li
+                        className="phase-exercise-item"
+                        key={`${exercise.title}-${index}`}
+                      >
                         <strong>{exercise.title}</strong>
                         {exercise.details.length > 0 ? (
                           <ul className="phase-detail-list stack">
                             {exercise.details.map((detail, detailIndex) => (
-                              <li className="phase-detail-item" key={`${detail.label}-${detailIndex}`}>
-                                <span className="muted phase-detail-label">{detail.label}</span>
-                                <span className="phase-detail-value">{detail.value}</span>
+                              <li
+                                className="phase-detail-item"
+                                key={`${detail.label}-${detailIndex}`}
+                              >
+                                <span className="muted phase-detail-label">
+                                  {detail.label}
+                                </span>
+                                <span className="phase-detail-value">
+                                  {detail.value}
+                                </span>
                               </li>
                             ))}
                           </ul>
@@ -170,7 +206,9 @@ export default function SessionsExplorer(): ReactElement {
                     ))}
                   </ol>
                 ) : (
-                  <p className="muted">Für diese Phase sind keine Übungen hinterlegt.</p>
+                  <p className="muted">
+                    Für diese Phase sind keine Übungen hinterlegt.
+                  </p>
                 )}
               </div>
             </details>
@@ -203,11 +241,16 @@ export default function SessionsExplorer(): ReactElement {
 
         <label>
           <span className="muted">Treffer</span>
-          <input className="input" value={String(filteredSessions.length)} readOnly />
+          <input
+            className="input"
+            value={String(filteredSessions.length)}
+            readOnly
+          />
         </label>
 
         <div className="notice">
-          Kategorien wurden entfernt. Nutze die Suche, um direkt zur passenden Stunde zu springen.
+          Kategorien wurden entfernt. Nutze die Suche, um direkt zur passenden
+          Stunde zu springen.
         </div>
       </div>
 
@@ -217,7 +260,9 @@ export default function SessionsExplorer(): ReactElement {
             <li key={`${session.categorySlug}-${session.slug}`}>
               <article className="card stack session-card">
                 <h2 className="session-card-title">{session.title}</h2>
-                <p className="session-card-description">{session.description || "Ohne Kurzbeschreibung."}</p>
+                <p className="session-card-description">
+                  {session.description || "Ohne Kurzbeschreibung."}
+                </p>
                 <div className="meta session-meta">
                   <span>{session.categoryTitle}</span>
                   <span>{session.duration || "45 Min"}</span>
@@ -234,7 +279,9 @@ export default function SessionsExplorer(): ReactElement {
           ))}
         </ul>
       ) : (
-        <div className="empty">Keine Stunden gefunden. Passe Suche oder Filter an.</div>
+        <div className="empty">
+          Keine Stunden gefunden. Passe Suche oder Filter an.
+        </div>
       )}
     </section>
   );

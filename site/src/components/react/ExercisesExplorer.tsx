@@ -8,7 +8,9 @@ type ViewState =
   | { type: "error"; message: string }
   | { type: "ready"; exercises: ExerciseDetail[] };
 
-function parsePath(pathname: string): { kind: "list" } | { kind: "detail"; exerciseSlug: string } {
+function parsePath(
+  pathname: string,
+): { kind: "list" } | { kind: "detail"; exerciseSlug: string } {
   if (typeof window !== "undefined") {
     const params = new URLSearchParams(window.location.search);
     const slug = params.get("slug");
@@ -30,7 +32,9 @@ export default function ExercisesExplorer(): ReactElement {
   const [areaFilter, setAreaFilter] = useState("alle");
   const [difficultyFilter, setDifficultyFilter] = useState("alle");
   const [pathState] = useState(() =>
-    typeof window === "undefined" ? { kind: "list" as const } : parsePath(window.location.pathname),
+    typeof window === "undefined"
+      ? { kind: "list" as const }
+      : parsePath(window.location.pathname),
   );
 
   useEffect(() => {
@@ -47,7 +51,9 @@ export default function ExercisesExplorer(): ReactElement {
           setState({
             type: "error",
             message:
-              error instanceof Error ? error.message : "Übungen konnten nicht geladen werden.",
+              error instanceof Error
+                ? error.message
+                : "Übungen konnten nicht geladen werden.",
           });
         }
       });
@@ -95,7 +101,10 @@ export default function ExercisesExplorer(): ReactElement {
         return false;
       }
 
-      if (difficultyFilter !== "alle" && exercise.difficulty !== difficultyFilter) {
+      if (
+        difficultyFilter !== "alle" &&
+        exercise.difficulty !== difficultyFilter
+      ) {
         return false;
       }
 
@@ -114,7 +123,11 @@ export default function ExercisesExplorer(): ReactElement {
   }, [state, areaFilter, difficultyFilter, query]);
 
   if (state.type === "loading") {
-    return <div className="container section"><div className="empty">Lade Übungen …</div></div>;
+    return (
+      <div className="container section">
+        <div className="empty">Lade Übungen …</div>
+      </div>
+    );
   }
 
   if (state.type === "error") {
@@ -126,7 +139,9 @@ export default function ExercisesExplorer(): ReactElement {
   }
 
   if (pathState.kind === "detail") {
-    const exercise = state.exercises.find((entry) => entry.slug === pathState.exerciseSlug);
+    const exercise = state.exercises.find(
+      (entry) => entry.slug === pathState.exerciseSlug,
+    );
 
     if (!exercise) {
       return (
@@ -151,7 +166,9 @@ export default function ExercisesExplorer(): ReactElement {
 
         <header className="stack">
           <h1 className="section-title">{exercise.title}</h1>
-          <p className="muted">{exercise.summary || "Keine Kurzbeschreibung vorhanden."}</p>
+          <p className="muted">
+            {exercise.summary || "Keine Kurzbeschreibung vorhanden."}
+          </p>
           <div className="meta">
             {exercise.area ? <span>{exercise.area}</span> : null}
             {exercise.difficulty ? <span>{exercise.difficulty}</span> : null}
@@ -169,7 +186,9 @@ export default function ExercisesExplorer(): ReactElement {
             ))}
           </div>
         ) : (
-          <div className="empty">Für diese Übung sind keine Detailabschnitte hinterlegt.</div>
+          <div className="empty">
+            Für diese Übung sind keine Detailabschnitte hinterlegt.
+          </div>
         )}
 
         {exercise.kneeAlternative || exercise.shoulderAlternative ? (
@@ -197,7 +216,9 @@ export default function ExercisesExplorer(): ReactElement {
             <h2>Hinweise</h2>
             <ul className="list">
               {exercise.contraindications.map((item) => (
-                <li key={item} className="card">{item}</li>
+                <li key={item} className="card">
+                  {item}
+                </li>
               ))}
             </ul>
           </section>
@@ -269,12 +290,16 @@ export default function ExercisesExplorer(): ReactElement {
                 <p>{exercise.summary || "Ohne Kurzbeschreibung."}</p>
                 <div className="meta">
                   {exercise.area ? <span>{exercise.area}</span> : null}
-                  {exercise.difficulty ? <span>{exercise.difficulty}</span> : null}
+                  {exercise.difficulty ? (
+                    <span>{exercise.difficulty}</span>
+                  ) : null}
                   {exercise.duration ? <span>{exercise.duration}</span> : null}
                 </div>
                 <div className="meta">
                   {exercise.tags.slice(0, 4).map((tag) => (
-                    <span key={`${exercise.slug}-${tag}`} className="badge">#{tag}</span>
+                    <span key={`${exercise.slug}-${tag}`} className="badge">
+                      #{tag}
+                    </span>
                   ))}
                 </div>
                 <a
@@ -288,7 +313,9 @@ export default function ExercisesExplorer(): ReactElement {
           ))}
         </ul>
       ) : (
-        <div className="empty">Keine Übungen gefunden. Passe Suchbegriff oder Filter an.</div>
+        <div className="empty">
+          Keine Übungen gefunden. Passe Suchbegriff oder Filter an.
+        </div>
       )}
     </section>
   );

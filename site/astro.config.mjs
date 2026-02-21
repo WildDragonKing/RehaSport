@@ -5,6 +5,6 @@ export default defineConfig({
   integrations: [react()],
   output: "static",
   build: {
-    format: "directory"
-  }
+    format: "directory",
+  },
 });

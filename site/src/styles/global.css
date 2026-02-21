@@ -98,7 +98,9 @@ main {
   border-radius: var(--radius-soft);
   font-weight: 500;
   color: var(--text-muted);
-  transition: color 120ms ease, border-color 120ms ease;
+  transition:
+    color 120ms ease,
+    border-color 120ms ease;
 }
 
 .site-nav a[data-active="true"],
@@ -171,7 +173,10 @@ main {
   border: 1px solid var(--border);
   text-decoration: none;
   font-weight: 600;
-  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease,
+    color 120ms ease;
 }
 
 .btn-primary {
@@ -427,10 +432,6 @@ main {
   gap: var(--space-2);
 }
 
-.phase-detail-item {
-  display: block;
-}
-
 .phase-detail-label::after {
   content: ": ";
 }
@@ -567,8 +568,7 @@ main {
   }
 
   .phase-detail-item {
-    display: grid;
-    gap: 0;
+    display: block;
   }
 
   .phase-detail-label,
@@ -582,7 +582,7 @@ main {
   }
 }
 
-@media (min-width: 721px) {
+@media (min-width: 720px) {
   .grid-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
