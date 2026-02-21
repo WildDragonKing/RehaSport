@@ -7,6 +7,10 @@ export interface SessionExercise {
   title: string;
   slug?: string;
   details: SessionExerciseDetail[];
+  kneeAlternative?: string;
+  shoulderAlternative?: string;
+  difficulty?: string;
+  isGame?: boolean;
 }
 
 export interface SessionPhase {
@@ -35,8 +39,23 @@ export interface SessionSummary {
 }
 
 export interface SessionDetail extends SessionSummary {
+  firestoreId?: string;
   phases: SessionPhase[];
   exercises: SessionExercise[];
+}
+
+export interface SessionVersion {
+  id: string;
+  versionNumber: number;
+  changedBy: string;
+  changedByName?: string;
+  changedAt: Date;
+  changeNote: string;
+  snapshot: {
+    title: string;
+    description?: string;
+    phases: SessionPhase[];
+  };
 }
 
 export interface ExerciseSummary {
@@ -77,4 +96,5 @@ export interface ContentDataset {
   categories: CategorySummary[];
   sessions: SessionDetail[];
   exercises: ExerciseDetail[];
+  exerciseMap: Map<string, ExerciseDetail>;
 }

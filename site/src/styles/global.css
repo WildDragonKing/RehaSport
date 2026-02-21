@@ -487,6 +487,232 @@ main {
   color: var(--text);
 }
 
+/* ── Aufklappbare Uebungsdetails ─────────────────── */
+
+.exercise-expandable {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-soft);
+  overflow: hidden;
+}
+
+.exercise-expandable-summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  cursor: pointer;
+  list-style: none;
+}
+
+.exercise-expandable-summary::-webkit-details-marker {
+  display: none;
+}
+
+.exercise-expandable-summary::marker {
+  content: "";
+}
+
+.exercise-expandable[open] .exercise-expandable-summary {
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.exercise-expand-icon {
+  margin-left: auto;
+  font-weight: 600;
+  color: var(--text-muted);
+  transition: transform 120ms ease;
+  flex: 0 0 auto;
+}
+
+.exercise-expandable[open] .exercise-expand-icon {
+  transform: rotate(45deg);
+}
+
+.exercise-expandable-body {
+  padding: var(--space-3) var(--space-4);
+  display: grid;
+  gap: var(--space-3);
+}
+
+.exercise-inline-meta {
+  font-size: 0.86rem;
+  color: var(--text-muted);
+}
+
+.exercise-sections {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.exercise-section-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.exercise-section-content {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ── Alternativen-Banner ────────────────────────── */
+
+.exercise-alternatives {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.exercise-alt {
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--border);
+  padding: var(--space-3);
+  background: var(--surface);
+  font-size: 0.9rem;
+}
+
+.exercise-alt-knee {
+  border-left-color: #e6a817;
+}
+
+.exercise-alt-shoulder {
+  border-left-color: #2196f3;
+}
+
+.exercise-alt-highlighted {
+  border-left-width: 4px;
+  background: color-mix(in srgb, var(--accent) 8%, white);
+  border-left-color: var(--accent);
+}
+
+.exercise-contraindications {
+  font-size: 0.9rem;
+  border: 1px solid #f2b5ba;
+  border-left: 4px solid #d13f4f;
+  background: #fff3f4;
+  padding: var(--space-3);
+}
+
+.exercise-contraindications ul {
+  margin: var(--space-2) 0 0;
+  padding-left: 1.25rem;
+}
+
+/* ── Restriction-Bar (Knie/Schulter Toggles) ────── */
+
+.restriction-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.restriction-bar-label {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.restriction-toggle {
+  cursor: pointer;
+  background: #fff;
+  transition:
+    background 120ms ease,
+    border-color 120ms ease,
+    color 120ms ease;
+}
+
+.restriction-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #041208;
+}
+
+/* ── Spiel-Badge ────────────────────────────────── */
+
+.game-badge {
+  background: #fff3e0;
+  border-color: #e6a817;
+  color: #7a5700;
+}
+
+/* ── Difficulty-Badge ───────────────────────────── */
+
+.difficulty-leicht {
+  background: #e8f5e9;
+  border-color: #66bb6a;
+  color: #2e7d32;
+}
+
+.difficulty-mittel {
+  background: #fff8e1;
+  border-color: #ffa726;
+  color: #e65100;
+}
+
+.difficulty-schwer {
+  background: #fce4ec;
+  border-color: #ef5350;
+  color: #c62828;
+}
+
+/* ── Version History ────── */
+
+.version-history {
+  border-left: 3px solid var(--accent);
+}
+
+.version-history-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: "Space Grotesk", sans-serif;
+  padding: var(--space-3) var(--space-4);
+}
+
+.version-history[open] .exercise-expand-icon {
+  transform: rotate(45deg);
+}
+
+.version-history-body {
+  padding: var(--space-3) var(--space-4);
+}
+
+.version-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.version-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.version-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+
+.version-item-note {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.version-item-author {
+  font-size: 0.8rem;
+}
+
+.version-item-meta {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
 @media (max-width: 720px) {
   .site-header-inner {
     min-height: auto;
@@ -579,6 +805,24 @@ main {
   .site-footer-row {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .exercise-expandable-summary {
+    flex-wrap: wrap;
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .exercise-inline-meta {
+    flex-basis: 100%;
+    font-size: 0.84rem;
+  }
+
+  .exercise-expandable-body {
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .restriction-bar {
+    gap: var(--space-1) var(--space-2);
   }
 }
 

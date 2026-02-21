@@ -218,10 +218,10 @@ export const generateSession = onCall(
     // Build the prompt
     const exerciseList =
       exercises && exercises.length > 0
-        ? `\n\nVerfügbare Übungen aus der Bibliothek:\n${exercises
+        ? `\n\nVerfügbare Übungen aus der Bibliothek (nutze bevorzugt diese und setze den exakten slug):\n${exercises
             .map(
-              (e: { title: string; area?: string; difficulty?: string }) =>
-                `- ${e.title} (${e.area || "Ganzkörper"}, ${e.difficulty || "Mittel"})`
+              (e: { title: string; slug?: string; area?: string; difficulty?: string; tags?: string[] }) =>
+                `- ${e.title} [slug: ${e.slug || ""}] (${e.area || "Ganzkörper"}, ${e.difficulty || "Mittel"}${e.tags?.includes("spiel") ? ", Spiel" : ""})`
             )
             .join("\n")}`
         : "";
@@ -235,17 +235,26 @@ ${exerciseList}
 Die Stunde muss folgende Phasen haben:
 ${sessionRules.phases.map((p) => `- ${p.name}: ${p.duration} Minuten (${p.minExercises}-${p.maxExercises} Übungen)`).join("\n")}
 
+Methodische Prinzipien:
+- Vom Leichten zum Schweren, vom Einfachen zum Komplexen
+- Differenzierung: Jede Uebung braucht Alternativen fuer Einschraenkungen
+- Aufwaermen und Ausklang duerfen optional ein Spiel enthalten (isGame: true)
+- Nutze bevorzugt Uebungen aus der Bibliothek und setze deren "slug" Feld
+
 Für jede Übung gib an:
-- Titel (kurz, prägnant)
+- Titel (kurz, praegnant)
+- slug (exakter slug aus der Bibliothek, falls passend, sonst weglassen)
 - Dauer/Wiederholungen
-- Kurze Beschreibung der Ausführung
+- Kurze Beschreibung der Ausfuehrung
+- Schwierigkeit (Leicht, Mittel, Schwer)
 - Alternative bei Knieproblemen (falls relevant)
 - Alternative bei Schulterproblemen (falls relevant)
+- isGame: true falls es ein Spiel ist
 
 Antworte NUR mit validem JSON im folgenden Format:
 {
   "title": "Titel der Stunde",
-  "description": "Kurze Beschreibung (1-2 Sätze)",
+  "description": "Kurze Beschreibung (1-2 Saetze)",
   "focus": "Hauptfokus der Stunde",
   "phases": [
     {
@@ -253,11 +262,14 @@ Antworte NUR mit validem JSON im folgenden Format:
       "duration": "X Minuten",
       "exercises": [
         {
-          "title": "Übungsname",
-          "duration": "X Minuten" oder "Xmal wiederholen",
-          "description": "Ausführungsbeschreibung",
+          "title": "Uebungsname",
+          "slug": "slug-aus-bibliothek-oder-null",
+          "duration": "X Minuten",
+          "description": "Ausfuehrungsbeschreibung",
+          "difficulty": "Leicht|Mittel|Schwer",
           "kneeAlternative": "Alternative bei Knieproblemen (optional)",
-          "shoulderAlternative": "Alternative bei Schulterproblemen (optional)"
+          "shoulderAlternative": "Alternative bei Schulterproblemen (optional)",
+          "isGame": false
         }
       ]
     }
@@ -1008,6 +1020,254 @@ export const getUserJobs = onCall(
     return {
       success: true,
       jobs,
+    };
+  }
+);
+
+// ===================================
+// SESSION IMPROVEMENT - KI-gestuetzte Verbesserung bestehender Stunden
+// ===================================
+
+export const improveSession = onCall(
+  {
+    region: "europe-west1",
+    maxInstances: 3,
+    secrets: ["GEMINI_API_KEY"],
+    enforceAppCheck: true,
+  },
+  async (request) => {
+    validateAppCheck(request);
+
+    if (!request.auth) {
+      throw new HttpsError("unauthenticated", "Anmeldung erforderlich");
+    }
+
+    const userId = request.auth.uid;
+    await requireTrainerRole(userId);
+
+    const allowed = await checkRateLimit(userId);
+    if (!allowed) {
+      throw new HttpsError(
+        "resource-exhausted",
+        "Rate-Limit erreicht. Bitte warte eine Stunde."
+      );
+    }
+
+    const { sessionId } = request.data;
+    if (!sessionId || typeof sessionId !== "string") {
+      throw new HttpsError("invalid-argument", "Session-ID erforderlich");
+    }
+
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      throw new HttpsError("internal", "API-Konfiguration fehlt");
+    }
+
+    // Session und Uebungsbibliothek laden
+    const [sessionDoc, exercisesSnap] = await Promise.all([
+      db.collection("sessions").doc(sessionId).get(),
+      db.collection("exercises").get(),
+    ]);
+
+    if (!sessionDoc.exists) {
+      throw new HttpsError("not-found", "Session nicht gefunden");
+    }
+
+    const sessionData = sessionDoc.data()!;
+
+    // Uebungsbibliothek als Kontext aufbereiten
+    const exerciseLibrary = exercisesSnap.docs.map((doc) => {
+      const data = doc.data();
+      return {
+        slug: data.slug || doc.id,
+        title: data.title || "",
+        area: data.area || "",
+        difficulty: data.difficulty || "",
+        tags: data.tags || [],
+        hasKneeAlt: Boolean(data.kneeAlternative),
+        hasShoulderAlt: Boolean(data.shoulderAlternative),
+      };
+    });
+
+    const libraryList = exerciseLibrary
+      .map(
+        (e) =>
+          `- ${e.title} [slug: ${e.slug}] (${e.area || "Ganzkörper"}, ${e.difficulty || "Mittel"}${e.tags.includes("spiel") ? ", Spiel" : ""}${e.hasKneeAlt ? ", Knie-Alt" : ""}${e.hasShoulderAlt ? ", Schulter-Alt" : ""})`
+      )
+      .join("\n");
+
+    const currentPhases = JSON.stringify(sessionData.phases || [], null, 2);
+
+    const prompt = `Du bist ein erfahrener Rehasport-Trainer. Verbessere die folgende bestehende Trainingsstunde.
+
+AKTUELLE STUNDE:
+Titel: ${sessionData.title}
+Beschreibung: ${sessionData.description || ""}
+Fokus: ${sessionData.focus || ""}
+Phasen: ${currentPhases}
+
+UEBUNGSBIBLIOTHEK (nutze bevorzugt diese und setze den "slug"):
+${libraryList}
+
+VERBESSERUNGSAUFTRAEGE:
+1. Verknuepfe Uebungen mit der Bibliothek (setze den passenden "slug" wenn Titel uebereinstimmt)
+2. Ergaenze fehlende Knie-/Schulter-Alternativen fuer jede Uebung
+3. Setze fuer jede Uebung eine Schwierigkeit (Leicht/Mittel/Schwer)
+4. Fuege optional ein Aufwaerm-Spiel oder Ausklang-Spiel ein (isGame: true)
+5. Beachte methodische Prinzipien: vom Leichten zum Schweren
+6. Stelle sicher dass heterogene Gruppen differenziert werden koennen
+
+Antworte NUR mit validem JSON:
+{
+  "title": "Verbesserter Titel",
+  "description": "Verbesserte Beschreibung",
+  "focus": "Fokus",
+  "phases": [
+    {
+      "title": "Phasenname",
+      "description": "Phasenbeschreibung",
+      "exercises": [
+        {
+          "title": "Uebungsname",
+          "slug": "slug-aus-bibliothek-oder-null",
+          "details": [{"label": "Wiederholungen", "value": "8x"}, {"label": "Tempo", "value": "Langsam"}],
+          "difficulty": "Leicht|Mittel|Schwer",
+          "kneeAlternative": "Alternative bei Knieproblemen",
+          "shoulderAlternative": "Alternative bei Schulterproblemen",
+          "isGame": false
+        }
+      ]
+    }
+  ],
+  "improvementNotes": "Was wurde verbessert (kurz)"
+}`;
+
+    try {
+      const genAI = new GoogleGenerativeAI(apiKey);
+      const { text, model: usedModel } = await generateWithFallback(
+        genAI,
+        prompt,
+        { temperature: 0.5, maxOutputTokens: 8192 }
+      );
+
+      console.log(`Improved session using ${usedModel}`);
+
+      const jsonMatch = text.match(/\{[\s\S]*\}/);
+      if (!jsonMatch) {
+        throw new Error("Keine gueltige JSON-Antwort erhalten");
+      }
+
+      const improved = JSON.parse(jsonMatch[0]);
+
+      return {
+        success: true,
+        improved,
+        model: usedModel,
+      };
+    } catch (error) {
+      console.error("Improve session error:", error);
+      throw new HttpsError(
+        "internal",
+        "Session-Verbesserung fehlgeschlagen. Bitte versuche es erneut."
+      );
+    }
+  }
+);
+
+// Slug-Migration: Verknuepft bestehende Session-Uebungen mit der Bibliothek
+export const migrateSessionSlugs = onCall(
+  {
+    region: "europe-west1",
+    maxInstances: 1,
+    enforceAppCheck: true,
+  },
+  async (request) => {
+    validateAppCheck(request);
+
+    if (!request.auth) {
+      throw new HttpsError("unauthenticated", "Anmeldung erforderlich");
+    }
+
+    // Nur Admin
+    const userDoc = await db.collection("users").doc(request.auth.uid).get();
+    if (userDoc.data()?.role !== "admin") {
+      throw new HttpsError("permission-denied", "Nur Admin");
+    }
+
+    const dryRun = request.data?.dryRun !== false; // Standard: Dry-Run
+
+    // Bibliothek laden
+    const exercisesSnap = await db.collection("exercises").get();
+    const exercises = exercisesSnap.docs.map((doc) => ({
+      slug: doc.data().slug || doc.id,
+      title: (doc.data().title || "").toLowerCase().trim(),
+    }));
+
+    // Sessions laden
+    const sessionsSnap = await db.collection("sessions").get();
+    let matched = 0;
+    let unmatched = 0;
+    const unmatchedTitles: string[] = [];
+    const matchDetails: { session: string; exercise: string; slug: string }[] =
+      [];
+
+    const batch = db.batch();
+
+    for (const sessionDoc of sessionsSnap.docs) {
+      const data = sessionDoc.data();
+      if (!Array.isArray(data.phases)) continue;
+
+      let modified = false;
+      const updatedPhases = data.phases.map(
+        (phase: { exercises?: { title?: string; slug?: string }[] }) => ({
+          ...phase,
+          exercises: (phase.exercises || []).map(
+            (ex: { title?: string; slug?: string }) => {
+              if (ex.slug) return ex; // Schon verknuepft
+
+              const titleLower = (ex.title || "").toLowerCase().trim();
+              const match = exercises.find(
+                (e) =>
+                  e.title === titleLower ||
+                  e.title.includes(titleLower) ||
+                  titleLower.includes(e.title)
+              );
+
+              if (match) {
+                matched++;
+                modified = true;
+                matchDetails.push({
+                  session: data.title || sessionDoc.id,
+                  exercise: ex.title || "",
+                  slug: match.slug,
+                });
+                return { ...ex, slug: match.slug };
+              } else {
+                unmatched++;
+                unmatchedTitles.push(ex.title || "Unbekannt");
+                return ex;
+              }
+            }
+          ),
+        })
+      );
+
+      if (modified && !dryRun) {
+        batch.update(sessionDoc.ref, { phases: updatedPhases });
+      }
+    }
+
+    if (!dryRun) {
+      await batch.commit();
+    }
+
+    return {
+      success: true,
+      dryRun,
+      matched,
+      unmatched,
+      unmatchedTitles: [...new Set(unmatchedTitles)],
+      matchDetails: matchDetails.slice(0, 50),
     };
   }
 );

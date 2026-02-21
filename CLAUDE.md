@@ -100,6 +100,7 @@ firestore/
 ### Git Workflow
 - **Branch Protection:** Direct push zu `main` nicht moeglich - immer PR erstellen
 - **Release:** Feature-Branch -> PR -> Merge zu `main` (CI deployed alles + erstellt Tag)
+- **Binaries:** `backups/sora/` enthaelt Video-/Bildmaterial - nicht committen, `.gitignore` beachten
 
 ### Cloud Functions (functions/src/index.ts)
 - **Region:** `europe-west1` fuer alle Functions
@@ -123,6 +124,7 @@ firestore/
 - [x] Claude Code Automationen (Hooks, Skills, Agents)
 - [ ] Teilnehmer-Modus (Timer, Swipe-Navigation)
 - [ ] Domain rehasport.buettgen.app (manuell in Firebase Console)
+- [ ] Sora Video-Workflow (Uebungsvideos generieren, `feature/astro-migration` enthaelt Vorarbeit)
 
 ## Claude Code Automationen (.claude/)
 
