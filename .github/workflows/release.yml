@@ -70,11 +70,19 @@ jobs:
         run: npm run build
         working-directory: functions
 
-      - name: Deploy to Firebase (Hosting + Functions + Rules)
+      - name: Deploy to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          channelId: live
+          projectId: rehasport-trainer
+
+      - name: Deploy Functions and Firestore Rules
         run: |
           echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > /tmp/sa.json
           export GOOGLE_APPLICATION_CREDENTIALS=/tmp/sa.json
-          firebase deploy --project rehasport-trainer
+          firebase deploy --only functions,firestore:rules --project rehasport-trainer
           rm /tmp/sa.json
 
       - name: Get next version
