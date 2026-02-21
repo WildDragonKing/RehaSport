@@ -69,15 +69,15 @@ export async function restoreVersion(
 
     const currentData = sessionSnap.data();
 
-    // Naechste Versionsnummer bestimmen
-    const versionsRef = collection(db, "sessions", sessionId, "versions");
-    const versionsSnap = await getDocs(
-      query(versionsRef, orderBy("versionNumber", "desc")),
-    );
-    const lastVersion = versionsSnap.docs[0]?.data()?.versionNumber ?? 0;
+    // Versionsnummer transaktional aus Session-Counter bestimmen
+    const lastVersion =
+      typeof currentData.versionCount === "number"
+        ? currentData.versionCount
+        : 0;
     const nextVersion = lastVersion + 1;
 
     // Aktuellen Stand als Version sichern
+    const versionsRef = collection(db, "sessions", sessionId, "versions");
     const backupRef = doc(versionsRef);
     transaction.set(backupRef, {
       versionNumber: nextVersion,
@@ -92,12 +92,13 @@ export async function restoreVersion(
       },
     });
 
-    // Session mit dem alten Snapshot ueberschreiben
+    // Session mit dem alten Snapshot ueberschreiben + Counter aktualisieren
     const updatedPhases: SessionPhase[] = version.snapshot.phases;
     transaction.update(sessionRef, {
       title: version.snapshot.title,
       description: version.snapshot.description ?? "",
       phases: updatedPhases,
+      versionCount: nextVersion,
       updatedAt: new Date(),
       updatedBy: userId,
     });
@@ -121,15 +122,16 @@ export async function saveCurrentAsVersion(
     }
 
     const data = sessionSnap.data();
-    const versionsRef = collection(db, "sessions", sessionId, "versions");
-    const versionsSnap = await getDocs(
-      query(versionsRef, orderBy("versionNumber", "desc")),
-    );
-    const lastVersion = versionsSnap.docs[0]?.data()?.versionNumber ?? 0;
 
+    // Versionsnummer transaktional aus Session-Counter bestimmen
+    const lastVersion =
+      typeof data.versionCount === "number" ? data.versionCount : 0;
+    const nextVersion = lastVersion + 1;
+
+    const versionsRef = collection(db, "sessions", sessionId, "versions");
     const versionRef = doc(versionsRef);
     transaction.set(versionRef, {
-      versionNumber: lastVersion + 1,
+      versionNumber: nextVersion,
       changedBy: userId,
       changedByName: userName,
       changedAt: new Date(),
@@ -140,5 +142,8 @@ export async function saveCurrentAsVersion(
         phases: data.phases ?? [],
       },
     });
+
+    // Counter auf Session-Dokument aktualisieren
+    transaction.update(sessionRef, { versionCount: nextVersion });
   });
 }

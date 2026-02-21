@@ -1075,6 +1075,13 @@ export const improveSession = onCall(
 
     const sessionData = sessionDoc.data()!;
 
+    // Ownership-Check: Trainer duerfen nur eigene Sessions verbessern
+    const userDoc = await db.collection("users").doc(userId).get();
+    const isAdmin = userDoc.data()?.role === "admin";
+    if (!isAdmin && sessionData.createdBy !== userId) {
+      throw new HttpsError("permission-denied", "Keine Berechtigung fuer diese Session");
+    }
+
     // Uebungsbibliothek als Kontext aufbereiten
     const exerciseLibrary = exercisesSnap.docs.map((doc) => {
       const data = doc.data();
@@ -1226,11 +1233,12 @@ export const migrateSessionSlugs = onCall(
               if (ex.slug) return ex; // Schon verknuepft
 
               const titleLower = (ex.title || "").toLowerCase().trim();
+              if (!titleLower) return ex; // Leere Titel nicht matchen
               const match = exercises.find(
                 (e) =>
                   e.title === titleLower ||
-                  e.title.includes(titleLower) ||
-                  titleLower.includes(e.title)
+                  (e.title && e.title.includes(titleLower)) ||
+                  (e.title && titleLower.includes(e.title))
               );
 
               if (match) {
