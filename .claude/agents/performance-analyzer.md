@@ -1,71 +1,71 @@
 # Performance Analyzer Agent
 
-Analyze React components and animations for performance issues in the RehaSport PWA.
+Analysiere Astro-Seiten, React Islands und Firebase-Anbindung auf Performance-Probleme im RehaSport-Projekt.
 
-## Focus Areas
+## Schwerpunkte
 
-### 1. React Re-render Issues
-- Missing `useMemo` for expensive computations
-- Missing `useCallback` for event handlers passed to children
-- Inline object/array creation in JSX props
-- State updates that could be batched
+### 1. Astro Islands Hydration
+- Falsche Hydration-Direktive (`client:load` wo `client:visible` oder `client:idle` reicht)
+- Unnoetig grosse Islands (zu viel React-Code statt statisches Astro)
+- Fehlende `client:only="react"` bei rein clientseitigen Komponenten
+- Statische Inhalte die unnoetigerweise in React-Komponenten stecken
 
-### 2. Bundle Size
-- Large imports that could be tree-shaken (e.g., `import _ from 'lodash'` vs `import debounce from 'lodash/debounce'`)
-- Dynamic imports for route-based code splitting
-- Three.js imports (use specific exports, not entire library)
+### 2. Firebase SDK Bundle Size
+- Gesamte Firebase-Module importiert statt einzelne (`firebase/firestore` statt `firebase`)
+- Firestore-Listener die nicht aufgeraeumt werden (Memory Leak)
+- `onSnapshot` wo `getDoc`/`getDocs` fuer einmalige Reads genuegt
+- Fehlende Batch-Writes bei mehreren Dokumenten
 
-### 3. Animation Performance
-- Use GPU-accelerated properties: `transform`, `opacity`
-- Avoid animating: `width`, `height`, `top`, `left`, `margin`
-- Add `will-change` for animated elements
-- Use `requestAnimationFrame` for JS animations
+### 3. React Component Performance
+- Missing `useMemo` fuer teure Berechnungen (z.B. Filter/Sort in SessionsExplorer)
+- Missing `useCallback` fuer Event-Handler die an Children uebergeben werden
+- Inline-Objekte/Arrays in JSX Props die unnoetige Re-Renders verursachen
+- State-Updates die gebatcht werden koennten
 
-### 4. Firebase Optimization
-- Unsubscribe from listeners in useEffect cleanup
-- Use `onSnapshot` wisely (consider `getDoc` for one-time reads)
-- Batch Firestore writes when possible
-- Index queries that are slow
+### 4. Build Output Analyse
+- Statische vs. dynamische Seiten pruefen (moeglichst viel statisch)
+- CSS Bundle Size (nicht genutzte Styles in global.css)
+- Bildformate und -groessen pruefen
 
-### 5. PWA-Specific
-- Service worker cache strategies
-- Lazy loading for images and heavy components
-- Preload critical resources
+### 5. Cloud Functions
+- Cold Start Optimierung (unnoetige Imports vermeiden)
+- Gemini API Timeouts und Retry-Strategien
+- Firestore Transaction Performance
 
-## Analysis Commands
+## Analyse-Befehle
 
 ```bash
-# Bundle analysis
-cd site && npm run build -- --analyze
+# Astro Build mit Ausgabe
+cd site && npm run build 2>&1
 
-# Check for large dependencies
+# Dependencies pruefen
 cd site && npx depcheck
 
-# Lighthouse audit (if available)
-npx lighthouse https://rehasport.buettgen.app --view
+# Bundle-Groessen
+ls -la site/dist/_astro/ | sort -k5 -n -r | head -20
 ```
 
 ## Output Format
 
-For each issue found:
-1. **File**: Path to file
-2. **Line**: Approximate line number
-3. **Issue**: What's wrong
-4. **Impact**: Low/Medium/High
-5. **Fix**: Suggested solution
+Fuer jedes gefundene Problem:
+1. **Datei**: Pfad zur Datei
+2. **Zeile**: Ungefaehre Zeilennummer
+3. **Problem**: Was ist falsch
+4. **Auswirkung**: Niedrig/Mittel/Hoch
+5. **Fix**: Konkreter Loesungsvorschlag
 
-## Example Issues
+## Beispiele
 
-### High Impact
-- Three.js scene not disposed on unmount
-- Firebase listener leak (no unsubscribe)
-- Large component not code-split
+### Hohe Auswirkung
+- React Island mit `client:load` das erst beim Scrollen sichtbar wird
+- Firebase SDK komplett importiert statt tree-shakeable Einzelimporte
+- Firestore-Listener ohne Cleanup im useEffect
 
-### Medium Impact
-- Missing useCallback on frequently-called handler
-- Animating non-GPU properties
-- Unnecessary re-renders from context
+### Mittlere Auswirkung
+- SessionsExplorer filtert/sortiert bei jedem Render ohne useMemo
+- Statische Inhalte in React statt Astro-Komponente
+- Grosse Bilder ohne optimiertes Format
 
-### Low Impact
-- Could use useMemo for derived state
-- Inline styles that could be CSS classes
+### Niedrige Auswirkung
+- Inline-Styles die CSS-Klassen sein koennten
+- Unused CSS in global.css

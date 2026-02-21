@@ -32,6 +32,20 @@ jobs:
         run: npm test
         working-directory: site
 
+      - name: Security Audit (Site)
+        run: npm audit --audit-level=high
+        working-directory: site
+        continue-on-error: true
+
+      - name: TypeScript Check (Functions)
+        run: npm ci && npx tsc --noEmit
+        working-directory: functions
+
+      - name: Security Audit (Functions)
+        run: npm audit --audit-level=high
+        working-directory: functions
+        continue-on-error: true
+
       - name: Setup Firebase CLI
         run: npm install -g firebase-tools
 
