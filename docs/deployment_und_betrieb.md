@@ -101,23 +101,18 @@ Trigger:
 Pipeline:
 1. Checkout
 2. Node Setup
-3. `npm ci` in `site`
+3. `npm ci` in `site` + `functions`
 4. `npm test` in `site`
 5. Firebase CLI Setup
 6. Firebase Web SDK Config aus Projekt ziehen
 7. Frontend Build mit `PUBLIC_FIREBASE_*`-Variablen
-8. Deploy zu Firebase Hosting (`channelId: live`)
-9. Auto-Versionstag und GitHub Release
-
-**Wichtig:** Der CI-Workflow deployed nur Firebase Hosting. Cloud Functions und Firestore Rules muessen nach einem Release manuell deployed werden:
-
-```bash
-npx firebase deploy --only functions
-npx firebase deploy --only firestore:rules
-```
+8. Functions Build (`npm run build` in `functions`)
+9. Deploy zu Firebase (Hosting + Functions + Firestore Rules)
+10. Auto-Versionstag und GitHub Release
 
 ## Monitoring und Betriebshinweise
 
 - Der aktuelle Public-Frontend-Stand hat keine PWA-/Service-Worker-Logik.
 - Firestore Rules und Cloud Functions bleiben Teil der Gesamtplattform und werden ueber das Root-Projekt verwaltet.
 - Cloud Functions nutzen Fail-Closed Rate Limiting - bei Fehlern wird Zugriff verweigert.
+- CI deployed alles (Hosting + Functions + Rules) - kein manueller Deploy-Schritt noetig.

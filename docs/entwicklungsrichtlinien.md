@@ -65,7 +65,7 @@ npm run build
 - `main` ist Release-Zweig (auto deploy ueber Workflow)
 - kleine, reviewbare PRs
 - bei Routingaenderungen immer `firebase.json` mitziehen
-- CI deployed nur Hosting - Functions und Rules manuell deployen nach Merge
+- CI deployed alles (Hosting + Functions + Rules) bei Push auf `main`
 
 ## Doku-Disziplin
 
