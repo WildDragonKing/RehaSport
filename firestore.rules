@@ -7,16 +7,21 @@ service cloud.firestore {
       return request.auth != null;
     }
 
+    // Finding 13: exists()-Guard vor get() schuetzt gegen fehlende User-Dokumente
     function getUserData() {
       return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
     }
 
+    function userExists() {
+      return exists(/databases/$(database)/documents/users/$(request.auth.uid));
+    }
+
     function isAdmin() {
-      return isAuthenticated() && getUserData().role == 'admin';
+      return isAuthenticated() && userExists() && getUserData().role == 'admin';
     }
 
     function isTrainer() {
-      return isAuthenticated() && getUserData().role in ['admin', 'trainer'];
+      return isAuthenticated() && userExists() && getUserData().role in ['admin', 'trainer'];
     }
 
     function isOwner(userId) {
@@ -38,9 +43,11 @@ service cloud.firestore {
       allow create, update, delete: if isAdmin();
     }
 
+    // Finding 11: Trainer kann nur eigene Uebungen updaten
     match /exercises/{exerciseId} {
       allow read: if true;
-      allow create, update: if isTrainer();
+      allow create: if isTrainer();
+      allow update: if isAdmin() || (isTrainer() && resource.data.createdBy == request.auth.uid);
       allow delete: if isAdmin();
     }
 
@@ -53,7 +60,7 @@ service cloud.firestore {
     match /drafts/{draftId} {
       allow read: if isAdmin() || (isTrainer() && resource.data.createdBy == request.auth.uid);
       allow create: if isTrainer();
-      // Trainer können nur pending Drafts bearbeiten und dürfen status/approvedBy nicht ändern
+      // Trainer koennen nur pending Drafts bearbeiten und duerfen status/approvedBy nicht aendern
       allow update: if isAdmin() || (
         isTrainer() &&
         resource.data.createdBy == request.auth.uid &&
@@ -64,45 +71,64 @@ service cloud.firestore {
       allow delete: if isAdmin() || (isTrainer() && resource.data.createdBy == request.auth.uid);
     }
 
+    // Finding 5: User darf eigene role nicht aendern (Privilege Escalation verhindern)
     match /users/{userId} {
       allow read: if isOwner(userId);
       allow read: if isAdmin();
       allow create: if isOwner(userId);
-      allow update: if isAdmin() || isOwner(userId);
+      allow update: if isAdmin() || (
+        isOwner(userId) &&
+        !('role' in request.resource.data.diff(resource.data).affectedKeys())
+      );
       allow delete: if isAdmin();
     }
 
+    // Finding 4: config create nur durch Admin
     match /config/{configId} {
       allow read: if isAuthenticated();
-      allow create: if isAuthenticated();
-      allow update, delete: if isAdmin();
+      allow create, update, delete: if isAdmin();
     }
 
+    // Finding 2: Ratings - create mit Schema-Validierung, update nur via Cloud Function
     match /ratings/{ratingId} {
       allow read: if true;
-      allow create: if true;
-      allow update: if true;
+      allow create: if true
+        && request.resource.data.keys().hasOnly(['totalRatings', 'sumRatings', 'averageRating', 'sessionId', 'exerciseId', 'type'])
+        && request.resource.data.totalRatings is int
+        && request.resource.data.totalRatings >= 0
+        && request.resource.data.sumRatings is number
+        && request.resource.data.averageRating is number;
+      // Update nur durch Admin oder Cloud Functions (Admin SDK umgeht Rules)
+      allow update: if isAdmin();
       allow delete: if isAdmin();
     }
 
-    // Analytics (Nutzungsstatistiken)
+    // Finding 3: Analytics - nur Auth-User mit Schema-Validierung
     match /analytics/{docId} {
       allow read: if isAdmin();
-      allow create, update: if true;
+      allow create: if isAuthenticated()
+        && request.resource.data.keys().hasOnly(['event', 'timestamp', 'userId', 'sessionId', 'exerciseId', 'metadata'])
+        && request.resource.data.event is string
+        && request.resource.data.event.size() < 100;
+      allow update: if false;
       allow delete: if isAdmin();
     }
 
-    // Rate Limits (für KI-Anfragen)
+    // Rate Limits (fuer KI-Anfragen - nur Server-Zugriff)
     match /rateLimits/{userId} {
-      allow read, write: if false; // Nur Server-Zugriff
+      allow read, write: if false;
     }
 
+    // Generation Jobs (nur Server-Zugriff via Admin SDK)
+    match /generationJobs/{jobId} {
+      allow read, write: if false;
+    }
+
+    // Finding 10: Einladungen nur mit Auth lesbar
     match /invitations/{invitationId} {
-      // Nur einzelne Einladung abrufen (kein list), nur Admin kann alle sehen
-      allow get: if true;
+      allow get: if isAuthenticated();
       allow list: if isAdmin();
       allow create: if isAdmin();
-      // Nur Admin oder der eingeladene User (nach Auth) kann aktualisieren
       allow update: if isAdmin() || (isAuthenticated() && resource.data.email == request.auth.token.email);
       allow delete: if isAdmin();
     }
